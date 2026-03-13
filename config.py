@@ -73,32 +73,8 @@ SECTOR_ETFS = {
 BENCHMARK_SYMBOL = "SPY"
 INITIAL_CAPITAL  = 100_000
 
-# ─── Stock classification ─────────────────────────────────────────────────────
-# Tags every stock with market behavior. Used to gate short candidates.
-# Defensives hold value or rise in bear markets — never short them.
-# Utilities and REITs are rate-sensitive — never short in rising-rate env.
-# Without this table the filter in strategy_core defaults every stock to
-# "cyclical" and does nothing.
-STOCK_CLASSIFICATION = {
-    # Defensives — never short
-    "PG":   "defensive", "KO":   "defensive", "PEP":  "defensive",
-    "WMT":  "defensive", "PM":   "defensive", "MO":   "defensive",
-    "CL":   "defensive", "KMB":  "defensive", "GIS":  "defensive",
-    "HSY":  "defensive", "COST": "defensive", "MCD":  "defensive",
-    "SBUX": "defensive", "JNJ":  "defensive", "ABBV": "defensive",
-    "MRK":  "defensive", "PFE":  "defensive", "BMY":  "defensive",
-    "AMGN": "defensive", "GILD": "defensive", "ABT":  "defensive",
-    "MDT":  "defensive", "UNH":  "defensive", "EL":   "defensive",
-    # Utilities — never short
-    "NEE":  "utility",   "DUK":  "utility",   "SO":   "utility",
-    "D":    "utility",   "EXC":  "utility",   "AEP":  "utility",
-    "SRE":  "utility",   "PEG":  "utility",
-    # REITs — never short
-    "EQIX": "reit",      "DLR":  "reit",      "AMT":  "reit",
-    "CCI":  "reit",      "SBAC": "reit",      "PLD":  "reit",
-    "PSA":  "reit",
-}
-SHORT_INELIGIBLE_TYPES = {"defensive", "utility", "reit"}
+
+
 
 # ─── Position sizing ──────────────────────────────────────────────────────────
 MAX_POSITIONS        = 4
@@ -181,7 +157,6 @@ SHORT_REENTRY_COOLDOWN_DAYS = 60
 # Staggered entries: max new long positions opened per day.
 # Prevents entering 4 correlated positions on the same day and all stopping
 # out together when market gaps down (e.g. January 4, 2022).
-MAX_NEW_ENTRIES_PER_DAY = 2
 
 # Regime must hold this many consecutive days before officially flipping.
 # Stops same-day entry/exit churn during volatile oscillations.
