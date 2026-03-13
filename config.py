@@ -77,11 +77,11 @@ INITIAL_CAPITAL  = 100_000
 
 
 # ─── Position sizing ──────────────────────────────────────────────────────────
-MAX_POSITIONS        = 4
-MAX_TOTAL_EXPOSURE   = 1.45   # gross long exposure cap (× capital)
+MAX_POSITIONS        = 6
+MAX_TOTAL_EXPOSURE   = 1.60   # gross long exposure cap (× capital)
 MAX_POSITION_WEIGHT  = 0.35
 MAX_POSITION_DOLLARS = 40_000
-RISK_PER_TRADE       = 0.026
+RISK_PER_TRADE       = 0.035
 
 # ─── Exit parameters ──────────────────────────────────────────────────────────
 FIXED_STOP_LOSS_PCT = 0.02
