@@ -704,6 +704,14 @@ def run_backtest(days: int = 3650, refresh_cache: bool = False) -> Tuple:
         stable_is_bear    = _current_regime_label == "bear"
         stable_is_neutral = _current_regime_label == "neutral"
 
+        # ── ML scoring (runs before exits — available for future exit logic) ──────
+        X, valid_syms = feat_matrix.get_panel(date, available_symbols)
+        if X.shape[0] == 0:
+            port_val = _portfolio_value(cash, close_prices, long_positions, short_positions)
+            equity.append((date, port_val))
+            continue
+        ml_scores = batch_ml_scores_fast(X, valid_syms, rankers, feat_cols_union)
+
         # ── Exit: longs ───────────────────────────────────────────────────
         for s in list(long_positions.keys()):
             pos   = long_positions[s]
@@ -721,14 +729,16 @@ def run_backtest(days: int = 3650, refresh_cache: bool = False) -> Tuple:
             trail_stop = pos.highest_price * (1 - stop_pct)
             stop_px    = max(stop_px, trail_stop)
 
+            hold_d      = pos.age_days(pd.Timestamp(date).to_pydatetime())
             exit_reason = exit_ref = None
+
             if low <= stop_px:
                 exit_reason = "stop"
                 exit_ref    = stop_px
             elif close >= pos.entry_price * (1 + config.TAKE_PROFIT_PCT):
                 exit_reason = "take_profit"
                 exit_ref    = close
-            elif pos.age_days(pd.Timestamp(date).to_pydatetime()) >= config.MAX_HOLD_DAYS:
+            elif hold_d >= config.MAX_HOLD_DAYS:
                 exit_reason = "max_hold"
                 exit_ref    = close
 
@@ -807,20 +817,11 @@ def run_backtest(days: int = 3650, refresh_cache: bool = False) -> Tuple:
                 del short_positions[s]
                 entry_meta.pop(f"short_{s}", None)
 
-        # ── Hard circuit breakers ─────────────────────────────────────────
+        # ── Hard circuit breakers (halts new entries only, exits already processed) ──
         if config.ENABLE_REGIME_FILTER and (regime.spy_crash or regime.vol_halt):
             port_val = _portfolio_value(cash, close_prices, long_positions, short_positions)
             equity.append((date, port_val))
             continue
-
-        # ── ML scoring ────────────────────────────────────────────────────
-        X, valid_syms = feat_matrix.get_panel(date, available_symbols)
-        if X.shape[0] == 0:
-            port_val = _portfolio_value(cash, close_prices, long_positions, short_positions)
-            equity.append((date, port_val))
-            continue
-
-        ml_scores = batch_ml_scores_fast(X, valid_syms, rankers, feat_cols_union)
 
         # ── Snapshots ─────────────────────────────────────────────────────
         snapshots = build_fast_snapshots(
@@ -880,6 +881,14 @@ def run_backtest(days: int = 3650, refresh_cache: bool = False) -> Tuple:
                 if len(long_positions) >= max_longs:
                     break
 
+                # Staggered entries — max N new longs per day
+                max_per_day = getattr(config, "MAX_NEW_ENTRIES_PER_DAY", 2)
+                if entries_date != date:
+                    entries_today = 0
+                    entries_date  = date
+                if entries_today >= max_per_day:
+                    break
+
                 px         = open_next_prices[s]
                 stop_pct   = snap.stop_pct
                 scalar     = regime.position_scalar
@@ -908,6 +917,7 @@ def run_backtest(days: int = 3650, refresh_cache: bool = False) -> Tuple:
                     continue
 
                 cash -= cost
+                entries_today += 1
                 long_positions[s] = Position(
                     symbol=s, qty=qty, entry_price=fill,
                     entry_time=str(next_date.date()),

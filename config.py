@@ -114,10 +114,10 @@ ATR_STOP_MULTIPLIER = 1.8
 # ─── Adaptive stop parameters (no hardcoding — all tunable) ──────────────────
 # Stop width scales with realized vol of the individual stock.
 # As a position moves into profit the stop tightens to lock in gains.
-STOP_VOL_MULTIPLIER       = 2.0   # base ATR × this in normal vol
-STOP_PROFIT_TIGHTEN_START = 0.08  # start tightening when profit exceeds this
+STOP_VOL_MULTIPLIER       = 2.5   # base ATR × this in normal vol
+STOP_PROFIT_TIGHTEN_START = 0.12  # start tightening when profit exceeds this
 STOP_PROFIT_TIGHTEN_RATE  = 0.50  # fraction of profit gain to give back
-STOP_MIN_PCT              = 0.015 # never tighter than this
+STOP_MIN_PCT              = 0.035 # never tighter than this
 STOP_MAX_PCT              = 0.12  # never wider than this
 
 # ─── Regime detection ────────────────────────────────────────────────────────
