@@ -469,7 +469,8 @@ def train_ranker(panel: pd.DataFrame, horizon: int, oos_only: bool = False):
         imp   = pd.Series(model.feature_importances_, index=feature_cols)
         top10 = imp.nlargest(10)
         log("INFO | Top features: " + ", ".join(f"{n}={v:.3f}" for n, v in top10.items()))
-        cs_share = imp[[c for c in feature_cols if "_cs_rank" in c]].sum()
+        total_imp = imp.sum()
+        cs_share = imp[[c for c in feature_cols if "_cs_rank" in c]].sum() / total_imp if total_imp > 0 else 0
         log(f"INFO | CS-rank share: {cs_share:.1%} ({'OK' if cs_share < 0.6 else 'HIGH'})")
 
     if abs(ic) < 0.02:
@@ -512,10 +513,97 @@ def train_and_save_ensemble(symbols: List[str], days: int, refresh: bool = False
     log("INFO | Complete.")
 
 
+
+def train_rolling_ensemble(symbols: List[str], days: int = 3650, refresh: bool = False) -> None:
+    """
+    Rolling walk-forward retrain — the way real quant funds do it.
+
+    For each test year, train on the prior 5 years of data and save a dated model.
+    The backtester then loads the correct vintage for each date, eliminating
+    any future data leakage into the model.
+
+    Vintages produced:
+      cross_sectional_ranker_3d_2020.joblib  (trained 2015-2019, test 2020)
+      cross_sectional_ranker_3d_2021.joblib  (trained 2016-2020, test 2021)
+      ...
+      cross_sectional_ranker_3d_2025.joblib  (trained 2020-2024, test 2025)
+
+    Also saves the "current" model (trained on most recent 5 years) as the
+    standard cross_sectional_ranker_Xd.joblib for live trading.
+    """
+    log(f"INFO | Rolling walk-forward retrain")
+    log(f"INFO | Universe: {len(symbols)} stocks")
+    log(f"INFO | Model: {'LightGBM' if USE_LIGHTGBM else 'sklearn GBM'}")
+
+    store = build_symbol_store(symbols, days, refresh=refresh)
+    log(f"INFO | Loaded {len(store)} symbols")
+
+    test_years  = [2020, 2021, 2022, 2023, 2024, 2025]
+    train_years = 5
+
+    for horizon in [3, 5, 7]:
+        log(f"INFO | === Horizon {horizon}d ===")
+        panel = build_panel_from_store(store, horizon)
+        panel["date"] = pd.to_datetime(panel["date"])
+
+        feature_cols = [c for c in panel.columns
+                        if c not in {"date", "symbol", "target_raw", "target_rank"}]
+
+        for test_year in test_years:
+            train_start = pd.Timestamp(f"{test_year - train_years}-01-01")
+            train_end   = pd.Timestamp(f"{test_year}-01-01")
+            test_end    = pd.Timestamp(f"{test_year + 1}-01-01")
+
+            train_df = panel[(panel["date"] >= train_start) & (panel["date"] < train_end)]
+            test_df  = panel[(panel["date"] >= train_end)   & (panel["date"] < test_end)]
+
+            if len(train_df) < 1000:
+                log(f"WARN | {test_year}: insufficient train data ({len(train_df)} rows), skipping")
+                continue
+
+            log(f"INFO | {test_year}: train={train_start.year}-{train_end.year-1} "
+                f"({len(train_df):,} rows) | test={test_year} ({len(test_df):,} rows)")
+
+            scaler  = StandardScaler()
+            X_train = scaler.fit_transform(train_df[feature_cols].fillna(0))
+            model   = _build_model(horizon)
+            model.fit(X_train, train_df["target_rank"])
+
+            if len(test_df) > 0:
+                X_test = scaler.transform(test_df[feature_cols].fillna(0))
+                pred   = model.predict(X_test)
+                rmse   = float(np.sqrt(mean_squared_error(test_df["target_rank"], pred)))
+                ic     = float(np.corrcoef(pred, test_df["target_rank"])[0, 1])
+                log(f"INFO | {test_year} OOS: RMSE={rmse:.4f}  IC={ic:.4f}")
+
+            bundle = {
+                "model":    model,
+                "scaler":   scaler,
+                "features": feature_cols,
+                "horizon":  horizon,
+                "train_start": str(train_start.date()),
+                "train_end":   str(train_end.date()),
+                "test_year":   test_year,
+            }
+            path = f"cross_sectional_ranker_{horizon}d_{test_year}.joblib"
+            joblib.dump(bundle, path)
+            log(f"INFO | Saved {path}")
+
+        # Save the most recent vintage as the live model
+        latest_year = max(test_years)
+        latest_path = f"cross_sectional_ranker_{horizon}d_{latest_year}.joblib"
+        joblib.dump(joblib.load(latest_path), f"cross_sectional_ranker_{horizon}d.joblib")
+        log(f"INFO | Updated live model cross_sectional_ranker_{horizon}d.joblib from {latest_year} vintage")
+
+    joblib.dump(joblib.load("cross_sectional_ranker_5d.joblib"), "cross_sectional_ranker.joblib")
+    log("INFO | Rolling retrain complete.")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--days",          type=int, default=3650)
     parser.add_argument("--save-ensemble", action="store_true")
+    parser.add_argument("--rolling",       action="store_true", help="Rolling walk-forward retrain (one model per year)")
     parser.add_argument("--refresh",       action="store_true")
     parser.add_argument("--lightgbm",      action="store_true")
     args = parser.parse_args()
@@ -524,7 +612,9 @@ def main():
     if args.lightgbm:
         USE_LIGHTGBM = True
 
-    if args.save_ensemble:
+    if args.rolling:
+        train_rolling_ensemble(list(config.WATCHLIST), args.days, args.refresh)
+    elif args.save_ensemble:
         train_and_save_ensemble(list(config.WATCHLIST), args.days, args.refresh)
     else:
         parser.print_help()
