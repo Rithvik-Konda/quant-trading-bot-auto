@@ -41,7 +41,7 @@ warnings.filterwarnings("ignore", message="X does not have valid feature names")
 import config
 
 CACHE_DIR    = "cache_prices"
-USE_LIGHTGBM = False   # flip to True after: pip install lightgbm
+USE_LIGHTGBM = True   # flip to True after: pip install lightgbm
 os.makedirs(CACHE_DIR, exist_ok=True)
 
 SECTOR_ETF_MAP: Dict[str, str] = {}
@@ -391,7 +391,15 @@ def build_panel_from_store(store: dict, horizon: int) -> pd.DataFrame:
                         spy_close.loc[common].pct_change(p)
                     )
 
-        merged           = pd.concat([feat, target_raw.rename("target_raw")], axis=1)
+        if spy_close is not None:
+            spy_fwd = (spy_close.shift(-horizon) / spy_close.shift(-1)) - 1
+            common  = target_raw.index.intersection(spy_fwd.index)
+            target  = pd.Series(index=target_raw.index, dtype=float)
+            target.loc[common] = (target_raw.loc[common] - spy_fwd.loc[common]).clip(-0.20, 0.20)
+        else:
+            target = target_raw.clip(-0.20, 0.20)
+
+        merged           = pd.concat([feat, target_raw.rename("target_raw"), target.rename("target")], axis=1)
         merged["symbol"] = sym
         merged["date"]   = merged.index
         frames.append(merged)
@@ -400,10 +408,10 @@ def build_panel_from_store(store: dict, horizon: int) -> pd.DataFrame:
         raise RuntimeError("No symbols loaded")
 
     panel = pd.concat(frames)
-    panel["target_rank"] = panel.groupby("date")["target_raw"].rank(pct=True)
+    panel["target_rank"] = panel.groupby("date")["target"].rank(pct=True)
 
     feature_cols = [c for c in panel.columns
-                    if c not in {"date", "symbol", "target_raw", "target_rank"}]
+                    if c not in {"date", "symbol", "target_raw", "target", "target_rank"}]
     for c in feature_cols:
         panel[f"{c}_cs_rank"] = panel.groupby("date")[c].rank(pct=True)
 
@@ -438,7 +446,7 @@ def _build_model(horizon: int):
 
 def train_ranker(panel: pd.DataFrame, horizon: int, oos_only: bool = False):
     feature_cols = [c for c in panel.columns
-                    if c not in {"date", "symbol", "target_raw", "target_rank"}]
+                    if c not in {"date", "symbol", "target_raw", "target", "target_rank"}]
 
     panel        = panel.sort_values(["date", "symbol"])
     unique_dates = sorted(panel["date"].unique())
@@ -503,7 +511,7 @@ def train_and_save_ensemble(symbols: List[str], days: int, refresh: bool = False
         n_feat = len([c for c in panel.columns if c not in {"date","symbol","target_raw","target_rank"}])
         log(f"INFO | Panel rows={len(panel):,}  features={n_feat}")
 
-        model, scaler, features = train_ranker(panel, horizon)
+        model, scaler, features = train_ranker(panel, horizon, oos_only=True)
         bundle = {"model": model, "scaler": scaler, "features": features, "horizon": horizon}
         path   = f"cross_sectional_ranker_{horizon}d.joblib"
         joblib.dump(bundle, path)
@@ -547,7 +555,7 @@ def train_rolling_ensemble(symbols: List[str], days: int = 3650, refresh: bool =
         panel["date"] = pd.to_datetime(panel["date"])
 
         feature_cols = [c for c in panel.columns
-                        if c not in {"date", "symbol", "target_raw", "target_rank"}]
+                        if c not in {"date", "symbol", "target_raw", "target", "target_rank"}]
 
         for test_year in test_years:
             train_start = pd.Timestamp(f"{test_year - train_years}-01-01")
