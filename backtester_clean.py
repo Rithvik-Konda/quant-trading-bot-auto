@@ -629,6 +629,7 @@ def run_backtest(days: int = 3650, refresh_cache: bool = False) -> Tuple:
     equity                                    = []
     last_regime_exit_date: Optional[pd.Timestamp] = None
     short_stop_dates: Dict[str, pd.Timestamp]     = {}   # symbol → date of last short_stop
+    recent_trade_outcomes: List[int]              = []   # 1=win, 0=loss, rolling signal quality
     entries_today:    int                         = 0    # new long entries on current date
     entries_date:     Optional[pd.Timestamp]      = None # date entries_today was last reset
     _regime_candidate: Optional[str]     = None
@@ -773,6 +774,10 @@ def run_backtest(days: int = 3650, refresh_cache: bool = False) -> Tuple:
                 ))
                 if exit_reason == "regime_exit":
                     last_regime_exit_date = date
+                # Track outcome for signal quality monitor
+                recent_trade_outcomes.append(1 if pnl > 0 else 0)
+                if len(recent_trade_outcomes) > 20:
+                    recent_trade_outcomes.pop(0)
                 del long_positions[s]
                 entry_meta.pop(s, None)
 
@@ -903,6 +908,17 @@ def run_backtest(days: int = 3650, refresh_cache: bool = False) -> Tuple:
                 stop_pct   = snap.stop_pct
                 scalar     = regime.position_scalar
                 conviction = conviction_multiplier(snap)
+
+                # Signal quality monitor — reduce size when model is underperforming
+                # If rolling 20-trade win rate < 45%, cut position size by 50%
+                signal_scalar = 1.0
+                if len(recent_trade_outcomes) >= 10:
+                    roll_wr = sum(recent_trade_outcomes) / len(recent_trade_outcomes)
+                    if roll_wr < 0.45:
+                        signal_scalar = 0.50  # half size when signal is weak
+                    elif roll_wr < 0.50:
+                        signal_scalar = 0.75  # 75% size when signal is marginal
+                scalar = scalar * signal_scalar
 
                 gross_exp = current_gross_exposure(close_prices, long_positions)
                 remaining = max(0.0, config.INITIAL_CAPITAL * config.MAX_TOTAL_EXPOSURE - gross_exp)
