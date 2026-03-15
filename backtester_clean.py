@@ -409,10 +409,13 @@ def build_fast_snapshots(
     hist: Dict[str, pd.DataFrame],
     rule_store: Dict[str, pd.Series],
     ml_scores: Dict[str, float],
+    pead_scores: Optional[Dict[str, float]] = None,
 ) -> Dict[str, SignalSnapshot]:
     snapshots: Dict[str, SignalSnapshot] = {}
     if not ml_scores:
         return snapshots
+    if pead_scores is None:
+        pead_scores = {}
 
     for symbol in available_symbols:
         if symbol not in ml_scores:
@@ -423,10 +426,17 @@ def build_fast_snapshots(
                 continue
             rule     = float(rule_store[symbol].get(date, 0.0))
             ml       = float(ml_scores[symbol])
+            pead     = float(pead_scores.get(symbol, 0.0))
             bull     = trend_bullish(df)
             atr_pct  = compute_atr_pct(df, config.ATR_PERIOD)
             stop_pct = stop_pct_for_symbol(df)
-            combined = 0.75 * ml + 0.15 * ml + 0.10 * rule
+
+            # Blended score: PEAD boosts conviction when earnings catalyst present
+            # When PEAD=0 (no recent beat), falls back to pure momentum scoring
+            if pead > 0:
+                combined = 0.65 * ml + 0.25 * pead + 0.10 * (rule + 1) / 2
+            else:
+                combined = 0.90 * ml + 0.10 * (rule + 1) / 2
 
             snapshots[symbol] = SignalSnapshot(
                 symbol=symbol,
