@@ -255,12 +255,12 @@ REGIME_BEAR_THRESHOLD    = 0.45  # below this → short-heavy or short-only
 # Regime component weights (must sum to 1.0)
 # Breadth raised: 80% of stocks below 200MA is an unambiguous bear signal
 # MA structure lowered: SPY MAs lag — breadth and vol lead
-REGIME_WEIGHT_MA_STRUCTURE = 0.20  # was 0.30 — lags, can mask bear early
-REGIME_WEIGHT_MOMENTUM     = 0.25  # unchanged
-REGIME_WEIGHT_VOL          = 0.20  # unchanged
-REGIME_WEIGHT_BREADTH      = 0.20  # was 0.10 — leading indicator, raised
-REGIME_WEIGHT_VOL_TREND    = 0.08  # unchanged
-REGIME_WEIGHT_DRAWDOWN     = 0.07  # unchanged
+REGIME_WEIGHT_MA_STRUCTURE = 0.15  # was 0.30 — lags, can mask bear early
+REGIME_WEIGHT_MOMENTUM     = 0.18  # unchanged
+REGIME_WEIGHT_VOL          = 0.15  # unchanged
+REGIME_WEIGHT_BREADTH      = 0.17  # was 0.10 — leading indicator, raised
+REGIME_WEIGHT_VOL_TREND    = 0.05  # unchanged
+REGIME_WEIGHT_DRAWDOWN     = 0.05  # unchanged
 
 # After a regime_exit, don't re-enter longs for this many trading days.
 REGIME_EXIT_COOLDOWN_DAYS  = 10
@@ -365,3 +365,15 @@ LEADERSHIP_THRESHOLD        = 0.62
 LEADERSHIP_TOP_N            = 4
 LEADERSHIP_MIN_MULTIPLIER   = 0.60
 LEADERSHIP_BOOST_CAP        = 1.50
+# ─── Macro regime inputs ──────────────────────────────────────────────────────
+# Independent of price momentum — catches rate/credit/dollar regime shifts
+# weeks before breadth or MA signals move.
+MACRO_TLT_SYMBOL   = "TLT"   # 20yr treasury — falling = rates rising = bearish growth
+MACRO_HYG_SYMBOL   = "HYG"   # high yield credit — falling = credit stress = risk-off
+MACRO_DXY_SYMBOL   = "UUP"   # dollar ETF — rising = risk-off for equities
+
+# Macro component weights (added to regime score)
+# Reduced other weights proportionally to keep sum = 1.0
+REGIME_WEIGHT_TLT        = 0.08  # treasury trend
+REGIME_WEIGHT_HYG        = 0.08  # credit trend
+REGIME_WEIGHT_DXY        = 0.06  # dollar (inverted)

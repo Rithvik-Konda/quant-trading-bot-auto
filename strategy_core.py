@@ -271,14 +271,72 @@ def market_regime(
     # -5% = 0.0, 0% (at high) = 1.0
     components["drawdown"] = _score_component(drawdown, -0.25, 0.0)
 
+    # ── Component 7: TLT trend (treasury bonds — falling = rates rising = bearish growth) ──
+    try:
+        from ml_model import _load_etf
+        tlt_df = _load_etf(getattr(config, "MACRO_TLT_SYMBOL", "TLT"))
+        if tlt_df is not None and len(tlt_df) > 60:
+            tlt_close = tlt_df["close"].reindex(close.index, method="ffill").dropna()
+            if len(tlt_close) > 60:
+                tlt_ret20 = float(tlt_close.pct_change(20).iloc[-1])
+                tlt_ret60 = float(tlt_close.pct_change(60).iloc[-1])
+                # TLT falling fast = rates rising = bearish for growth
+                # -10% over 60d = 0.0 (very bearish), +5% = 1.0 (bullish)
+                tlt_score = float(np.mean([
+                    _score_component(tlt_ret20, -0.06, 0.03),
+                    _score_component(tlt_ret60, -0.10, 0.05),
+                ]))
+                components["tlt_trend"] = tlt_score
+    except Exception:
+        components["tlt_trend"] = 0.5
+
+    # ── Component 8: HYG trend (high yield credit — falling = credit stress = risk-off) ──
+    try:
+        from ml_model import _load_etf
+        hyg_df = _load_etf(getattr(config, "MACRO_HYG_SYMBOL", "HYG"))
+        if hyg_df is not None and len(hyg_df) > 60:
+            hyg_close = hyg_df["close"].reindex(close.index, method="ffill").dropna()
+            if len(hyg_close) > 60:
+                hyg_ret20 = float(hyg_close.pct_change(20).iloc[-1])
+                hyg_ret60 = float(hyg_close.pct_change(60).iloc[-1])
+                # HYG falling = credit spreads widening = risk-off
+                hyg_score = float(np.mean([
+                    _score_component(hyg_ret20, -0.05, 0.02),
+                    _score_component(hyg_ret60, -0.08, 0.03),
+                ]))
+                components["hyg_trend"] = hyg_score
+    except Exception:
+        components["hyg_trend"] = 0.5
+
+    # ── Component 9: DXY via UUP (dollar — rising dollar = risk-off for equities) ──
+    try:
+        from ml_model import _load_etf
+        uup_df = _load_etf(getattr(config, "MACRO_DXY_SYMBOL", "UUP"))
+        if uup_df is not None and len(uup_df) > 60:
+            uup_close = uup_df["close"].reindex(close.index, method="ffill").dropna()
+            if len(uup_close) > 60:
+                uup_ret20 = float(uup_close.pct_change(20).iloc[-1])
+                uup_ret60 = float(uup_close.pct_change(60).iloc[-1])
+                # Rising dollar = bearish equities (inverted)
+                dxy_score = float(np.mean([
+                    _score_component(uup_ret20, 0.03, -0.02),
+                    _score_component(uup_ret60, 0.06, -0.03),
+                ]))
+                components["dxy_inverted"] = dxy_score
+    except Exception:
+        components["dxy_inverted"] = 0.5
+
     # ── Weighted composite — all weights from config, nothing hardcoded ──
     weights = {
-        "ma_structure": getattr(config, "REGIME_WEIGHT_MA_STRUCTURE", 0.20),
-        "momentum":     getattr(config, "REGIME_WEIGHT_MOMENTUM",     0.25),
-        "vol_inverted": getattr(config, "REGIME_WEIGHT_VOL",          0.20),
-        "breadth":      getattr(config, "REGIME_WEIGHT_BREADTH",      0.20),
-        "vol_trend":    getattr(config, "REGIME_WEIGHT_VOL_TREND",    0.08),
-        "drawdown":     getattr(config, "REGIME_WEIGHT_DRAWDOWN",     0.07),
+        "ma_structure": getattr(config, "REGIME_WEIGHT_MA_STRUCTURE", 0.15),
+        "momentum":     getattr(config, "REGIME_WEIGHT_MOMENTUM",     0.18),
+        "vol_inverted": getattr(config, "REGIME_WEIGHT_VOL",          0.15),
+        "breadth":      getattr(config, "REGIME_WEIGHT_BREADTH",      0.17),
+        "vol_trend":    getattr(config, "REGIME_WEIGHT_VOL_TREND",    0.05),
+        "drawdown":     getattr(config, "REGIME_WEIGHT_DRAWDOWN",     0.05),
+        "tlt_trend":    getattr(config, "REGIME_WEIGHT_TLT",          0.08),
+        "hyg_trend":    getattr(config, "REGIME_WEIGHT_HYG",          0.08),
+        "dxy_inverted": getattr(config, "REGIME_WEIGHT_DXY",          0.06),
     }
     raw_score = sum(weights[k] * components[k] for k in weights)
 
