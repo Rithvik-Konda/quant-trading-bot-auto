@@ -1,0 +1,186 @@
+"""
+strategy_choppy.py — Choppy/Transitional Market Strategy
+=========================================================
+Used when regime = CHOPPY.
+
+Philosophy: In choppy markets, momentum signals are unreliable.
+Most momentum entries get stopped out quickly because trends don't
+sustain. The job is to be highly selective — only take the absolute
+highest conviction setups — and size down so losses are contained.
+
+Key differences from trending bull:
+- A/D filter is TIGHT (either distribution OR lower highs blocks entry)
+- Max positions reduced to 4 (concentrate on best ideas only)
+- ML threshold raised to 0.93 (top 7% only)
+- Hold period shortened to 12 days (don't overstay in choppy tape)
+- Position size 60% of normal (protect capital)
+- 2 shorts allowed (some names genuinely breaking down)
+- Sector filter: only enter if sector ETF also in accumulation
+"""
+
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
+import numpy as np
+import pandas as pd
+
+from entry_filter import is_in_accumulation, accumulation_score
+from regime_classifier import CHOPPY
+
+
+# ── Strategy parameters ───────────────────────────────────────────────────────
+MAX_POSITIONS        = 4       # concentrate on best ideas only
+ML_RANK_MIN          = 0.93    # top 7% — very selective
+COMBINED_SCORE_MIN   = 0.25    # higher bar in choppy markets
+MAX_HOLD_DAYS        = 12      # shorter holds — don't overstay
+TAKE_PROFIT_PCT      = 0.25    # lower take profit — lock in gains faster
+STOP_MIN_PCT         = 0.025   # tighter stops in choppy
+STOP_MAX_PCT         = 0.08    # lower max stop
+STOP_VOL_MULTIPLIER  = 2.0     # tighter ATR multiplier
+RISK_PER_TRADE       = 0.020   # 2% risk per trade (reduced from 3.5%)
+MAX_POSITION_WEIGHT  = 0.25    # lower concentration per position
+MAX_TOTAL_EXPOSURE   = 1.20    # lower total exposure
+MAX_POSITIONS_SHORT  = 2       # 2 shorts allowed
+POSITION_SCALAR      = 0.60    # 60% of normal sizing
+
+
+@dataclass
+class StrategyParams:
+    max_positions:       int   = MAX_POSITIONS
+    ml_rank_min:         float = ML_RANK_MIN
+    combined_score_min:  float = COMBINED_SCORE_MIN
+    max_hold_days:       int   = MAX_HOLD_DAYS
+    take_profit_pct:     float = TAKE_PROFIT_PCT
+    stop_min_pct:        float = STOP_MIN_PCT
+    stop_max_pct:        float = STOP_MAX_PCT
+    stop_vol_multiplier: float = STOP_VOL_MULTIPLIER
+    risk_per_trade:      float = RISK_PER_TRADE
+    max_position_weight: float = MAX_POSITION_WEIGHT
+    max_total_exposure:  float = MAX_TOTAL_EXPOSURE
+    max_positions_short: int   = MAX_POSITIONS_SHORT
+    position_scalar:     float = POSITION_SCALAR
+
+
+def get_params() -> StrategyParams:
+    return StrategyParams()
+
+
+def should_enter(
+    symbol: str,
+    ml_rank_pct: float,
+    combined_score: float,
+    df: pd.DataFrame,
+    regime: str,
+    sector_df: Optional[pd.DataFrame] = None,
+) -> Tuple[bool, str]:
+    """
+    Entry decision for choppy strategy.
+    Much stricter than trending bull.
+    """
+    params = get_params()
+
+    if ml_rank_pct < params.ml_rank_min:
+        return False, f"ML rank {ml_rank_pct:.2f} below choppy threshold {params.ml_rank_min}"
+
+    if combined_score < params.combined_score_min:
+        return False, f"combined score too low for choppy market"
+
+    # Tight A/D filter
+    if not is_in_accumulation(df, CHOPPY):
+        return False, "distribution detected — skip in choppy market"
+
+    # Sector filter: sector ETF must also be in accumulation
+    if sector_df is not None and len(sector_df) > 20:
+        if not is_in_accumulation(sector_df, CHOPPY):
+            return False, "sector in distribution — skip in choppy market"
+
+    return True, ""
+
+
+def score_candidates(
+    snapshots: dict,
+    prices: Dict[str, pd.DataFrame],
+    sector_prices: Dict[str, pd.DataFrame],
+    as_of_date: pd.Timestamp,
+) -> List[dict]:
+    """
+    Score and rank candidates for the choppy strategy.
+    Very strict filtering — only highest conviction setups.
+    """
+    params = get_params()
+    scored = []
+
+    for sym, snap in snapshots.items():
+        if snap.ml_rank_pct < params.ml_rank_min:
+            continue
+        if snap.combined_score < params.combined_score_min:
+            continue
+
+        df = prices.get(sym)
+        if df is None:
+            continue
+        df_asof = df.loc[:as_of_date]
+
+        # Strict A/D check
+        if not is_in_accumulation(df_asof, CHOPPY):
+            continue
+
+        # Accumulation score for ranking
+        acc_score = accumulation_score(df_asof)
+
+        # Only enter if accumulation is genuinely strong
+        if acc_score < 0.55:
+            continue
+
+        boosted_score = snap.combined_score * acc_score
+
+        scored.append({
+            "symbol":         sym,
+            "ml_rank_pct":    snap.ml_rank_pct,
+            "combined_score": boosted_score,
+            "raw_score":      snap.combined_score,
+            "acc_score":      acc_score,
+            "stop_pct":       snap.stop_pct,
+            "atr_pct":        snap.atr_pct,
+        })
+
+    scored.sort(key=lambda x: x["combined_score"], reverse=True)
+    return scored[:params.max_positions * 2]
+
+
+def position_size(
+    entry_price: float,
+    stop_pct: float,
+    capital: float,
+    current_exposure: float,
+    cash: float,
+    conviction_mult: float = 1.0,
+) -> int:
+    params = get_params()
+    scalar = params.position_scalar * conviction_mult
+    risk_budget = capital * params.risk_per_trade * scalar
+    risk_per_share = entry_price * stop_pct
+    if risk_per_share <= 0:
+        return 0
+    qty_risk = int(risk_budget / risk_per_share)
+    max_dollars = min(
+        capital * params.max_position_weight * scalar,
+        cash,
+        max(0, capital * params.max_total_exposure - current_exposure),
+    )
+    qty_dollars = int(max_dollars / entry_price) if entry_price > 0 else 0
+    return max(0, min(qty_risk, qty_dollars))
+
+
+if __name__ == "__main__":
+    print("Choppy Market Strategy Parameters:")
+    p = get_params()
+    print(f"  Max positions:    {p.max_positions}")
+    print(f"  ML rank min:      {p.ml_rank_min:.0%}")
+    print(f"  Max hold days:    {p.max_hold_days}")
+    print(f"  Risk per trade:   {p.risk_per_trade:.1%}")
+    print(f"  Stop min/max:     {p.stop_min_pct:.1%} / {p.stop_max_pct:.1%}")
+    print(f"  Take profit:      {p.take_profit_pct:.0%}")
+    print(f"  Position scalar:  {p.position_scalar:.0%}")
+    print(f"  Shorts allowed:   {p.max_positions_short}")
+    print("\nStrategy ready.")
