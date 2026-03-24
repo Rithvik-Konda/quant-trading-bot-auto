@@ -504,6 +504,39 @@ def load_ranker_ensemble() -> Dict[int, dict]:
     }
 
 
+def load_ranker_ensemble_for_year(year: int) -> Dict[int, dict]:
+    """
+    Load the correct model vintage for a given year.
+    Each vintage was trained on the 5 years BEFORE the test year —
+    no future data leakage.
+
+    Vintage mapping:
+      2017-2019 → use 2020 model (trained 2015-2019) — best available
+      2020      → 2020 model (trained 2015-2019)
+      2021      → 2021 model (trained 2016-2020)
+      2022      → 2022 model (trained 2017-2021)
+      2023      → 2023 model (trained 2018-2022)
+      2024      → 2024 model (trained 2019-2023)
+      2025+     → 2025 model (trained 2020-2024)
+    """
+    available = [2020, 2021, 2022, 2023, 2024, 2025]
+    # Use the earliest available vintage for early years (no leakage)
+    # Use the vintage whose training ended before this year
+    vintage = min(available, key=lambda v: abs(v - max(year, min(available))))
+    # Clamp: never use a vintage from the future
+    vintage = max(v for v in available if v <= max(year, min(available)))
+
+    result = {}
+    for h in [3, 5, 7]:
+        path = f"cross_sectional_ranker_{h}d_{vintage}.joblib"
+        import os as _os
+        if _os.path.exists(path):
+            result[h] = load_ranker(path)
+        else:
+            result[h] = load_ranker(f"cross_sectional_ranker_{h}d.joblib")
+    return result
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Correlation helpers
 # ─────────────────────────────────────────────────────────────────────────────

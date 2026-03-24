@@ -45,6 +45,7 @@ from risk_manager import Position
 from sector_leadership import LeadershipAdapter, apply_leadership_to_snapshots
 from strategy_core import (
     adaptive_stop_pct, compute_atr_pct, load_ranker_ensemble,
+    load_ranker_ensemble_for_year,
     market_regime, normalize_ohlcv, select_top_candidates,
     trend_bullish,
 )
@@ -69,6 +70,16 @@ def _get_strategy(regime: str):
         return strat_chop
     else:
         return strat_bear
+
+
+def _compute_one(args):
+    """Module-level worker for parallel feature computation."""
+    sym, df, vix_df = args
+    try:
+        f = compute_features(df, symbol=sym, vix_macro=vix_df)
+        return sym, f.replace([np.inf, -np.inf], np.nan) if f is not None and len(f) else pd.DataFrame()
+    except Exception:
+        return sym, pd.DataFrame()
 
 
 def run_backtest_v2(
@@ -127,21 +138,82 @@ def run_backtest_v2(
     ))
     print(f"[ok]   ensemble loaded ({len(feat_cols_union)} features)", flush=True)
 
-    # ── 5. Feature computation ────────────────────────────────────────────
-    print("[prep] computing features...", flush=True)
-    feature_store: Dict[str, pd.DataFrame] = {}
-    for i, s in enumerate(symbols):
-        print(f"  [feat] {i+1}/{len(symbols)} {s}   ", end="\r", flush=True)
-        try:
-            f = compute_features(prices_by_symbol[s], symbol=s)
-            feature_store[s] = f.replace([np.inf, -np.inf], np.nan) if f is not None and len(f) else pd.DataFrame()
-        except Exception:
-            feature_store[s] = pd.DataFrame()
-    print(f"\n[ok]   features done", flush=True)
+    # ── 5. Feature computation (parallel + cached) ───────────────────────
+    import hashlib, pickle
+    from concurrent.futures import ProcessPoolExecutor, as_completed
 
-    # ── 6. Rule scores + feature matrix ──────────────────────────────────
+    cache_dir_feat = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "cache_prices", "feat_cache")
+    os.makedirs(cache_dir_feat, exist_ok=True)
+
+    # _compute_one moved to module level for multiprocessing pickling
+
+    def _cache_key(sym, df):
+        last_date = str(df.index[-1]) if len(df) else "empty"
+        nrows = str(len(df))
+        return hashlib.md5(f"{sym}_{last_date}_{nrows}_macrov1".encode()).hexdigest()[:12]
+
+    print("[prep] computing features (parallel + cached)...", flush=True)
+    feature_store: Dict[str, pd.DataFrame] = {}
+    to_compute = []
+    for s in symbols:
+        df = prices_by_symbol[s]
+        key = _cache_key(s, df)
+        cache_path = os.path.join(cache_dir_feat, f"{s}_{key}.pkl")
+        if os.path.exists(cache_path):
+            try:
+                with open(cache_path, "rb") as fh:
+                    feature_store[s] = pickle.load(fh)
+                continue
+            except Exception:
+                pass
+        to_compute.append(s)
+
+    cached_count = len(feature_store)
+    print(f"  [feat] {cached_count} cached, computing {len(to_compute)} symbols...", flush=True)
+
+    if to_compute:
+        import multiprocessing
+        n_workers = max(1, multiprocessing.cpu_count() - 1)
+        args_list = [(s, prices_by_symbol[s], vix_macro) for s in to_compute]
+        done = 0
+        with ProcessPoolExecutor(max_workers=n_workers) as executor:
+            futures = {executor.submit(_compute_one, a): a[0] for a in args_list}
+            for future in as_completed(futures):
+                sym, feat_df = future.result()
+                feature_store[sym] = feat_df
+                key = _cache_key(sym, prices_by_symbol[sym])
+                cache_path = os.path.join(cache_dir_feat, f"{sym}_{key}.pkl")
+                try:
+                    with open(cache_path, "wb") as fh:
+                        pickle.dump(feat_df, fh)
+                except Exception:
+                    pass
+                done += 1
+                if done % 50 == 0 or done == len(to_compute):
+                    print(f"  [feat] {done}/{len(to_compute)} computed   ", end="\r", flush=True)
+
+    print(f"\n[ok]   features done ({cached_count} cached + {len(to_compute)} computed)", flush=True)
+
+    # ── 6. Rule scores + feature matrix (cached) ─────────────────────────
     print("[prep] computing rule scores...", flush=True)
-    rule_store = build_rule_store_fast(symbols, prices_by_symbol)
+    rule_cache_key = _cache_key("rule_store", spy) + f"_{len(symbols)}"
+    rule_cache_path = os.path.join(cache_dir_feat, f"rule_store_{rule_cache_key}.pkl")
+    if os.path.exists(rule_cache_path):
+        try:
+            with open(rule_cache_path, "rb") as fh:
+                rule_store = pickle.load(fh)
+            print("[ok]   rule scores loaded from cache", flush=True)
+        except Exception:
+            rule_store = build_rule_store_fast(symbols, prices_by_symbol)
+            with open(rule_cache_path, "wb") as fh:
+                pickle.dump(rule_store, fh)
+    else:
+        rule_store = build_rule_store_fast(symbols, prices_by_symbol)
+        try:
+            with open(rule_cache_path, "wb") as fh:
+                pickle.dump(rule_store, fh)
+        except Exception:
+            pass
     print("[prep] building feature matrix...", flush=True)
     feat_matrix = FeatureMatrix(
         symbols=symbols, feature_store=feature_store,
@@ -154,6 +226,17 @@ def run_backtest_v2(
     for etf, syms in config.SECTOR_ETFS.items():
         for s in syms:
             sector_map[s] = etf
+
+    # ── 7b. Precompute SPY 5-day returns for performance ─────────────────
+    _spy_close_series = spy_macro["close"] if "close" in spy_macro.columns else spy_macro.iloc[:, 0]
+    _spy_5d_returns: Dict[pd.Timestamp, float] = {}
+    for _d in all_trade_dates:
+        _spy_hist = _spy_close_series.loc[:_d]
+        if len(_spy_hist) >= 6:
+            _spy_5d_returns[_d] = float(_spy_hist.iloc[-1] / _spy_hist.iloc[-6] - 1)
+        else:
+            _spy_5d_returns[_d] = 0.0
+    print(f"[ok]   SPY 5d returns precomputed ({len(_spy_5d_returns)} dates)", flush=True)
 
     # ── 8. Leadership adapter ─────────────────────────────────────────────
     leadership_adapter = None
@@ -175,6 +258,7 @@ def run_backtest_v2(
 
     long_stop_dates:  Dict[str, pd.Timestamp] = {}
     short_stop_dates: Dict[str, pd.Timestamp] = {}
+    prev_ml_ranks:    Dict[str, float]         = {}  # Fix 1: entry confirmation
 
     last_regime_exit_date: Optional[pd.Timestamp] = None
     _regime_candidate:     Optional[str]           = None
@@ -265,6 +349,11 @@ def run_backtest_v2(
             trail_stop = pos.highest_price * (1 - stop_pct)
             stop_px  = max(stop_px, trail_stop)
 
+            # Fix 4: move stop to breakeven once up 8%
+            unrealized_pct = (close - pos.entry_price) / pos.entry_price
+            if unrealized_pct >= 0.08:
+                stop_px = max(stop_px, pos.entry_price * 1.001)
+
             hold_d      = pos.age_days(pd.Timestamp(date).to_pydatetime())
             exit_reason = exit_ref = None
 
@@ -315,18 +404,22 @@ def run_backtest_v2(
             pnl_pct     = (pos.entry_price - close) / pos.entry_price
             exit_reason = exit_ref = None
 
+            # Fix A: Short exits — time-based only. Price stops removed.
+            # Data: 143 price stops at 0% WR = -$216k destroyed.
+            # 95 max_hold exits at 85% WR = +$182k. Price stop is net negative.
+            # Only keeping disaster stop at 40% for true catastrophic squeezes.
             if pnl_pct >= bear_params.take_profit_short:
                 exit_reason = "short_take_profit"
                 exit_ref    = close
-            elif high >= pos.entry_price * (1 + bear_params.stop_short):
-                exit_reason = "short_stop"
-                exit_ref    = pos.entry_price * (1 + bear_params.stop_short)
             elif pos.age_days(pd.Timestamp(date).to_pydatetime()) >= bear_params.max_hold_days_short:
                 exit_reason = "short_max_hold"
                 exit_ref    = close
-            elif _current_regime == TRENDING_BULL:
+            elif _current_regime in (TRENDING_BULL, CHOPPY):
                 exit_reason = "regime_cover"
                 exit_ref    = close
+            elif high >= pos.entry_price * 1.40:
+                exit_reason = "short_stop_disaster"
+                exit_ref    = pos.entry_price * 1.40
 
             if exit_reason:
                 fill, comm = apply_fill_cost(exit_ref, pos.qty, "buy")
@@ -343,7 +436,7 @@ def run_backtest_v2(
                     combined_score=float(meta.get("combined_score", 0)),
                     side="short",
                 ))
-                if exit_reason == "short_stop":
+                if exit_reason == "short_stop_disaster":
                     short_stop_dates[s] = date
                 del short_positions[s]
                 entry_meta.pop(f"short_{s}", None)
@@ -353,6 +446,10 @@ def run_backtest_v2(
             date=date, available_symbols=available_symbols,
             hist=prices_by_symbol, rule_store=rule_store, ml_scores=ml_scores,
         )
+
+        # Fix 1: update ML rank memory for next day confirmation
+        for _s_r, _snap_r in snapshots.items():
+            prev_ml_ranks[_s_r] = _snap_r.ml_rank_pct
 
         if leadership_adapter:
             leadership_adapter.update(date, prices_by_symbol)
@@ -408,6 +505,19 @@ def run_backtest_v2(
                 if not is_in_accumulation(df_s, _current_regime):
                     continue
 
+                # Fix 1: Entry confirmation — must rank top decile 2 consecutive days
+                ml_min_threshold = getattr(params, 'ml_rank_min', getattr(params, 'ml_rank_min_long', 0.80))
+                if prev_ml_ranks.get(s, 0.0) < ml_min_threshold:
+                    prev_ml_ranks[s] = snap.ml_rank_pct
+                    continue
+
+                # SPY 5-day momentum filter — don't buy into weakness
+                # Even in TRENDING_BULL, short-term dips cause clustered stops
+                if _spy_5d_returns.get(date, 0.0) < -0.015:
+                    continue
+
+
+
                 # Bear strategy: defensive sectors only
                 if _current_regime == BEAR:
                     sector = sector_map.get(s)
@@ -420,7 +530,12 @@ def run_backtest_v2(
 
                 px         = open_next_prices[s]
                 stop_pct   = float(np.clip(snap.stop_pct, getattr(params, 'stop_min_pct', getattr(params, 'stop_min_long', 0.02)), getattr(params, 'stop_max_pct', getattr(params, 'stop_max_long', 0.12))))
-                conviction = conviction_multiplier(snap)
+                # Fix 2: ML-rank-scaled conviction sizing
+                import numpy as _np
+                base_conviction = conviction_multiplier(snap)
+                ml_conv = 0.5 + (snap.ml_rank_pct - ml_min_threshold) / max(1.0 - ml_min_threshold, 0.01)
+                ml_conv = float(_np.clip(ml_conv, 0.5, 1.5))
+                conviction = base_conviction * ml_conv
                 risk_pt    = getattr(params, 'risk_per_trade', 0.035)
                 scalar     = getattr(params, 'position_scalar', getattr(params, 'position_scalar_long', 1.0))
 

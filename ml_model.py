@@ -133,8 +133,14 @@ def _get_fundamentals(symbol: str) -> dict:
 
 # ── Feature engineering ───────────────────────────────────────────────────────
 
-def compute_features(df: pd.DataFrame, symbol: Optional[str] = None) -> pd.DataFrame:
+def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: Optional[pd.DataFrame] = None) -> pd.DataFrame:
     high, low, close, open_, volume = df["high"], df["low"], df["close"], df["open"], df["volume"]
+    if vix_macro is None:
+        # Try loading from cache if not passed
+        try:
+            vix_macro = _load_etf("VIX") or pd.DataFrame()
+        except Exception:
+            vix_macro = pd.DataFrame()
     feat = pd.DataFrame(index=df.index)
 
     # 1. Price momentum — multiple horizons
@@ -293,7 +299,60 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None) -> pd.DataF
     feat["dd_recovery"]      = (close / close.rolling(60).max().replace(0, np.nan)).clip(0.5, 1)
     feat["trend_age"]        = (close > sma20).astype(int).rolling(60).sum() / 60
 
-    # 14. Vol-adjusted momentum — raw return divided by realized vol
+    # 14. Macro regime features — yield curve + VIX term structure
+    # These are cross-sectional constants (same for all stocks on a given day)
+    # but they tell the model WHAT KIND OF MARKET it's operating in.
+    # Yield curve inversion predicted every recession since 1955.
+    # VIX term structure ratio predicts acute vs structural stress.
+    try:
+        t2_df  = _load_etf("treasury_2yr")
+        t10_df = _load_etf("treasury_10yr")
+        v3m_df = _load_etf("vix3m")
+
+        if t2_df is not None and t10_df is not None and len(t2_df) > 60 and len(t10_df) > 60:
+            t2  = t2_df["close"].reindex(close.index, method="ffill")
+            t10 = t10_df["close"].reindex(close.index, method="ffill")
+
+            # Yield spread: 10yr - 2yr (negative = inverted = danger)
+            spread = t10 - t2
+            feat["yield_spread"]         = spread.clip(-3, 3)
+
+            # Spread change over 60 days — steepening or flattening?
+            feat["yield_spread_60d_chg"] = spread.diff(60).clip(-2, 2)
+
+            # Spread vs 1yr rolling average — unusually flat vs history?
+            spread_ma252 = spread.rolling(252).mean()
+            feat["yield_spread_vs_1yr"]  = (spread - spread_ma252).clip(-2, 2)
+
+            # Is curve inverted? Binary signal
+            feat["yield_inverted"]       = (spread < 0).astype(float)
+
+            # 2yr yield level — absolute rate environment
+            feat["rate_2yr_level"]       = t2.clip(0, 10) / 10.0  # normalize to 0-1
+
+            # Rate of change in 2yr — Fed hiking or cutting?
+            feat["rate_2yr_60d_chg"]     = t2.diff(60).clip(-3, 3)
+
+        if v3m_df is not None and len(v3m_df) > 30:
+            vix_s  = vix_macro["close"] if "close" in vix_macro.columns else vix_macro.iloc[:, 0]
+            vix_aligned = vix_s.reindex(close.index, method="ffill")
+            v3m    = v3m_df["close"].reindex(close.index, method="ffill")
+
+            # VIX term structure ratio — >1 means near-term fear > long-term fear
+            # (acute stress), <1 means calm short-term (structural concern only)
+            vix_ratio = (vix_aligned / v3m.replace(0, np.nan)).clip(0.5, 2.0)
+            feat["vix_term_ratio"]       = vix_ratio
+
+            # Is term structure inverted (contango vs backwardation)?
+            feat["vix_backwardation"]    = (vix_ratio > 1.0).astype(float)
+
+            # 20-day change in ratio — is stress rising or falling?
+            feat["vix_term_ratio_20d"]   = vix_ratio.diff(20).clip(-0.5, 0.5)
+
+    except Exception as _e:
+        pass  # macro features optional — don't break if data missing
+
+    # 15. Vol-adjusted momentum — raw return divided by realized vol
     # A 3% move in a 15-vol stock >> 3% move in a 40-vol stock
     # Without this the model can't distinguish signal from noise in momentum
     # vol_base: use realized_vol_10 for short horizons, realized_vol_20 for longer
