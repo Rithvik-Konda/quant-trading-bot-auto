@@ -141,94 +141,94 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
             vix_macro = _load_etf("VIX") or pd.DataFrame()
         except Exception:
             vix_macro = pd.DataFrame()
-    feat = pd.DataFrame(index=df.index)
+    d: dict = {}
 
     # 1. Price momentum — multiple horizons
     for p in [1, 3, 5, 10, 20, 40, 60, 90, 120]:
-        feat[f"ret_{p}"] = close.pct_change(p).clip(-2, 2)
-    feat["mom_accel_5_20"]  = feat["ret_5"]  - feat["ret_20"]
-    feat["mom_accel_20_60"] = feat["ret_20"] - feat["ret_60"]
-    feat["mom_accel_5_60"]  = feat["ret_5"]  - feat["ret_60"]
-    feat["mom_accel_1_5"]   = feat["ret_1"]  - feat["ret_5"]
+        d[f"ret_{p}"] = close.pct_change(p).clip(-2, 2)
+    d["mom_accel_5_20"]  = d["ret_5"]  - d["ret_20"]
+    d["mom_accel_20_60"] = d["ret_20"] - d["ret_60"]
+    d["mom_accel_5_60"]  = d["ret_5"]  - d["ret_60"]
+    d["mom_accel_1_5"]   = d["ret_1"]  - d["ret_5"]
     # Jegadeesh-Titman canonical momentum: 12-month return ex last month
-    feat["mom_12_1"] = (close.pct_change(252) - close.pct_change(21)).clip(-2, 2)
+    d["mom_12_1"] = (close.pct_change(252) - close.pct_change(21)).clip(-2, 2)
 
     # 2. Trend structure
     sma20  = close.rolling(20).mean()
     sma50  = close.rolling(50).mean()
     sma200 = close.rolling(200).mean()
-    feat["px_vs_sma20"]     = (close / sma20.replace(0, np.nan)  - 1).clip(-1, 1)
-    feat["px_vs_sma50"]     = (close / sma50.replace(0, np.nan)  - 1).clip(-1, 1)
-    feat["px_vs_sma200"]    = (close / sma200.replace(0, np.nan) - 1).clip(-1, 1)
-    feat["sma20_vs_sma50"]  = (sma20  / sma50.replace(0, np.nan)  - 1).clip(-0.5, 0.5)
-    feat["sma50_vs_sma200"] = (sma50  / sma200.replace(0, np.nan) - 1).clip(-0.5, 0.5)
-    feat["sma20_slope"]     = sma20.pct_change(5).clip(-0.2, 0.2)
-    feat["sma50_slope"]     = sma50.pct_change(10).clip(-0.2, 0.2)
-    feat["sma200_slope"]    = sma200.pct_change(20).clip(-0.2, 0.2)
+    d["px_vs_sma20"]     = (close / sma20.replace(0, np.nan)  - 1).clip(-1, 1)
+    d["px_vs_sma50"]     = (close / sma50.replace(0, np.nan)  - 1).clip(-1, 1)
+    d["px_vs_sma200"]    = (close / sma200.replace(0, np.nan) - 1).clip(-1, 1)
+    d["sma20_vs_sma50"]  = (sma20  / sma50.replace(0, np.nan)  - 1).clip(-0.5, 0.5)
+    d["sma50_vs_sma200"] = (sma50  / sma200.replace(0, np.nan) - 1).clip(-0.5, 0.5)
+    d["sma20_slope"]     = sma20.pct_change(5).clip(-0.2, 0.2)
+    d["sma50_slope"]     = sma50.pct_change(10).clip(-0.2, 0.2)
+    d["sma200_slope"]    = sma200.pct_change(20).clip(-0.2, 0.2)
 
     # 3. Oscillators
     for p in [7, 14, 21]:
         delta = close.diff()
         gain  = delta.clip(lower=0).rolling(p).mean()
         loss  = (-delta.clip(upper=0)).rolling(p).mean()
-        feat[f"rsi_{p}"] = (100 - 100 / (1 + gain / loss.replace(0, np.nan))).clip(0, 100)
-    feat["rsi_14_slope"] = feat["rsi_14"].diff(5)
+        d[f"rsi_{p}"] = (100 - 100 / (1 + gain / loss.replace(0, np.nan))).clip(0, 100)
+    d["rsi_14_slope"] = d["rsi_14"].diff(5)
     ema12 = close.ewm(span=12, adjust=False).mean()
     ema26 = close.ewm(span=26, adjust=False).mean()
     macd  = ema12 - ema26
     sig   = macd.ewm(span=9, adjust=False).mean()
-    feat["macd_hist"]      = (macd - sig)
-    feat["macd_hist_norm"] = feat["macd_hist"] / close.replace(0, np.nan)
-    feat["macd_hist_slope"]= feat["macd_hist"].diff(3)
+    d["macd_hist"]      = (macd - sig)
+    d["macd_hist_norm"] = d["macd_hist"] / close.replace(0, np.nan)
+    d["macd_hist_slope"]= d["macd_hist"].diff(3)
     bb_mid  = close.rolling(20).mean()
     bb_std  = close.rolling(20).std()
     bb_rng  = (4 * bb_std).replace(0, np.nan)
-    feat["bb_pct"]   = ((close - (bb_mid - 2*bb_std)) / bb_rng).clip(0, 1)
-    feat["bb_width"] = (4 * bb_std / bb_mid.replace(0, np.nan)).clip(0, 1)
+    d["bb_pct"]   = ((close - (bb_mid - 2*bb_std)) / bb_rng).clip(0, 1)
+    d["bb_width"] = (4 * bb_std / bb_mid.replace(0, np.nan)).clip(0, 1)
 
     # 4. Volatility
     ret1 = close.pct_change()
-    feat["realized_vol_10"] = ret1.rolling(10).std() * np.sqrt(252)
-    feat["realized_vol_20"] = ret1.rolling(20).std() * np.sqrt(252)
-    feat["realized_vol_60"] = ret1.rolling(60).std() * np.sqrt(252)
-    feat["vol_expansion"]   = (feat["realized_vol_10"] / feat["realized_vol_20"].replace(0, np.nan)).clip(0, 5)
-    feat["vol_contracting"] = (feat["realized_vol_10"] < feat["realized_vol_20"]).astype(float)
+    d["realized_vol_10"] = ret1.rolling(10).std() * np.sqrt(252)
+    d["realized_vol_20"] = ret1.rolling(20).std() * np.sqrt(252)
+    d["realized_vol_60"] = ret1.rolling(60).std() * np.sqrt(252)
+    d["vol_expansion"]   = (d["realized_vol_10"] / d["realized_vol_20"].replace(0, np.nan)).clip(0, 5)
+    d["vol_contracting"] = (d["realized_vol_10"] < d["realized_vol_20"]).astype(float)
     tr = pd.concat([high-low, (high-close.shift()).abs(), (low-close.shift()).abs()], axis=1).max(axis=1)
-    feat["atr_pct"] = (tr.rolling(14).mean() / close.replace(0, np.nan)).clip(0, 0.2)
+    d["atr_pct"] = (tr.rolling(14).mean() / close.replace(0, np.nan)).clip(0, 0.2)
 
     # 5. Volume / flow
     vol_ma20 = volume.rolling(20).mean()
-    feat["vol_ratio_20"] = (volume  / vol_ma20.replace(0, np.nan)).clip(0, 10)
-    feat["vol_ratio_5"]  = (volume.rolling(5).mean() / vol_ma20.replace(0, np.nan)).clip(0, 5)
+    d["vol_ratio_20"] = (volume  / vol_ma20.replace(0, np.nan)).clip(0, 10)
+    d["vol_ratio_5"]  = (volume.rolling(5).mean() / vol_ma20.replace(0, np.nan)).clip(0, 5)
     obv = (np.sign(close.diff()).fillna(0) * volume).cumsum()
-    feat["obv_slope_10"] = ((obv - obv.shift(10)) / (obv.shift(10).abs() + 1)).clip(-1, 1)
-    feat["obv_slope_20"] = ((obv - obv.shift(20)) / (obv.shift(20).abs() + 1)).clip(-1, 1)
+    d["obv_slope_10"] = ((obv - obv.shift(10)) / (obv.shift(10).abs() + 1)).clip(-1, 1)
+    d["obv_slope_20"] = ((obv - obv.shift(20)) / (obv.shift(20).abs() + 1)).clip(-1, 1)
     mf_raw = ((close-low) - (high-close)) / (high-low).replace(0, np.nan) * volume
-    feat["money_flow_14"] = (mf_raw.rolling(14).mean() / (vol_ma20 * close).replace(0, np.nan)).clip(-1, 1)
+    d["money_flow_14"] = (mf_raw.rolling(14).mean() / (vol_ma20 * close).replace(0, np.nan)).clip(-1, 1)
 
     # 6. Breakout / range
     h52 = close.rolling(252).max()
     l52 = close.rolling(252).min()
-    feat["dist_to_52w_high"] = (close / h52.replace(0, np.nan) - 1).clip(-1, 0)
-    feat["dist_to_52w_low"]  = (close / l52.replace(0, np.nan) - 1).clip(0, 5)
-    feat["range_pos_52w"]    = ((close - l52) / (h52 - l52).replace(0, np.nan)).clip(0, 1)
-    feat["dist_to_20d_high"] = (close / close.rolling(20).max().replace(0, np.nan) - 1).clip(-1, 0)
-    feat["breakout_quality"] = (feat["dist_to_52w_high"].clip(-0.05,0)*-20 * feat["vol_ratio_20"].clip(1,3)/3).clip(0,1)
+    d["dist_to_52w_high"] = (close / h52.replace(0, np.nan) - 1).clip(-1, 0)
+    d["dist_to_52w_low"]  = (close / l52.replace(0, np.nan) - 1).clip(0, 5)
+    d["range_pos_52w"]    = ((close - l52) / (h52 - l52).replace(0, np.nan)).clip(0, 1)
+    d["dist_to_20d_high"] = (close / close.rolling(20).max().replace(0, np.nan) - 1).clip(-1, 0)
+    d["breakout_quality"] = (d["dist_to_52w_high"].clip(-0.05,0)*-20 * d["vol_ratio_20"].clip(1,3)/3).clip(0,1)
 
     # 7. Mean reversion 1-5d (uncorrelated with 20-60d momentum)
-    feat["mean_rev_1d"]    = (-ret1).clip(-0.10, 0.10)
-    feat["mean_rev_3d"]    = (-close.pct_change(3)).clip(-0.15, 0.15)
-    feat["rsi_7_dip"]      = (50 - feat["rsi_7"]).clip(0, 50) / 50
-    feat["bb_lower_touch"] = (1 - feat["bb_pct"]).clip(0, 1)
-    feat["dip_in_trend"]   = (feat["ret_20"].clip(0,0.4) * feat["mean_rev_3d"].clip(0,0.15)).clip(0,0.1)
+    d["mean_rev_1d"]    = (-ret1).clip(-0.10, 0.10)
+    d["mean_rev_3d"]    = (-close.pct_change(3)).clip(-0.15, 0.15)
+    d["rsi_7_dip"]      = (50 - d["rsi_7"]).clip(0, 50) / 50
+    d["bb_lower_touch"] = (1 - d["bb_pct"]).clip(0, 1)
+    d["dip_in_trend"]   = (d["ret_20"].clip(0,0.4) * d["mean_rev_3d"].clip(0,0.15)).clip(0,0.1)
 
     # 8. Trend quality
-    feat["trend_consistency"]    = (close.diff() > 0).rolling(10).mean()
-    feat["trend_consistency_20"] = (close.diff() > 0).rolling(20).mean()
+    d["trend_consistency"]    = (close.diff() > 0).rolling(10).mean()
+    d["trend_consistency_20"] = (close.diff() > 0).rolling(20).mean()
     cr = (high - low).replace(0, np.nan)
-    feat["body_pct"]      = ((close-open_).abs() / cr).clip(0, 1)
-    feat["close_to_high"] = ((high-close) / cr).clip(0, 1)
-    feat["close_to_low"]  = ((close-low)  / cr).clip(0, 1)
+    d["body_pct"]      = ((close-open_).abs() / cr).clip(0, 1)
+    d["close_to_high"] = ((high-close) / cr).clip(0, 1)
+    d["close_to_low"]  = ((close-low)  / cr).clip(0, 1)
 
     # 9. vs SPY
     spy_df = _etf_cache.get("SPY")
@@ -237,14 +237,14 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
     if spy_df is not None and len(spy_df) > 60:
         spy_c = spy_df["close"].reindex(close.index, method="ffill")
         for p in [5, 20, 60, 120]:
-            feat[f"ret_{p}_vs_spy"] = (close.pct_change(p) - spy_c.pct_change(p)).clip(-1, 1)
-        feat["mom_accel_vs_spy"] = (
+            d[f"ret_{p}_vs_spy"] = (close.pct_change(p) - spy_c.pct_change(p)).clip(-1, 1)
+        d["mom_accel_vs_spy"] = (
             (close.pct_change(5) - spy_c.pct_change(5)) -
             (close.pct_change(20) - spy_c.pct_change(20))
         ).clip(-0.5, 0.5)
         rcov = close.pct_change().rolling(60).cov(spy_c.pct_change())
         rvar = spy_c.pct_change().rolling(60).var()
-        feat["beta_60"] = (rcov / rvar.replace(0, np.nan)).clip(-3, 3)
+        d["beta_60"] = (rcov / rvar.replace(0, np.nan)).clip(-3, 3)
 
     # 10. vs Sector ETF
     if symbol:
@@ -254,8 +254,8 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
             if etf_df is not None and len(etf_df) > 60:
                 ec = etf_df["close"].reindex(close.index, method="ffill")
                 for p in [5, 20, 60]:
-                    feat[f"ret_{p}_vs_sector"] = (close.pct_change(p) - ec.pct_change(p)).clip(-1, 1)
-                feat["mom_accel_vs_sector"] = (
+                    d[f"ret_{p}_vs_sector"] = (close.pct_change(p) - ec.pct_change(p)).clip(-1, 1)
+                d["mom_accel_vs_sector"] = (
                     (close.pct_change(5)-ec.pct_change(5)) -
                     (close.pct_change(20)-ec.pct_change(20))
                 ).clip(-0.5, 0.5)
@@ -278,26 +278,26 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
             v = f.get(src)
             if v is not None:
                 scaled = np.clip(v / 200 if src == "debtToEquity" else v, lo, hi)
-                feat[dst] = scaled
+                d[dst] = scaled
                 if src in ("returnOnEquity", "grossMargins", "revenueGrowth"):
                     q_parts.append(np.clip(v, 0, 1))
         if f.get("pegRatio", 0) > 0:
-            feat["quality_peg"] = np.clip(1 / f["pegRatio"], 0, 3)
+            d["quality_peg"] = np.clip(1 / f["pegRatio"], 0, 3)
         if q_parts:
-            feat["quality_composite"] = float(np.mean(q_parts))
+            d["quality_composite"] = float(np.mean(q_parts))
 
     # 12. Short interest (bearish signal — rising SI predicts underperformance)
     if symbol:
         f = _get_fundamentals(symbol)
         si = f.get("shortPercentOfFloat")
         sr = f.get("shortRatio")
-        if si is not None: feat["short_pct_float"] = np.clip(si, 0, 0.5)
-        if sr is not None: feat["short_ratio"]     = np.clip(sr / 20, 0, 1)
+        if si is not None: d["short_pct_float"] = np.clip(si, 0, 0.5)
+        if sr is not None: d["short_ratio"]     = np.clip(sr / 20, 0, 1)
 
     # 13. Regime features
-    feat["vol_regime_score"] = (1 - feat["realized_vol_20"].clip(0, 0.8) / 0.8)
-    feat["dd_recovery"]      = (close / close.rolling(60).max().replace(0, np.nan)).clip(0.5, 1)
-    feat["trend_age"]        = (close > sma20).astype(int).rolling(60).sum() / 60
+    d["vol_regime_score"] = (1 - d["realized_vol_20"].clip(0, 0.8) / 0.8)
+    d["dd_recovery"]      = (close / close.rolling(60).max().replace(0, np.nan)).clip(0.5, 1)
+    d["trend_age"]        = (close > sma20).astype(int).rolling(60).sum() / 60
 
     # 14. Macro regime features — yield curve + VIX term structure
     # These are cross-sectional constants (same for all stocks on a given day)
@@ -315,23 +315,23 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
 
             # Yield spread: 10yr - 2yr (negative = inverted = danger)
             spread = t10 - t2
-            feat["yield_spread"]         = spread.clip(-3, 3)
+            d["yield_spread"]         = spread.clip(-3, 3)
 
             # Spread change over 60 days — steepening or flattening?
-            feat["yield_spread_60d_chg"] = spread.diff(60).clip(-2, 2)
+            d["yield_spread_60d_chg"] = spread.diff(60).clip(-2, 2)
 
             # Spread vs 1yr rolling average — unusually flat vs history?
             spread_ma252 = spread.rolling(252).mean()
-            feat["yield_spread_vs_1yr"]  = (spread - spread_ma252).clip(-2, 2)
+            d["yield_spread_vs_1yr"]  = (spread - spread_ma252).clip(-2, 2)
 
             # Is curve inverted? Binary signal
-            feat["yield_inverted"]       = (spread < 0).astype(float)
+            d["yield_inverted"]       = (spread < 0).astype(float)
 
             # 2yr yield level — absolute rate environment
-            feat["rate_2yr_level"]       = t2.clip(0, 10) / 10.0  # normalize to 0-1
+            d["rate_2yr_level"]       = t2.clip(0, 10) / 10.0  # normalize to 0-1
 
             # Rate of change in 2yr — Fed hiking or cutting?
-            feat["rate_2yr_60d_chg"]     = t2.diff(60).clip(-3, 3)
+            d["rate_2yr_60d_chg"]     = t2.diff(60).clip(-3, 3)
 
         if v3m_df is not None and len(v3m_df) > 30:
             vix_s  = vix_macro["close"] if "close" in vix_macro.columns else vix_macro.iloc[:, 0]
@@ -341,13 +341,13 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
             # VIX term structure ratio — >1 means near-term fear > long-term fear
             # (acute stress), <1 means calm short-term (structural concern only)
             vix_ratio = (vix_aligned / v3m.replace(0, np.nan)).clip(0.5, 2.0)
-            feat["vix_term_ratio"]       = vix_ratio
+            d["vix_term_ratio"]       = vix_ratio
 
             # Is term structure inverted (contango vs backwardation)?
-            feat["vix_backwardation"]    = (vix_ratio > 1.0).astype(float)
+            d["vix_backwardation"]    = (vix_ratio > 1.0).astype(float)
 
             # 20-day change in ratio — is stress rising or falling?
-            feat["vix_term_ratio_20d"]   = vix_ratio.diff(20).clip(-0.5, 0.5)
+            d["vix_term_ratio_20d"]   = vix_ratio.diff(20).clip(-0.5, 0.5)
 
     except Exception as _e:
         pass  # macro features optional — don't break if data missing
@@ -358,29 +358,29 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
     # vol_base: use realized_vol_10 for short horizons, realized_vol_20 for longer
     _vol_map = {5: "realized_vol_10", 20: "realized_vol_20", 60: "realized_vol_20"}
     for p in [5, 20, 60]:
-        vol_base = feat[_vol_map[p]].replace(0, np.nan)
-        feat[f"vol_adj_ret_{p}"] = (feat[f"ret_{p}"] / (vol_base / np.sqrt(252) * np.sqrt(p))).clip(-5, 5)
+        vol_base = d[_vol_map[p]].replace(0, np.nan)
+        d[f"vol_adj_ret_{p}"] = (d[f"ret_{p}"] / (vol_base / np.sqrt(252) * np.sqrt(p))).clip(-5, 5)
 
     # 15. Momentum trajectory — is momentum accelerating or decelerating?
     # A stock at rank 85 that was rank 70 last week is accelerating (buy signal)
     # A stock at rank 85 that was rank 95 last week is decelerating (warning)
     # Computed as slope of 5d return over rolling 10/20 day windows
-    feat["mom_trajectory_10"] = feat["ret_5"].diff(10).clip(-0.3, 0.3)
-    feat["mom_trajectory_20"] = feat["ret_5"].diff(20).clip(-0.5, 0.5)
-    feat["mom_vs_spy_trajectory"] = (
-        feat.get("ret_5_vs_spy", pd.Series(0, index=feat.index)).diff(10)
+    d["mom_trajectory_10"] = d["ret_5"].diff(10).clip(-0.3, 0.3)
+    d["mom_trajectory_20"] = d["ret_5"].diff(20).clip(-0.5, 0.5)
+    d["mom_vs_spy_trajectory"] = (
+        d.get("ret_5_vs_spy", pd.Series(0, index=df.index)).diff(10)
     ).clip(-0.3, 0.3)
 
     # 16. Persistence signals — consecutive days above/below key levels
     # Persistent weakness (20+ days below 200MA) = structural bear, not a dip
     # This is what distinguishes a genuine short from a temporarily weak stock
-    feat["days_above_sma20"]  = (close > sma20).astype(int).rolling(20).sum() / 20
-    feat["days_above_sma200"] = (close > sma200).astype(int).rolling(60).sum() / 60
-    feat["days_below_sma200"] = (close < sma200).astype(int).rolling(60).sum() / 60
+    d["days_above_sma20"]  = (close > sma20).astype(int).rolling(20).sum() / 20
+    d["days_above_sma200"] = (close > sma200).astype(int).rolling(60).sum() / 60
+    d["days_below_sma200"] = (close < sma200).astype(int).rolling(60).sum() / 60
     # Persistent weakness: in bottom half of performance for 20 consecutive days
-    below_median_20d = (feat["ret_20"] < 0).astype(int)
-    feat["persistent_weakness"] = below_median_20d.rolling(20).mean()
-    feat["persistent_strength"] = (feat["ret_20"] > 0).astype(int).rolling(20).mean()
+    below_median_20d = (d["ret_20"] < 0).astype(int)
+    d["persistent_weakness"] = below_median_20d.rolling(20).mean()
+    d["persistent_strength"] = (d["ret_20"] > 0).astype(int).rolling(20).mean()
 
     # 17. Sector relative strength — is this stock's sector leading or lagging?
     # Key for short selection: don't short stocks in leading sectors.
@@ -399,13 +399,14 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
                     ec  = etf_df["close"].reindex(close.index, method="ffill")
                     sc2 = spy_df2["close"].reindex(close.index, method="ffill")
                     # Sector vs SPY over 20/60 days — positive = sector leading
-                    feat["sector_vs_spy_20"]  = (ec.pct_change(20) - sc2.pct_change(20)).clip(-0.5, 0.5)
-                    feat["sector_vs_spy_60"]  = (ec.pct_change(60) - sc2.pct_change(60)).clip(-0.5, 0.5)
+                    d["sector_vs_spy_20"]  = (ec.pct_change(20) - sc2.pct_change(20)).clip(-0.5, 0.5)
+                    d["sector_vs_spy_60"]  = (ec.pct_change(60) - sc2.pct_change(60)).clip(-0.5, 0.5)
                     # Is sector in uptrend vs market?
-                    feat["sector_leading"]    = (feat["sector_vs_spy_60"] > 0).astype(float)
+                    d["sector_leading"]    = (d["sector_vs_spy_60"] > 0).astype(float)
                     # Stock strength within its own sector
-                    feat["stock_vs_sector_20"] = (close.pct_change(20) - ec.pct_change(20)).clip(-0.5, 0.5)
+                    d["stock_vs_sector_20"] = (close.pct_change(20) - ec.pct_change(20)).clip(-0.5, 0.5)
 
+    feat = pd.DataFrame(d, index=df.index)
     return feat.replace([np.inf, -np.inf], np.nan)
 
 
@@ -442,7 +443,7 @@ def build_panel_from_store(store: dict, horizon: int) -> pd.DataFrame:
 
         # Canonical SPY-relative features
         if spy_close is not None:
-            common = feat.index.intersection(spy_close.index)
+            common = df.index.intersection(spy_close.index)
             for p in [5, 20, 60]:
                 if f"ret_{p}" in feat.columns:
                     feat.loc[common, f"ret_{p}_vs_spy"] = (
