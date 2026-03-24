@@ -1,0 +1,7 @@
+cache_prices/feat_cache/
+cache_prices/*.csv
+__pycache__/
+*.pyc
+*.joblib
+trades_v2.csv
+equity_v2.csv
