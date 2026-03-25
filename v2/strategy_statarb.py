@@ -337,10 +337,18 @@ class StatArbEngine:
         cash:          float,
         capital:       float,
         trades:        List[Trade],
+        regime:        str = "CHOPPY",
     ) -> float:
-        """Process exits then entries. Returns updated cash."""
+        """Process exits then entries. Returns updated cash.
+        
+        Only enters new positions in CHOPPY or BEAR regimes.
+        Mean reversion is suppressed in TRENDING_BULL — momentum
+        runs over spread reversion, causing maxhold failures.
+        Data validation: stat arb positive only in low-TREND years.
+        """
         cash = self._handle_exits(date, prices_by_sym, cash, trades)
-        cash = self._handle_entries(date, next_date, prices_by_sym, cash, capital, trades)
+        if regime != "TRENDING_BULL":
+            cash = self._handle_entries(date, next_date, prices_by_sym, cash, capital, trades)
         return cash
 
     def portfolio_value(
@@ -633,15 +641,31 @@ def backtest_statarb_standalone(days: int = 3650):
 
     print(f"  Running {len(all_dates) - warmup} trading days...\n")
 
+    # Load real regime data for regime-conditional gating
+    from regime_classifier import RegimeClassifier, compute_signals, load_macro_data
+    macro_cache = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "cache_prices")
+    spy_macro, hyg_macro, vix_macro = load_macro_data(cache_dir=macro_cache)
+    clf = RegimeClassifier()
+    regime_map = {}
+    for d in all_dates:
+        signals = compute_signals(spy_macro, hyg_macro, vix_macro, as_of_date=d)
+        if signals:
+            regime_map[d] = clf.update(d, signals)
+    from collections import Counter
+    print(f"  Regime distribution: {dict(Counter(regime_map.values()))}")
+    print()
+
     for i in range(warmup, len(all_dates) - 1):
         date      = all_dates[i]
         next_date = all_dates[i + 1]
+        regime    = regime_map.get(date, "CHOPPY")
 
         cash = engine.update(
             date=date, next_date=next_date,
             prices_by_sym=hist,
             cash=cash, capital=capital,
             trades=trades,
+            regime=regime,
         )
 
         pair_val = engine.portfolio_value(hist, date)
