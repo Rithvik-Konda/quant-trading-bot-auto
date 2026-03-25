@@ -430,7 +430,7 @@ def run_backtest_v2(
             elif pos.age_days(pd.Timestamp(date).to_pydatetime()) >= bear_params.max_hold_days_short:
                 exit_reason = "short_max_hold"
                 exit_ref    = close
-            elif _current_regime in (TRENDING_BULL, CHOPPY):
+            elif _current_regime in (TRENDING_BULL, CHOPPY) and pos.age_days(pd.Timestamp(date).to_pydatetime()) <= 7:
                 exit_reason = "regime_cover"
                 exit_ref    = close
             elif high >= pos.entry_price * 1.40:
