@@ -536,6 +536,22 @@ def run_backtest_v2(
                 ml_conv = 0.5 + (snap.ml_rank_pct - ml_min_threshold) / max(1.0 - ml_min_threshold, 0.01)
                 ml_conv = float(_np.clip(ml_conv, 0.5, 1.5))
                 conviction = base_conviction * ml_conv
+
+                # Fix 6: Volatility-scaled position sizing (Moreira & Muir 2017)
+                # Reduce size when VIX elevated — directly addresses Feb 2025 cluster
+                vix_now = vix_macro["close"].reindex([date], method="ffill")
+                vix_level = float(vix_now.iloc[0]) if len(vix_now) and not vix_now.isna().all() else 20.0
+                if vix_level >= 35.0:
+                    vol_scalar = 0.0   # VIX > 35: no new longs (acute stress)
+                elif vix_level >= 25.0:
+                    vol_scalar = 0.5   # VIX 25-35: half size
+                elif vix_level >= 20.0:
+                    vol_scalar = 0.75  # VIX 20-25: 75% size
+                else:
+                    vol_scalar = 1.0   # VIX < 20: full size
+                if vol_scalar == 0.0:
+                    continue           # skip this entry entirely
+                conviction = conviction * vol_scalar
                 risk_pt    = getattr(params, 'risk_per_trade', 0.035)
                 scalar     = getattr(params, 'position_scalar', getattr(params, 'position_scalar_long', 1.0))
 

@@ -349,6 +349,12 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
             # 20-day change in ratio — is stress rising or falling?
             d["vix_term_ratio_20d"]   = vix_ratio.diff(20).clip(-0.5, 0.5)
 
+            # Interaction: high VIX AND inverted curve = maximum danger signal
+            # (2024 paper: combined signal predicts recessions far better than either alone)
+            if "yield_inverted" in d:
+                yi = d["yield_inverted"]
+                d["vix_yield_danger"]  = (vix_ratio * yi.reindex(vix_ratio.index, method="ffill").fillna(0)).clip(0, 2)
+
     except Exception as _e:
         pass  # macro features optional — don't break if data missing
 
@@ -472,8 +478,10 @@ def build_panel_from_store(store: dict, horizon: int) -> pd.DataFrame:
 
     feature_cols = [c for c in panel.columns
                     if c not in {"date", "symbol", "target_raw", "target", "target_rank"}]
+    cs_ranks = {}
     for c in feature_cols:
-        panel[f"{c}_cs_rank"] = panel.groupby("date")[c].rank(pct=True)
+        cs_ranks[f"{c}_cs_rank"] = panel.groupby("date")[c].rank(pct=True)
+    panel = pd.concat([panel, pd.DataFrame(cs_ranks, index=panel.index)], axis=1)
 
     return panel.dropna().reset_index(drop=True)
 

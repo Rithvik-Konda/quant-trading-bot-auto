@@ -3,7 +3,7 @@ WATCHLIST = [
 # ===== SEMICONDUCTORS / AI HARDWARE =====
 "NVDA","AVGO","AMD","MU","MRVL","QCOM","TXN","INTC","ADI",
 "AMAT","LRCX","KLAC","SMCI","ANET","ARM","MPWR","ON",
-"SWKS","NXPI","SNPS","CDNS","ANSS","STX","WDC",
+"SWKS","NXPI","SNPS","CDNS","STX","WDC",
 
 # ===== MEGA CAP TECH =====
 "MSFT","META","AMZN","GOOGL","AAPL","TSLA",
@@ -11,11 +11,11 @@ WATCHLIST = [
 # ===== CLOUD / SOFTWARE =====
 "SNOW","MDB","DDOG","NET","TEAM","ZS","SHOP","NOW",
 "CRWD","PANW","PLTR","ADBE","ORCL","CRM","INTU",
-"WDAY","OKTA","DOCU","HUBS","SPLK","FTNT",
-"GTLB","BILL","CFLT","S","ESTC","MNDY","TOST","SMAR",
+"WDAY","OKTA","DOCU","HUBS","FTNT",
+"GTLB","BILL","CFLT","S","ESTC","MNDY","TOST",
 
 # ===== HARDWARE / ENTERPRISE TECH =====
-"DELL","HPQ","HPE","PSTG","NTAP","CDW","JNPR","FFIV",
+"DELL","HPQ","HPE","PSTG","NTAP","CDW","FFIV",
 "ZBRA","CGNX","TDY","TRMB",
 
 # ===== INTERNET / DIGITAL MEDIA =====
@@ -23,7 +23,7 @@ WATCHLIST = [
 "TTD","ZG","IAC",
 
 # ===== FINTECH =====
-"V","MA","PYPL","SQ","AFRM","UPST","SOFI","NU",
+"V","MA","PYPL","AFRM","UPST","SOFI","NU",
 "ALLY","HOOD","COIN",
 
 # ===== FINANCIALS — BANKS =====
@@ -63,7 +63,7 @@ WATCHLIST = [
 # ===== CONSUMER DISCRETIONARY — AUTOS / LEISURE =====
 "F","GM","RIVN","HOG","POOL",
 "LVS","MGM","WYNN","CZR","PENN","DKNG",
-"DIS","PARA","WBD","CNK","IMAX",
+"DIS","WBD","CNK","IMAX",
 
 # ===== INDUSTRIALS — AEROSPACE / DEFENSE =====
 "LMT","BA","RTX","GD","NOC","HII","TXT","KTOS",
@@ -77,8 +77,8 @@ WATCHLIST = [
 
 # ===== INDUSTRIALS — CONSTRUCTION =====
 "PWR","PRIM","MTZ","STRL",
-"VMC","MLM","EXP","SUM",
-"MAS","TREX","AZEK",
+"VMC","MLM","EXP",
+"MAS","TREX",
 "NVR","PHM","DHI","LEN","TOL","KBH",
 "TMHC","SKY",
 
@@ -89,7 +89,7 @@ WATCHLIST = [
 
 # ===== ENERGY — OIL & GAS =====
 "XOM","CVX","COP","EOG","SLB","PSX","VLO","MPC",
-"OXY","HAL","DVN","FANG","APA","MRO","HES",
+"OXY","HAL","DVN","FANG","APA",
 "KMI","WMB","OKE","EPD","ET","MPLX",
 
 # ===== ENERGY — CLEAN / POWER =====
@@ -106,7 +106,7 @@ WATCHLIST = [
 "LIN","APD","NEM","FCX","ECL","SHW","DD","DOW",
 "PPG","RPM","EMN","CE","OLN",
 "AA","NUE","STLD","CMC","ATI","RS",
-"ALB","MP","AVY","PKG","IP","WRK","AMCR",
+"ALB","MP","AVY","PKG","IP","AMCR",
 
 # ===== REAL ESTATE =====
 "EQIX","DLR","AMT","CCI","SBAC","PLD","PSA",
@@ -131,18 +131,18 @@ SECTOR_ETFS = {
         "NVDA","AVGO","AMD","MU","MRVL","QCOM","TXN","INTC","ADI","AMAT","LRCX","KLAC",
         "SMCI","ANET","ARM","MSFT","AAPL","ORCL","CRM","INTU","ADBE","SNOW","MDB","DDOG",
         "NET","TEAM","ZS","NOW","CRWD","PANW","PLTR","FTNT","VRT","DELL","HPQ","HPE",
-        "PSTG","NTAP","CDW","JNPR","FFIV","MPWR","ON","NXPI","SNPS","CDNS","ANSS",
-        "ZBRA","CGNX","TDY","TRMB","GTLB","BILL","CFLT","S","ESTC","MNDY","TOST","SMAR",
+        "PSTG","NTAP","CDW","FFIV","MPWR","ON","NXPI","SNPS","CDNS",
+        "ZBRA","CGNX","TDY","TRMB","GTLB","BILL","CFLT","S","ESTC","MNDY","TOST",
     ],
     "XLC": [
-        "META","GOOGL","NFLX","T","VZ","TMUS","CMCSA","CHTR","DIS","PARA","WBD",
+        "META","GOOGL","NFLX","T","VZ","TMUS","CMCSA","CHTR","DIS","WBD",
         "SNAP","PINS","RDDT","TTD","IAC","LBRDA",
     ],
     "XLY": [
         "AMZN","TSLA","HD","LOW","NKE","MCD","SBUX","CMG","MAR","BKNG","TJX","ROST",
         "EBAY","ETSY","ULTA","SHOP","TGT","BBY","F","GM","RIVN","LVS","MGM","WYNN",
         "CZR","PENN","DKNG","ABNB","DASH","UBER","ANF","URBN","WSM","RH","POOL",
-        "HOG","BOOT","DIS","PARA","WBD","CNK","IMAX",
+        "HOG","BOOT","DIS","WBD","CNK","IMAX",
     ],
     "XLP": [
         "PG","KO","PEP","COST","WMT","PM","MO","CL","KMB","GIS","HSY","EL",
@@ -151,7 +151,7 @@ SECTOR_ETFS = {
     "XLF": [
         "JPM","BAC","C","GS","MS","BLK","SCHW","AXP","SPGI","ICE","CME","AIG","CB",
         "PGR","TRV","USB","PNC","TFC","COF","BK","MTB","CFG","HBAN","RF","KEY","FITB",
-        "ZION","CMA","WAL","V","MA","PYPL","SQ","AFRM","UPST","SOFI","NU","ALLY",
+        "ZION","CMA","WAL","V","MA","PYPL","AFRM","UPST","SOFI","NU","ALLY",
         "HOOD","COIN","MET","PRU","AFL","ALL","HIG","LNC","AON","MMC","AJG","BRO",
         "ERIE","RJF","LPLA","WTW","BX","KKR","APO","CG","ARES",
     ],
@@ -169,7 +169,7 @@ SECTOR_ETFS = {
     ],
     "XLE": [
         "XOM","CVX","COP","EOG","SLB","PSX","VLO","MPC","OXY","HAL","DVN","FANG",
-        "APA","MRO","HES","KMI","WMB","OKE","EPD","ET","MPLX",
+        "APA","KMI","WMB","OKE","EPD","ET","MPLX",
         "NEE","VST","CEG","NRG","AES","CWEN","ENPH","SEDG","FSLR","ARRY","BE","PLUG",
     ],
     "XLU": [
@@ -178,7 +178,7 @@ SECTOR_ETFS = {
     ],
     "XLB": [
         "LIN","APD","NEM","FCX","ECL","SHW","DD","DOW","PPG","RPM","EMN","CE","OLN",
-        "AA","NUE","STLD","CMC","ATI","RS","ALB","MP","AVY","PKG","IP","WRK","AMCR",
+        "AA","NUE","STLD","CMC","ATI","RS","ALB","MP","AVY","PKG","IP","AMCR",
     ],
     "XLRE": [
         "EQIX","DLR","AMT","CCI","SBAC","PLD","PSA","SPG","O","VICI","WELL","VTR",
