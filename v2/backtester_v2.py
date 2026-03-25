@@ -246,6 +246,22 @@ def run_backtest_v2(
             leadership_threshold=getattr(config, "LEADERSHIP_THRESHOLD", 0.62),
             top_n_leaders=getattr(config, "LEADERSHIP_TOP_N", 4),
         )
+    # Precompute earnings dates for all symbols once before main loop
+    print("[prep] loading earnings calendars...", flush=True)
+    earnings_dates: Dict[str, List[pd.Timestamp]] = {}
+    try:
+        import yfinance as _yf
+        for _sym in symbols:
+            try:
+                _cal = _yf.Ticker(_sym).get_earnings_dates(limit=20)
+                if _cal is not None and len(_cal) > 0:
+                    earnings_dates[_sym] = list(pd.to_datetime(_cal.index).tz_localize(None))
+            except Exception:
+                pass
+        print(f"[ok]   earnings calendars loaded ({len(earnings_dates)} symbols)", flush=True)
+    except Exception:
+        print("[warn] earnings calendar load failed — skipping filter", flush=True)
+
     print("[ok]   ready\n", flush=True)
 
     # ── 9. Main loop ──────────────────────────────────────────────────────
@@ -498,6 +514,11 @@ def run_backtest_v2(
                 # Long stop cooldown
                 last_stop = long_stop_dates.get(s)
                 if last_stop and (date - last_stop).days < 15:
+                    continue
+
+                # Earnings calendar filter — avoid entries within 5 days of earnings
+                _earn = earnings_dates.get(s, [])
+                if _earn and min(abs((date - d).days) for d in _earn) <= 5:
                     continue
 
                 # Regime-conditional entry filter
