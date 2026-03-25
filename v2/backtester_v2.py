@@ -721,6 +721,7 @@ def _print_results(stats, trades, regime_counts):
 
     if trades:
         trade_df = pd.DataFrame([t.__dict__ for t in trades])
+        trade_df.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "trades_v2.csv"), index=False)
         pnl = trade_df["pnl"]
         print(f"\n  Avg Trade PnL: ${pnl.mean():.0f}")
 
