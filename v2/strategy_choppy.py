@@ -113,7 +113,14 @@ def score_candidates(
     for sym, snap in snapshots.items():
         if snap.ml_rank_pct < params.ml_rank_min:
             continue
-        if snap.combined_score < params.combined_score_min:
+        # Factor rotation: in CHOPPY regime, boost quality+low-vol stocks
+        # Research: quality factor performs best during economic uncertainty
+        # Low-vol stocks capture 80% of upside with 60% of downside in choppy markets
+        quality = float(snap.__dict__.get("quality_composite", 0.5)) if hasattr(snap, "__dict__") else 0.5
+        vol_score = 1.0 - min(float(getattr(snap, "realized_vol_20", 0.25)), 0.5) / 0.5
+        choppy_boost = 0.8 + 0.2 * (0.5 * quality + 0.5 * vol_score)
+        snap = snap  # snap is immutable — boost applied via combined_score below
+        if snap.combined_score * choppy_boost < params.combined_score_min:
             continue
 
         df = prices.get(sym)

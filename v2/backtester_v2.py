@@ -511,6 +511,19 @@ def run_backtest_v2(
                     prev_ml_ranks[s] = snap.ml_rank_pct
                     continue
 
+                # Quality gate — don't buy high-momentum low-quality stocks
+                # Research: momentum+quality combo reduces drawdowns 30-40% vs momentum alone
+                # (Fama-French 5-factor, SGH 2024, abrdn 2024)
+                q_feat = feature_store.get(s)
+                if q_feat is not None and date in q_feat.index:
+                    q_row = q_feat.loc[date]
+                    quality = float(q_row.get("quality_composite", 0.5))
+                    # In TRENDING_BULL: require quality > 0.2 (weak filter, don't miss rallies)
+                    # In CHOPPY: require quality > 0.35 (tighter — only resilient stocks)
+                    q_min = 0.35 if _current_regime == "CHOPPY" else 0.20
+                    if quality < q_min:
+                        continue
+
                 # SPY 5-day momentum filter — don't buy into weakness
                 # Even in TRENDING_BULL, short-term dips cause clustered stops
                 if _spy_5d_returns.get(date, 0.0) < -0.015:
