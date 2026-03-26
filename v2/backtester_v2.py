@@ -288,6 +288,7 @@ def run_backtest_v2(
     long_stop_dates:  Dict[str, pd.Timestamp] = {}
     short_stop_dates: Dict[str, pd.Timestamp] = {}
     prev_ml_ranks:    Dict[str, float]         = {}  # Fix 1: entry confirmation
+    recent_stop_dates: List[pd.Timestamp]      = []  # cascade sensor
 
     last_regime_exit_date: Optional[pd.Timestamp] = None
     _regime_candidate:     Optional[str]           = None
@@ -402,8 +403,23 @@ def run_backtest_v2(
                 exit_reason = "stop"
                 exit_ref    = stop_px
             elif close >= pos.entry_price * (1 + getattr(params, 'take_profit_pct', getattr(params, 'take_profit_long', 0.40))):
-                exit_reason = "take_profit"
-                exit_ref    = close
+                # Fundamental-conditional suppression — if ML + streak + revision all
+                # still strong, this is a secular theme. Let it ride with trailing stop.
+                # APP 2024 exited at +53%, stock went to +300%. Same for NVDA, PLTR, VRT.
+                _ml_at_exit = ml_scores.get(s, 0.0)
+                _feat_at_exit = feature_store.get(s)
+                _streak_at_exit = 0.0
+                _revision_at_exit = 0.0
+                if _feat_at_exit is not None and date in _feat_at_exit.index:
+                    _row_exit = _feat_at_exit.loc[date]
+                    _streak_at_exit = float(_row_exit.get("earnings_beat_streak", 0.0))
+                    _revision_at_exit = float(_row_exit.get("analyst_revision_momentum", 0.0))
+                _secular = (_ml_at_exit > 0.90 and _streak_at_exit >= 0.85 and _revision_at_exit >= 0.65)
+                if _secular:
+                    pass  # suppress take_profit — trailing ATR stop will exit
+                else:
+                    exit_reason = "take_profit"
+                    exit_ref    = close
             elif hold_d >= getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12)):
                 # Profit-based hold extension: let winners run.
                 # If position is up >8% AND ML score is top-decile, extend by 50%.
@@ -436,6 +452,8 @@ def run_backtest_v2(
                 ))
                 if exit_reason == "stop" or (exit_reason == "max_hold" and pnl < 0):
                     long_stop_dates[s] = date
+                if exit_reason == "stop":
+                    recent_stop_dates.append(date)
                 # Large losing max_hold: extend cooldown to 90 days
                 # FTNT pattern: -$2,234 Aug 4, re-entered Oct 28 (-$3,269)
                 # 85-day gap defeats 15-day cooldown — need size-aware block
@@ -529,7 +547,12 @@ def run_backtest_v2(
             (date - last_regime_exit_date).days >= getattr(config, "REGIME_EXIT_COOLDOWN_DAYS", 10)
         )
 
-        if len(long_positions) < max_longs and cooldown_ok:
+        # Stop cascade sensor — if ≥2 stops fired in last 5 trading days,
+        # freeze new entries. Macro shocks cluster stops before regime flips.
+        recent_stop_dates[:] = [d for d in recent_stop_dates if (date - d).days <= 5]
+        cascade_freeze = len(recent_stop_dates) >= 2
+
+        if len(long_positions) < max_longs and cooldown_ok and not cascade_freeze:
             # Get ML threshold for current regime
             ml_min = getattr(params, 'ml_rank_min', getattr(params, 'ml_rank_min_long', 0.80))
 
@@ -549,10 +572,18 @@ def run_backtest_v2(
                 if len(long_positions) >= max_longs:
                     break
 
-                # Long stop cooldown
+                # Vol-proportional cooldown — high-vol stocks need longer cooling.
+                # APP vol=0.94: 180 days. NVDA vol=0.34: 30 days. Flat 15d let APP enter 4x in 2025.
                 last_stop = long_stop_dates.get(s)
-                if last_stop and (date - last_stop).days < 15:
-                    continue
+                if last_stop:
+                    _df_cool = hist.get(s)
+                    if _df_cool is not None and len(_df_cool) >= 20:
+                        _cool_vol = float(_df_cool.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5))
+                        _cool_days = 180 if _cool_vol > 0.70 else 90 if _cool_vol > 0.50 else 45 if _cool_vol > 0.30 else 15
+                    else:
+                        _cool_days = 15
+                    if (date - last_stop).days < _cool_days:
+                        continue
 
                 # Earnings calendar filter — avoid entries within 5 days of earnings
                 _earn = earnings_dates.get(s, [])
@@ -589,6 +620,20 @@ def run_backtest_v2(
                     continue
 
 
+
+                # Biotech gate — XLV high-vol names with binary event risk.
+                # ALNY stopped twice same month different years. Same mechanism.
+                # LLY/ABBV/MRK pass (consistent streaks). ALNY/RARE/IONS fail.
+                if sector_map.get(s) == "XLV":
+                    _bio_df = hist.get(s)
+                    if _bio_df is not None and len(_bio_df) >= 20:
+                        _bio_vol = float(_bio_df.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5))
+                        if _bio_vol > 0.35:
+                            q_feat2 = feature_store.get(s)
+                            if q_feat2 is not None and date in q_feat2.index:
+                                _streak = float(q_feat2.loc[date].get("earnings_beat_streak", 0.0))
+                                if _streak < 0.60:  # requires ≥2 consecutive beats
+                                    continue
 
                 # Bear strategy: defensive sectors only
                 if _current_regime == BEAR:
