@@ -460,9 +460,40 @@ def run_backtest_v2(
                     long_stop_dates[s] = date
                 if exit_reason == "stop":
                     recent_stop_dates.append(date)
-                # Cooldown set by vol-proportional logic at entry — no extra fitted extension
                 if exit_reason == "regime_exit":
                     last_regime_exit_date = date
+
+                # ── Settle conviction call if active ──────────────────────
+                # Sell at bid: mid price minus 50bps options slippage
+                OPTIONS_SLIP_EXIT = 0.005
+                if meta.get("call_contracts", 0) > 0:
+                    try:
+                        from conviction_calls import bs_call as _bs_call
+                        _K2          = float(meta["call_strike"])
+                        _sigma2      = float(meta["call_sigma"])
+                        _n2          = int(meta["call_contracts"])
+                        _cost2       = float(meta["call_cost"])
+                        _entry_dt2   = pd.Timestamp(meta["call_entry_date"])
+                        _days_held2  = (date - _entry_dt2).days
+                        _DTE2        = 21
+
+                        if _days_held2 >= _DTE2:
+                            _df_call = prices_by_symbol.get(s, pd.DataFrame())
+                            _future  = _df_call.loc[_df_call.index > _entry_dt2]["close"]
+                            _dte_px2 = float(_future.iloc[_DTE2-1]) if len(_future) >= _DTE2 else fill
+                            _payoff_mid = max(_dte_px2 - _K2, 0)
+                        else:
+                            _T_rem2     = max((_DTE2 - _days_held2) / 365.0, 0.01)
+                            _payoff_mid = _bs_call(fill, _K2, _T_rem2, 0.05, _sigma2)
+
+                        _payoff_bid  = _payoff_mid * (1 - OPTIONS_SLIP_EXIT)
+                        _call_payoff = _n2 * _payoff_bid * 100
+                        _call_pnl    = _call_payoff - _cost2
+                        cash        += _call_payoff
+                        pnl         += _call_pnl
+                    except Exception:
+                        pass
+
                 del long_positions[s]
                 entry_meta.pop(s, None)
 
@@ -732,13 +763,85 @@ def run_backtest_v2(
                 )
                 _df_vol_entry = prices_by_symbol.get(s)
                 _ann_vol_entry = float(_df_vol_entry.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5)) if _df_vol_entry is not None and len(_df_vol_entry) >= 20 else 0.35
-                entry_meta[s] = {
+
+                # ── Conviction calls overlay ──────────────────────────────
+                # Fires at entry time — no future knowledge.
+                # Options slippage: 50bps per leg (5x wider than stock 10bps)
+                # Reflects real bid-ask spreads on equity options.
+                OPTIONS_SLIPPAGE = 0.005  # 50bps — realistic for liquid single-stock options
+                _conv_meta = {
                     "ml_rank_pct":    snap.ml_rank_pct,
                     "rule_score":     snap.rule_score,
                     "combined_score": snap.combined_score,
                     "regime":         _current_regime,
                     "ann_vol":        _ann_vol_entry,
                 }
+                try:
+                    from conviction_calls import conviction_score, options_allocation_fraction, bs_call
+                    import json as _json
+
+                    # Get PEAD + streak at entry from earnings cache
+                    _pead_s   = 0.0
+                    _streak_s = 0.0
+                    _earn_path = os.path.join(
+                        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                        'cache_earnings_streak', f'{s}.json'
+                    )
+                    if os.path.exists(_earn_path):
+                        with open(_earn_path) as _ef:
+                            _recs = _json.load(_ef)
+                        _prior = [r for r in _recs if pd.Timestamp(r['date']) < next_date]
+                        if _prior:
+                            _pead_s = float(_prior[-1].get('surp', 0))
+                            _beats  = [r['beat'] for r in _prior[-4:]]
+                            _streak_s = float(sum(_beats) / len(_beats)) if _beats else 0.0
+
+                    _rev_s = float(np.clip((snap.ml_rank_pct - 0.85) / 0.15, 0, 1))
+                    _conv  = conviction_score(snap.ml_rank_pct, _pead_s, _rev_s, _streak_s)
+
+                    if _conv >= 0.3:
+                        _stock_frac, _call_frac = options_allocation_fraction(_conv)
+
+                        # Reduce stock position — reallocate call_frac to options
+                        _new_qty = max(1, int(qty * _stock_frac))
+                        _refund  = (qty - _new_qty) * fill
+                        cash    += _refund
+                        long_positions[s] = Position(
+                            symbol=s, qty=_new_qty, entry_price=fill,
+                            entry_time=str(next_date.date()),
+                            stop_pct=stop_pct,
+                            initial_stop=fill * (1 - stop_pct),
+                            highest_price=fill, add_count=0,
+                        )
+
+                        # Price the call with slippage — buy at ask (mid + 50bps)
+                        _K        = fill * 1.05   # 5% OTM
+                        _T        = 21 / 365.0
+                        _sigma_c  = float(np.clip(_ann_vol_entry, 0.15, 1.5))
+                        _call_mid = bs_call(fill, _K, _T, 0.05, _sigma_c)
+                        _call_ask = _call_mid * (1 + OPTIONS_SLIPPAGE)  # pay the ask
+
+                        if _call_ask > 0.01:
+                            _call_budget  = fill * qty * _call_frac
+                            _n_contracts  = max(1, int(_call_budget / (_call_ask * 100)))
+                            _call_cost    = _n_contracts * _call_ask * 100
+
+                            if _call_cost <= cash:
+                                cash -= _call_cost
+                                _conv_meta.update({
+                                    "conv_score":     _conv,
+                                    "call_strike":    _K,
+                                    "call_sigma":     _sigma_c,
+                                    "call_contracts": _n_contracts,
+                                    "call_cost":      _call_cost,
+                                    "call_ask":       _call_ask,
+                                    "call_entry_date": str(next_date.date()),
+                                })
+
+                except Exception:
+                    pass  # fall through to stock-only
+
+                entry_meta[s] = _conv_meta
 
         # ── Short entries (bear regime only) ──────────────────────────────
         if _current_regime == BEAR and len(short_positions) < max_shorts:
