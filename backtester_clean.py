@@ -53,7 +53,9 @@ class Trade:
     ml_rank_pct:    float
     rule_score:     float
     combined_score: float
-    side:           str = "long"   # "long" or "short"
+    side:           str   = "long"   # "long" or "short"
+    regime:         str   = ""       # regime at entry — for Kelly sizing
+    ann_vol:        float = 0.35     # annualized vol at entry — for Kelly bucketing
 
 
 # ─────────────────────────────────────────────────────────────────────────────

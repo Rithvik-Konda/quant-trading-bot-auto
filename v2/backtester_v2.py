@@ -453,6 +453,8 @@ def run_backtest_v2(
                     rule_score=float(meta.get("rule_score", 0)),
                     combined_score=float(meta.get("combined_score", 0)),
                     side="long",
+                    regime=meta.get("regime", _current_regime),
+                    ann_vol=float(meta.get("ann_vol", 0.35)),
                 ))
                 if exit_reason == "stop" or (exit_reason == "max_hold" and pnl < 0):
                     long_stop_dates[s] = date
@@ -669,7 +671,26 @@ def run_backtest_v2(
                 if vol_scalar == 0.0:
                     continue           # skip this entry entirely
                 conviction = conviction * vol_scalar
-                risk_pt    = getattr(params, 'risk_per_trade', 0.035)
+                # Kelly position sizing — replaces hardcoded 3.5% risk/trade
+                # Computed from last 100 similar trades (regime + ML bucket + vol bucket)
+                # Falls back to 3.5% if <15 similar trades in history
+                try:
+                    import sys as _sys2
+                    _sys2.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+                    from kelly_sizer import compute_kelly
+                    _df_vol = prices_by_symbol.get(s)
+                    _ann_vol = float(_df_vol.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5)) if _df_vol is not None and len(_df_vol) >= 20 else 0.35
+                    _trade_dicts = [t.__dict__ for t in trades]
+                    risk_pt = compute_kelly(
+                        trades=_trade_dicts,
+                        regime=_current_regime,
+                        ml_score=snap.ml_rank_pct,
+                        ann_vol=_ann_vol,
+                        min_trades=15,
+                        fallback=getattr(params, 'risk_per_trade', 0.035),
+                    )
+                except Exception:
+                    risk_pt = getattr(params, 'risk_per_trade', 0.035)
                 scalar     = getattr(params, 'position_scalar', getattr(params, 'position_scalar_long', 1.0))
 
                 gross_exp  = sum(close_prices.get(sym, p.entry_price) * p.qty for sym, p in long_positions.items())
@@ -709,11 +730,14 @@ def run_backtest_v2(
                     initial_stop=fill * (1 - stop_pct),
                     highest_price=fill, add_count=0,
                 )
+                _df_vol_entry = prices_by_symbol.get(s)
+                _ann_vol_entry = float(_df_vol_entry.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5)) if _df_vol_entry is not None and len(_df_vol_entry) >= 20 else 0.35
                 entry_meta[s] = {
                     "ml_rank_pct":    snap.ml_rank_pct,
                     "rule_score":     snap.rule_score,
                     "combined_score": snap.combined_score,
                     "regime":         _current_regime,
+                    "ann_vol":        _ann_vol_entry,
                 }
 
         # ── Short entries (bear regime only) ──────────────────────────────
