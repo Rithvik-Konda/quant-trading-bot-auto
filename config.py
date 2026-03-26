@@ -395,3 +395,7 @@ MIDCAP_WATCHLIST = [
     # Materials
     "AMR","ARCH","CEIX","METC",
 ]
+
+
+# Merge mid-cap expansion into main watchlist
+WATCHLIST = list(dict.fromkeys(WATCHLIST + MIDCAP_WATCHLIST))

@@ -648,7 +648,7 @@ def run_backtest_v2(
                     _ann_vol = float(_df_s.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5))
                     if _ann_vol > 0.50:
                         qty = max(1, int(qty * 0.50))
-                    elif _ann_vol > 0.35:
+                    elif _ann_vol > 0.30:
                         qty = max(1, int(qty * 0.75))
                 if qty <= 0:
                     continue

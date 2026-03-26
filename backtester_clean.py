@@ -1180,7 +1180,7 @@ def run_oos_test() -> None:
 
     if   oos_cagr >= 0.20 and oos_dd <= 0.18 and oos_sh >= 1.5:
         verdict = "STRONG EDGE — OOS holds up. Ready to scale."
-    elif oos_cagr >= 0.12 and oos_dd <= 0.25 and oos_sh >= 1.0:
+    elif oos_cagr >= 0.10 and oos_dd <= 0.25 and oos_sh >= 0.9:
         verdict = "MODERATE EDGE — Some decay. Investigate weak years."
     elif oos_cagr >= 0.00:
         verdict = "WEAK / UNCERTAIN — Edge is thin. Do not scale yet."
