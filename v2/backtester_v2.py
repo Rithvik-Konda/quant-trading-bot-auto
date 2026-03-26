@@ -642,11 +642,15 @@ def run_backtest_v2(
                     cash, remaining,
                 )
                 qty = min(qty_risk, int(max_dollars / px) if px > 0 else 0)
-                # Vol-adjusted size cap — NVDA alone: 9 stops = -$17,908
+                # Vol-adjusted size cap + hard exclusion for extreme vol
+                # APP 4 stops 2025 = -$6,851. VRT 3 stops = -$4,385. MP 2 stops = -$5,181.
+                # Even at 50% size, 0.94 vol stocks destroy the account on stops.
                 _df_s = hist.get(s)
                 if _df_s is not None and len(_df_s) >= 20:
                     _ann_vol = float(_df_s.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5))
-                    if _ann_vol > 0.50:
+                    if _ann_vol > 0.70:        # hard exclude — too volatile for momentum stops
+                        qty = 0
+                    elif _ann_vol > 0.50:
                         qty = max(1, int(qty * 0.50))
                     elif _ann_vol > 0.30:
                         qty = max(1, int(qty * 0.75))
