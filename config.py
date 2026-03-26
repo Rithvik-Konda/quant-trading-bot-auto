@@ -347,7 +347,7 @@ CORRELATION_BUCKETS = {
 ROTATION_SCORE_GAP = 0.08
 
 # ─── Execution costs ─────────────────────────────────────────────────────────
-SLIPPAGE_BPS           = 5
+SLIPPAGE_BPS           = 10
 COMMISSION_PER_SHARE   = 0.005
 COMMISSION_MAX_PCT     = 0.005
 
