@@ -649,14 +649,7 @@ def run_backtest_v2(
                 if _df_s is not None and len(_df_s) >= 20:
                     _ann_vol = float(_df_s.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5))
                     if _ann_vol > 0.50:
-                        # High vol stock — require strong trend confirmation
-                        # VRT/APP: profitable 2023/2024 in uptrend, -$8k in 2025 when trend broke
-                        _px = float(close_prices.get(s, px))
-                        _ma50 = float(_df_s.loc[:date]["close"].tail(50).mean())
-                        if _px < _ma50:        # below 50MA = trend broken, skip
-                            qty = 0
-                        else:
-                            qty = max(1, int(qty * 0.50))
+                        qty = max(1, int(qty * 0.50))
                     elif _ann_vol > 0.30:
                         qty = max(1, int(qty * 0.75))
                 if qty <= 0:
