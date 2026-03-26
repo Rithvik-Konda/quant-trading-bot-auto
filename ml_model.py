@@ -573,6 +573,51 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
     else:
         d["analyst_revision_momentum"] = pd.Series(0.0, index=df.index)
 
+    # 26b. Real PEAD signal — actual earnings surprise with time decay
+    # IC=0.043 on mid-caps vs 0.002 on large-caps (our backtest tonight)
+    # Bernard & Thomas (1989), 90-day drift window
+    if symbol is not None:
+        try:
+            from pead_signal import pead_score as _pead_score, build_pead_store as _build_pead
+            import os as _os
+            _pead_cache = os.path.join("cache_earnings_streak", f"{symbol}.json")
+            if _os.path.exists(_pead_cache):
+                import json as _json
+                with open(_pead_cache) as _f:
+                    _recs = _json.load(_f)
+                if _recs:
+                    _pdf = pd.DataFrame(_recs)
+                    _pdf["date"] = pd.to_datetime(_pdf["date"])
+                    _pead_scores = [_pead_score(symbol, pd.Timestamp(_dt), {symbol: _pdf}) for _dt in df.index]
+                    d["pead_real"] = pd.Series(_pead_scores, index=df.index)
+                else:
+                    d["pead_real"] = pd.Series(0.0, index=df.index)
+            else:
+                d["pead_real"] = pd.Series(0.0, index=df.index)
+        except Exception:
+            d["pead_real"] = pd.Series(0.0, index=df.index)
+    else:
+        d["pead_real"] = pd.Series(0.0, index=df.index)
+
+    # 26. Sector earnings beat cluster — novel signal
+    # 3+ peers in same sector beating same quarter = fundamental sector momentum
+    if symbol is not None:
+        try:
+            import sys as _sys2
+            _sys2.path.insert(0, '/Users/rick/ai_trading_bot_v2')
+            from sector_earnings_cluster import sector_beat_cluster_score as _sbcs
+            import config as _cfg
+            _smap = {}
+            for _etf, _syms in _cfg.SECTOR_ETFS.items():
+                for _s in _syms:
+                    _smap[_s] = _etf
+            _cluster_scores = [_sbcs(symbol, pd.Timestamp(_dt), _smap, list(_cfg.WATCHLIST)) for _dt in df.index]
+            d["sector_earnings_cluster"] = pd.Series(_cluster_scores, index=df.index)
+        except Exception:
+            d["sector_earnings_cluster"] = pd.Series(0.0, index=df.index)
+    else:
+        d["sector_earnings_cluster"] = pd.Series(0.0, index=df.index)
+
     feat = pd.DataFrame(d, index=df.index)
     return feat.replace([np.inf, -np.inf], np.nan)
 
