@@ -196,7 +196,8 @@ INITIAL_CAPITAL  = 100_000
 MAX_POSITIONS        = 6
 MAX_TOTAL_EXPOSURE   = 1.60   # gross long exposure cap (× capital)
 MAX_POSITION_WEIGHT  = 0.35
-MAX_POSITION_DOLLARS = 40_000
+MAX_POSITION_DOLLARS = 40_000  # hard cap — scales with AUM in live trading
+MAX_POSITION_PCT_AUM = 0.15   # never more than 15% of total AUM in one position
 RISK_PER_TRADE       = 0.035
 
 # ─── Exit parameters ──────────────────────────────────────────────────────────
@@ -377,3 +378,20 @@ MACRO_DXY_SYMBOL   = "UUP"   # dollar ETF — rising = risk-off for equities
 REGIME_WEIGHT_TLT        = 0.08  # treasury trend
 REGIME_WEIGHT_HYG        = 0.08  # credit trend
 REGIME_WEIGHT_DXY        = 0.06  # dollar (inverted)
+
+# ===== MIDCAP EXPANSION — Russell Midcap additions =====
+MIDCAP_WATCHLIST = [
+    # High-growth tech
+    "APP","DUOL","AXON","CELH","ALTR","ASAN","BRZE","PCTY","PAYC","SMAR",
+    # Healthcare mid-cap
+    "ACAD","RARE","IONS","HALO","ITCI","PRGO","PCRX","OMCL","GDRX",
+    "PRVA","IRTC","INSP","TNDM",
+    # Consumer mid-cap
+    "WING","TXRH","SHAK","CAVA","DECK","SKX","CROX","WRBY","PTON","PLNT",
+    # Industrial / defense mid-cap
+    "MOOG","HEICO","TDG","WWD","LDOS","SAIC","BAH","AVAV","HEI",
+    # Energy transition
+    "SHLS","STEM","NOVA","RUN",
+    # Materials
+    "AMR","ARCH","CEIX","METC",
+]

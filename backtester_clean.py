@@ -431,12 +431,15 @@ def build_fast_snapshots(
             atr_pct  = compute_atr_pct(df, config.ATR_PERIOD)
             stop_pct = stop_pct_for_symbol(df)
 
-            # Blended score: PEAD boosts conviction when earnings catalyst present
-            # When PEAD=0 (no recent beat), falls back to pure momentum scoring
+            # combined_score = ml rank percentile across full universe (0-1)
+            # rule_score provides a small tiebreaker but ml_rank_pct is the signal
+            # Previous blended formula saturated at 1.0 for 64% of trades — useless
+            # Now: use raw rank percentile so combined_score has real dispersion
+            rule_norm = (rule + 1) / 2  # normalize rule_score from [-1,1] to [0,1]
             if pead > 0:
-                combined = 0.65 * ml + 0.25 * pead + 0.10 * (rule + 1) / 2
+                combined = 0.70 * ml + 0.20 * pead + 0.10 * rule_norm
             else:
-                combined = 0.90 * ml + 0.10 * (rule + 1) / 2
+                combined = 0.85 * ml + 0.15 * rule_norm
 
             snapshots[symbol] = SignalSnapshot(
                 symbol=symbol,

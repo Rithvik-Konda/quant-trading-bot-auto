@@ -29,7 +29,7 @@ from regime_classifier import TRENDING_BULL
 
 # ── Strategy parameters ───────────────────────────────────────────────────────
 MAX_POSITIONS        = 8       # more positions in bull — diversify the winners
-ML_RANK_MIN          = 0.80    # top 20% of ML signals
+ML_RANK_MIN          = 0.85    # top 15% of ML signals
 COMBINED_SCORE_MIN   = 0.18    # minimum combined score
 MAX_HOLD_DAYS        = 26      # Fix B: extended further — 80% WR at exit means winners still running
 TAKE_PROFIT_PCT      = 0.40    # 40% take profit

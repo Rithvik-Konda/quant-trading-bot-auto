@@ -642,6 +642,14 @@ def run_backtest_v2(
                     cash, remaining,
                 )
                 qty = min(qty_risk, int(max_dollars / px) if px > 0 else 0)
+                # Vol-adjusted size cap — NVDA alone: 9 stops = -$17,908
+                _df_s = hist.get(s)
+                if _df_s is not None and len(_df_s) >= 20:
+                    _ann_vol = float(_df_s["close"].pct_change().dropna().tail(60).std() * (252**0.5))
+                    if _ann_vol > 0.50:
+                        qty = max(1, int(qty * 0.50))
+                    elif _ann_vol > 0.35:
+                        qty = max(1, int(qty * 0.75))
                 if qty <= 0:
                     continue
 
