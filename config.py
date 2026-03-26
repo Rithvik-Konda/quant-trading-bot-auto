@@ -133,6 +133,7 @@ SECTOR_ETFS = {
         "NET","TEAM","ZS","NOW","CRWD","PANW","PLTR","FTNT","VRT","DELL","HPQ","HPE",
         "PSTG","NTAP","CDW","FFIV","MPWR","ON","NXPI","SNPS","CDNS",
         "ZBRA","CGNX","TDY","TRMB","GTLB","BILL","CFLT","S","ESTC","MNDY","TOST",
+        "APP","DUOL","AXON","BRZE","ASAN","PCTY","PAYC",
     ],
     "XLC": [
         "META","GOOGL","NFLX","T","VZ","TMUS","CMCSA","CHTR","DIS","WBD",
@@ -143,6 +144,7 @@ SECTOR_ETFS = {
         "EBAY","ETSY","ULTA","SHOP","TGT","BBY","F","GM","RIVN","LVS","MGM","WYNN",
         "CZR","PENN","DKNG","ABNB","DASH","UBER","ANF","URBN","WSM","RH","POOL",
         "HOG","BOOT","DIS","WBD","CNK","IMAX",
+        "WING","CAVA","TXRH","SHAK","DECK","CROX","WRBY","PTON","PLNT","DRVN",
     ],
     "XLP": [
         "PG","KO","PEP","COST","WMT","PM","MO","CL","KMB","GIS","HSY","EL",
@@ -160,6 +162,7 @@ SECTOR_ETFS = {
         "GILD","VRTX","REGN","ZTS","SYK","BSX","MDT","CI","CVS","HUM","CNC","MRNA",
         "BNTX","BIIB","ALNY","INCY","NBIX","JAZZ","EW","HOLX","DXCM","PODD","ALGN",
         "HCA","THC","UHS","LH","DGX","EXAS","NTRA","VEEV","DOCS",
+        "ACAD","RARE","IONS","HALO","PRGO","PCRX","OMCL","GDRX","PRVA","IRTC","INSP","TNDM",
     ],
     "XLI": [
         "CAT","DE","HON","LMT","BA","RTX","UPS","FDX","WM","GE","PH","ETN","ITW",
