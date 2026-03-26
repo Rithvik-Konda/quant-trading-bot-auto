@@ -54,7 +54,7 @@ from regime_classifier import BEAR
 MAX_POSITIONS_LONG   = 2       # minimal longs
 MAX_POSITIONS_SHORT  = 6       # active short book
 ML_RANK_MIN_LONG     = 0.95    # only top 5% for longs
-ML_RANK_MAX_SHORT    = 0.15    # bottom 15% for shorts
+ML_RANK_MAX_SHORT    = 0.08    # bottom 8% — only strongest short signals
 MAX_HOLD_DAYS_LONG   = 8       # short hold for longs
 MAX_HOLD_DAYS_SHORT  = 20      # longer hold for shorts (primary exit mechanism)
 TAKE_PROFIT_LONG     = 0.15    # quick take profit on longs

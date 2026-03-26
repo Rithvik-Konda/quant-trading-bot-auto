@@ -32,7 +32,7 @@ from regime_classifier import CHOPPY
 MAX_POSITIONS        = 2       # very defensive in choppy — only best 2 ideas
 ML_RANK_MIN          = 0.93    # top 7% — very selective
 COMBINED_SCORE_MIN   = 0.25    # higher bar in choppy markets
-MAX_HOLD_DAYS        = 12      # shorter holds — don't overstay
+MAX_HOLD_DAYS        = 22      # data: 11-15d exits avg -$86, 21-30d avg +$420
 TAKE_PROFIT_PCT      = 0.25    # lower take profit — lock in gains faster
 STOP_MIN_PCT         = 0.15   # tighter stops in choppy
 STOP_MAX_PCT         = 0.25    # lower max stop

@@ -382,18 +382,18 @@ REGIME_WEIGHT_DXY        = 0.06  # dollar (inverted)
 # ===== MIDCAP EXPANSION — Russell Midcap additions =====
 MIDCAP_WATCHLIST = [
     # High-growth tech
-    "APP","DUOL","AXON","CELH","ALTR","ASAN","BRZE","PCTY","PAYC","SMAR",
+    "APP","DUOL","AXON","CELH","ASAN","BRZE","PCTY","PAYC",
     # Healthcare mid-cap
-    "ACAD","RARE","IONS","HALO","ITCI","PRGO","PCRX","OMCL","GDRX",
+    "ACAD","RARE","IONS","HALO","PRGO","PCRX","OMCL","GDRX",
     "PRVA","IRTC","INSP","TNDM",
     # Consumer mid-cap
-    "WING","TXRH","SHAK","CAVA","DECK","SKX","CROX","WRBY","PTON","PLNT",
+    "WING","TXRH","SHAK","CAVA","DECK","CROX","WRBY","PTON","PLNT",
     # Industrial / defense mid-cap
-    "MOOG","HEICO","TDG","WWD","LDOS","SAIC","BAH","AVAV","HEI",
+    "TDG","WWD","LDOS","SAIC","BAH","AVAV","HEI",
     # Energy transition
-    "SHLS","STEM","NOVA","RUN",
+    "SHLS","STEM","RUN",
     # Materials
-    "AMR","ARCH","CEIX","METC",
+    "AMR","METC",
 ]
 
 
