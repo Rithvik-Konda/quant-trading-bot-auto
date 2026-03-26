@@ -83,8 +83,7 @@ def _load_etf(ticker: str) -> Optional[pd.DataFrame]:
         _etf_cache[ticker] = df
         return df
     except Exception as e:
-        log(f"WARN | ETF {ticker}: {e}")
-        return None
+        return None  # suppress ETF load warnings — expected for missing data
 
 
 def fetch_data(symbol: str, days: int = 3650, refresh: bool = False) -> Optional[pd.DataFrame]:
@@ -136,9 +135,12 @@ def _get_fundamentals(symbol: str) -> dict:
 def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: Optional[pd.DataFrame] = None, streak_store: Optional[dict] = None, insider_store: Optional[dict] = None, revision_store: Optional[dict] = None) -> pd.DataFrame:
     high, low, close, open_, volume = df["high"], df["low"], df["close"], df["open"], df["volume"]
     if vix_macro is None:
-        # Try loading from cache if not passed
+        # Load from pre-cached VIX data — ^VIX is the correct yfinance ticker
         try:
-            vix_macro = _load_etf("VIX") or pd.DataFrame()
+            import warnings as _w
+            with _w.catch_warnings():
+                _w.simplefilter("ignore")
+                vix_macro = _load_etf("^VIX") or pd.DataFrame()
         except Exception:
             vix_macro = pd.DataFrame()
     d: dict = {}

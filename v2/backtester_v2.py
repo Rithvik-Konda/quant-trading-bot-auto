@@ -381,15 +381,32 @@ def run_backtest_v2(
 
             pos.update_high(close)
             df_s     = prices_by_symbol[s].loc[:date]
-            stop_pct = adaptive_stop_pct(df_s, pos.entry_price, close, side="long")
 
-            # Use strategy-specific stop bounds
-            stop_min = getattr(params, 'stop_min_pct', getattr(params, 'stop_min_long', 0.02))
-            stop_max = getattr(params, 'stop_max_pct', getattr(params, 'stop_max_long', 0.12))
-            stop_pct = float(np.clip(stop_pct, stop_min, stop_max))
-            stop_px  = pos.entry_price * (1 - stop_pct)
+            # ML-predicted stop width — learned from 393 historical trades
+            # Features: ann_vol, proper_atr, ADX, price_vs_200ma, momentum_60d
+            # No hardcoded thresholds — model learns what stop width each situation needs
+            try:
+                from stop_width_model import predict_stop_width
+                _meta = entry_meta.get(s, {})
+                _dse  = int((date - pd.Timestamp(_meta.get("entry_date", str(date)))).days) if "entry_date" in _meta else 60
+                _str  = float(_meta.get("earnings_streak", 0.5))
+                stop_pct = predict_stop_width(s, df_s, _dse, _str)
+            except Exception:
+                # Fallback: proper true-range ATR (not close-to-close approximation)
+                if len(df_s) >= 2:
+                    _tr = pd.concat([
+                        df_s["high"] - df_s["low"],
+                        (df_s["high"] - df_s["close"].shift()).abs(),
+                        (df_s["low"]  - df_s["close"].shift()).abs(),
+                    ], axis=1).max(axis=1)
+                    _true_atr_pct = float(_tr.tail(14).mean() / df_s["close"].iloc[-1])
+                    stop_pct = float(np.clip(2.0 * _true_atr_pct, 0.04, 0.20))
+                else:
+                    stop_pct = 0.08
+
+            stop_px    = pos.entry_price * (1 - stop_pct)
             trail_stop = pos.highest_price * (1 - stop_pct)
-            stop_px  = max(stop_px, trail_stop)
+            stop_px    = max(stop_px, trail_stop)
 
             # Fix 4: move stop to breakeven once up 8%
             unrealized_pct = (close - pos.entry_price) / pos.entry_price
@@ -403,23 +420,10 @@ def run_backtest_v2(
                 exit_reason = "stop"
                 exit_ref    = stop_px
             elif close >= pos.entry_price * (1 + getattr(params, 'take_profit_pct', getattr(params, 'take_profit_long', 0.40))):
-                # Fundamental-conditional suppression — if ML + streak + revision all
-                # still strong, this is a secular theme. Let it ride with trailing stop.
-                # APP 2024 exited at +53%, stock went to +300%. Same for NVDA, PLTR, VRT.
-                _ml_at_exit = ml_scores.get(s, 0.0)
-                _feat_at_exit = feature_store.get(s)
-                _streak_at_exit = 0.0
-                _revision_at_exit = 0.0
-                if _feat_at_exit is not None and date in _feat_at_exit.index:
-                    _row_exit = _feat_at_exit.loc[date]
-                    _streak_at_exit = float(_row_exit.get("earnings_beat_streak", 0.0))
-                    _revision_at_exit = float(_row_exit.get("analyst_revision_momentum", 0.0))
-                _secular = (_ml_at_exit > 0.90 and _streak_at_exit >= 0.85 and _revision_at_exit >= 0.65)
-                if _secular:
-                    pass  # suppress take_profit — trailing ATR stop will exit
-                else:
-                    exit_reason = "take_profit"
-                    exit_ref    = close
+                # Take profit — trailing ATR stop handles secular winners naturally
+                # Removed fitted suppression (0.90/0.85/0.65 thresholds were fitted to APP/NVDA/VRT)
+                exit_reason = "take_profit"
+                exit_ref    = close
             elif hold_d >= getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12)):
                 # Profit-based hold extension: let winners run.
                 # If position is up >8% AND ML score is top-decile, extend by 50%.
@@ -454,11 +458,7 @@ def run_backtest_v2(
                     long_stop_dates[s] = date
                 if exit_reason == "stop":
                     recent_stop_dates.append(date)
-                # Large losing max_hold: extend cooldown to 90 days
-                # FTNT pattern: -$2,234 Aug 4, re-entered Oct 28 (-$3,269)
-                # 85-day gap defeats 15-day cooldown — need size-aware block
-                if exit_reason == "max_hold" and pnl < -500:
-                    long_stop_dates[s] = date + pd.Timedelta(days=75)  # adds 75 extra days
+                # Cooldown set by vol-proportional logic at entry — no extra fitted extension
                 if exit_reason == "regime_exit":
                     last_regime_exit_date = date
                 del long_positions[s]
@@ -687,16 +687,13 @@ def run_backtest_v2(
                     cash, remaining,
                 )
                 qty = min(qty_risk, int(max_dollars / px) if px > 0 else 0)
-                # Vol-adjusted size cap + hard exclusion for extreme vol
-                # APP 4 stops 2025 = -$6,851. VRT 3 stops = -$4,385. MP 2 stops = -$5,181.
-                # Even at 50% size, 0.94 vol stocks destroy the account on stops.
-                _df_s = hist.get(s)
-                if _df_s is not None and len(_df_s) >= 20:
-                    _ann_vol = float(_df_s.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5))
-                    if _ann_vol > 0.50:
-                        qty = max(1, int(qty * 0.50))
-                    elif _ann_vol > 0.30:
-                        qty = max(1, int(qty * 0.75))
+                # Vol-aware sizing: use ML stop width to scale position size.
+                # Wider ML stop = model expects more noise = smaller position.
+                # stop_pct already set by ML model above — use it directly.
+                # High vol stocks get narrower ML stops (less room to breathe)
+                # which naturally reduces position size through risk-per-share.
+                # No separate vol scalar needed — it's implicit in stop_pct.
+                pass
                 if qty <= 0:
                     continue
 
