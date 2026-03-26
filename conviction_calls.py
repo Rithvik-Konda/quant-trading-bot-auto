@@ -192,12 +192,24 @@ def run_conviction_calls_backtest():
         # Hold period
         hold_days = (exit_date - entry_date).days
 
-        # Call payoff at exit
+        # Call payoff: expires at DTE regardless of trade hold period
+        # After expiry, trade continues stock-only
         if hold_days >= DTE:
-            # Expired — intrinsic value only
-            call_payoff_per = max(exit_px - K, 0)
+            # Call expired — compute price at DTE day, not exit day
+            price_path2 = os.path.join(CACHE_DIR, f"{sym}_max.pkl")
+            dte_px = entry_px  # fallback
+            if os.path.exists(price_path2):
+                try:
+                    df_h2 = pd.read_pickle(price_path2)
+                    df_h2.index = pd.to_datetime(df_h2.index).tz_localize(None)
+                    future_px = df_h2.loc[df_h2.index > entry_date]['close']
+                    if len(future_px) >= DTE:
+                        dte_px = float(future_px.iloc[DTE-1])
+                except Exception:
+                    dte_px = exit_px
+            call_payoff_per = max(dte_px - K, 0)
         else:
-            # Still alive — BS price with remaining time
+            # Still alive at trade exit — BS price with remaining time
             T_rem = max((DTE - hold_days) / 365.0, 0.01)
             call_payoff_per = bs_call(exit_px, K, T_rem, RISK_FREE, sigma)
 
@@ -205,7 +217,8 @@ def run_conviction_calls_backtest():
         call_pnl          = total_call_payoff - call_cost
         call_ret          = call_pnl / call_cost if call_cost > 0 else 0
 
-        # Total overlay P&L
+        # Stock component: full stock P&L on reduced position
+        # After call expires, stock continues to trade exit
         overlay_total = stock_component_pnl + call_pnl
         baseline_pnl  = stock_pnl
         improvement   = overlay_total - baseline_pnl

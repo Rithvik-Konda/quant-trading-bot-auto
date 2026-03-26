@@ -12,8 +12,8 @@
     "reason": "SVXY Volmageddon tail risk. +0.74% CAGR but 87% single-day loss risk. Thesis works but product is dangerous."
   },
   "conviction_calls": {
-    "status": "PENDING",
-    "reason": "Highest priority \u2014 session 2 build"
+    "status": "NEEDS_PROPER_BACKTEST",
+    "reason": "Structure valid, Cremers & Weinbaum confirmed directionally. But retrospective test is circular \u2014 conviction score correlated with known winners. Must integrate into backtester main loop for honest measurement."
   },
   "protective_puts": {
     "status": "PENDING",
