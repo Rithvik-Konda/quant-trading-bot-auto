@@ -15,7 +15,7 @@ sys.path.insert(0, '/Users/rick/ai_trading_bot_v2')
 
 CACHE_DIR = '/Users/rick/ai_trading_bot_v2/cache_prices'
 MODEL_PATH = '/Users/rick/ai_trading_bot_v2/stop_width_ranker.joblib'
-FEATURE_COLS = ['ann_vol', 'true_atr', 'adx', 'price_vs_200ma', 'mom_60', 'vol_regime', 'rsi_14']
+FEATURE_COLS = ['ann_vol', 'true_atr', 'adx', 'price_vs_200ma', 'mom_60', 'vol_regime', 'rsi_14', 'regime_trending', 'regime_bear', 'ma200_slope']
 
 
 def compute_true_atr_pct(df, period=14):
@@ -96,14 +96,25 @@ def extract_features(df_pre):
         vol60      = df_pre['close'].pct_change().dropna().tail(60).std()
         vol_regime = float(vol5 / vol60) if vol60 > 0 else 1.0
         rsi        = compute_rsi(df_pre['close'])
+        # 200MA slope — is the stock in structural uptrend or downtrend?
+        # Novel feature: regime-conditional stop needs to know trend direction
+        ma200_series = df_pre['close'].rolling(200).mean()
+        if len(ma200_series.dropna()) >= 20:
+            ma200_slope = float((ma200_series.iloc[-1] / ma200_series.iloc[-20] - 1))
+        else:
+            ma200_slope = 0.0
+
         return {
-            'ann_vol':        float(np.clip(ann_vol, 0, 3)),
-            'true_atr':       float(np.clip(true_atr, 0, 0.15)),
-            'adx':            float(np.clip(adx_val, 0, 100)),
-            'price_vs_200ma': float(np.clip(p200, -0.5, 1.0)),
-            'mom_60':         float(np.clip(mom60, -0.8, 3.0)),
-            'vol_regime':     float(np.clip(vol_regime, 0, 5)),
-            'rsi_14':         float(np.clip(rsi, 0, 100)),
+            'ann_vol':          float(np.clip(ann_vol, 0, 3)),
+            'true_atr':         float(np.clip(true_atr, 0, 0.15)),
+            'adx':              float(np.clip(adx_val, 0, 100)),
+            'price_vs_200ma':   float(np.clip(p200, -0.5, 1.0)),
+            'mom_60':           float(np.clip(mom60, -0.8, 3.0)),
+            'vol_regime':       float(np.clip(vol_regime, 0, 5)),
+            'rsi_14':           float(np.clip(rsi, 0, 100)),
+            'regime_trending':  0.0,  # set at call site from regime classifier
+            'regime_bear':      0.0,  # set at call site from regime classifier
+            'ma200_slope':      float(np.clip(ma200_slope, -0.15, 0.15)),
         }
     except Exception:
         return None
@@ -209,13 +220,16 @@ def train_stop_model(df):
     return model
 
 
-def predict_stop_width(symbol, df_pre, days_since_earnings=60, earnings_streak=0.5):
+def predict_stop_width(symbol, df_pre, days_since_earnings=60, earnings_streak=0.5, regime='CHOPPY'):
     """Predict optimal stop width. Falls back to 2x true ATR if model unavailable."""
     try:
         bundle = joblib.load(MODEL_PATH)
         feats  = extract_features(df_pre)
         if feats is None:
             raise ValueError("feature extraction failed")
+        # Inject regime as learned binary features — not hardcoded multipliers
+        feats['regime_trending'] = 1.0 if regime == 'TRENDING_BULL' else 0.0
+        feats['regime_bear']     = 1.0 if regime == 'BEAR' else 0.0
         X = pd.DataFrame([feats], columns=bundle['features']).fillna(0)
         pred = float(bundle['model'].predict(X)[0])
         return float(np.clip(pred, 0.04, 0.25))

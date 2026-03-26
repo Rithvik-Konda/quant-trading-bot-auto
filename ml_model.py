@@ -620,6 +620,48 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
     else:
         d["sector_earnings_cluster"] = pd.Series(0.0, index=df.index)
 
+    # Novel D: Earnings beat streak × PEAD interaction
+    # A stock with 4 consecutive beats AND confirmed PEAD drift isn't just additive
+    # The market is systematically underreacting to a consistent pattern
+    # This interaction term captures that compounding effect
+    if "earnings_beat_streak" in d and "pead_real" in d:
+        _streak = d["earnings_beat_streak"]
+        _pead   = d["pead_real"]
+        if isinstance(_streak, pd.Series) and isinstance(_pead, pd.Series):
+            d["streak_pead_interaction"] = (_streak * _pead).clip(-0.5, 0.5)
+        else:
+            d["streak_pead_interaction"] = float(_streak) * float(_pead)
+    else:
+        d["streak_pead_interaction"] = pd.Series(0.0, index=df.index)
+
+    # Novel E: Short interest × PEAD amplifier
+    # High SI + positive earnings surprise = short squeeze amplification of PEAD drift
+    # APP 2023 +$8,012 in 15 days was exactly this: PEAD fired, shorts squeezed
+    # SI × PEAD interaction as both feature and sizing signal
+    if symbol and "pead_real" in d:
+        _f = _get_fundamentals(symbol) if symbol else {}
+        _si = _f.get("shortPercentOfFloat", 0.0) or 0.0
+        _pead_val = d["pead_real"]
+        if isinstance(_pead_val, pd.Series):
+            d["si_pead_squeeze"] = (_pead_val * float(_si)).clip(-0.3, 0.3)
+        else:
+            d["si_pead_squeeze"] = float(_pead_val) * float(_si)
+    else:
+        d["si_pead_squeeze"] = pd.Series(0.0, index=df.index)
+
+    # Novel C proxy: momentum persistence score
+    # How consistent is this stock's ML-predictable momentum across rolling windows?
+    # Stocks with consistent momentum across 5/20/60d all aligned = higher persistence
+    if "ret_5" in d and "ret_20" in d and "ret_60" in d:
+        _r5  = d["ret_5"]  if isinstance(d["ret_5"],  pd.Series) else pd.Series(d["ret_5"],  index=df.index)
+        _r20 = d["ret_20"] if isinstance(d["ret_20"], pd.Series) else pd.Series(d["ret_20"], index=df.index)
+        _r60 = d["ret_60"] if isinstance(d["ret_60"], pd.Series) else pd.Series(d["ret_60"], index=df.index)
+        # All three momentum horizons aligned = persistent momentum
+        _aligned = ((_r5 > 0).astype(int) + (_r20 > 0).astype(int) + (_r60 > 0).astype(int)) / 3.0
+        d["momentum_persistence"] = _aligned
+    else:
+        d["momentum_persistence"] = pd.Series(0.5, index=df.index)
+
     feat = pd.DataFrame(d, index=df.index)
     return feat.replace([np.inf, -np.inf], np.nan)
 
