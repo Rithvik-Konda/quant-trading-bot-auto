@@ -133,7 +133,7 @@ def _get_fundamentals(symbol: str) -> dict:
 
 # ── Feature engineering ───────────────────────────────────────────────────────
 
-def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: Optional[pd.DataFrame] = None, streak_store: Optional[dict] = None, insider_store: Optional[dict] = None) -> pd.DataFrame:
+def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: Optional[pd.DataFrame] = None, streak_store: Optional[dict] = None, insider_store: Optional[dict] = None, revision_store: Optional[dict] = None) -> pd.DataFrame:
     high, low, close, open_, volume = df["high"], df["low"], df["close"], df["open"], df["volume"]
     if vix_macro is None:
         # Try loading from cache if not passed
@@ -560,6 +560,19 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
     else:
         d["insider_cluster_score"] = pd.Series(0.0, index=df.index)
 
+    # 25. Analyst revision momentum — Mill Street Research 2023
+    # Net direction of EPS revisions over last 4 quarters. Persists 5 months.
+    if revision_store is not None and symbol is not None and symbol in revision_store:
+        try:
+            from analyst_revision import revision_momentum_score as _rms
+            _rdf = revision_store[symbol]
+            _rscores = [_rms(symbol, pd.Timestamp(_dt), {symbol: _rdf}) for _dt in df.index]
+            d["analyst_revision_momentum"] = pd.Series(_rscores, index=df.index)
+        except Exception:
+            d["analyst_revision_momentum"] = pd.Series(0.0, index=df.index)
+    else:
+        d["analyst_revision_momentum"] = pd.Series(0.0, index=df.index)
+
     feat = pd.DataFrame(d, index=df.index)
     return feat.replace([np.inf, -np.inf], np.nan)
 
@@ -591,12 +604,20 @@ def build_symbol_store(symbols: List[str], days: int, refresh: bool = False) -> 
     except Exception as _e:
         log(f"WARN | Insider store failed: {_e}")
         insider_store = {}
+    # Build analyst revision store
+    try:
+        from analyst_revision import build_revision_store
+        revision_store = build_revision_store(symbols, verbose=False)
+        log(f"INFO | Revision store: {len(revision_store)} symbols")
+    except Exception as _e:
+        log(f"WARN | Revision store failed: {_e}")
+        revision_store = {}
     store = {}
     for sym in symbols:
         df = fetch_data(sym, days, refresh)
         if df is None or len(df) < 260:
             continue
-        feat = compute_features(df, symbol=sym, streak_store=streak_store, insider_store=insider_store)
+        feat = compute_features(df, symbol=sym, streak_store=streak_store, insider_store=insider_store, revision_store=revision_store)
         store[sym] = {"prices": df, "features": feat}
     return store
 

@@ -1,0 +1,1 @@
+[{"date": "2025-03-31T00:00:00", "actual": 1.77, "est": 2.31667, "surp": -0.236, "beat": false}, {"date": "2025-06-30T00:00:00", "actual": 2.09, "est": 2.26, "surp": -0.0752, "beat": false}, {"date": "2025-09-30T00:00:00", "actual": 2.2, "est": 2.16143, "surp": 0.0178, "beat": true}, {"date": "2025-12-31T00:00:00", "actual": 3.47, "est": 4.05865, "surp": -0.145, "beat": false}]
