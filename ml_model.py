@@ -133,7 +133,7 @@ def _get_fundamentals(symbol: str) -> dict:
 
 # ── Feature engineering ───────────────────────────────────────────────────────
 
-def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: Optional[pd.DataFrame] = None) -> pd.DataFrame:
+def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: Optional[pd.DataFrame] = None, streak_store: Optional[dict] = None) -> pd.DataFrame:
     high, low, close, open_, volume = df["high"], df["low"], df["close"], df["open"], df["volume"]
     if vix_macro is None:
         # Try loading from cache if not passed
@@ -547,12 +547,22 @@ def compute_forward_return(df: pd.DataFrame, horizon: int = 5) -> pd.Series:
 # ── Panel builder ─────────────────────────────────────────────────────────────
 
 def build_symbol_store(symbols: List[str], days: int, refresh: bool = False) -> dict:
+    # Build earnings beat streak store once for all symbols
+    try:
+        import sys as _sys
+        _sys.path.insert(0, '/Users/rick/ai_trading_bot_v2')
+        from earnings_streak import build_streak_store
+        streak_store = build_streak_store(symbols, verbose=False)
+        log(f"INFO | Earnings streak store: {len(streak_store)} symbols")
+    except Exception as _e:
+        log(f"WARN | Earnings streak store failed: {_e}")
+        streak_store = {}
     store = {}
     for sym in symbols:
         df = fetch_data(sym, days, refresh)
         if df is None or len(df) < 260:
             continue
-        feat = compute_features(df, symbol=sym)
+        feat = compute_features(df, symbol=sym, streak_store=streak_store)
         store[sym] = {"prices": df, "features": feat}
     return store
 
