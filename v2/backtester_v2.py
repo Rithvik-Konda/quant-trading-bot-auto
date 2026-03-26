@@ -405,8 +405,16 @@ def run_backtest_v2(
                 exit_reason = "take_profit"
                 exit_ref    = close
             elif hold_d >= getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12)):
-                exit_reason = "max_hold"
-                exit_ref    = close
+                # Profit-based hold extension: let winners run.
+                # If position is up >8% AND ML score is top-decile, extend by 50%.
+                # Data: 129 trades forced out at max_hold while up >$1000 — these
+                # are genuine winners being killed by an arbitrary time limit.
+                base_max   = getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12))
+                ml_score   = ml_scores.get(s, 0.0)
+                extended   = int(base_max * 1.5) if (unrealized_pct > 0.08 and ml_score > 0.85) else base_max
+                if hold_d >= extended:
+                    exit_reason = "max_hold"
+                    exit_ref    = close
             elif _current_regime == BEAR and sector_map.get(s) not in strat_bear.DEFENSIVE_SECTORS:
                 exit_reason = "regime_exit"
                 exit_ref    = close

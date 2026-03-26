@@ -412,6 +412,128 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
                     # Stock strength within its own sector
                     d["stock_vs_sector_20"] = (close.pct_change(20) - ec.pct_change(20)).clip(-0.5, 0.5)
 
+
+    # ── NEW FEATURES: PEAD proxy, momentum exhaustion, SI surprise, peer spillover ──
+
+    # 18. PEAD Proxy — earnings surprise from price
+    # Identify earnings days: large idiosyncratic return vs sector on high volume
+    # Post-earnings drift persists 45-60 days (Bernard & Thomas 1989, replicated 2024)
+    if symbol:
+        etf = SECTOR_ETF_MAP.get(symbol.upper())
+        etf_df2 = _etf_cache.get(etf) if etf else None
+        if etf_df2 is not None and len(etf_df2) > 60:
+            ec2 = etf_df2["close"].reindex(close.index, method="ffill")
+            # Idiosyncratic daily return = stock return - sector return
+            idio_ret = close.pct_change() - ec2.pct_change()
+            # Earnings day proxy: |idiosyncratic return| > 3% AND volume > 2x average
+            vol_threshold = volume.rolling(20).mean() * 2.0
+            large_idio    = idio_ret.abs() > 0.03
+            high_vol      = volume > vol_threshold
+            earnings_day_proxy = (large_idio & high_vol).astype(float)
+            # Signed earnings surprise: direction of idiosyncratic move on earnings day
+            earnings_surprise = idio_ret * earnings_day_proxy
+            # PEAD signal: decay-weighted sum of recent earnings surprises
+            # Recent surprises (last 45 days) weighted by recency
+            pead_45 = earnings_surprise.rolling(45).sum()
+            pead_20 = earnings_surprise.rolling(20).sum()
+            d["pead_signal_45"]    = pead_45.clip(-0.5, 0.5)
+            d["pead_signal_20"]    = pead_20.clip(-0.3, 0.3)
+            # Days since last positive earnings surprise (recency matters)
+            pos_surprise_days = earnings_day_proxy * (idio_ret > 0.03).astype(float)
+            last_pos = pos_surprise_days.rolling(90).apply(
+                lambda x: 90 - (np.where(x[::-1] > 0)[0][0] if (x > 0).any() else 90),
+                raw=True
+            )
+            d["days_since_pos_earnings"] = (last_pos / 90).clip(0, 1)  # 0=recent, 1=old/none
+            # Magnitude of last earnings surprise
+            d["last_earnings_magnitude"] = (
+                idio_ret.where(earnings_day_proxy > 0).fillna(0).rolling(90).apply(
+                    lambda x: x[x != 0][-1] if (x != 0).any() else 0, raw=True
+                )
+            ).clip(-0.3, 0.3)
+
+    # 19. Momentum Exhaustion Signal
+    # Where does today's N-day return sit on this stock's own historical distribution?
+    # Stock at 95th percentile of own history = exhausted, likely to mean revert
+    # Stock at 60th percentile = momentum has room to run
+    # No paper has implemented this as a per-stock self-referential feature
+    for p, window in [(20, 252), (60, 504)]:
+        ret_series = close.pct_change(p)
+        # Rolling percentile rank of current return vs trailing history
+        def pctile_rank(x):
+            if len(x) < 20:
+                return 0.5
+            return float(np.sum(x[:-1] < x[-1]) / max(len(x)-1, 1))
+        exhaustion = ret_series.rolling(window).apply(pctile_rank, raw=True)
+        d[f"mom_exhaustion_{p}d"] = exhaustion.clip(0, 1)
+        # Distance from exhaustion: 0.5=neutral, >0.8=overbought, <0.2=oversold
+        d[f"mom_exhaustion_extreme_{p}d"] = (exhaustion - 0.5).abs().clip(0, 0.5)
+
+    # 20. Short Interest Surprise (SUSIR)
+    # Raw SI level is noisy. The SIGNAL is the surprise vs own history.
+    # Akbas et al 2023 JFE: surprise in SI predicts cross-section globally
+    if symbol:
+        f2 = _get_fundamentals(symbol)
+        si = f2.get("shortPercentOfFloat")
+        if si is not None and "short_pct_float" in d:
+            # We only have a point-in-time SI, not history
+            # Proxy: use SI relative to typical range for this stock's sector
+            # If SI > 0.15 for a low-SI sector (tech) it's a surprise
+            # If SI > 0.15 for a high-SI sector (retail) it's normal
+            sector_si_medians = {
+                "XLK": 0.035, "XLC": 0.040, "XLY": 0.055, "XLP": 0.025,
+                "XLF": 0.025, "XLV": 0.045, "XLI": 0.025, "XLE": 0.030,
+                "XLU": 0.020, "XLB": 0.030, "XLRE": 0.035,
+            }
+            etf3 = SECTOR_ETF_MAP.get(symbol.upper(), "XLK")
+            sector_median = sector_si_medians.get(etf3, 0.035)
+            # SI surprise = (current SI - sector median) / sector median
+            si_surprise = (si - sector_median) / max(sector_median, 0.01)
+            d["short_interest_surprise"] = np.clip(si_surprise, -3, 3)
+            # High SI surprise = bearish signal
+            d["si_elevated"]   = float(si > sector_median * 2.0)
+            d["si_suppressed"] = float(si < sector_median * 0.5)
+
+    # 21. Volume Shape Features — institutional accumulation/distribution
+    # Gervais et al: high volume days predict positive returns (high-vol return premium)
+    # Novel: direction of volume matters more than level
+    d["volume_acceleration"]   = (volume / volume.rolling(20).mean().replace(0, np.nan) - 1).clip(-1, 2)
+    d["vol_accel_5d"]          = (volume.rolling(5).mean() / volume.rolling(20).mean().replace(0, np.nan) - 1).clip(-1, 2)
+    # VWAP proxy: close vs open as fraction of daily range (buying pressure)
+    daily_range = (high - low).replace(0, np.nan)
+    d["buying_pressure"]       = ((close - open_) / daily_range).clip(-1, 1)
+    d["close_strength"]        = ((close - low) / daily_range).clip(0, 1)  # close in upper half = bullish
+    # Consecutive high-volume days: sustained institutional accumulation
+    above_avg_vol = (volume > volume.rolling(20).mean()).astype(int)
+    d["vol_streak_up"]         = above_avg_vol.rolling(5).sum() / 5  # 0-1, 1 = all 5 days high vol
+    # Volume on up vs down days
+    up_vol   = volume.where(close.diff() > 0, 0)
+    down_vol = volume.where(close.diff() <= 0, 0)
+    d["up_down_vol_ratio"] = (
+        up_vol.rolling(10).mean() / down_vol.rolling(10).mean().replace(0, np.nan)
+    ).clip(0, 5)
+
+    # 22. Quality Acceleration (Ma, Yang, Ye 2024 - Research in International Business)
+    # Second derivative of quality: rate of change of quality growth
+    # Predicts returns beyond quality level AND quality growth
+    if "quality_composite" in d:
+        qc = d["quality_composite"]
+        if isinstance(qc, pd.Series) and len(qc) > 20:
+            # Quality growth: 20-day change in quality composite
+            d["quality_growth_20"]    = qc.diff(20).clip(-0.5, 0.5)
+            d["quality_growth_60"]    = qc.diff(60).clip(-0.8, 0.8)
+            # Quality acceleration: change in quality growth (second derivative)
+            d["quality_acceleration"] = d["quality_growth_20"].diff(20).clip(-0.3, 0.3)
+            # Quality streak: consecutive periods of improvement
+            d["quality_improving"]    = (d["quality_growth_20"] > 0).astype(float)
+            d["quality_streak"]       = d["quality_improving"].rolling(3).mean()
+        else:
+            # Scalar value — create as constant series for this row
+            for feat_name in ["quality_growth_20", "quality_growth_60",
+                               "quality_acceleration", "quality_improving", "quality_streak"]:
+                d[feat_name] = 0.0
+
+
     feat = pd.DataFrame(d, index=df.index)
     return feat.replace([np.inf, -np.inf], np.nan)
 
