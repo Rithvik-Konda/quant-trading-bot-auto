@@ -544,6 +544,7 @@ def load_ranker_ensemble_for_year(year: int) -> Dict[int, dict]:
 
 
 def load_ranker_regime_ensemble() -> dict:
+    import os
     """
     Load regime-specific model sets.
 
@@ -563,6 +564,8 @@ def load_ranker_regime_ensemble() -> dict:
         for h in [3, 5, 7]:
             path = f"cross_sectional_ranker_{h}d_{regime}.joblib"
             fallback = f"cross_sectional_ranker_{h}d.joblib"
+            # TRENDING_BULL model has consistently negative IC — use all-regime fallback
+            # CHOPPY and BEAR models have positive IC and are worth using
             if os.path.exists(path):
                 regime_rankers[h] = load_ranker(path)
             elif os.path.exists(fallback):
