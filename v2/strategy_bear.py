@@ -262,12 +262,28 @@ def score_short_candidates(
     as_of_date: pd.Timestamp,
 ) -> List[dict]:
     """
-    Score and rank short candidates for bear strategy.
-    Returns stop_pct as the disaster backstop (0.15), NOT a normal stop.
+    Score and rank short candidates using ML short ranker.
+    Lower predicted forward return = better short candidate.
+    Falls back to inverted ML rank if short ranker unavailable.
     """
     params = get_params()
-    scored = []
 
+    # Load ML short ranker — trained on 333k synthetic entries across 64yr history
+    _short_model = None
+    try:
+        import sys as _sys, os as _os
+        _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+        from short_ranker import compute_short_features
+        import joblib as _joblib
+        _model_path = _os.path.join(
+            _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))),
+            'short_ranker.joblib'
+        )
+        _short_model = _joblib.load(_model_path)
+    except Exception:
+        _short_model = None
+
+    scored = []
     for sym, snap in snapshots.items():
         if snap.ml_rank_pct > params.ml_rank_max_short:
             continue
@@ -282,44 +298,38 @@ def score_short_candidates(
         if not ok:
             continue
 
-        # Lower ML rank = better short candidate
-        short_score = 1.0 - snap.ml_rank_pct
-        acc         = accumulation_score(df_asof)
-        dist_score  = 1.0 - acc  # high distribution = good short
+        # ML short ranker score — predicts 5d forward return
+        # Lower predicted return = better short candidate
+        if _short_model is not None and len(df_asof) >= 60:
+            try:
+                from short_ranker import compute_short_features
+                feats = compute_short_features(df_asof)
+                if feats is not None:
+                    import pandas as _pd
+                    X = _pd.DataFrame([feats], columns=_short_model['features']).fillna(0)
+                    ml_short_score = float(_short_model['model'].predict(X)[0])
+                    short_score = -ml_short_score  # invert: lower return = higher priority
+                else:
+                    short_score = 1.0 - snap.ml_rank_pct
+            except Exception:
+                short_score = 1.0 - snap.ml_rank_pct
+        else:
+            short_score = 1.0 - snap.ml_rank_pct
 
-        # Boost score by how many days below MA (more confirmed = higher priority)
-        days_below  = _days_below_ma20(df_asof)
-        confirmation_boost = min(days_below / 10.0, 0.5)  # cap at 0.5 boost
+        acc        = accumulation_score(df_asof)
+        dist_score = 1.0 - acc
+        days_below = _days_below_ma20(df_asof)
+        if dist_score > 0.7:
+            short_score *= 1.3
 
         scored.append({
             "symbol":      sym,
+            "short_score": short_score,
             "ml_rank_pct": snap.ml_rank_pct,
-            "short_score": short_score * dist_score * (1 + confirmation_boost),
-            "stop_pct":    params.stop_short,  # 0.15 disaster backstop
-            "days_below_ma20": days_below,
+            "dist_score":  dist_score,
+            "stop_pct":    params.stop_short,
         })
 
     scored.sort(key=lambda x: x["short_score"], reverse=True)
-    return scored[:params.max_positions_short * 2]
+    return scored[:params.max_positions_short * 3]
 
-
-if __name__ == "__main__":
-    print("Bear Market Strategy Parameters (v2.1):")
-    p = get_params()
-    print(f"  Max longs:             {p.max_positions_long}")
-    print(f"  Max shorts:            {p.max_positions_short}")
-    print(f"  Long ML min:           {p.ml_rank_min_long:.0%}")
-    print(f"  Short ML max:          {p.ml_rank_max_short:.0%}")
-    print(f"  Long hold days:        {p.max_hold_days_long}")
-    print(f"  Short hold days:       {p.max_hold_days_short}  (primary exit)")
-    print(f"  Long scalar:           {p.position_scalar_long:.0%}")
-    print(f"  Short scalar:          {p.position_scalar_short:.0%}")
-    print(f"  Short disaster stop:   {p.stop_short:.0%}  (backstop only, not normal stop)")
-    print(f"  Short MA20 confirm:    {p.short_entry_ma20_days} consecutive days below")
-    print(f"  Short dist confirm:    {p.short_entry_dist_days} consecutive distribution days")
-    print(f"  Defensive sectors:     {DEFENSIVE_SECTORS}")
-    print()
-    print("  EXIT LOGIC:")
-    print("  Shorts: take_profit (25%) > max_hold (20d) > disaster_stop (15%)")
-    print("  Price stops removed — time-based exits only for shorts")
-    print("\nStrategy ready.")

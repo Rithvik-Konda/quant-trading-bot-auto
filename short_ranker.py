@@ -203,7 +203,7 @@ def build_training_data():
 def train_short_model(df):
     """Train LightGBM to predict short candidates (negative forward return)."""
     X = df[FEATURE_COLS].fillna(0)
-    y = df['target_cont']  # predict magnitude of negative return
+    y = df['target_cont']  # SPY-adjusted relative return — negative = good short
 
     split = int(len(X) * 0.8)
     X_tr, X_te = X.iloc[:split], X.iloc[split:]
@@ -287,8 +287,8 @@ if __name__ == "__main__":
         sys.exit(1)
 
     print(f"\nTraining on {len(df)} examples...")
-    print(f"Short signal rate (fwd<-2%): {df['target'].mean():.1%}")
-    print(f"Mean forward return: {df['fwd_5'].mean():.4f}")
+    print(f"Short signal rate (rel<-2% vs SPY): {df['target'].mean():.1%}")
+    print(f"Mean fwd return: {df['fwd_5'].mean():.4f}  Mean vs SPY: {df['fwd_5_rel'].mean():.4f}")
 
     model = train_short_model(df)
 
