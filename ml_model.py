@@ -133,7 +133,7 @@ def _get_fundamentals(symbol: str) -> dict:
 
 # ── Feature engineering ───────────────────────────────────────────────────────
 
-def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: Optional[pd.DataFrame] = None, streak_store: Optional[dict] = None) -> pd.DataFrame:
+def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: Optional[pd.DataFrame] = None, streak_store: Optional[dict] = None, insider_store: Optional[dict] = None) -> pd.DataFrame:
     high, low, close, open_, volume = df["high"], df["low"], df["close"], df["open"], df["volume"]
     if vix_macro is None:
         # Try loading from cache if not passed
@@ -534,6 +534,32 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
                 d[feat_name] = 0.0
 
 
+    # 23. Earnings beat streak — He & Narayanamoorthy (2020), t-stat > 3.0
+    if streak_store is not None and symbol is not None and symbol in streak_store:
+        try:
+            import sys as _sys
+            _sys.path.insert(0, '/Users/rick/ai_trading_bot_v2')
+            from earnings_streak import beat_streak_score as _bss
+            _streak_df = streak_store[symbol]
+            _scores = [_bss(symbol, pd.Timestamp(_dt), {symbol: _streak_df}) for _dt in df.index]
+            d["earnings_beat_streak"] = pd.Series(_scores, index=df.index)
+        except Exception:
+            d["earnings_beat_streak"] = pd.Series(0.0, index=df.index)
+    else:
+        d["earnings_beat_streak"] = pd.Series(0.0, index=df.index)
+
+    # 24. Insider cluster score — Cohen, Malloy, Pomorski (JF 2012)
+    if insider_store is not None and symbol is not None and symbol in insider_store:
+        try:
+            from insider_signal import insider_score as _iscore
+            _idf = insider_store[symbol]
+            _iscores = [_iscore(symbol, pd.Timestamp(_dt), {symbol: _idf}) for _dt in df.index]
+            d["insider_cluster_score"] = pd.Series(_iscores, index=df.index)
+        except Exception:
+            d["insider_cluster_score"] = pd.Series(0.0, index=df.index)
+    else:
+        d["insider_cluster_score"] = pd.Series(0.0, index=df.index)
+
     feat = pd.DataFrame(d, index=df.index)
     return feat.replace([np.inf, -np.inf], np.nan)
 
@@ -557,12 +583,20 @@ def build_symbol_store(symbols: List[str], days: int, refresh: bool = False) -> 
     except Exception as _e:
         log(f"WARN | Earnings streak store failed: {_e}")
         streak_store = {}
+    # Build insider cluster store once for all symbols
+    try:
+        from insider_signal import build_insider_store
+        insider_store = build_insider_store(symbols, verbose=False)
+        log(f"INFO | Insider store: {len(insider_store)} symbols with buy data")
+    except Exception as _e:
+        log(f"WARN | Insider store failed: {_e}")
+        insider_store = {}
     store = {}
     for sym in symbols:
         df = fetch_data(sym, days, refresh)
         if df is None or len(df) < 260:
             continue
-        feat = compute_features(df, symbol=sym, streak_store=streak_store)
+        feat = compute_features(df, symbol=sym, streak_store=streak_store, insider_store=insider_store)
         store[sym] = {"prices": df, "features": feat}
     return store
 
