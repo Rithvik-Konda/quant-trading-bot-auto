@@ -434,8 +434,13 @@ def run_backtest_v2(
                     combined_score=float(meta.get("combined_score", 0)),
                     side="long",
                 ))
-                if exit_reason == "stop":
+                if exit_reason == "stop" or (exit_reason == "max_hold" and pnl < 0):
                     long_stop_dates[s] = date
+                # Large losing max_hold: extend cooldown to 90 days
+                # FTNT pattern: -$2,234 Aug 4, re-entered Oct 28 (-$3,269)
+                # 85-day gap defeats 15-day cooldown — need size-aware block
+                if exit_reason == "max_hold" and pnl < -500:
+                    long_stop_dates[s] = date + pd.Timedelta(days=75)  # adds 75 extra days
                 if exit_reason == "regime_exit":
                     last_regime_exit_date = date
                 del long_positions[s]
@@ -485,7 +490,7 @@ def run_backtest_v2(
                     combined_score=float(meta.get("combined_score", 0)),
                     side="short",
                 ))
-                if exit_reason == "short_stop_disaster":
+                if exit_reason == "short_stop_disaster" or (exit_reason == "short_max_hold" and pnl < 0):
                     short_stop_dates[s] = date
                 del short_positions[s]
                 entry_meta.pop(f"short_{s}", None)
