@@ -662,6 +662,33 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
     else:
         d["momentum_persistence"] = pd.Series(0.5, index=df.index)
 
+    # VIX spike probability — ML model (AUC=0.90)
+    # High spike probability = reduce long scores = system naturally
+    # becomes more conservative before volatility events
+    try:
+        import sys as _sys2
+        _sys2.path.insert(0, '/Users/rick/ai_trading_bot_v2')
+        from vol_strategy_ml import predict_vix_spike_prob, predict_vix_30d, load_vix_history
+        _vix_series = load_vix_history()
+        if len(_vix_series) > 0:
+            _vix_to_date = _vix_series.loc[_vix_series.index <= close.index[-1]]
+            if len(_vix_to_date) >= 60:
+                _spike_prob = predict_vix_spike_prob(_vix_to_date)
+                _vix_30d    = predict_vix_30d(_vix_to_date)
+                d["vix_spike_prob_10d"] = pd.Series(float(_spike_prob), index=df.index)
+                d["vix_predicted_30d"]  = pd.Series(float(_vix_30d), index=df.index)
+                # Derived: expected vol regime change
+                _curr_vix = float(_vix_to_date.iloc[-1])
+                d["vix_expected_drop"]  = pd.Series(float((_curr_vix - _vix_30d) / _curr_vix), index=df.index)
+            else:
+                d["vix_spike_prob_10d"] = pd.Series(0.3, index=df.index)
+                d["vix_predicted_30d"]  = pd.Series(20.0, index=df.index)
+                d["vix_expected_drop"]  = pd.Series(0.0, index=df.index)
+    except Exception:
+        d["vix_spike_prob_10d"] = pd.Series(0.3, index=df.index)
+        d["vix_predicted_30d"]  = pd.Series(20.0, index=df.index)
+        d["vix_expected_drop"]  = pd.Series(0.0, index=df.index)
+
     feat = pd.DataFrame(d, index=df.index)
     return feat.replace([np.inf, -np.inf], np.nan)
 

@@ -1,0 +1,74 @@
+{
+  "vix_puts_spike30": {
+    "status": "FAILED",
+    "reason": "Strike too far OTM, -2.62% CAGR contribution"
+  },
+  "vxx_short_bull": {
+    "status": "FAILED",
+    "reason": "Tail risk + regime friction, -0.28% CAGR"
+  },
+  "svxy_long_bull": {
+    "status": "FAILED",
+    "reason": "SVXY Volmageddon tail risk. +0.74% CAGR but 87% single-day loss risk. Thesis works but product is dangerous."
+  },
+  "conviction_calls": {
+    "status": "PENDING",
+    "reason": "Highest priority \u2014 session 2 build"
+  },
+  "protective_puts": {
+    "status": "PENDING",
+    "reason": "Caps worst losses directly"
+  },
+  "pead_calls_90dte": {
+    "status": "PENDING",
+    "reason": "Confirmed alpha exists (IC=0.043)"
+  },
+  "earnings_straddles": {
+    "status": "PENDING",
+    "reason": "Session 3"
+  },
+  "covered_calls": {
+    "status": "PENDING",
+    "reason": "Session 3"
+  },
+  "csp_entries": {
+    "status": "PENDING",
+    "reason": "Session 3"
+  },
+  "calendar_spreads": {
+    "status": "PENDING",
+    "reason": "Session 4"
+  },
+  "iron_condors": {
+    "status": "PENDING",
+    "reason": "Session 4"
+  },
+  "sector_etf_calls": {
+    "status": "PENDING",
+    "reason": "Session 3"
+  },
+  "puts_on_shorts": {
+    "status": "PENDING",
+    "reason": "After short ranker validated"
+  },
+  "si_change_velocity": {
+    "status": "PENDING",
+    "reason": "Free data, session 3"
+  },
+  "13f_flow": {
+    "status": "PENDING",
+    "reason": "Free data, session 3"
+  },
+  "finbert_sentiment": {
+    "status": "PENDING",
+    "reason": "Session 4"
+  },
+  "insider_bear_emphasis": {
+    "status": "PENDING",
+    "reason": "Session 2 \u2014 already have data"
+  },
+  "ml_vix_models": {
+    "status": "BUILT",
+    "reason": "AUC=0.90 spike predictor, MAE=3.47 VIX points 30d forecast. Use as feature in ML ranker."
+  }
+}

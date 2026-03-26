@@ -288,7 +288,7 @@ if __name__ == "__main__":
 
     print(f"\nTraining on {len(df)} examples...")
     print(f"Short signal rate (rel<-2% vs SPY): {df['target'].mean():.1%}")
-    print(f"Mean fwd return: {df['fwd_5'].mean():.4f}  Mean vs SPY: {df['fwd_5_rel'].mean():.4f}")
+    print(f"Mean fwd return: {df['fwd_5'].mean():.4f}")
 
     model = train_short_model(df)
 
