@@ -541,6 +541,36 @@ def load_ranker_ensemble_for_year(year: int) -> Dict[int, dict]:
 # Correlation helpers
 # ─────────────────────────────────────────────────────────────────────────────
 
+
+
+def load_ranker_regime_ensemble() -> dict:
+    """
+    Load regime-specific model sets.
+
+    Returns nested dict:
+        {
+          "TRENDING_BULL": {3: bundle, 5: bundle, 7: bundle},
+          "CHOPPY":        {3: bundle, 5: bundle, 7: bundle},
+          "BEAR":          {3: bundle, 5: bundle, 7: bundle},
+        }
+
+    Falls back to the all-regime model if regime-specific file missing.
+    """
+    regimes = ["TRENDING_BULL", "CHOPPY", "BEAR"]
+    result  = {}
+    for regime in regimes:
+        regime_rankers = {}
+        for h in [3, 5, 7]:
+            path = f"cross_sectional_ranker_{h}d_{regime}.joblib"
+            fallback = f"cross_sectional_ranker_{h}d.joblib"
+            if os.path.exists(path):
+                regime_rankers[h] = load_ranker(path)
+            elif os.path.exists(fallback):
+                log(f"WARN | {path} missing — falling back to all-regime model")
+                regime_rankers[h] = load_ranker(fallback)
+        result[regime] = regime_rankers
+    return result
+
 def bucket_of(symbol: str) -> str:
     return config.CORRELATION_BUCKETS.get(symbol, symbol)
 

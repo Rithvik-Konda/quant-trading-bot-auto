@@ -675,11 +675,146 @@ def train_rolling_ensemble(symbols: List[str], days: int = 3650, refresh: bool =
     log("INFO | Rolling retrain complete.")
 
 
+
+
+def train_rolling_regime_ensemble(symbols: List[str], days: int, refresh: bool = False) -> None:
+    """
+    Train three separate LightGBM rankers — one per regime — for each
+    horizon and each test year.
+
+    Motivation:
+      The all-regime model averages conflicting signals across TRENDING_BULL,
+      CHOPPY, and BEAR days. IC is near zero in 2021-2023 because the model
+      learned momentum features that work in TRENDING_BULL but not CHOPPY.
+
+      A CHOPPY-specific model learns that quality, earnings stability, and
+      low-vol matter more than raw momentum. A BEAR model learns defensive
+      and short signals. Each model is sharper because it trains on days
+      where its signal type actually works.
+
+    Output files (per horizon per year per regime):
+      cross_sectional_ranker_5d_2023_TRENDING_BULL.joblib
+      cross_sectional_ranker_5d_2023_CHOPPY.joblib
+      cross_sectional_ranker_5d_2023_BEAR.joblib
+      ... etc for horizons 3d, 7d and years 2020-2025
+
+    Live models (most recent vintage, used by backtester):
+      cross_sectional_ranker_5d_TRENDING_BULL.joblib
+      cross_sectional_ranker_5d_CHOPPY.joblib
+      cross_sectional_ranker_5d_BEAR.joblib
+    """
+    import sys
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "v2"))
+    from regime_classifier import RegimeClassifier, compute_signals, load_macro_data
+    from regime_classifier import TRENDING_BULL, CHOPPY, BEAR
+
+    log("INFO | === REGIME-SPECIFIC ML TRAINING ===")
+    log(f"INFO | Universe: {len(symbols)} stocks")
+
+    # Load regime labels for every trading date
+    cache_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cache_prices")
+    spy_macro, hyg_macro, vix_macro = load_macro_data(cache_dir=cache_dir)
+    clf = RegimeClassifier()
+
+    log("INFO | Building regime label series...")
+    import pandas as _pd
+    spy_dates = spy_macro.index.sort_values()
+    regime_labels: dict = {}
+    for d in spy_dates:
+        signals = compute_signals(spy_macro, hyg_macro, vix_macro, as_of_date=d)
+        if signals:
+            regime_labels[d] = clf.update(d, signals)
+    regime_series = _pd.Series(regime_labels)
+    log(f"INFO | Regime counts: { {r: int((regime_series==r).sum()) for r in [TRENDING_BULL, CHOPPY, BEAR]} }")
+
+    # Build full data store (same as rolling retrain)
+    store = build_symbol_store(symbols, days, refresh=refresh)
+    log(f"INFO | Loaded {len(store)} symbols")
+
+    regimes    = [TRENDING_BULL, CHOPPY, BEAR]
+    test_years = [2020, 2021, 2022, 2023, 2024, 2025]
+    train_years = 5
+
+    for horizon in [3, 5, 7]:
+        log(f"INFO | === Horizon {horizon}d ===")
+        panel = build_panel_from_store(store, horizon)
+        panel["date"] = _pd.to_datetime(panel["date"])
+
+        feature_cols = [c for c in panel.columns
+                        if c not in {"date", "symbol", "target_raw", "target", "target_rank"}]
+
+        # Attach regime label to each row
+        panel["regime"] = panel["date"].map(regime_series)
+        panel = panel.dropna(subset=["regime"])
+
+        for test_year in test_years:
+            train_start = _pd.Timestamp(f"{test_year - train_years}-01-01")
+            train_end   = _pd.Timestamp(f"{test_year}-01-01")
+            test_end    = _pd.Timestamp(f"{test_year + 1}-01-01")
+
+            train_all = panel[(panel["date"] >= train_start) & (panel["date"] < train_end)]
+            test_df   = panel[(panel["date"] >= train_end)   & (panel["date"] < test_end)]
+
+            if len(train_all) < 1000:
+                log(f"WARN | {test_year}: insufficient train data, skipping")
+                continue
+
+            for regime in regimes:
+                regime_short = regime.replace("_", "")[:4].upper()
+
+                # Train only on days classified as this regime
+                train_regime = train_all[train_all["regime"] == regime]
+
+                if len(train_regime) < 500:
+                    log(f"WARN | {test_year}/{regime}: only {len(train_regime)} rows — using all-regime fallback")
+                    train_regime = train_all  # fallback to all-regime data
+
+                log(f"INFO | {test_year}/{regime}: {len(train_regime):,} train rows")
+
+                scaler  = StandardScaler()
+                X_train = scaler.fit_transform(train_regime[feature_cols].fillna(0))
+                model   = _build_model(horizon)
+                model.fit(X_train, train_regime["target_rank"])
+
+                # Evaluate on regime-specific test days
+                test_regime = test_df[test_df["regime"] == regime]
+                if len(test_regime) > 50:
+                    X_test = scaler.transform(test_regime[feature_cols].fillna(0))
+                    pred   = model.predict(X_test)
+                    ic     = float(np.corrcoef(pred, test_regime["target_rank"])[0, 1])
+                    log(f"INFO | {test_year}/{regime} OOS IC={ic:.4f}")
+
+                bundle = {
+                    "model":    model,
+                    "scaler":   scaler,
+                    "features": feature_cols,
+                    "horizon":  horizon,
+                    "regime":   regime,
+                    "train_start": str(train_start.date()),
+                    "test_year":   test_year,
+                }
+                path = f"cross_sectional_ranker_{horizon}d_{test_year}_{regime}.joblib"
+                joblib.dump(bundle, path)
+                log(f"INFO | Saved {path}")
+
+        # Save most recent vintage as live model for each regime
+        latest_year = max(test_years)
+        for regime in regimes:
+            src  = f"cross_sectional_ranker_{horizon}d_{latest_year}_{regime}.joblib"
+            dst  = f"cross_sectional_ranker_{horizon}d_{regime}.joblib"
+            if os.path.exists(src):
+                joblib.dump(joblib.load(src), dst)
+                log(f"INFO | Updated live model {dst} from {latest_year} vintage")
+
+    log("INFO | Regime ML training complete.")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--days",          type=int, default=3650)
     parser.add_argument("--save-ensemble", action="store_true")
     parser.add_argument("--rolling",       action="store_true", help="Rolling walk-forward retrain (one model per year)")
+    parser.add_argument("--regime",        action="store_true", help="Train regime-specific models (TRENDING_BULL, CHOPPY, BEAR)")
     parser.add_argument("--refresh",       action="store_true")
     parser.add_argument("--lightgbm",      action="store_true")
     args = parser.parse_args()
@@ -690,6 +825,8 @@ def main():
 
     if args.rolling:
         train_rolling_ensemble(list(config.WATCHLIST), args.days, args.refresh)
+    elif args.regime:
+        train_rolling_regime_ensemble(list(config.WATCHLIST), args.days, args.refresh)
     elif args.save_ensemble:
         train_and_save_ensemble(list(config.WATCHLIST), args.days, args.refresh)
     else:

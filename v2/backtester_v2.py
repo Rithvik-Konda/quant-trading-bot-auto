@@ -44,7 +44,7 @@ from ml_model import compute_features
 from risk_manager import Position
 from sector_leadership import LeadershipAdapter, apply_leadership_to_snapshots
 from strategy_core import (
-    adaptive_stop_pct, compute_atr_pct, load_ranker_ensemble,
+    adaptive_stop_pct, compute_atr_pct, load_ranker_ensemble, load_ranker_regime_ensemble,
     load_ranker_ensemble_for_year,
     market_regime, normalize_ohlcv, select_top_candidates,
     trend_bullish,
@@ -137,6 +137,19 @@ def run_backtest_v2(
         list(rankers[7]["features"])
     ))
     print(f"[ok]   ensemble loaded ({len(feat_cols_union)} features)", flush=True)
+
+    # Load regime-specific models (trained only on same-regime days)
+    # Falls back to all-regime model if not yet trained
+    print("[prep] loading regime-specific ML ensembles...", flush=True)
+    regime_rankers = load_ranker_regime_ensemble()
+    has_regime_models = any(
+        os.path.exists(f"cross_sectional_ranker_5d_{r}.joblib")
+        for r in ["TRENDING_BULL", "CHOPPY", "BEAR"]
+    )
+    if has_regime_models:
+        print("[ok]   regime-specific models loaded", flush=True)
+    else:
+        print("[warn] regime models not found — using all-regime model for all regimes", flush=True)
 
     # ── 5. Feature computation (parallel + cached) ───────────────────────
     import hashlib, pickle
@@ -343,7 +356,9 @@ def run_backtest_v2(
             port_val = _portfolio_value(cash, close_prices, long_positions, short_positions)
             equity.append((date, port_val))
             continue
-        ml_scores = batch_ml_scores_fast(X, valid_syms, rankers, feat_cols_union)
+        # Use regime-specific model if available, else fall back to all-regime
+        active_rankers = regime_rankers.get(_current_regime, rankers) if regime_rankers else rankers
+        ml_scores = batch_ml_scores_fast(X, valid_syms, active_rankers, feat_cols_union)
 
         # ── Exit: longs ───────────────────────────────────────────────────
         for s in list(long_positions.keys()):
