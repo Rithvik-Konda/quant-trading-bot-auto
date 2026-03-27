@@ -57,7 +57,16 @@ class Trade:
     regime:         str   = ""       # regime at entry
     ann_vol:        float = 0.0     # annualized vol at entry
     call_cost:      float = 0.0     # conviction call premium paid
-    call_pnl:       float = 0.0     # conviction call PnL at exit — for Kelly sizing
+    call_pnl:       float = 0.0     # conviction call PnL at exit
+    # ── Diagnostic flags — which features affected this trade ──
+    breadth_at_entry:   float = 0.0   # market breadth when entered
+    min_hold_triggered: int   = 0     # 1 if min hold prevented early stop
+    cooldown_days:      int   = 0     # cooldown days frozen at stop
+    earnings_blocked:   int   = 0     # 1 if earnings filter blocked (not entered)
+    hyg_stress:         float = 0.0   # HYG 10d return at entry
+    top1pct_bypass:     int   = 0     # 1 if bypassed confirmation as top 1%
+    secular_hold:       int   = 0     # 1 if held past max_hold as secular winner
+    rank_at_exit:       float = 0.0   # ML rank when exited (for secular winners) — for Kelly sizing
     ann_vol:        float = 0.35     # annualized vol at entry — for Kelly bucketing
 
 

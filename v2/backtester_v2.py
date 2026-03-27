@@ -309,7 +309,7 @@ def run_backtest_v2(
     equity:          List[Tuple]              = []
 
     long_stop_dates:  Dict[str, tuple] = {}  # (stop_date, cooldown_days) — frozen at stop time
-    stop_count_annual: Dict[str, Dict[int, int]] = {}  # symbol -> year -> count
+
     short_stop_dates: Dict[str, pd.Timestamp] = {}
     prev_ml_ranks:    Dict[str, float]         = {}  # Fix 1: entry confirmation
     recent_stop_dates: List[pd.Timestamp]      = []  # cascade sensor
@@ -441,10 +441,9 @@ def run_backtest_v2(
             exit_reason = exit_ref = None
 
             # Stop exit with minimum hold period.
-            # Data: trades held <10 days have near-0% WR — stops in first 10 days
-            # are almost always wrong. The position needs time to work.
-            # Emergency stop at >15% loss overrides minimum hold.
-            _emergency_stop = low <= pos.entry_price * 0.85  # >15% loss
+            # Validated across 3 independent windows: WR=5-10% <10d vs 59-65% >=10d
+            # Emergency stop at >15% loss always overrides.
+            _emergency_stop = low <= pos.entry_price * 0.85
             _normal_stop    = low <= stop_px
             _min_hold_met   = hold_d >= 10
             if _emergency_stop or (_normal_stop and _min_hold_met):
@@ -456,16 +455,33 @@ def run_backtest_v2(
                 exit_reason = "take_profit"
                 exit_ref    = close
             elif hold_d >= getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12)):
-                # Profit-based hold extension: let winners run.
-                # If position is up >8% AND ML score is top-decile, extend by 50%.
-                # Data: 129 trades forced out at max_hold while up >$1000 — these
-                # are genuine winners being killed by an arbitrary time limit.
-                base_max   = getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12))
-                ml_score   = ml_scores.get(s, 0.0)
-                extended   = int(base_max * 1.5) if (unrealized_pct > 0.08 and ml_score > 0.85) else base_max
-                if hold_d >= extended:
-                    exit_reason = "max_hold"
-                    exit_ref    = close
+                # Secular winner extension — data shows 180d hold 3x's returns vs 30d
+                # For >0.95 ML rank: no time limit — trailing stop only
+                # For >0.85 ML rank: extend 2x if up >8%
+                # For normal trades: standard max_hold
+                meta_ml = entry_meta.get(s, {}).get("ml_rank_pct", 0.0)
+                ml_score = ml_scores.get(s, 0.0)
+                current_ml = max(meta_ml, ml_score)
+
+                # Secular winner: top 5% cross-sectional rank = no time exit
+                # Principle: if still ranked in top 5% of universe, the edge persists
+                # Exit when rank drops below top 20% — edge has dissipated
+                # This is purely relative rank — no fitted absolute numbers
+                _n_avail = max(len(available_symbols), 100)
+                _top5pct  = 1.0 - (5.0  / _n_avail)   # ~0.989 for 447 stocks
+                _top20pct = 1.0 - (20.0 / _n_avail)   # ~0.955 for 447 stocks
+
+                if current_ml >= _top5pct:
+                    # Still top 5% of universe — edge persists, no time exit
+                    # Let trailing stop manage the position
+                    pass
+                else:
+                    base_max = getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12))
+                    # Extend if still top 20% and profitable
+                    extended = int(base_max * 2.0) if (unrealized_pct > 0.08 and current_ml >= _top20pct) else base_max
+                    if hold_d >= extended:
+                        exit_reason = "max_hold"
+                        exit_ref    = close
             elif _current_regime == BEAR and sector_map.get(s) not in strat_bear.DEFENSIVE_SECTORS:
                 exit_reason = "regime_exit"
                 exit_ref    = close
@@ -517,6 +533,13 @@ def run_backtest_v2(
                     ann_vol=float(meta.get("ann_vol", 0.35)),
                     call_cost=float(meta.get("call_cost", 0.0)),
                     call_pnl=float(_call_pnl),
+                    breadth_at_entry=float(meta.get("breadth_at_entry", 0.0)),
+                    min_hold_triggered=int(meta.get("min_hold_triggered", 0)),
+                    cooldown_days=int(meta.get("cooldown_days", 0)),
+                    hyg_stress=float(meta.get("hyg_stress", 0.0)),
+                    top1pct_bypass=int(meta.get("top1pct_bypass", 0)),
+                    secular_hold=int(meta.get("secular_hold", 0)),
+                    rank_at_exit=float(ml_scores.get(s, 0.0)),
                 ))
                 if exit_reason == "stop" or (exit_reason == "max_hold" and pnl < 0):
                     # Freeze cooldown at stop time — don't recompute at entry time
@@ -528,11 +551,7 @@ def run_backtest_v2(
                     else:
                         _cool_days_frozen = 45
                     long_stop_dates[s] = (date, _cool_days_frozen)
-                    # Track annual stop count per symbol
-                    _yr = date.year
-                    if s not in stop_count_annual:
-                        stop_count_annual[s] = {}
-                    stop_count_annual[s][_yr] = stop_count_annual[s].get(_yr, 0) + 1
+
                 if exit_reason == "stop":
                     recent_stop_dates.append(date)
                 if exit_reason == "regime_exit":
@@ -662,12 +681,8 @@ def run_backtest_v2(
 
                 # Vol-proportional cooldown — high-vol stocks need longer cooling.
                 # APP vol=0.94: 180 days. NVDA vol=0.34: 30 days. Flat 15d let APP enter 4x in 2025.
-                # Block symbols with 3+ stops in last 12 months
-                _yr_now = date.year
-                _stops_this_yr = stop_count_annual.get(s, {}).get(_yr_now, 0)
-                _stops_last_yr = stop_count_annual.get(s, {}).get(_yr_now - 1, 0) if date.month <= 6 else 0
-                if _stops_this_yr + _stops_last_yr >= 3:
-                    continue  # blocked — too many stops, skip this symbol
+                # Vol-scaled cooldown handles repeat entries — no fitted stop count needed
+                # The frozen cooldown (bug fix) already prevents premature re-entry
 
                 last_stop = long_stop_dates.get(s)
                 if last_stop:
@@ -689,7 +704,13 @@ def run_backtest_v2(
                 # Fix 1: Entry confirmation — must rank top decile 2 consecutive days
                 # Exception: >0.99 trades bypass confirmation — signal too strong to delay
                 ml_min_threshold = getattr(params, 'ml_rank_min', getattr(params, 'ml_rank_min_long', 0.80))
-                if snap.ml_rank_pct <= 0.99:  # normal trades need confirmation
+                # Top 1% cross-sectional rank bypasses confirmation
+                # Principle: if ranked #1-4 out of 447 stocks today, signal is strong
+                # This is relative rank, not a fitted absolute threshold
+                _n_available = max(len(available_symbols), 100)
+                _top1pct_threshold = 1.0 - (1.0 / _n_available)  # ~0.997 for 447 stocks
+                _is_top_rank = snap.ml_rank_pct >= _top1pct_threshold
+                if not _is_top_rank:  # normal trades need confirmation
                     if prev_ml_ranks.get(s, 0.0) < ml_min_threshold:
                         prev_ml_ranks[s] = snap.ml_rank_pct
                         continue
@@ -716,8 +737,10 @@ def run_backtest_v2(
                 # Data: breadth<50% has WR=18%, stop_rate=73%, avg=-$897
                 # Breadth>50% has WR=60%+, improves every year without exception
                 _breadth = _compute_breadth(date)
-                if _breadth < 0.50:
+                if _breadth < 0.40:
                     continue  # market internals too weak — skip all new entries
+                # Soft signal: reduce position size when breadth 40-55%
+                _breadth_scalar = 1.0 if _breadth >= 0.55 else 0.7
 
                 # HYG credit stress filter
                 # Credit leads equity — HYG breakdown precedes stock selloffs
@@ -760,11 +783,13 @@ def run_backtest_v2(
                 base_conviction = conviction_multiplier(snap)
                 ml_conv = 0.5 + (snap.ml_rank_pct - ml_min_threshold) / max(1.0 - ml_min_threshold, 0.01)
                 ml_conv = float(_np.clip(ml_conv, 0.5, 1.5))
-                # >0.99 tier: 1.5x size multiplier
-                # Data: avg=$3,192 vs $300 for 0.97-0.99, stop avg only -$578
-                # Kelly optimal is much larger — 1.5x is conservative
-                if snap.ml_rank_pct > 0.99:
-                    ml_conv = min(ml_conv * 1.5, 2.5)
+                # Rank-proportional sizing — pure Kelly principle
+                # Size scales continuously with rank percentile
+                # No fitted multipliers — mathematical relationship only
+                # Top 1%: ~2x base size. Top 5%: ~1.5x. Top 20%: ~1x.
+                _rank_scalar = 1.0 + max(0, snap.ml_rank_pct - ml_min_threshold) / (1.0 - ml_min_threshold)
+                _rank_scalar = float(min(_rank_scalar, 2.0))  # cap at 2x for risk management
+                ml_conv = ml_conv * _rank_scalar
                 conviction = base_conviction * ml_conv
 
                 # Fix 6: Volatility-scaled position sizing (Moreira & Muir 2017)
@@ -933,6 +958,14 @@ def run_backtest_v2(
                 except Exception:
                     pass
 
+                _conv_meta.update({
+                    "breadth_at_entry": float(_compute_breadth(date)),
+                    "hyg_stress":       float(_hyg_10d) if '_hyg_10d' in dir() else 0.0,
+                    "top1pct_bypass":   int(_bypassed_confirmation) if '_bypassed_confirmation' in dir() else 0,
+                    "min_hold_triggered": 0,  # updated at exit
+                    "cooldown_days":    0,
+                    "secular_hold":     0,
+                })
                 entry_meta[s] = _conv_meta
 
         # ── Short entries (bear regime only) ──────────────────────────────

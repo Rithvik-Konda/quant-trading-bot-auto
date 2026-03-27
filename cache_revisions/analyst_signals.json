@@ -1,0 +1,92 @@
+[
+  {
+    "symbol": "NVDA",
+    "upside_to_target": 0.603,
+    "recommendation": 1.28,
+    "n_analysts": 56,
+    "eps_growth_fwd": 0.34,
+    "rev_growth": 0.732,
+    "earnings_growth": 0.956
+  },
+  {
+    "symbol": "PLTR",
+    "upside_to_target": 0.302,
+    "recommendation": 1.93,
+    "n_analysts": 26,
+    "eps_growth_fwd": 0.412,
+    "rev_growth": 0.7,
+    "earnings_growth": 6.476
+  },
+  {
+    "symbol": "APP",
+    "upside_to_target": 0.696,
+    "recommendation": 3,
+    "n_analysts": 28,
+    "eps_growth_fwd": 0.325,
+    "rev_growth": 0.659,
+    "earnings_growth": 0.847
+  },
+  {
+    "symbol": "SNOW",
+    "upside_to_target": 0.563,
+    "recommendation": 1.47,
+    "n_analysts": 46,
+    "eps_growth_fwd": 0.359,
+    "rev_growth": 0.301,
+    "earnings_growth": 0
+  },
+  {
+    "symbol": "MSFT",
+    "upside_to_target": 0.651,
+    "recommendation": 1.28,
+    "n_analysts": 53,
+    "eps_growth_fwd": 0.127,
+    "rev_growth": 0.167,
+    "earnings_growth": 0.598
+  },
+  {
+    "symbol": "ORCL",
+    "upside_to_target": 0.763,
+    "recommendation": 1.61,
+    "n_analysts": 39,
+    "eps_growth_fwd": 0.07,
+    "rev_growth": 0.217,
+    "earnings_growth": 0.245
+  },
+  {
+    "symbol": "INTU",
+    "upside_to_target": 0.446,
+    "recommendation": 1.54,
+    "n_analysts": 33,
+    "eps_growth_fwd": 0.14,
+    "rev_growth": 0.41,
+    "earnings_growth": -0.185
+  },
+  {
+    "symbol": "AVAV",
+    "upside_to_target": 0.676,
+    "recommendation": 1.63,
+    "n_analysts": 17,
+    "eps_growth_fwd": 0.407,
+    "rev_growth": 1.434,
+    "earnings_growth": 0
+  },
+  {
+    "symbol": "BA",
+    "upside_to_target": 0.426,
+    "recommendation": 1.58,
+    "n_analysts": 24,
+    "eps_growth_fwd": 47.425,
+    "rev_growth": 0.571,
+    "earnings_growth": 0
+  },
+  {
+    "symbol": "FTNT",
+    "upside_to_target": 0.135,
+    "recommendation": 2.72,
+    "n_analysts": 34,
+    "eps_growth_fwd": 0.11,
+    "rev_growth": 0.148,
+    "earnings_growth": -0.011
+  }
+]

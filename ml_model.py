@@ -774,6 +774,67 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
                    'insider_ceo_buying','insider_net_buying']:
             d[_k] = pd.Series(0.0, index=df.index)
 
+    # ── Earnings quality — accruals vs cash flow (Sloan 1996) ───────────
+    # Principle: earnings backed by CASH are more durable than accrual earnings
+    # Low accruals = conservative accounting = higher quality earnings
+    # Works because of accounting reality — true since double-entry bookkeeping 1494
+    # High accruals stock underperforms by 10%/yr (Sloan 1996, 40-year study)
+    try:
+        import yfinance as _yf_aq
+        _aq_tick = _yf_aq.Ticker(symbol or '')
+        _cf = _aq_tick.cashflow
+        _bs = _aq_tick.balance_sheet
+        _inc = _aq_tick.income_stmt
+        if _cf is not None and _bs is not None and _inc is not None and len(_cf.columns) >= 2:
+            # Operating cash flow
+            _ocf = float(_cf.loc['Operating Cash Flow'].iloc[0]) if 'Operating Cash Flow' in _cf.index else 0
+            # Net income
+            _ni  = float(_inc.loc['Net Income'].iloc[0]) if 'Net Income' in _inc.index else 0
+            # Total assets for scaling
+            _ta  = float(_bs.loc['Total Assets'].iloc[0]) if 'Total Assets' in _bs.index else 1
+            # Accruals = Net Income - Operating Cash Flow (scaled by assets)
+            # Low accruals (earnings ≈ cash) = high quality
+            _accruals = (_ni - _ocf) / max(abs(_ta), 1)
+            # Accrual ratio: negative = cash > earnings = HIGH QUALITY
+            _accrual_ratio = float(np.clip(_accruals, -0.20, 0.20))
+            # Cash earnings ratio: OCF/NI > 1 = cash confirms earnings
+            _cash_earnings = float(np.clip(_ocf / max(abs(_ni), 1), -2, 3)) if _ni != 0 else 0.0
+            d["accrual_ratio"]    = pd.Series(_accrual_ratio, index=df.index)
+            d["cash_earnings"]    = pd.Series(_cash_earnings, index=df.index)
+            d["earnings_quality"] = pd.Series(float(-_accrual_ratio + 0.20), index=df.index)  # higher = better
+        else:
+            d["accrual_ratio"]    = pd.Series(0.0, index=df.index)
+            d["cash_earnings"]    = pd.Series(1.0, index=df.index)
+            d["earnings_quality"] = pd.Series(0.5, index=df.index)
+    except Exception:
+        d["accrual_ratio"]    = pd.Series(0.0, index=df.index)
+        d["cash_earnings"]    = pd.Series(1.0, index=df.index)
+        d["earnings_quality"] = pd.Series(0.5, index=df.index)
+
+    # ── Earnings surprise quality (soft signal, not hard filter) ──────────
+    # beat_rate as ML feature — let ranker weigh vs other signals
+    # Data showed hard filter hurts 2022/2023/2025 — soft is better
+    try:
+        import json as _jeq
+        _eq_path = '/Users/rick/ai_trading_bot_v2/cache_revisions/earnings_quality.json'
+        if os.path.exists(_eq_path):
+            _eq = _jeq.load(open(_eq_path))
+            _eq_data = _eq.get(symbol or {}, {})
+            _beat_rate  = float(_eq_data.get('beat_rate', 0.5))
+            _avg_surp   = float(np.clip(_eq_data.get('avg_surprise', 0.0), -1, 2))
+            _streak     = float(min(_eq_data.get('streak', 0), 8)) / 8.0
+        else:
+            _beat_rate = 0.5
+            _avg_surp  = 0.0
+            _streak    = 0.0
+        d["eps_beat_rate"]    = pd.Series(_beat_rate, index=df.index)
+        d["eps_avg_surprise"] = pd.Series(_avg_surp,  index=df.index)
+        d["eps_beat_streak"]  = pd.Series(_streak,    index=df.index)
+    except Exception:
+        d["eps_beat_rate"]    = pd.Series(0.5, index=df.index)
+        d["eps_avg_surprise"] = pd.Series(0.0, index=df.index)
+        d["eps_beat_streak"]  = pd.Series(0.0, index=df.index)
+
     # Institutional flow features — SEC EDGAR 13F quarterly
     # Measures Vanguard+BlackRock+StateStreet QoQ share count changes
     # Filtered to exclude passive rebalancing artifacts (>50% changes)

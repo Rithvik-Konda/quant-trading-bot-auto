@@ -1,0 +1,86 @@
+{
+  "PLTR": {
+    "beat_rate": 1.0,
+    "avg_surprise": 0.127,
+    "streak": 4,
+    "signal": "STRONG \u2713",
+    "category": "winners"
+  },
+  "APP": {
+    "beat_rate": 1.0,
+    "avg_surprise": 0.122,
+    "streak": 4,
+    "signal": "STRONG \u2713",
+    "category": "winners"
+  },
+  "SNOW": {
+    "beat_rate": 1.0,
+    "avg_surprise": 0.187,
+    "streak": 4,
+    "signal": "STRONG \u2713",
+    "category": "winners"
+  },
+  "NVDA": {
+    "beat_rate": 1.0,
+    "avg_surprise": 0.052,
+    "streak": 4,
+    "signal": "STRONG \u2713",
+    "category": "winners"
+  },
+  "HALO": {
+    "beat_rate": 0.75,
+    "avg_surprise": -0.167,
+    "streak": 3,
+    "signal": "NEUTRAL",
+    "category": "winners"
+  },
+  "TTD": {
+    "beat_rate": 0.75,
+    "avg_surprise": 0.09,
+    "streak": 1,
+    "signal": "STRONG \u2713",
+    "category": "winners"
+  },
+  "AVAV": {
+    "beat_rate": 0.25,
+    "avg_surprise": -0.107,
+    "streak": 1,
+    "signal": "WEAK \u2717",
+    "category": "losers"
+  },
+  "ORCL": {
+    "beat_rate": 0.75,
+    "avg_surprise": 0.116,
+    "streak": 1,
+    "signal": "STRONG \u2713",
+    "category": "losers"
+  },
+  "BA": {
+    "beat_rate": 0.75,
+    "avg_surprise": 5.746,
+    "streak": 2,
+    "signal": "STRONG \u2713",
+    "category": "losers"
+  },
+  "FTNT": {
+    "beat_rate": 1.0,
+    "avg_surprise": 0.108,
+    "streak": 4,
+    "signal": "STRONG \u2713",
+    "category": "losers"
+  },
+  "INTU": {
+    "beat_rate": 1.0,
+    "avg_surprise": 0.077,
+    "streak": 4,
+    "signal": "STRONG \u2713",
+    "category": "losers"
+  },
+  "MSFT": {
+    "beat_rate": 1.0,
+    "avg_surprise": 0.128,
+    "streak": 4,
+    "signal": "STRONG \u2713",
+    "category": "losers"
+  }
+}
