@@ -285,7 +285,8 @@ def run_backtest_v2(
     trades:          List[Trade]              = []
     equity:          List[Tuple]              = []
 
-    long_stop_dates:  Dict[str, pd.Timestamp] = {}
+    long_stop_dates:  Dict[str, tuple] = {}  # (stop_date, cooldown_days) — frozen at stop time
+    stop_count_annual: Dict[str, Dict[int, int]] = {}  # symbol -> year -> count
     short_stop_dates: Dict[str, pd.Timestamp] = {}
     prev_ml_ranks:    Dict[str, float]         = {}  # Fix 1: entry confirmation
     recent_stop_dates: List[pd.Timestamp]      = []  # cascade sensor
@@ -416,14 +417,16 @@ def run_backtest_v2(
             hold_d      = pos.age_days(pd.Timestamp(date).to_pydatetime())
             exit_reason = exit_ref = None
 
-            # Stop exit — original logic restored.
-            # Regime-conditional confirmation (vol_ratio>1.5 OR >3% break)
-            # caused WR to drop to 13% by holding through real breakdowns.
-            # Lesson: whipsaw reduction via confirmation delays real exits too long.
-            # Simple close-below-stop is more robust across regimes.
-            if low <= stop_px:
+            # Stop exit with minimum hold period.
+            # Data: trades held <10 days have near-0% WR — stops in first 10 days
+            # are almost always wrong. The position needs time to work.
+            # Emergency stop at >15% loss overrides minimum hold.
+            _emergency_stop = low <= pos.entry_price * 0.85  # >15% loss
+            _normal_stop    = low <= stop_px
+            _min_hold_met   = hold_d >= 10
+            if _emergency_stop or (_normal_stop and _min_hold_met):
                 exit_reason = "stop"
-                exit_ref    = stop_px
+                exit_ref    = stop_px if not _emergency_stop else pos.entry_price * 0.85
             elif close >= pos.entry_price * (1 + getattr(params, 'take_profit_pct', getattr(params, 'take_profit_long', 0.40))):
                 # Take profit — trailing ATR stop handles secular winners naturally
                 # Removed fitted suppression (0.90/0.85/0.65 thresholds were fitted to APP/NVDA/VRT)
@@ -493,7 +496,20 @@ def run_backtest_v2(
                     call_pnl=float(_call_pnl),
                 ))
                 if exit_reason == "stop" or (exit_reason == "max_hold" and pnl < 0):
-                    long_stop_dates[s] = date
+                    # Freeze cooldown at stop time — don't recompute at entry time
+                    # Bug was: vol drops after stop, cooldown shrinks, re-enters too early
+                    _df_cool_stop = hist.get(s)
+                    if _df_cool_stop is not None and len(_df_cool_stop.loc[:date]) >= 20:
+                        _cool_vol_stop = float(_df_cool_stop.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5))
+                        _cool_days_frozen = 180 if _cool_vol_stop > 0.70 else 90 if _cool_vol_stop > 0.50 else 45 if _cool_vol_stop > 0.30 else 15
+                    else:
+                        _cool_days_frozen = 45
+                    long_stop_dates[s] = (date, _cool_days_frozen)
+                    # Track annual stop count per symbol
+                    _yr = date.year
+                    if s not in stop_count_annual:
+                        stop_count_annual[s] = {}
+                    stop_count_annual[s][_yr] = stop_count_annual[s].get(_yr, 0) + 1
                 if exit_reason == "stop":
                     recent_stop_dates.append(date)
                 if exit_reason == "regime_exit":
@@ -612,15 +628,18 @@ def run_backtest_v2(
 
                 # Vol-proportional cooldown — high-vol stocks need longer cooling.
                 # APP vol=0.94: 180 days. NVDA vol=0.34: 30 days. Flat 15d let APP enter 4x in 2025.
+                # Block symbols with 3+ stops in last 12 months
+                _yr_now = date.year
+                _stops_this_yr = stop_count_annual.get(s, {}).get(_yr_now, 0)
+                _stops_last_yr = stop_count_annual.get(s, {}).get(_yr_now - 1, 0) if date.month <= 6 else 0
+                if _stops_this_yr + _stops_last_yr >= 3:
+                    continue  # blocked — too many stops, skip this symbol
+
                 last_stop = long_stop_dates.get(s)
                 if last_stop:
-                    _df_cool = hist.get(s)
-                    if _df_cool is not None and len(_df_cool) >= 20:
-                        _cool_vol = float(_df_cool.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5))
-                        _cool_days = 180 if _cool_vol > 0.70 else 90 if _cool_vol > 0.50 else 45 if _cool_vol > 0.30 else 15
-                    else:
-                        _cool_days = 15
-                    if (date - last_stop).days < _cool_days:
+                    # Use frozen cooldown from stop time — not recomputed current vol
+                    _stop_date, _cool_days_frozen = last_stop
+                    if (date - _stop_date).days < _cool_days_frozen:
                         continue
 
                 # Earnings calendar filter — avoid entries within 5 days of earnings
