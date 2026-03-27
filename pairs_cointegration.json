@@ -1,0 +1,590 @@
+[
+  {
+    "sector": "semiconductors",
+    "sym1": "AVGO",
+    "sym2": "KLAC",
+    "pval": 0.0923,
+    "hedge_ratio": 0.7331,
+    "half_life": 484.0,
+    "spread_std": 0.3837,
+    "z_score_now": 1.126
+  },
+  {
+    "sector": "cloud_software",
+    "sym1": "SNOW",
+    "sym2": "OKTA",
+    "pval": 0.0578,
+    "hedge_ratio": 1.1075,
+    "half_life": 122.6,
+    "spread_std": 0.3616,
+    "z_score_now": 0.589
+  },
+  {
+    "sector": "cloud_software",
+    "sym1": "DDOG",
+    "sym2": "MDB",
+    "pval": 0.0541,
+    "hedge_ratio": 0.8235,
+    "half_life": 78.6,
+    "spread_std": 0.2276,
+    "z_score_now": 1.309
+  },
+  {
+    "sector": "cloud_software",
+    "sym1": "DDOG",
+    "sym2": "NET",
+    "pval": 0.0083,
+    "hedge_ratio": 1.0453,
+    "half_life": 204.4,
+    "spread_std": 0.3649,
+    "z_score_now": -2.181
+  },
+  {
+    "sector": "cloud_software",
+    "sym1": "DDOG",
+    "sym2": "TEAM",
+    "pval": 0.0324,
+    "hedge_ratio": 0.8798,
+    "half_life": 197.9,
+    "spread_std": 0.2969,
+    "z_score_now": 3.71
+  },
+  {
+    "sector": "cloud_software",
+    "sym1": "DDOG",
+    "sym2": "ZS",
+    "pval": 0.0048,
+    "hedge_ratio": 0.8987,
+    "half_life": 36.5,
+    "spread_std": 0.1432,
+    "z_score_now": 2.616
+  },
+  {
+    "sector": "cloud_software",
+    "sym1": "DDOG",
+    "sym2": "OKTA",
+    "pval": 0.005,
+    "hedge_ratio": 0.9741,
+    "half_life": 233.6,
+    "spread_std": 0.5326,
+    "z_score_now": 0.969
+  },
+  {
+    "sector": "cloud_software",
+    "sym1": "MDB",
+    "sym2": "OKTA",
+    "pval": 0.0556,
+    "hedge_ratio": 1.183,
+    "half_life": 267.0,
+    "spread_std": 0.576,
+    "z_score_now": 0.461
+  },
+  {
+    "sector": "cloud_software",
+    "sym1": "ZS",
+    "sym2": "OKTA",
+    "pval": 0.0403,
+    "hedge_ratio": 1.0839,
+    "half_life": 245.7,
+    "spread_std": 0.5691,
+    "z_score_now": 0.277
+  },
+  {
+    "sector": "fintech",
+    "sym1": "V",
+    "sym2": "MA",
+    "pval": 0.0026,
+    "hedge_ratio": 0.918,
+    "half_life": 28.8,
+    "spread_std": 0.0323,
+    "z_score_now": 0.389
+  },
+  {
+    "sector": "fintech",
+    "sym1": "COIN",
+    "sym2": "AFRM",
+    "pval": 0.0839,
+    "hedge_ratio": 1.3651,
+    "half_life": 67.3,
+    "spread_std": 0.4617,
+    "z_score_now": -0.156
+  },
+  {
+    "sector": "megacap_tech",
+    "sym1": "AAPL",
+    "sym2": "GOOGL",
+    "pval": 0.0612,
+    "hedge_ratio": 1.0437,
+    "half_life": 165.5,
+    "spread_std": 0.1717,
+    "z_score_now": -2.081
+  },
+  {
+    "sector": "megacap_tech",
+    "sym1": "AAPL",
+    "sym2": "META",
+    "pval": 0.097,
+    "hedge_ratio": 0.8768,
+    "half_life": 264.8,
+    "spread_std": 0.3174,
+    "z_score_now": -0.041
+  },
+  {
+    "sector": "megacap_tech",
+    "sym1": "META",
+    "sym2": "AMZN",
+    "pval": 0.0557,
+    "hedge_ratio": 1.15,
+    "half_life": 183.2,
+    "spread_std": 0.2714,
+    "z_score_now": 0.646
+  },
+  {
+    "sector": "cybersecurity",
+    "sym1": "PANW",
+    "sym2": "OKTA",
+    "pval": 0.0679,
+    "hedge_ratio": 0.9552,
+    "half_life": 725.7,
+    "spread_std": 0.891,
+    "z_score_now": 0.894
+  },
+  {
+    "sector": "energy",
+    "sym1": "XOM",
+    "sym2": "VLO",
+    "pval": 0.0157,
+    "hedge_ratio": 0.9525,
+    "half_life": 35.8,
+    "spread_std": 0.0882,
+    "z_score_now": -1.552
+  },
+  {
+    "sector": "banks",
+    "sym1": "GS",
+    "sym2": "MS",
+    "pval": 0.0828,
+    "hedge_ratio": 1.3184,
+    "half_life": 53.3,
+    "spread_std": 0.1058,
+    "z_score_now": -0.125
+  },
+  {
+    "sector": "banks",
+    "sym1": "GS",
+    "sym2": "WFC",
+    "pval": 0.0088,
+    "hedge_ratio": 1.5332,
+    "half_life": 85.4,
+    "spread_std": 0.1855,
+    "z_score_now": -0.012
+  },
+  {
+    "sector": "banks",
+    "sym1": "MS",
+    "sym2": "C",
+    "pval": 0.0484,
+    "hedge_ratio": 1.1009,
+    "half_life": 132.1,
+    "spread_std": 0.2144,
+    "z_score_now": -0.483
+  },
+  {
+    "sector": "banks",
+    "sym1": "MS",
+    "sym2": "WFC",
+    "pval": 0.0001,
+    "hedge_ratio": 1.1628,
+    "half_life": 60.8,
+    "spread_std": 0.1368,
+    "z_score_now": 0.06
+  },
+  {
+    "sector": "healthcare",
+    "sym1": "TMO",
+    "sym2": "ISRG",
+    "pval": 0.0253,
+    "hedge_ratio": 1.0744,
+    "half_life": 450.2,
+    "spread_std": 0.3404,
+    "z_score_now": -1.278
+  },
+  {
+    "sector": "healthcare",
+    "sym1": "TMO",
+    "sym2": "DHR",
+    "pval": 0.0926,
+    "hedge_ratio": 1.1557,
+    "half_life": 58.3,
+    "spread_std": 0.074,
+    "z_score_now": 1.905
+  },
+  {
+    "sector": "consumer",
+    "sym1": "WMT",
+    "sym2": "NKE",
+    "pval": 0.0169,
+    "hedge_ratio": 0.8758,
+    "half_life": 999,
+    "spread_std": 0.5603,
+    "z_score_now": 2.373
+  },
+  {
+    "sector": "consumer",
+    "sym1": "COST",
+    "sym2": "NKE",
+    "pval": 0.0289,
+    "hedge_ratio": 1.3679,
+    "half_life": 999,
+    "spread_std": 0.7244,
+    "z_score_now": 2.011
+  },
+  {
+    "sector": "consumer",
+    "sym1": "TGT",
+    "sym2": "MCD",
+    "pval": 0.0994,
+    "hedge_ratio": 0.8984,
+    "half_life": 456.8,
+    "spread_std": 0.3556,
+    "z_score_now": -1.119
+  },
+  {
+    "sector": "consumer",
+    "sym1": "HD",
+    "sym2": "NKE",
+    "pval": 0.0074,
+    "hedge_ratio": 1.2467,
+    "half_life": 2008.3,
+    "spread_std": 0.4392,
+    "z_score_now": 1.918
+  },
+  {
+    "sector": "consumer",
+    "sym1": "LOW",
+    "sym2": "MCD",
+    "pval": 0.0052,
+    "hedge_ratio": 0.9586,
+    "half_life": 40.2,
+    "spread_std": 0.1063,
+    "z_score_now": -0.353
+  },
+  {
+    "sector": "consumer",
+    "sym1": "LOW",
+    "sym2": "SBUX",
+    "pval": 0.0194,
+    "hedge_ratio": 1.1745,
+    "half_life": 97.9,
+    "spread_std": 0.2131,
+    "z_score_now": 0.738
+  },
+  {
+    "sector": "consumer",
+    "sym1": "LOW",
+    "sym2": "NKE",
+    "pval": 0.0003,
+    "hedge_ratio": 1.149,
+    "half_life": 1158.0,
+    "spread_std": 0.4405,
+    "z_score_now": 2.029
+  },
+  {
+    "sector": "consumer",
+    "sym1": "MCD",
+    "sym2": "NKE",
+    "pval": 0.0035,
+    "hedge_ratio": 1.1986,
+    "half_life": 999,
+    "spread_std": 0.4462,
+    "z_score_now": 2.178
+  },
+  {
+    "sector": "consumer",
+    "sym1": "SBUX",
+    "sym2": "NKE",
+    "pval": 0.0869,
+    "hedge_ratio": 0.9795,
+    "half_life": 421.7,
+    "spread_std": 0.2507,
+    "z_score_now": 2.327
+  },
+  {
+    "sector": "industrials",
+    "sym1": "DE",
+    "sym2": "UPS",
+    "pval": 0.0554,
+    "hedge_ratio": 1.1762,
+    "half_life": 4016.9,
+    "spread_std": 0.4503,
+    "z_score_now": 2.155
+  },
+  {
+    "sector": "industrials",
+    "sym1": "DE",
+    "sym2": "GE",
+    "pval": 0.029,
+    "hedge_ratio": 1.2837,
+    "half_life": 3098.8,
+    "spread_std": 0.6998,
+    "z_score_now": -1.424
+  },
+  {
+    "sector": "industrials",
+    "sym1": "HON",
+    "sym2": "UPS",
+    "pval": 0.0559,
+    "hedge_ratio": 1.0451,
+    "half_life": 1475.0,
+    "spread_std": 0.2985,
+    "z_score_now": 2.16
+  },
+  {
+    "sector": "industrials",
+    "sym1": "HON",
+    "sym2": "FDX",
+    "pval": 0.0484,
+    "hedge_ratio": 0.957,
+    "half_life": 71.5,
+    "spread_std": 0.1443,
+    "z_score_now": -1.246
+  },
+  {
+    "sector": "industrials",
+    "sym1": "HON",
+    "sym2": "GE",
+    "pval": 0.0155,
+    "hedge_ratio": 1.1363,
+    "half_life": 7717.5,
+    "spread_std": 0.7212,
+    "z_score_now": -1.55
+  },
+  {
+    "sector": "industrials",
+    "sym1": "HON",
+    "sym2": "ETN",
+    "pval": 0.0504,
+    "hedge_ratio": 0.9869,
+    "half_life": 519.9,
+    "spread_std": 0.3748,
+    "z_score_now": -1.125
+  },
+  {
+    "sector": "industrials",
+    "sym1": "HON",
+    "sym2": "PH",
+    "pval": 0.0632,
+    "hedge_ratio": 0.8742,
+    "half_life": 597.1,
+    "spread_std": 0.3373,
+    "z_score_now": -1.655
+  },
+  {
+    "sector": "industrials",
+    "sym1": "HON",
+    "sym2": "EMR",
+    "pval": 0.0711,
+    "hedge_ratio": 1.1456,
+    "half_life": 115.7,
+    "spread_std": 0.1748,
+    "z_score_now": -0.783
+  },
+  {
+    "sector": "industrials",
+    "sym1": "UPS",
+    "sym2": "GE",
+    "pval": 0.091,
+    "hedge_ratio": 1.0763,
+    "half_life": 999,
+    "spread_std": 0.9397,
+    "z_score_now": -1.753
+  },
+  {
+    "sector": "industrials",
+    "sym1": "UPS",
+    "sym2": "PH",
+    "pval": 0.0416,
+    "hedge_ratio": 0.8313,
+    "half_life": 999,
+    "spread_std": 0.5754,
+    "z_score_now": -1.946
+  },
+  {
+    "sector": "industrials",
+    "sym1": "GE",
+    "sym2": "PH",
+    "pval": 0.0,
+    "hedge_ratio": 0.7611,
+    "half_life": 1026.1,
+    "spread_std": 0.3558,
+    "z_score_now": 1.405
+  },
+  {
+    "sector": "industrials",
+    "sym1": "GE",
+    "sym2": "EMR",
+    "pval": 0.0108,
+    "hedge_ratio": 0.9928,
+    "half_life": 999,
+    "spread_std": 0.5027,
+    "z_score_now": 1.731
+  },
+  {
+    "sector": "software_saas",
+    "sym1": "WDAY",
+    "sym2": "HUBS",
+    "pval": 0.0729,
+    "hedge_ratio": 0.882,
+    "half_life": 60.0,
+    "spread_std": 0.1909,
+    "z_score_now": 0.084
+  },
+  {
+    "sector": "ecommerce",
+    "sym1": "ETSY",
+    "sym2": "BKNG",
+    "pval": 0.0662,
+    "hedge_ratio": 0.5651,
+    "half_life": 666.9,
+    "spread_std": 0.6642,
+    "z_score_now": -1.297
+  },
+  {
+    "sector": "ev_auto",
+    "sym1": "TSLA",
+    "sym2": "GM",
+    "pval": 0.0156,
+    "hedge_ratio": 1.4374,
+    "half_life": 55.6,
+    "spread_std": 0.3107,
+    "z_score_now": -0.941
+  },
+  {
+    "sector": "ev_auto",
+    "sym1": "TSLA",
+    "sym2": "HOG",
+    "pval": 0.0079,
+    "hedge_ratio": 1.5522,
+    "half_life": 217.8,
+    "spread_std": 0.5833,
+    "z_score_now": 2.16
+  },
+  {
+    "sector": "ev_auto",
+    "sym1": "RIVN",
+    "sym2": "F",
+    "pval": 0.0425,
+    "hedge_ratio": 1.1759,
+    "half_life": 70.8,
+    "spread_std": 0.4146,
+    "z_score_now": -0.355
+  },
+  {
+    "sector": "financial_etfs",
+    "sym1": "XLF",
+    "sym2": "IAI",
+    "pval": 0.0838,
+    "hedge_ratio": 0.7773,
+    "half_life": 44.0,
+    "z_score_now": -2.07
+  },
+  {
+    "sector": "health_etfs",
+    "sym1": "XLV",
+    "sym2": "IBB",
+    "pval": 0.0563,
+    "hedge_ratio": 0.989,
+    "half_life": 237.5,
+    "z_score_now": -0.44
+  },
+  {
+    "sector": "health_etfs",
+    "sym1": "XLV",
+    "sym2": "XBI",
+    "pval": 0.0088,
+    "hedge_ratio": 1.0617,
+    "half_life": 278.5,
+    "z_score_now": -0.478
+  },
+  {
+    "sector": "health_etfs",
+    "sym1": "IBB",
+    "sym2": "XBI",
+    "pval": 0.0517,
+    "hedge_ratio": 1.0742,
+    "half_life": 210.4,
+    "z_score_now": -0.492
+  },
+  {
+    "sector": "broad_market",
+    "sym1": "SPY",
+    "sym2": "DIA",
+    "pval": 0.0109,
+    "hedge_ratio": 1.0431,
+    "half_life": 208.6,
+    "z_score_now": 1.476
+  },
+  {
+    "sector": "broad_market",
+    "sym1": "QQQ",
+    "sym2": "DIA",
+    "pval": 0.0825,
+    "hedge_ratio": 1.0106,
+    "half_life": 178.3,
+    "z_score_now": 1.36
+  },
+  {
+    "sector": "broad_market",
+    "sym1": "MDY",
+    "sym2": "DIA",
+    "pval": 0.07,
+    "hedge_ratio": 1.051,
+    "half_life": 68.4,
+    "z_score_now": -0.462
+  },
+  {
+    "sector": "stock_vs_etf",
+    "sym1": "AMD",
+    "sym2": "SOXX",
+    "pval": 0.0898,
+    "hedge_ratio": 0.9207,
+    "half_life": 54.7,
+    "z_score_now": -0.098
+  },
+  {
+    "sector": "stock_vs_etf",
+    "sym1": "AAPL",
+    "sym2": "XLK",
+    "pval": 0.0853,
+    "hedge_ratio": 1.1517,
+    "half_life": 123.0,
+    "z_score_now": -0.835
+  },
+  {
+    "sector": "stock_vs_etf",
+    "sym1": "XOM",
+    "sym2": "XLE",
+    "pval": 0.0055,
+    "hedge_ratio": 1.2489,
+    "half_life": 42.2,
+    "z_score_now": -0.503
+  },
+  {
+    "sector": "stock_vs_etf",
+    "sym1": "LLY",
+    "sym2": "XLV",
+    "pval": 0.0639,
+    "hedge_ratio": 1.236,
+    "half_life": 1531.6,
+    "z_score_now": 1.247
+  },
+  {
+    "sector": "stock_vs_etf",
+    "sym1": "HD",
+    "sym2": "XLY",
+    "pval": 0.0606,
+    "hedge_ratio": 1.2926,
+    "half_life": 109.2,
+    "z_score_now": -1.937
+  }
+]
