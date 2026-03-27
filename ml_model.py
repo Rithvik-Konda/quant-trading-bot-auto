@@ -679,6 +679,85 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
         for _k in ["job_velocity","job_expanding","job_contracting"]:
             d[_k] = pd.Series(0.0, index=df.index)
 
+    # Insider sequence signal — sequence of buys ENDING = strongest buy signal
+    # Alpha Architect: 22-32% annualized alpha from sequence confirmation
+    try:
+        import json as _jseq
+        _sp = "/Users/rick/ai_trading_bot_v2/cache_insider/insider_sequence.json"
+        if os.path.exists(_sp):
+            _sd = {r["symbol"]: r for r in _jseq.load(open(_sp))}
+            _s  = _sd.get(symbol or "", {})
+            d["insider_seq_buy"]      = pd.Series(float(_s.get("insider_seq_buy", 0)), index=df.index)
+            d["insider_seq_strength"] = pd.Series(float(_s.get("insider_seq_strength", 0)), index=df.index)
+        else:
+            d["insider_seq_buy"]      = pd.Series(0.0, index=df.index)
+            d["insider_seq_strength"] = pd.Series(0.0, index=df.index)
+    except Exception:
+        d["insider_seq_buy"]      = pd.Series(0.0, index=df.index)
+        d["insider_seq_strength"] = pd.Series(0.0, index=df.index)
+
+    # App Store rating — consumer tech revenue proxy (Apple iTunes API, free)
+    # High rating (>=4.5) correlates with user retention and revenue growth
+    try:
+        import json as _japp
+        _ap = "/Users/rick/ai_trading_bot_v2/cache_appstore/app_ratings.json"
+        if os.path.exists(_ap):
+            _ad = {r["symbol"]: r for r in _japp.load(open(_ap))}
+            _a  = _ad.get(symbol or "", {})
+            d["app_rating"]      = pd.Series(float(_a.get("app_rating", 0)), index=df.index)
+            d["app_rating_high"] = pd.Series(float(_a.get("app_rating_high", 0)), index=df.index)
+        else:
+            d["app_rating"]      = pd.Series(0.0, index=df.index)
+            d["app_rating_high"] = pd.Series(0.0, index=df.index)
+    except Exception:
+        d["app_rating"]      = pd.Series(0.0, index=df.index)
+        d["app_rating_high"] = pd.Series(0.0, index=df.index)
+
+    # Squeeze score — SI velocity + days-to-cover + momentum composite
+    try:
+        import json as _jsq
+        _sqp = "/Users/rick/ai_trading_bot_v2/cache_si/squeeze_scores.json"
+        if os.path.exists(_sqp):
+            _sqd = {r["symbol"]: r for r in _jsq.load(open(_sqp))}
+            _sq  = _sqd.get(symbol or "", {})
+            d["squeeze_score"] = pd.Series(float(_sq.get("squeeze_score", 0)), index=df.index)
+            d["squeeze_alert"] = pd.Series(float(_sq.get("squeeze_alert", 0)), index=df.index)
+        else:
+            d["squeeze_score"] = pd.Series(0.0, index=df.index)
+            d["squeeze_alert"] = pd.Series(0.0, index=df.index)
+    except Exception:
+        d["squeeze_score"] = pd.Series(0.0, index=df.index)
+        d["squeeze_alert"] = pd.Series(0.0, index=df.index)
+
+    # FDA catalyst flag — biotech event risk
+    try:
+        import json as _jfda
+        _fdap = "/Users/rick/ai_trading_bot_v2/cache_fda/fda_signals.json"
+        if os.path.exists(_fdap):
+            _fdad = {r["symbol"]: r for r in _jfda.load(open(_fdap))}
+            _fda  = _fdad.get(symbol or "", {})
+            d["fda_catalyst_near"] = pd.Series(float(_fda.get("fda_catalyst_near", 0)), index=df.index)
+        else:
+            d["fda_catalyst_near"] = pd.Series(0.0, index=df.index)
+    except Exception:
+        d["fda_catalyst_near"] = pd.Series(0.0, index=df.index)
+
+    # 8-K text sentiment — Loughran-McDonald financial wordlist on SEC filings
+    try:
+        import json as _j8k
+        _8kp = "/Users/rick/ai_trading_bot_v2/cache_8k/8k_sentiment.json"
+        if os.path.exists(_8kp):
+            _8kd = {r["symbol"]: r for r in _j8k.load(open(_8kp))}
+            _8k  = _8kd.get(symbol or "", {})
+            d["8k_sentiment"] = pd.Series(float(_8k.get("8k_sentiment", 0)), index=df.index)
+            d["8k_negative"]  = pd.Series(float(_8k.get("8k_negative", 0)), index=df.index)
+        else:
+            d["8k_sentiment"] = pd.Series(0.0, index=df.index)
+            d["8k_negative"]  = pd.Series(0.0, index=df.index)
+    except Exception:
+        d["8k_sentiment"] = pd.Series(0.0, index=df.index)
+        d["8k_negative"]  = pd.Series(0.0, index=df.index)
+
     # Insider flow features — SEC EDGAR Form 4 (filed within 2 days)
     # insider_cluster: 3+ insiders buying = strongest signal (Seyhun 1998)
     # insider_net_buying: buys minus sells — positive = bullish insider sentiment
