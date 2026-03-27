@@ -662,6 +662,46 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
     else:
         d["momentum_persistence"] = pd.Series(0.5, index=df.index)
 
+    # Institutional flow features — SEC EDGAR 13F quarterly
+    # Measures Vanguard+BlackRock+StateStreet QoQ share count changes
+    # Filtered to exclude passive rebalancing artifacts (>50% changes)
+    # Active buying (5-20% increase) predicts 6-12mo returns (Nofsinger 1999)
+    try:
+        import json as _json13f
+        _13f_path = '/Users/rick/ai_trading_bot_v2/cache_13f/inst_changes_filtered.json'
+        if os.path.exists(_13f_path):
+            with open(_13f_path) as _f13f:
+                _13f_data = {r['symbol']: r for r in _json13f.load(_f13f)}
+            _sym_13f = _13f_data.get(symbol or '', {})
+            _inst_chg = float(_sym_13f.get('chg', 0.0))
+            d['inst_buying']  = pd.Series(float(np.clip(max(_inst_chg, 0), 0, 0.5)), index=df.index)
+            d['inst_selling'] = pd.Series(float(np.clip(-min(_inst_chg, 0), 0, 0.5)), index=df.index)
+            d['inst_chg_pct'] = pd.Series(float(np.clip(_inst_chg, -0.5, 0.5)), index=df.index)
+        else:
+            d['inst_buying']  = pd.Series(0.0, index=df.index)
+            d['inst_selling'] = pd.Series(0.0, index=df.index)
+            d['inst_chg_pct'] = pd.Series(0.0, index=df.index)
+    except Exception:
+        d['inst_buying']  = pd.Series(0.0, index=df.index)
+        d['inst_selling'] = pd.Series(0.0, index=df.index)
+        d['inst_chg_pct'] = pd.Series(0.0, index=df.index)
+
+    # Short Interest velocity features — FINRA data (2x monthly)
+    # si_cover_signal: falling SI + rising price = short covering rally
+    # si_squeeze_risk: high SI + rising SI = squeeze danger
+    # si_velocity: acceleration of SI change (momentum of momentum)
+    try:
+        import sys as _si_sys
+        _si_sys.path.insert(0, '/Users/rick/ai_trading_bot_v2')
+        from si_velocity import compute_si_features
+        _si_feats = compute_si_features(symbol or '', df)
+        for _k, _v in _si_feats.items():
+            d[_k] = pd.Series(float(_v), index=df.index)
+    except Exception:
+        for _k in ['si_level','si_change_2w','si_change_4w','si_velocity',
+                   'si_squeeze_risk','si_cover_signal','si_days_cover']:
+            d[_k] = pd.Series(0.0, index=df.index)
+
     # VIX spike probability — ML model (AUC=0.90)
     # High spike probability = reduce long scores = system naturally
     # becomes more conservative before volatility events

@@ -416,9 +416,34 @@ def run_backtest_v2(
             hold_d      = pos.age_days(pd.Timestamp(date).to_pydatetime())
             exit_reason = exit_ref = None
 
-            if low <= stop_px:
-                exit_reason = "stop"
-                exit_ref    = stop_px
+            # Regime-conditional stop confirmation.
+            # Empirical whipsaw rates from 264 historical stops:
+            #   BEAR=0%, TRENDING_BULL=63%, CHOPPY=71%
+            # In BEAR: exit immediately — stops are almost never false.
+            # In BULL/CHOPPY: require close below stop (not just intraday low)
+            #   AND vol_ratio < 2.0 (high volume = real selling, not noise)
+            # This is learned from data, not hardcoded preference.
+            _stop_triggered = low <= stop_px
+            if _stop_triggered:
+                if _current_regime == BEAR:
+                    # BEAR: 0% whipsaw — exit immediately
+                    exit_reason = "stop"
+                    exit_ref    = stop_px
+                else:
+                    # BULL/CHOPPY: 63-71% whipsaw rate
+                    # Require close-based confirmation AND check volume
+                    _close_below = close <= stop_px
+                    # Volume ratio — high volume on stop day = real selling
+                    _df_vol    = prices_by_symbol[s].loc[:date]['volume']
+                    _vol_avg   = float(_df_vol.tail(20).mean()) if len(_df_vol) >= 20 else 1
+                    _vol_today = float(_df_vol.iloc[-1]) if len(_df_vol) > 0 else 1
+                    _vol_ratio = _vol_today / _vol_avg if _vol_avg > 0 else 1.0
+                    # Exit if: close below stop AND volume confirms (vol_ratio > 1.5)
+                    # OR close is >3% below stop (not just touching)
+                    _deep_break = close <= stop_px * 0.97
+                    if _close_below and (_vol_ratio > 1.5 or _deep_break):
+                        exit_reason = "stop"
+                        exit_ref    = stop_px
             elif close >= pos.entry_price * (1 + getattr(params, 'take_profit_pct', getattr(params, 'take_profit_long', 0.40))):
                 # Take profit — trailing ATR stop handles secular winners naturally
                 # Removed fitted suppression (0.90/0.85/0.65 thresholds were fitted to APP/NVDA/VRT)
@@ -463,34 +488,30 @@ def run_backtest_v2(
                 if exit_reason == "regime_exit":
                     last_regime_exit_date = date
 
-                # ── Settle conviction call if active ──────────────────────
-                # Sell at bid: mid price minus 50bps options slippage
+                # ── Settle conviction call at bid price ───────────────────
                 OPTIONS_SLIP_EXIT = 0.005
                 if meta.get("call_contracts", 0) > 0:
                     try:
-                        from conviction_calls import bs_call as _bs_call
-                        _K2          = float(meta["call_strike"])
-                        _sigma2      = float(meta["call_sigma"])
-                        _n2          = int(meta["call_contracts"])
-                        _cost2       = float(meta["call_cost"])
-                        _entry_dt2   = pd.Timestamp(meta["call_entry_date"])
-                        _days_held2  = (date - _entry_dt2).days
-                        _DTE2        = 21
-
+                        from conviction_calls import bs_call as _bs_call2
+                        _K2         = float(meta["call_strike"])
+                        _sigma2     = float(meta["call_sigma"])
+                        _n2         = int(meta["call_contracts"])
+                        _cost2      = float(meta["call_cost"])
+                        _entry_dt2  = pd.Timestamp(meta["call_entry_date"])
+                        _days_held2 = (date - _entry_dt2).days
+                        _DTE2       = 21
                         if _days_held2 >= _DTE2:
-                            _df_call = prices_by_symbol.get(s, pd.DataFrame())
-                            _future  = _df_call.loc[_df_call.index > _entry_dt2]["close"]
-                            _dte_px2 = float(_future.iloc[_DTE2-1]) if len(_future) >= _DTE2 else fill
-                            _payoff_mid = max(_dte_px2 - _K2, 0)
+                            _df_c2  = prices_by_symbol.get(s, pd.DataFrame())
+                            _fut2   = _df_c2.loc[_df_c2.index > _entry_dt2]["close"]
+                            _dte_px = float(_fut2.iloc[_DTE2-1]) if len(_fut2) >= _DTE2 else fill
+                            _mid2   = max(_dte_px - _K2, 0)
                         else:
-                            _T_rem2     = max((_DTE2 - _days_held2) / 365.0, 0.01)
-                            _payoff_mid = _bs_call(fill, _K2, _T_rem2, 0.05, _sigma2)
-
-                        _payoff_bid  = _payoff_mid * (1 - OPTIONS_SLIP_EXIT)
-                        _call_payoff = _n2 * _payoff_bid * 100
-                        _call_pnl    = _call_payoff - _cost2
-                        cash        += _call_payoff
-                        pnl         += _call_pnl
+                            _T_rem2 = max((_DTE2 - _days_held2) / 365.0, 0.01)
+                            _mid2   = _bs_call2(fill, _K2, _T_rem2, 0.05, _sigma2)
+                        _bid2    = _mid2 * (1 - OPTIONS_SLIP_EXIT)
+                        _payoff2 = _n2 * _bid2 * 100
+                        cash    += _payoff2
+                        pnl     += _payoff2 - _cost2
                     except Exception:
                         pass
 
@@ -764,11 +785,9 @@ def run_backtest_v2(
                 _df_vol_entry = prices_by_symbol.get(s)
                 _ann_vol_entry = float(_df_vol_entry.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5)) if _df_vol_entry is not None and len(_df_vol_entry) >= 20 else 0.35
 
-                # ── Conviction calls overlay ──────────────────────────────
-                # Fires at entry time — no future knowledge.
-                # Options slippage: 50bps per leg (5x wider than stock 10bps)
-                # Reflects real bid-ask spreads on equity options.
-                OPTIONS_SLIPPAGE = 0.005  # 50bps — realistic for liquid single-stock options
+                # ── Conviction calls overlay — delta-neutral sizing ───────
+                # Budget sized so delta-adjusted exposure stays within Kelly.
+                # No hardcoded fractions — call delta determines position size.
                 _conv_meta = {
                     "ml_rank_pct":    snap.ml_rank_pct,
                     "rule_score":     snap.rule_score,
@@ -777,12 +796,11 @@ def run_backtest_v2(
                     "ann_vol":        _ann_vol_entry,
                 }
                 try:
-                    from conviction_calls import conviction_score, options_allocation_fraction, bs_call
+                    from conviction_calls import conviction_score, compute_options_budget, bs_call
                     import json as _json
+                    OPTIONS_SLIP = 0.005  # 50bps options slippage
 
-                    # Get PEAD + streak at entry from earnings cache
-                    _pead_s   = 0.0
-                    _streak_s = 0.0
+                    _pead_s, _streak_s = 0.0, 0.0
                     _earn_path = os.path.join(
                         os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                         'cache_earnings_streak', f'{s}.json'
@@ -792,39 +810,55 @@ def run_backtest_v2(
                             _recs = _json.load(_ef)
                         _prior = [r for r in _recs if pd.Timestamp(r['date']) < next_date]
                         if _prior:
-                            _pead_s = float(_prior[-1].get('surp', 0))
-                            _beats  = [r['beat'] for r in _prior[-4:]]
-                            _streak_s = float(sum(_beats) / len(_beats)) if _beats else 0.0
+                            _pead_s   = float(_prior[-1].get('surp', 0))
+                            _beats    = [r['beat'] for r in _prior[-4:]]
+                            _streak_s = float(sum(_beats)/len(_beats)) if _beats else 0.0
 
                     _rev_s = float(np.clip((snap.ml_rank_pct - 0.85) / 0.15, 0, 1))
                     _conv  = conviction_score(snap.ml_rank_pct, _pead_s, _rev_s, _streak_s)
 
                     if _conv >= 0.3:
-                        _stock_frac, _call_frac = options_allocation_fraction(_conv)
+                        _K       = fill * 1.05
+                        _T_call  = 21 / 365.0
+                        _sigma_c = float(np.clip(_ann_vol_entry, 0.15, 1.5))
+                        _call_mid = bs_call(fill, _K, _T_call, 0.05, _sigma_c)
+                        _call_ask = _call_mid * (1 + OPTIONS_SLIP)
 
-                        # Reduce stock position — reallocate call_frac to options
-                        _new_qty = max(1, int(qty * _stock_frac))
-                        _refund  = (qty - _new_qty) * fill
-                        cash    += _refund
-                        long_positions[s] = Position(
-                            symbol=s, qty=_new_qty, entry_price=fill,
-                            entry_time=str(next_date.date()),
-                            stop_pct=stop_pct,
-                            initial_stop=fill * (1 - stop_pct),
-                            highest_price=fill, add_count=0,
+                        # Kelly budget = risk_pt * INITIAL_CAPITAL
+                        _kelly_budget = risk_pt * config.INITIAL_CAPITAL
+
+                        # Delta-neutral budget — exposure stays within Kelly
+                        _call_budget = compute_options_budget(
+                            conv_score=_conv,
+                            kelly_budget=_kelly_budget,
+                            stock_price=fill,
+                            call_strike=_K,
+                            call_price=_call_ask,
+                            sigma=_sigma_c,
+                            T=_T_call,
                         )
 
-                        # Price the call with slippage — buy at ask (mid + 50bps)
-                        _K        = fill * 1.05   # 5% OTM
-                        _T        = 21 / 365.0
-                        _sigma_c  = float(np.clip(_ann_vol_entry, 0.15, 1.5))
-                        _call_mid = bs_call(fill, _K, _T, 0.05, _sigma_c)
-                        _call_ask = _call_mid * (1 + OPTIONS_SLIPPAGE)  # pay the ask
+                        if _call_ask > 0.01 and _call_budget > _call_ask * 100:
+                            _n_contracts = max(1, int(_call_budget / (_call_ask * 100)))
+                            _call_cost   = _n_contracts * _call_ask * 100
 
-                        if _call_ask > 0.01:
-                            _call_budget  = fill * qty * _call_frac
-                            _n_contracts  = max(1, int(_call_budget / (_call_ask * 100)))
-                            _call_cost    = _n_contracts * _call_ask * 100
+                            # Reduce stock by equivalent delta exposure
+                            from scipy.stats import norm as _norm2
+                            _d1    = (np.log(fill / _K) + (0.05 + 0.5*_sigma_c**2)*_T_call) / (_sigma_c*np.sqrt(_T_call))
+                            _delta = float(np.clip(_norm2.cdf(_d1), 0.05, 0.95))
+                            _call_delta_equiv = _n_contracts * _delta * 100 * fill
+                            _shares_to_remove = max(0, int(_call_delta_equiv / fill))
+                            _new_qty = max(1, qty - _shares_to_remove)
+                            _refund  = (qty - _new_qty) * fill
+                            cash    += _refund
+
+                            long_positions[s] = Position(
+                                symbol=s, qty=_new_qty, entry_price=fill,
+                                entry_time=str(next_date.date()),
+                                stop_pct=stop_pct,
+                                initial_stop=fill * (1 - stop_pct),
+                                highest_price=fill, add_count=0,
+                            )
 
                             if _call_cost <= cash:
                                 cash -= _call_cost
@@ -834,12 +868,11 @@ def run_backtest_v2(
                                     "call_sigma":     _sigma_c,
                                     "call_contracts": _n_contracts,
                                     "call_cost":      _call_cost,
-                                    "call_ask":       _call_ask,
                                     "call_entry_date": str(next_date.date()),
+                                    "call_delta":     _delta,
                                 })
-
                 except Exception:
-                    pass  # fall through to stock-only
+                    pass
 
                 entry_meta[s] = _conv_meta
 

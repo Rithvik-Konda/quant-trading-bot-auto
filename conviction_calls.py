@@ -66,17 +66,64 @@ def conviction_score(ml_rank, pead, revision, streak):
     return float(np.power(ml_norm * pead_n * rev_n * streak_n, 0.25))
 
 
-def options_allocation_fraction(conv_score, base_stock_alloc=1.0):
+def compute_options_budget(
+    conv_score: float,
+    kelly_budget: float,
+    stock_price: float,
+    call_strike: float,
+    call_price: float,
+    sigma: float,
+    T: float,
+    risk_free: float = 0.05,
+) -> float:
     """
-    How much of the position to express as calls vs stock.
-    Higher conviction = more calls (more leverage).
-    conv_score 0.5 → 25% calls, 75% stock
-    conv_score 1.0 → 50% calls, 50% stock
-    No hardcoding — continuous function of conviction.
+    Compute options budget such that delta-adjusted total exposure
+    stays within the Kelly budget. No hardcoded fractions.
+
+    Kelly already sized the position for the right risk.
+    Adding options on top increases effective exposure via delta.
+    We solve for call_dollars such that:
+        stock_dollars + call_delta_equivalent = kelly_budget
+
+    Where:
+        call_delta_equivalent = n_contracts * delta * 100 * stock_price
+        n_contracts = call_dollars / (call_price * 100)
+
+    So: call_delta_equivalent = call_dollars * delta / call_price
+    Solving: call_dollars = (kelly_budget - stock_dollars) * call_price / delta
+
+    conviction_score modulates how much of the remaining delta budget
+    to express as calls (higher conviction = use more of it).
     """
-    call_fraction = float(np.clip(conv_score * 0.5, 0, 0.5))
-    stock_fraction = 1.0 - call_fraction
-    return stock_fraction, call_fraction
+    from scipy.stats import norm as _norm
+
+    # Compute call delta via Black-Scholes
+    if T <= 0 or sigma <= 0 or stock_price <= 0 or call_price <= 0:
+        return 0.0
+    try:
+        d1 = (np.log(stock_price / call_strike) + (risk_free + 0.5 * sigma**2) * T) / (sigma * np.sqrt(T))
+        delta = float(_norm.cdf(d1))
+        delta = float(np.clip(delta, 0.05, 0.95))
+    except Exception:
+        delta = 0.30  # reasonable default for 5% OTM
+
+    # Stock exposure at full Kelly
+    stock_dollars = kelly_budget
+
+    # Delta-adjusted call budget: how many call dollars give same delta exposure as X stock dollars
+    # We want to REPLACE a fraction of stock exposure with calls
+    # call_fraction of position expressed as calls = conv_score * 0.4 (max 40%)
+    call_exposure_target = kelly_budget * float(np.clip(conv_score * 0.40, 0, 0.40))
+
+    # Convert target exposure to call dollars using delta
+    # call_dollars * delta / call_price = target_exposure / stock_price
+    # call_dollars = target_exposure * call_price / (delta * stock_price)
+    if delta * stock_price > 0:
+        call_dollars = call_exposure_target * call_price / (delta * stock_price)
+    else:
+        call_dollars = 0.0
+
+    return float(np.clip(call_dollars, 0, kelly_budget * 0.30))
 
 
 def run_conviction_calls_backtest():

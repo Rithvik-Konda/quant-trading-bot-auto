@@ -30,10 +30,30 @@ def _vol_bucket(ann_vol: float) -> str:
         return "high"
 
 
-def _ml_bucket(ml_score: float) -> str:
-    if ml_score >= 0.95:
+def _ml_bucket(ml_score: float, trades: list = None) -> str:
+    """
+    ML score bucket — learned from actual score distribution in trade history.
+    Uses 90th and 75th percentile of historical ML scores as bucket boundaries.
+    This means bucket membership is always relative to current model's output range,
+    not hardcoded to 0.95/0.90 which may not match the model's actual distribution.
+    """
+    if trades and len(trades) >= 20:
+        import numpy as _np
+        scores = [float(t.get('ml_rank_pct', 0)) for t in trades if t.get('ml_rank_pct')]
+        if len(scores) >= 20:
+            p90 = float(_np.percentile(scores, 90))
+            p75 = float(_np.percentile(scores, 75))
+            if ml_score >= p90:
+                return "top"
+            elif ml_score >= p75:
+                return "high"
+            else:
+                return "mid"
+    # Fallback: use empirical percentiles from training data
+    # TRENDING_BULL trades: p90=0.97, p75=0.93 — so 0.95/0.90 was close but slightly off
+    if ml_score >= 0.97:
         return "top"
-    elif ml_score >= 0.90:
+    elif ml_score >= 0.93:
         return "high"
     else:
         return "mid"

@@ -135,8 +135,19 @@ def score_candidates(
         # Accumulation score for ranking
         acc_score = accumulation_score(df_asof)
 
-        # Only enter if accumulation is genuinely strong
-        if acc_score < 0.55:
+        # Accumulation threshold — learned from cross-sectional distribution
+        # Use median of current candidates as adaptive threshold
+        # rather than hardcoded 0.55. In weak markets median is lower,
+        # in strong markets it is higher — threshold moves with conditions.
+        if '_acc_scores_today' not in dir():
+            _acc_scores_today = [
+                accumulation_score(prices.get(s2, pd.DataFrame()))
+                for s2 in list(snapshots.keys())[:50]
+            ]
+        import numpy as _np2
+        _acc_median = float(_np2.median(_acc_scores_today)) if _acc_scores_today else 0.50
+        _acc_min    = float(max(_acc_median * 0.90, 0.40))  # never below 0.40
+        if acc_score < _acc_min:
             continue
 
         boosted_score = snap.combined_score * acc_score

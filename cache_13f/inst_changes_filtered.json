@@ -1,0 +1,2109 @@
+[
+  {
+    "symbol": "HALO",
+    "name": "HALOZYME THERAPEUTICS INC",
+    "q4": 78065541,
+    "q1": 110081505,
+    "chg": 0.41011646867341894
+  },
+  {
+    "symbol": "IAC",
+    "name": "IAC INC",
+    "q4": 12871768,
+    "q1": 17893654,
+    "chg": 0.39014733640320426
+  },
+  {
+    "symbol": "ALNY",
+    "name": "ALNYLAM PHARMACEUTICALS INC",
+    "q4": 54716934,
+    "q1": 72060551,
+    "chg": 0.3169698251002149
+  },
+  {
+    "symbol": "BILL",
+    "name": "BILL HOLDINGS INC",
+    "q4": 47682248,
+    "q1": 62473015,
+    "chg": 0.3101944144915315
+  },
+  {
+    "symbol": "VRTX",
+    "name": "VERTEX INC",
+    "q4": 11348559,
+    "q1": 14861672,
+    "chg": 0.3095646768898148
+  },
+  {
+    "symbol": "IONS",
+    "name": "IONIS PHARMACEUTICALS INC",
+    "q4": 68224272,
+    "q1": 85783354,
+    "chg": 0.25737294785644615
+  },
+  {
+    "symbol": "ARES",
+    "name": "ARES MANAGEMENT CORPORATION",
+    "q4": 38624286,
+    "q1": 47835245,
+    "chg": 0.23847583875077977
+  },
+  {
+    "symbol": "CMA",
+    "name": "COMERICA INC",
+    "q4": 29142968,
+    "q1": 36088927,
+    "chg": 0.23834082376235666
+  },
+  {
+    "symbol": "SNOW",
+    "name": "SNOWFLAKE INC",
+    "q4": 83407817,
+    "q1": 103100246,
+    "chg": 0.23609812255366905
+  },
+  {
+    "symbol": "PLUG",
+    "name": "PLUG POWER INC",
+    "q4": 182677581,
+    "q1": 224210930,
+    "chg": 0.22735876385400572
+  },
+  {
+    "symbol": "CMS",
+    "name": "CMS ENERGY CORP",
+    "q4": 99901446,
+    "q1": 121027404,
+    "chg": 0.21146799016302525
+  },
+  {
+    "symbol": "NET",
+    "name": "CLOUDFLARE INC",
+    "q4": 100795217,
+    "q1": 120672036,
+    "chg": 0.1972000219018329
+  },
+  {
+    "symbol": "DDOG",
+    "name": "DATADOG INC",
+    "q4": 81178391,
+    "q1": 96101920,
+    "chg": 0.18383622557879967
+  },
+  {
+    "symbol": "DXCM",
+    "name": "DEXCOM INC",
+    "q4": 167435808,
+    "q1": 193117297,
+    "chg": 0.1533811035211775
+  },
+  {
+    "symbol": "WERN",
+    "name": "WERNER ENTERPRISES INC",
+    "q4": 16884488,
+    "q1": 19144487,
+    "chg": 0.1338506089139333
+  },
+  {
+    "symbol": "DUOL",
+    "name": "DUOLINGO INC",
+    "q4": 7296111,
+    "q1": 8252351,
+    "chg": 0.1310616025441499
+  },
+  {
+    "symbol": "PENN",
+    "name": "PENN ENTERTAINMENT INC",
+    "q4": 35526555,
+    "q1": 39680519,
+    "chg": 0.11692560677498845
+  },
+  {
+    "symbol": "TNDM",
+    "name": "TANDEM DIABETES CARE INC",
+    "q4": 18963983,
+    "q1": 21105983,
+    "chg": 0.11295095550338766
+  },
+  {
+    "symbol": "RKLB",
+    "name": "ROCKET LAB CORP",
+    "q4": 54209294,
+    "q1": 59940415,
+    "chg": 0.1057221110461243
+  },
+  {
+    "symbol": "RDDT",
+    "name": "REDDIT INC",
+    "q4": 15920439,
+    "q1": 17551807,
+    "chg": 0.10247003867167231
+  },
+  {
+    "symbol": "CFLT",
+    "name": "CONFLUENT INC",
+    "q4": 101067190,
+    "q1": 111102586,
+    "chg": 0.09929430114758311
+  },
+  {
+    "symbol": "GTLB",
+    "name": "GITLAB INC",
+    "q4": 22717140,
+    "q1": 24884522,
+    "chg": 0.09540734441043194
+  },
+  {
+    "symbol": "BRZE",
+    "name": "BRAZE INC",
+    "q4": 15130037,
+    "q1": 16564217,
+    "chg": 0.09479025067817085
+  },
+  {
+    "symbol": "RIVN",
+    "name": "RIVIAN AUTOMOTIVE INC",
+    "q4": 232030193,
+    "q1": 253803785,
+    "chg": 0.09383947717528296
+  },
+  {
+    "symbol": "VRT",
+    "name": "VERTIV HOLDINGS CO",
+    "q4": 74719591,
+    "q1": 81084881,
+    "chg": 0.08518903696889883
+  },
+  {
+    "symbol": "WDAY",
+    "name": "WORKDAY INC",
+    "q4": 45181744,
+    "q1": 48673735,
+    "chg": 0.07728765405779821
+  },
+  {
+    "symbol": "DELL",
+    "name": "DELL TECHNOLOGIES INC",
+    "q4": 57262598,
+    "q1": 61633296,
+    "chg": 0.07632727386906196
+  },
+  {
+    "symbol": "METC",
+    "name": "RAMACO RES INC",
+    "q4": 7287282,
+    "q1": 7832928,
+    "chg": 0.07487647657933369
+  },
+  {
+    "symbol": "PINS",
+    "name": "PINTEREST INC",
+    "q4": 124305865,
+    "q1": 132000409,
+    "chg": 0.06190008814145656
+  },
+  {
+    "symbol": "CVS",
+    "name": "CVS HEALTH CORP",
+    "q4": 264924828,
+    "q1": 281044491,
+    "chg": 0.06084617708990265
+  },
+  {
+    "symbol": "TSN",
+    "name": "TYSON FOODS INC",
+    "q4": 70731226,
+    "q1": 74972215,
+    "chg": 0.059959218012140776
+  },
+  {
+    "symbol": "ZTS",
+    "name": "ZOETIS INC",
+    "q4": 98685669,
+    "q1": 104412905,
+    "chg": 0.05803513375381789
+  },
+  {
+    "symbol": "TEAM",
+    "name": "ATLASSIAN CORPORATION",
+    "q4": 31545551,
+    "q1": 33293045,
+    "chg": 0.05539589402004739
+  },
+  {
+    "symbol": "TEAM",
+    "name": "TEAM INC",
+    "q4": 227693,
+    "q1": 240001,
+    "chg": 0.05405524104825357
+  },
+  {
+    "symbol": "S",
+    "name": "SENTINELONE INC",
+    "q4": 58591517,
+    "q1": 61753757,
+    "chg": 0.053970952825816064
+  },
+  {
+    "symbol": "SOFI",
+    "name": "SOFI TECHNOLOGIES INC",
+    "q4": 173202367,
+    "q1": 182398437,
+    "chg": 0.05309436677617691
+  },
+  {
+    "symbol": "CAVA",
+    "name": "CAVA GROUP INC",
+    "q4": 13853247,
+    "q1": 14584337,
+    "chg": 0.05277390925030067
+  },
+  {
+    "symbol": "NSC",
+    "name": "SOUTHERN CO",
+    "q4": 299824588,
+    "q1": 315183450,
+    "chg": 0.05122615894330854
+  },
+  {
+    "symbol": "EXC",
+    "name": "EXELON CORP",
+    "q4": 283755677,
+    "q1": 298284655,
+    "chg": 0.051202422286691376
+  },
+  {
+    "symbol": "APP",
+    "name": "APPLOVIN CORP",
+    "q4": 47701574,
+    "q1": 50076221,
+    "chg": 0.049781313295867345
+  },
+  {
+    "symbol": "TOST",
+    "name": "TOAST INC",
+    "q4": 75331569,
+    "q1": 78959123,
+    "chg": 0.048154499476839516
+  },
+  {
+    "symbol": "MET",
+    "name": "METLIFE INC",
+    "q4": 138957045,
+    "q1": 145513702,
+    "chg": 0.04718477569813031
+  },
+  {
+    "symbol": "NTAP",
+    "name": "NETAPP INC",
+    "q4": 55960389,
+    "q1": 58559003,
+    "chg": 0.04643666790808048
+  },
+  {
+    "symbol": "ETSY",
+    "name": "ETSY INC",
+    "q4": 87181061,
+    "q1": 91143185,
+    "chg": 0.04544707250121675
+  },
+  {
+    "symbol": "AFL",
+    "name": "AFLAC INC",
+    "q4": 115788344,
+    "q1": 120964215,
+    "chg": 0.04470114021148795
+  },
+  {
+    "symbol": "CCI",
+    "name": "CROWN CASTLE INC",
+    "q4": 127383958,
+    "q1": 132874531,
+    "chg": 0.043102546711572584
+  },
+  {
+    "symbol": "KKR",
+    "name": "KKR & CO INC",
+    "q4": 127270337,
+    "q1": 132533911,
+    "chg": 0.041357429579211374
+  },
+  {
+    "symbol": "APA",
+    "name": "APA CORPORATION",
+    "q4": 95761855,
+    "q1": 99692420,
+    "chg": 0.041045205316876957
+  },
+  {
+    "symbol": "SAIA",
+    "name": "SAIA INC",
+    "q4": 6114465,
+    "q1": 6361526,
+    "chg": 0.040405988095442526
+  },
+  {
+    "symbol": "HBAN",
+    "name": "HUNTINGTON BANCSHARES INC",
+    "q4": 383408657,
+    "q1": 398888220,
+    "chg": 0.04037353543636862
+  },
+  {
+    "symbol": "INTC",
+    "name": "INTEL CORP",
+    "q4": 937585579,
+    "q1": 974729609,
+    "chg": 0.03961668228687634
+  },
+  {
+    "symbol": "PTON",
+    "name": "PELOTON INTERACTIVE INC",
+    "q4": 79151828,
+    "q1": 82211008,
+    "chg": 0.03864951798712722
+  },
+  {
+    "symbol": "ENPH",
+    "name": "ENPHASE ENERGY INC",
+    "q4": 84686815,
+    "q1": 87928942,
+    "chg": 0.03828372811045025
+  },
+  {
+    "symbol": "ORCL",
+    "name": "ORACLE CORP",
+    "q4": 366779889,
+    "q1": 379934420,
+    "chg": 0.03586491897324283
+  },
+  {
+    "symbol": "BA",
+    "name": "BOEING CO",
+    "q4": 140984651,
+    "q1": 145929570,
+    "chg": 0.03507416562672486
+  },
+  {
+    "symbol": "KR",
+    "name": "KROGER CO",
+    "q4": 165407156,
+    "q1": 170935800,
+    "chg": 0.033424454743662964
+  },
+  {
+    "symbol": "MP",
+    "name": "MP MATERIALS CORP",
+    "q4": 32078430,
+    "q1": 33148855,
+    "chg": 0.03336899592654628
+  },
+  {
+    "symbol": "NOC",
+    "name": "NORTHROP GRUMMAN CORP",
+    "q4": 36084323,
+    "q1": 37230320,
+    "chg": 0.03175886104334007
+  },
+  {
+    "symbol": "ZIM",
+    "name": "ZIM INTEGRATED SHIPPING SERV",
+    "q4": 4688658,
+    "q1": 4837540,
+    "chg": 0.031753648911906136
+  },
+  {
+    "symbol": "DOCU",
+    "name": "DOCUSIGN INC",
+    "q4": 42903317,
+    "q1": 44252614,
+    "chg": 0.03144971285087351
+  },
+  {
+    "symbol": "NI",
+    "name": "NISOURCE INC",
+    "q4": 128030053,
+    "q1": 132041814,
+    "chg": 0.031334525808561525
+  },
+  {
+    "symbol": "XOM",
+    "name": "EXXON MOBIL CORP",
+    "q4": 910111234,
+    "q1": 938280811,
+    "chg": 0.030951795723026972
+  },
+  {
+    "symbol": "META",
+    "name": "META PLATFORMS INC",
+    "q4": 438447724,
+    "q1": 452001334,
+    "chg": 0.03091271606190388
+  },
+  {
+    "symbol": "AVAV",
+    "name": "AEROVIRONMENT INC",
+    "q4": 24772769,
+    "q1": 25518865,
+    "chg": 0.03011758596707538
+  },
+  {
+    "symbol": "COIN",
+    "name": "COINBASE GLOBAL INC",
+    "q4": 108455603,
+    "q1": 111721821,
+    "chg": 0.030115714722456523
+  },
+  {
+    "symbol": "ACAD",
+    "name": "ACADIA PHARMACEUTICALS INC",
+    "q4": 34103587,
+    "q1": 35126903,
+    "chg": 0.03000611050092766
+  },
+  {
+    "symbol": "PRGO",
+    "name": "PERRIGO CO PLC",
+    "q4": 33845843,
+    "q1": 34846025,
+    "chg": 0.029551103218200238
+  },
+  {
+    "symbol": "CFG",
+    "name": "CITIZENS INC",
+    "q4": 3836376,
+    "q1": 3942525,
+    "chg": 0.027669081445614297
+  },
+  {
+    "symbol": "ZS",
+    "name": "ZSCALER INC",
+    "q4": 29503787,
+    "q1": 30319046,
+    "chg": 0.027632351060560462
+  },
+  {
+    "symbol": "ON",
+    "name": "ON SEMICONDUCTOR CORP",
+    "q4": 174910845,
+    "q1": 179730686,
+    "chg": 0.027555987165918727
+  },
+  {
+    "symbol": "AMD",
+    "name": "ADVANCED MICRO DEVICES INC",
+    "q4": 354689161,
+    "q1": 364381564,
+    "chg": 0.027326470796777462
+  },
+  {
+    "symbol": "CAT",
+    "name": "CATERPILLAR INC",
+    "q4": 114878596,
+    "q1": 117986716,
+    "chg": 0.02705569277674668
+  },
+  {
+    "symbol": "XPO",
+    "name": "XPO INC",
+    "q4": 24350451,
+    "q1": 24992797,
+    "chg": 0.026379223941273202
+  },
+  {
+    "symbol": "DOW",
+    "name": "DOW INC",
+    "q4": 166898925,
+    "q1": 171174399,
+    "chg": 0.025617145227268538
+  },
+  {
+    "symbol": "WEC",
+    "name": "WEC ENERGY GROUP INC",
+    "q4": 124614858,
+    "q1": 127754606,
+    "chg": 0.02519561511677845
+  },
+  {
+    "symbol": "SPGI",
+    "name": "S&P GLOBAL INC",
+    "q4": 68695573,
+    "q1": 70406032,
+    "chg": 0.02489911540587921
+  },
+  {
+    "symbol": "CSX",
+    "name": "CSX CORP",
+    "q4": 399905232,
+    "q1": 409841679,
+    "chg": 0.024847004252247444
+  },
+  {
+    "symbol": "JNJ",
+    "name": "JOHNSON & JOHNSON",
+    "q4": 558551415,
+    "q1": 572406327,
+    "chg": 0.024805079045408917
+  },
+  {
+    "symbol": "WRBY",
+    "name": "WARBY PARKER INC",
+    "q4": 19796114,
+    "q1": 20281223,
+    "chg": 0.02450526401292698
+  },
+  {
+    "symbol": "VTR",
+    "name": "VENTAS INC",
+    "q4": 145407890,
+    "q1": 148905788,
+    "chg": 0.024055764786903928
+  },
+  {
+    "symbol": "DECK",
+    "name": "OUTDOOR HOLDING CO",
+    "q4": 7086689,
+    "q1": 7253235,
+    "chg": 0.0235012429640979
+  },
+  {
+    "symbol": "PLTR",
+    "name": "PALANTIR TECHNOLOGIES INC",
+    "q4": 427827732,
+    "q1": 437584905,
+    "chg": 0.022806312611824798
+  },
+  {
+    "symbol": "VZ",
+    "name": "VERIZON COMMUNICATIONS INC",
+    "q4": 930856553,
+    "q1": 951225391,
+    "chg": 0.021881822644267294
+  },
+  {
+    "symbol": "AON",
+    "name": "AON PLC",
+    "q4": 43693783,
+    "q1": 44641367,
+    "chg": 0.021686929694322874
+  },
+  {
+    "symbol": "NEM",
+    "name": "NEWMONT CORP",
+    "q4": 296923415,
+    "q1": 303318116,
+    "chg": 0.021536533250501647
+  },
+  {
+    "symbol": "TRV",
+    "name": "TRAVELERS COMPANIES INC",
+    "q4": 57064227,
+    "q1": 58285150,
+    "chg": 0.021395593424931525
+  },
+  {
+    "symbol": "UNP",
+    "name": "UNION PAC CORP",
+    "q4": 125792795,
+    "q1": 128460747,
+    "chg": 0.021209100250932495
+  },
+  {
+    "symbol": "UPS",
+    "name": "UNITED PARCEL SERVICE INC",
+    "q4": 152775442,
+    "q1": 155956580,
+    "chg": 0.020822312528475617
+  },
+  {
+    "symbol": "DOCS",
+    "name": "DOXIMITY INC",
+    "q4": 27520218,
+    "q1": 28080153,
+    "chg": 0.02034631411713381
+  },
+  {
+    "symbol": "ALL",
+    "name": "ALLSTATE CORP",
+    "q4": 64059177,
+    "q1": 65351842,
+    "chg": 0.020179232087230842
+  },
+  {
+    "symbol": "MSFT",
+    "name": "MICROSOFT CORP",
+    "q4": 1548165219,
+    "q1": 1578374795,
+    "chg": 0.019513147323845157
+  },
+  {
+    "symbol": "MU",
+    "name": "MICRON TECHNOLOGY INC",
+    "q4": 246894388,
+    "q1": 251679436,
+    "chg": 0.019380950854176564
+  },
+  {
+    "symbol": "SWKS",
+    "name": "SKYWORKS SOLUTIONS INC",
+    "q4": 42691572,
+    "q1": 43486847,
+    "chg": 0.018628384075432967
+  },
+  {
+    "symbol": "GD",
+    "name": "GENERAL DYNAMICS CORP",
+    "q4": 50045717,
+    "q1": 50975235,
+    "chg": 0.01857337761790884
+  },
+  {
+    "symbol": "PNW",
+    "name": "PINNACLE WEST CAP CORP",
+    "q4": 42684736,
+    "q1": 43469913,
+    "chg": 0.01839479574150347
+  },
+  {
+    "symbol": "ES",
+    "name": "EVERSOURCE ENERGY",
+    "q4": 111199224,
+    "q1": 113233373,
+    "chg": 0.018292834489564425
+  },
+  {
+    "symbol": "HUM",
+    "name": "HUMANA INC",
+    "q4": 30285891,
+    "q1": 30832996,
+    "chg": 0.018064682330131875
+  },
+  {
+    "symbol": "D",
+    "name": "DOMINION ENERGY INC",
+    "q4": 213233218,
+    "q1": 216991149,
+    "chg": 0.017623572139684164
+  },
+  {
+    "symbol": "SRE",
+    "name": "SEMPRA",
+    "q4": 174864988,
+    "q1": 177906223,
+    "chg": 0.01739190351815882
+  },
+  {
+    "symbol": "CNP",
+    "name": "CENTERPOINT ENERGY INC",
+    "q4": 186641611,
+    "q1": 189851110,
+    "chg": 0.017196052813753308
+  },
+  {
+    "symbol": "INSP",
+    "name": "SPIRE INC",
+    "q4": 16698157,
+    "q1": 16984912,
+    "chg": 0.01717285326757917
+  },
+  {
+    "symbol": "SBUX",
+    "name": "STARBUCKS CORP",
+    "q4": 237019491,
+    "q1": 241073855,
+    "chg": 0.017105614322663446
+  },
+  {
+    "symbol": "ANET",
+    "name": "ARISTA NETWORKS INC",
+    "q4": 165472941,
+    "q1": 168249727,
+    "chg": 0.016780906794906122
+  },
+  {
+    "symbol": "EQIX",
+    "name": "EQUINIX INC",
+    "q4": 28989473,
+    "q1": 29468717,
+    "chg": 0.01653165616360118
+  },
+  {
+    "symbol": "SNPS",
+    "name": "SYNOPSYS INC",
+    "q4": 39448803,
+    "q1": 40085718,
+    "chg": 0.01614535680588331
+  },
+  {
+    "symbol": "AES",
+    "name": "AES CORP",
+    "q4": 184584269,
+    "q1": 187490869,
+    "chg": 0.015746737334371652
+  },
+  {
+    "symbol": "WELL",
+    "name": "WELLTOWER INC",
+    "q4": 190166896,
+    "q1": 193157778,
+    "chg": 0.01572766902605383
+  },
+  {
+    "symbol": "MTZ",
+    "name": "MASTEC INC",
+    "q4": 13389101,
+    "q1": 13598860,
+    "chg": 0.015666399110739398
+  },
+  {
+    "symbol": "AAPL",
+    "name": "APPLE INC",
+    "q4": 3038847681,
+    "q1": 3086096471,
+    "chg": 0.015548258734854305
+  },
+  {
+    "symbol": "PRU",
+    "name": "PRUDENTIAL PLC",
+    "q4": 2835646,
+    "q1": 2879689,
+    "chg": 0.015531910541724883
+  },
+  {
+    "symbol": "TSLA",
+    "name": "TESLA INC",
+    "q4": 555444220,
+    "q1": 563852370,
+    "chg": 0.01513770365636355
+  },
+  {
+    "symbol": "ECL",
+    "name": "ECOLAB INC",
+    "q4": 57330894,
+    "q1": 58169146,
+    "chg": 0.014621296503766364
+  },
+  {
+    "symbol": "ETN",
+    "name": "EATON CORP PLC",
+    "q4": 82375197,
+    "q1": 83577395,
+    "chg": 0.014594174506192683
+  },
+  {
+    "symbol": "KEY",
+    "name": "KEYCORP",
+    "q4": 267015244,
+    "q1": 270872125,
+    "chg": 0.01444442250645435
+  },
+  {
+    "symbol": "ROK",
+    "name": "ROCKWELL AUTOMATION INC",
+    "q4": 27872862,
+    "q1": 28267224,
+    "chg": 0.014148600886410588
+  },
+  {
+    "symbol": "HPE",
+    "name": "HEWLETT PACKARD ENTERPRISE C",
+    "q4": 364070407,
+    "q1": 369177282,
+    "chg": 0.014027163158031682
+  },
+  {
+    "symbol": "NEE",
+    "name": "NEXTERA ENERGY INC",
+    "q4": 483037515,
+    "q1": 489702492,
+    "chg": 0.013798052517722148
+  },
+  {
+    "symbol": "TMO",
+    "name": "THERMO FISHER SCIENTIFIC INC",
+    "q4": 79210081,
+    "q1": 80276789,
+    "chg": 0.013466821224434804
+  },
+  {
+    "symbol": "SYK",
+    "name": "STRYKER CORPORATION",
+    "q4": 74961008,
+    "q1": 75964110,
+    "chg": 0.01338165036414665
+  },
+  {
+    "symbol": "GOOGL",
+    "name": "ALPHABET INC",
+    "q4": 2113747687,
+    "q1": 2141796549,
+    "chg": 0.013269730428331865
+  },
+  {
+    "symbol": "STX",
+    "name": "SEAGATE TECHNOLOGY HLDNGS PL",
+    "q4": 50119062,
+    "q1": 50735083,
+    "chg": 0.01229115181764575
+  },
+  {
+    "symbol": "HD",
+    "name": "HOME DEPOT INC",
+    "q4": 215100115,
+    "q1": 217707819,
+    "chg": 0.012123210626828348
+  },
+  {
+    "symbol": "INTU",
+    "name": "INTUIT",
+    "q4": 65589444,
+    "q1": 66370002,
+    "chg": 0.01190066499115315
+  },
+  {
+    "symbol": "AVGO",
+    "name": "BROADCOM INC",
+    "q4": 698738892,
+    "q1": 706991986,
+    "chg": 0.011811413525841067
+  },
+  {
+    "symbol": "FANG",
+    "name": "DIAMONDBACK ENERGY INC",
+    "q4": 48081837,
+    "q1": 48638614,
+    "chg": 0.011579778035518901
+  },
+  {
+    "symbol": "NBIX",
+    "name": "NEUROCRINE BIOSCIENCES INC",
+    "q4": 27814008,
+    "q1": 28133690,
+    "chg": 0.011493561086198005
+  },
+  {
+    "symbol": "BX",
+    "name": "BLACKSTONE INC",
+    "q4": 148772165,
+    "q1": 150472252,
+    "chg": 0.011427453515918116
+  },
+  {
+    "symbol": "TXRH",
+    "name": "TEXAS ROADHOUSE INC",
+    "q4": 14624091,
+    "q1": 14788784,
+    "chg": 0.011261759790745285
+  },
+  {
+    "symbol": "CRM",
+    "name": "SALESFORCE INC",
+    "q4": 212128387,
+    "q1": 214500614,
+    "chg": 0.011182977599315833
+  },
+  {
+    "symbol": "SEDG",
+    "name": "SOLAREDGE TECHNOLOGIES INC",
+    "q4": 18217813,
+    "q1": 18416649,
+    "chg": 0.010914372652743773
+  },
+  {
+    "symbol": "EMR",
+    "name": "EMERSON ELEC CO",
+    "q4": 116478325,
+    "q1": 117733766,
+    "chg": 0.010778322919736355
+  },
+  {
+    "symbol": "QCOM",
+    "name": "QUALCOMM INC",
+    "q4": 260190598,
+    "q1": 262969321,
+    "chg": 0.010679567291666704
+  },
+  {
+    "symbol": "CME",
+    "name": "CME GROUP INC",
+    "q4": 76888882,
+    "q1": 77703554,
+    "chg": 0.01059544603600817
+  },
+  {
+    "symbol": "CAG",
+    "name": "CONAGRA BRANDS INC",
+    "q4": 130032014,
+    "q1": 131396281,
+    "chg": 0.010491777817115099
+  },
+  {
+    "symbol": "BIIB",
+    "name": "BIOGEN INC",
+    "q4": 38753972,
+    "q1": 39144609,
+    "chg": 0.010079921614228342
+  },
+  {
+    "symbol": "TMUS",
+    "name": "T-MOBILE US INC",
+    "q4": 103788399,
+    "q1": 104829581,
+    "chg": 0.010031776287444226
+  },
+  {
+    "symbol": "GS",
+    "name": "GOLDMAN SACHS GROUP INC",
+    "q4": 71036330,
+    "q1": 71739256,
+    "chg": 0.00989530286826473
+  },
+  {
+    "symbol": "BRO",
+    "name": "BROWN & BROWN INC",
+    "q4": 67050900,
+    "q1": 67710383,
+    "chg": 0.009835557762833907
+  },
+  {
+    "symbol": "O",
+    "name": "REALTY INCOME CORP",
+    "q4": 294375482,
+    "q1": 297267376,
+    "chg": 0.009823827651516168
+  },
+  {
+    "symbol": "MA",
+    "name": "MASTERCARD INCORPORATED",
+    "q4": 185020665,
+    "q1": 186755824,
+    "chg": 0.00937819026863837
+  },
+  {
+    "symbol": "PODD",
+    "name": "INSULET CORP",
+    "q4": 24502142,
+    "q1": 24731685,
+    "chg": 0.00936828298521819
+  },
+  {
+    "symbol": "DHR",
+    "name": "DANAHER CORPORATION",
+    "q4": 137952291,
+    "q1": 139198920,
+    "chg": 0.009036667611413573
+  },
+  {
+    "symbol": "BSX",
+    "name": "BOSTON SCIENTIFIC CORP",
+    "q4": 330010793,
+    "q1": 332983420,
+    "chg": 0.009007666000790466
+  },
+  {
+    "symbol": "UNH",
+    "name": "UNITEDHEALTH GROUP INC",
+    "q4": 208387919,
+    "q1": 210261302,
+    "chg": 0.008989882949980417
+  },
+  {
+    "symbol": "SHAK",
+    "name": "SHAKE SHACK INC",
+    "q4": 13335369,
+    "q1": 13449749,
+    "chg": 0.008577190477443855
+  },
+  {
+    "symbol": "WSO",
+    "name": "WATSCO INC",
+    "q4": 8453877,
+    "q1": 8525453,
+    "chg": 0.008466647906043583
+  },
+  {
+    "symbol": "PANW",
+    "name": "PALO ALTO NETWORKS INC",
+    "q4": 130679985,
+    "q1": 131758769,
+    "chg": 0.008255158584537639
+  },
+  {
+    "symbol": "NVR",
+    "name": "NVR INC",
+    "q4": 753839,
+    "q1": 760025,
+    "chg": 0.00820599624057657
+  },
+  {
+    "symbol": "C",
+    "name": "CITIGROUP INC",
+    "q4": 399507513,
+    "q1": 402727110,
+    "chg": 0.008058914776904333
+  },
+  {
+    "symbol": "DOV",
+    "name": "DOVER CORP",
+    "q4": 32990850,
+    "q1": 33256013,
+    "chg": 0.00803747099574579
+  },
+  {
+    "symbol": "WMT",
+    "name": "WALMART INC",
+    "q4": 915269169,
+    "q1": 922457972,
+    "chg": 0.007854304770097636
+  },
+  {
+    "symbol": "FCX",
+    "name": "FREEPORT-MCMORAN INC",
+    "q4": 301250888,
+    "q1": 303539777,
+    "chg": 0.00759794938762139
+  },
+  {
+    "symbol": "DASH",
+    "name": "DOORDASH INC",
+    "q4": 75004176,
+    "q1": 75527409,
+    "chg": 0.006976051573448391
+  },
+  {
+    "symbol": "TRMB",
+    "name": "TRIMBLE INC",
+    "q4": 60192417,
+    "q1": 60606634,
+    "chg": 0.006881547886671505
+  },
+  {
+    "symbol": "VEEV",
+    "name": "VEEVA SYS INC",
+    "q4": 28253911,
+    "q1": 28441385,
+    "chg": 0.006635329176197943
+  },
+  {
+    "symbol": "PGR",
+    "name": "PROGRESSIVE CORP",
+    "q4": 128731805,
+    "q1": 129534791,
+    "chg": 0.006237665975397455
+  },
+  {
+    "symbol": "PPL",
+    "name": "PPL CORP",
+    "q4": 186555365,
+    "q1": 187687619,
+    "chg": 0.006069265282185801
+  },
+  {
+    "symbol": "BNTX",
+    "name": "BIONTECH SE",
+    "q4": 2033476,
+    "q1": 2045804,
+    "chg": 0.006062525449034068
+  },
+  {
+    "symbol": "MRK",
+    "name": "MERCK & CO INC",
+    "q4": 579245465,
+    "q1": 582572648,
+    "chg": 0.0057439949055103955
+  },
+  {
+    "symbol": "WDC",
+    "name": "WESTERN DIGITAL CORP",
+    "q4": 91519250,
+    "q1": 92044614,
+    "chg": 0.005740475364472502
+  },
+  {
+    "symbol": "CDW",
+    "name": "CDW CORP",
+    "q4": 33909356,
+    "q1": 34099411,
+    "chg": 0.005604795325514292
+  },
+  {
+    "symbol": "BLK",
+    "name": "BLACKROCK INC",
+    "q4": 29676597,
+    "q1": 29842726,
+    "chg": 0.0055979801188121405
+  },
+  {
+    "symbol": "WING",
+    "name": "WINGSTOP INC",
+    "q4": 6324701,
+    "q1": 6359699,
+    "chg": 0.005533542218043193
+  },
+  {
+    "symbol": "FITB",
+    "name": "FIFTH THIRD BANCORP",
+    "q4": 172544159,
+    "q1": 173498292,
+    "chg": 0.00552979020286627
+  },
+  {
+    "symbol": "NDAQ",
+    "name": "NASDAQ INC",
+    "q4": 112504543,
+    "q1": 113125864,
+    "chg": 0.005522630317248611
+  },
+  {
+    "symbol": "AVY",
+    "name": "AVERY DENNISON CORP",
+    "q4": 21172862,
+    "q1": 21289316,
+    "chg": 0.0055001539234516336
+  },
+  {
+    "symbol": "TGT",
+    "name": "TARGET CORP",
+    "q4": 127711459,
+    "q1": 128393707,
+    "chg": 0.005342104814572669
+  },
+  {
+    "symbol": "HCA",
+    "name": "HCA HEALTHCARE INC",
+    "q4": 36938422,
+    "q1": 37134641,
+    "chg": 0.005312056914613191
+  },
+  {
+    "symbol": "MO",
+    "name": "ALTRIA GROUP INC",
+    "q4": 357422792,
+    "q1": 359306927,
+    "chg": 0.005271446147731955
+  },
+  {
+    "symbol": "AMZN",
+    "name": "AMAZON COM INC",
+    "q4": 1873259493,
+    "q1": 1882748821,
+    "chg": 0.00506567725158193
+  },
+  {
+    "symbol": "CDNS",
+    "name": "CADENCE DESIGN SYSTEM INC",
+    "q4": 70150885,
+    "q1": 70485398,
+    "chg": 0.004768478687047213
+  },
+  {
+    "symbol": "EOG",
+    "name": "EOG RES INC",
+    "q4": 124806893,
+    "q1": 125381768,
+    "chg": 0.004606115785608092
+  },
+  {
+    "symbol": "GILD",
+    "name": "GILEAD SCIENCES INC",
+    "q4": 300603976,
+    "q1": 301969877,
+    "chg": 0.00454385540130048
+  },
+  {
+    "symbol": "LIN",
+    "name": "LINDE PLC",
+    "q4": 99845801,
+    "q1": 100268679,
+    "chg": 0.004235310806911149
+  },
+  {
+    "symbol": "LRCX",
+    "name": "LAM RESEARCH CORP",
+    "q4": 203021310,
+    "q1": 203801174,
+    "chg": 0.0038412913403031435
+  },
+  {
+    "symbol": "MDT",
+    "name": "MEDTRONIC PLC",
+    "q4": 301514163,
+    "q1": 302513879,
+    "chg": 0.003315651875364807
+  },
+  {
+    "symbol": "FAST",
+    "name": "FASTENAL CO",
+    "q4": 251789729,
+    "q1": 252622271,
+    "chg": 0.0033064970652555885
+  },
+  {
+    "symbol": "KHC",
+    "name": "KRAFT HEINZ CO",
+    "q4": 240076263,
+    "q1": 240868385,
+    "chg": 0.003299459888710447
+  },
+  {
+    "symbol": "MDB",
+    "name": "MONGODB INC",
+    "q4": 26232166,
+    "q1": 26317663,
+    "chg": 0.003259242869994037
+  },
+  {
+    "symbol": "LVS",
+    "name": "LAS VEGAS SANDS CORP",
+    "q4": 82472444,
+    "q1": 82722149,
+    "chg": 0.003027738574110887
+  },
+  {
+    "symbol": "RH",
+    "name": "RH",
+    "q4": 3222877,
+    "q1": 3232453,
+    "chg": 0.0029712582887897986
+  },
+  {
+    "symbol": "ADI",
+    "name": "ANALOG DEVICES INC",
+    "q4": 113593994,
+    "q1": 113930124,
+    "chg": 0.002959047289067061
+  },
+  {
+    "symbol": "PRVA",
+    "name": "PRIVIA HEALTH GROUP INC",
+    "q4": 33460983,
+    "q1": 33546833,
+    "chg": 0.002565674774109296
+  },
+  {
+    "symbol": "RS",
+    "name": "RELIANCE INC",
+    "q4": 15141331,
+    "q1": 15180000,
+    "chg": 0.002553870594335465
+  },
+  {
+    "symbol": "CMC",
+    "name": "COMMERCIAL METALS CO",
+    "q4": 32202246,
+    "q1": 32283941,
+    "chg": 0.0025369348460973808
+  },
+  {
+    "symbol": "AMGN",
+    "name": "AMGEN INC",
+    "q4": 131152017,
+    "q1": 131472958,
+    "chg": 0.0024470916066811235
+  },
+  {
+    "symbol": "LEN",
+    "name": "LENNAR CORP",
+    "q4": 60803375,
+    "q1": 60950836,
+    "chg": 0.002425210771606017
+  },
+  {
+    "symbol": "CI",
+    "name": "THE CIGNA GROUP",
+    "q4": 62200456,
+    "q1": 62343282,
+    "chg": 0.0022962211080896256
+  },
+  {
+    "symbol": "SMCI",
+    "name": "SUPER MICRO COMPUTER INC",
+    "q4": 130632801,
+    "q1": 130899579,
+    "chg": 0.0020421976560083097
+  },
+  {
+    "symbol": "MRVL",
+    "name": "MARVELL TECHNOLOGY INC",
+    "q4": 162435080,
+    "q1": 162754232,
+    "chg": 0.0019647972593112278
+  },
+  {
+    "symbol": "PEP",
+    "name": "PEPSICO INC",
+    "q4": 306536183,
+    "q1": 307099504,
+    "chg": 0.0018376982269659174
+  },
+  {
+    "symbol": "NTRA",
+    "name": "NATERA INC",
+    "q4": 24777563,
+    "q1": 24816759,
+    "chg": 0.0015819150575865754
+  },
+  {
+    "symbol": "PFE",
+    "name": "PFIZER INC",
+    "q4": 1264520834,
+    "q1": 1266169366,
+    "chg": 0.0013036811697164968
+  },
+  {
+    "symbol": "ALB",
+    "name": "ALBEMARLE CORP",
+    "q4": 35503659,
+    "q1": 35545429,
+    "chg": 0.0011764984561168752
+  },
+  {
+    "symbol": "ANF",
+    "name": "ABERCROMBIE & FITCH CO",
+    "q4": 14650016,
+    "q1": 14665810,
+    "chg": 0.0010780875597678529
+  },
+  {
+    "symbol": "MKC",
+    "name": "MCCORMICK & CO INC",
+    "q4": 66955372,
+    "q1": 67008370,
+    "chg": 0.0007915421633382905
+  },
+  {
+    "symbol": "BMY",
+    "name": "BRISTOL-MYERS SQUIBB CO",
+    "q4": 455140322,
+    "q1": 455367059,
+    "chg": 0.0004981694414673284
+  },
+  {
+    "symbol": "MPLX",
+    "name": "MPLX LP",
+    "q4": 91979,
+    "q1": 91980,
+    "chg": 1.0872046880266147e-05
+  },
+  {
+    "symbol": "FDX",
+    "name": "FEDEX CORP",
+    "q4": 47728101,
+    "q1": 47725903,
+    "chg": -4.605253412449827e-05
+  },
+  {
+    "symbol": "ISRG",
+    "name": "INTUITIVE SURGICAL INC",
+    "q4": 79460639,
+    "q1": 79437143,
+    "chg": -0.0002956935697433795
+  },
+  {
+    "symbol": "HIG",
+    "name": "HARTFORD INSURANCE GROUP INC",
+    "q4": 52886743,
+    "q1": 52843086,
+    "chg": -0.0008254809716680795
+  },
+  {
+    "symbol": "EXAS",
+    "name": "EXACT SCIENCES CORP",
+    "q4": 67822854,
+    "q1": 67732312,
+    "chg": -0.0013349777347912845
+  },
+  {
+    "symbol": "DE",
+    "name": "DEERE & CO",
+    "q4": 49521649,
+    "q1": 49431537,
+    "chg": -0.0018196486146897087
+  },
+  {
+    "symbol": "MRNA",
+    "name": "MODERNA INC",
+    "q4": 83689768,
+    "q1": 83512581,
+    "chg": -0.0021171883282075773
+  },
+  {
+    "symbol": "CG",
+    "name": "CARLYLE GROUP INC",
+    "q4": 58745386,
+    "q1": 58620799,
+    "chg": -0.0021207963464568943
+  },
+  {
+    "symbol": "OMCL",
+    "name": "OMNICELL COM",
+    "q4": 20552195,
+    "q1": 20502560,
+    "chg": -0.002415070507067493
+  },
+  {
+    "symbol": "DD",
+    "name": "DUPONT DE NEMOURS INC",
+    "q4": 98873005,
+    "q1": 98633446,
+    "chg": -0.0024228959158265695
+  },
+  {
+    "symbol": "AVY",
+    "name": "ENNIS INC",
+    "q4": 4570226,
+    "q1": 4556702,
+    "chg": -0.0029591534423024156
+  },
+  {
+    "symbol": "KMB",
+    "name": "KIMBERLY-CLARK CORP",
+    "q4": 93691073,
+    "q1": 93360442,
+    "chg": -0.0035289488039057892
+  },
+  {
+    "symbol": "XYL",
+    "name": "XYLEM INC",
+    "q4": 64912747,
+    "q1": 64681318,
+    "chg": -0.003565231956675628
+  },
+  {
+    "symbol": "COP",
+    "name": "CONOCOPHILLIPS",
+    "q4": 283535541,
+    "q1": 282507410,
+    "chg": -0.0036261097863565543
+  },
+  {
+    "symbol": "URBN",
+    "name": "URBAN OUTFITTERS INC",
+    "q4": 19110911,
+    "q1": 19040679,
+    "chg": -0.0036749687128991393
+  },
+  {
+    "symbol": "TOL",
+    "name": "TOLL BROTHERS INC",
+    "q4": 25342804,
+    "q1": 25249343,
+    "chg": -0.0036878713184223815
+  },
+  {
+    "symbol": "PAYC",
+    "name": "PAYCOM SOFTWARE INC",
+    "q4": 11550679,
+    "q1": 11498698,
+    "chg": -0.0045002549200787246
+  },
+  {
+    "symbol": "ZBRA",
+    "name": "ZEBRA TECHNOLOGIES CORPORATI",
+    "q4": 13841746,
+    "q1": 13779206,
+    "chg": -0.004518216126780538
+  },
+  {
+    "symbol": "ARM",
+    "name": "ARM HOLDINGS PLC",
+    "q4": 2564682,
+    "q1": 2553026,
+    "chg": -0.0045448129631665835
+  },
+  {
+    "symbol": "IP",
+    "name": "INTERNATIONAL PAPER CO",
+    "q4": 128301841,
+    "q1": 127597472,
+    "chg": -0.005489936812364212
+  },
+  {
+    "symbol": "ADBE",
+    "name": "ADOBE INC",
+    "q4": 101053204,
+    "q1": 100495482,
+    "chg": -0.005519092694972839
+  },
+  {
+    "symbol": "REGN",
+    "name": "REGENERON PHARMACEUTICALS",
+    "q4": 22308146,
+    "q1": 22182327,
+    "chg": -0.005640047362071236
+  },
+  {
+    "symbol": "ABBV",
+    "name": "ABBVIE INC",
+    "q4": 400528022,
+    "q1": 398152140,
+    "chg": -0.005931874599275853
+  },
+  {
+    "symbol": "AXP",
+    "name": "AMERICAN EXPRESS CO",
+    "q4": 118180143,
+    "q1": 117471944,
+    "chg": -0.005992538018844672
+  },
+  {
+    "symbol": "TREX",
+    "name": "TREX CO INC",
+    "q4": 27239483,
+    "q1": 27065400,
+    "chg": -0.006390833482412276
+  },
+  {
+    "symbol": "RTX",
+    "name": "RTX CORPORATION",
+    "q4": 314989746,
+    "q1": 312663173,
+    "chg": -0.007386186469701779
+  },
+  {
+    "symbol": "RUN",
+    "name": "SUNRUN INC",
+    "q4": 85175548,
+    "q1": 84437682,
+    "chg": -0.008662885268434081
+  },
+  {
+    "symbol": "HOLX",
+    "name": "HOLOGIC INC",
+    "q4": 59584734,
+    "q1": 59064002,
+    "chg": -0.008739352599946154
+  },
+  {
+    "symbol": "MS",
+    "name": "MORGAN STANLEY",
+    "q4": 310890848,
+    "q1": 307941112,
+    "chg": -0.009488011689556071
+  },
+  {
+    "symbol": "CEG",
+    "name": "CONSTELLATION ENERGY CORP",
+    "q4": 79334496,
+    "q1": 78542570,
+    "chg": -0.009982114211704326
+  },
+  {
+    "symbol": "ALGN",
+    "name": "ALIGN TECHNOLOGY INC",
+    "q4": 18851686,
+    "q1": 18662025,
+    "chg": -0.010060691653786298
+  },
+  {
+    "symbol": "ASAN",
+    "name": "ASANA INC",
+    "q4": 22886689,
+    "q1": 22654505,
+    "chg": -0.01014493621161191
+  },
+  {
+    "symbol": "DGX",
+    "name": "QUEST DIAGNOSTICS INC",
+    "q4": 30176135,
+    "q1": 29834032,
+    "chg": -0.01133687266444162
+  },
+  {
+    "symbol": "WAL",
+    "name": "WESTERN ALLIANCE BANCORP",
+    "q4": 20193711,
+    "q1": 19962280,
+    "chg": -0.011460548286543271
+  },
+  {
+    "symbol": "VRTX",
+    "name": "VERTEX PHARMACEUTICALS INC",
+    "q4": 57783552,
+    "q1": 57107606,
+    "chg": -0.011697896314854442
+  },
+  {
+    "symbol": "WTW",
+    "name": "WILLIS TOWERS WATSON PLC LTD",
+    "q4": 25707487,
+    "q1": 25400490,
+    "chg": -0.011941929602064956
+  },
+  {
+    "symbol": "ZG",
+    "name": "ZILLOW GROUP INC",
+    "q4": 59189729,
+    "q1": 58479656,
+    "chg": -0.011996557713585747
+  },
+  {
+    "symbol": "NUE",
+    "name": "NUCOR CORP",
+    "q4": 61679920,
+    "q1": 60923251,
+    "chg": -0.0122676715534002
+  },
+  {
+    "symbol": "MAS",
+    "name": "MASCO CORP",
+    "q4": 55532428,
+    "q1": 54820743,
+    "chg": -0.012815665110122684
+  },
+  {
+    "symbol": "HUBS",
+    "name": "HUBSPOT INC",
+    "q4": 14408273,
+    "q1": 14212782,
+    "chg": -0.013567968902310499
+  },
+  {
+    "symbol": "OKTA",
+    "name": "OKTA INC",
+    "q4": 48824181,
+    "q1": 48145597,
+    "chg": -0.013898522947061826
+  },
+  {
+    "symbol": "CHD",
+    "name": "CHURCH & DWIGHT CO INC",
+    "q4": 66768592,
+    "q1": 65833729,
+    "chg": -0.014001538328080964
+  },
+  {
+    "symbol": "TDY",
+    "name": "TELEDYNE TECHNOLOGIES INC",
+    "q4": 11914371,
+    "q1": 11745996,
+    "chg": -0.014132093083218576
+  },
+  {
+    "symbol": "WWD",
+    "name": "WOODWARD INC",
+    "q4": 14077540,
+    "q1": 13876428,
+    "chg": -0.014286018722021034
+  },
+  {
+    "symbol": "EW",
+    "name": "EDWARDS LIFESCIENCES CORP",
+    "q4": 149215440,
+    "q1": 147046451,
+    "chg": -0.014535955528462739
+  },
+  {
+    "symbol": "FTNT",
+    "name": "FORTINET INC",
+    "q4": 160476422,
+    "q1": 158123239,
+    "chg": -0.014663730476244042
+  },
+  {
+    "symbol": "ARCB",
+    "name": "ARCBEST CORP",
+    "q4": 7136068,
+    "q1": 7031202,
+    "chg": -0.014695207500825385
+  },
+  {
+    "symbol": "CGNX",
+    "name": "COGNEX CORP",
+    "q4": 39505594,
+    "q1": 38896202,
+    "chg": -0.015425461011926564
+  },
+  {
+    "symbol": "EQR",
+    "name": "EQUITY RESIDENTIAL",
+    "q4": 122644449,
+    "q1": 120687868,
+    "chg": -0.01595327808109766
+  },
+  {
+    "symbol": "PH",
+    "name": "PARKER-HANNIFIN CORP",
+    "q4": 29788476,
+    "q1": 29297958,
+    "chg": -0.01646670343256231
+  },
+  {
+    "symbol": "WYNN",
+    "name": "WYNN RESORTS LTD",
+    "q4": 19655919,
+    "q1": 19326115,
+    "chg": -0.01677886442246735
+  },
+  {
+    "symbol": "HAL",
+    "name": "HALLIBURTON CO",
+    "q4": 229134466,
+    "q1": 225192434,
+    "chg": -0.017204011551889362
+  },
+  {
+    "symbol": "TXT",
+    "name": "TEXTRON INC",
+    "q4": 46429757,
+    "q1": 45617943,
+    "chg": -0.017484778134850026
+  },
+  {
+    "symbol": "CB",
+    "name": "CHUBB LIMITED",
+    "q4": 83094451,
+    "q1": 81585305,
+    "chg": -0.01816181443933001
+  },
+  {
+    "symbol": "ROST",
+    "name": "ROSS STORES INC",
+    "q4": 79053869,
+    "q1": 77524024,
+    "chg": -0.019351930770143584
+  },
+  {
+    "symbol": "ARRY",
+    "name": "ARRAY TECHNOLOGIES INC",
+    "q4": 45897050,
+    "q1": 45005363,
+    "chg": -0.01942798066542403
+  },
+  {
+    "symbol": "AMCR",
+    "name": "AMCOR PLC",
+    "q4": 357023186,
+    "q1": 349735107,
+    "chg": -0.020413461326290443
+  },
+  {
+    "symbol": "MATX",
+    "name": "MATSON INC",
+    "q4": 10505464,
+    "q1": 10288173,
+    "chg": -0.020683617591759868
+  },
+  {
+    "symbol": "BBY",
+    "name": "BEST BUY INC",
+    "q4": 62099138,
+    "q1": 60774589,
+    "chg": -0.02132958753791397
+  },
+  {
+    "symbol": "DECK",
+    "name": "DECKERS OUTDOOR CORP",
+    "q4": 26218471,
+    "q1": 25652678,
+    "chg": -0.021579938814891227
+  },
+  {
+    "symbol": "UBER",
+    "name": "UBER TECHNOLOGIES INC",
+    "q4": 500913237,
+    "q1": 490084847,
+    "chg": -0.021617296569864854
+  },
+  {
+    "symbol": "IR",
+    "name": "INGERSOLL RAND INC",
+    "q4": 97342963,
+    "q1": 95122902,
+    "chg": -0.022806589522038692
+  },
+  {
+    "symbol": "POOL",
+    "name": "POOL CORP",
+    "q4": 8626932,
+    "q1": 8427601,
+    "chg": -0.02310566491077013
+  },
+  {
+    "symbol": "SNAP",
+    "name": "SNAP INC",
+    "q4": 254054411,
+    "q1": 247754014,
+    "chg": -0.02479940015684278
+  },
+  {
+    "symbol": "VLO",
+    "name": "VALERO ENERGY CORP",
+    "q4": 84974971,
+    "q1": 82803144,
+    "chg": -0.025558431788108526
+  },
+  {
+    "symbol": "EBAY",
+    "name": "EBAY INC.",
+    "q4": 122110101,
+    "q1": 118986656,
+    "chg": -0.025578924056413647
+  },
+  {
+    "symbol": "HSY",
+    "name": "HERSHEY CO",
+    "q4": 40138763,
+    "q1": 39085120,
+    "chg": -0.026250011740521252
+  },
+  {
+    "symbol": "PSX",
+    "name": "PHILLIPS 66",
+    "q4": 109252466,
+    "q1": 106361285,
+    "chg": -0.026463301981668772
+  },
+  {
+    "symbol": "HRL",
+    "name": "HORMEL FOODS CORP",
+    "q4": 92546058,
+    "q1": 89950118,
+    "chg": -0.028050249314779025
+  },
+  {
+    "symbol": "LMT",
+    "name": "LOCKHEED MARTIN CORP",
+    "q4": 74041560,
+    "q1": 71941329,
+    "chg": -0.028365569282981073
+  },
+  {
+    "symbol": "ULTA",
+    "name": "ULTA BEAUTY INC",
+    "q4": 12209281,
+    "q1": 11850606,
+    "chg": -0.02937724178843947
+  },
+  {
+    "symbol": "KBH",
+    "name": "KB HOME",
+    "q4": 20344402,
+    "q1": 19727431,
+    "chg": -0.030326327605992055
+  },
+  {
+    "symbol": "SKY",
+    "name": "CHAMPION HOMES INC",
+    "q4": 8772972,
+    "q1": 8494640,
+    "chg": -0.03172607868804323
+  },
+  {
+    "symbol": "FSLR",
+    "name": "FIRST SOLAR INC",
+    "q4": 31014601,
+    "q1": 30024453,
+    "chg": -0.03192522128529076
+  },
+  {
+    "symbol": "THC",
+    "name": "TENET HEALTHCARE CORP",
+    "q4": 22155188,
+    "q1": 21433606,
+    "chg": -0.032569437009516686
+  },
+  {
+    "symbol": "STEM",
+    "name": "STEM INC",
+    "q4": 11739039,
+    "q1": 11339113,
+    "chg": -0.03406803572251527
+  },
+  {
+    "symbol": "MSCI",
+    "name": "MSCI INC",
+    "q4": 20090083,
+    "q1": 19379414,
+    "chg": -0.03537411965893819
+  },
+  {
+    "symbol": "CROX",
+    "name": "CROCS INC",
+    "q4": 12125736,
+    "q1": 11692623,
+    "chg": -0.03571849164454842
+  },
+  {
+    "symbol": "INCY",
+    "name": "INCYTE CORP",
+    "q4": 52868889,
+    "q1": 50924111,
+    "chg": -0.03678492279268437
+  },
+  {
+    "symbol": "STLD",
+    "name": "STEEL DYNAMICS INC",
+    "q4": 38154042,
+    "q1": 36717036,
+    "chg": -0.037663270381680665
+  },
+  {
+    "symbol": "TDG",
+    "name": "TRANSDIGM GROUP INC",
+    "q4": 13676213,
+    "q1": 13151485,
+    "chg": -0.03836793123944472
+  },
+  {
+    "symbol": "TMHC",
+    "name": "TAYLOR MORRISON HOME CORP",
+    "q4": 30134823,
+    "q1": 28970131,
+    "chg": -0.038649372521617265
+  },
+  {
+    "symbol": "TTD",
+    "name": "THE TRADE DESK INC",
+    "q4": 117030750,
+    "q1": 111799582,
+    "chg": -0.04469908976914187
+  },
+  {
+    "symbol": "LBRDA",
+    "name": "LIBERTY BROADBAND CORP",
+    "q4": 22010980,
+    "q1": 21024407,
+    "chg": -0.04482185709132442
+  },
+  {
+    "symbol": "IMAX",
+    "name": "IMAX CORP",
+    "q4": 4320997,
+    "q1": 4103156,
+    "chg": -0.050414522389161574
+  },
+  {
+    "symbol": "MNDY",
+    "name": "MONDAY COM LTD",
+    "q4": 2505059,
+    "q1": 2362942,
+    "chg": -0.056731997130606504
+  },
+  {
+    "symbol": "STRL",
+    "name": "STERLING INFRASTRUCTURE INC",
+    "q4": 7132683,
+    "q1": 6717257,
+    "chg": -0.058242599594009715
+  },
+  {
+    "symbol": "PLNT",
+    "name": "PLANET FITNESS INC",
+    "q4": 22042810,
+    "q1": 20652521,
+    "chg": -0.06307222173579503
+  },
+  {
+    "symbol": "CWEN",
+    "name": "CLEARWAY ENERGY INC",
+    "q4": 38167621,
+    "q1": 35757476,
+    "chg": -0.06314632499625795
+  },
+  {
+    "symbol": "VST",
+    "name": "VISTRA CORP",
+    "q4": 91833729,
+    "q1": 86004501,
+    "chg": -0.06347589348135912
+  },
+  {
+    "symbol": "JAZZ",
+    "name": "JAZZ PHARMACEUTICALS PLC",
+    "q4": 14844751,
+    "q1": 13900693,
+    "chg": -0.063595408235544
+  },
+  {
+    "symbol": "LDOS",
+    "name": "LEIDOS HOLDINGS INC",
+    "q4": 36491486,
+    "q1": 33825944,
+    "chg": -0.07304558657874333
+  },
+  {
+    "symbol": "MGM",
+    "name": "MGM RESORTS INTERNATIONAL",
+    "q4": 57578004,
+    "q1": 52860217,
+    "chg": -0.08193731411738413
+  },
+  {
+    "symbol": "AA",
+    "name": "ALCOA CORP",
+    "q4": 58936837,
+    "q1": 53307077,
+    "chg": -0.09552192290197047
+  },
+  {
+    "symbol": "EMN",
+    "name": "EASTMAN CHEM CO",
+    "q4": 28420020,
+    "q1": 25555723,
+    "chg": -0.10078448220655721
+  },
+  {
+    "symbol": "ATI",
+    "name": "ATI INC",
+    "q4": 48897152,
+    "q1": 43838749,
+    "chg": -0.1034498491854904
+  },
+  {
+    "symbol": "ABNB",
+    "name": "AIRBNB INC",
+    "q4": 215144561,
+    "q1": 187395567,
+    "chg": -0.12897836631807763
+  },
+  {
+    "symbol": "PCRX",
+    "name": "PACIRA BIOSCIENCES INC",
+    "q4": 17688279,
+    "q1": 14703148,
+    "chg": -0.1687632245059002
+  },
+  {
+    "symbol": "BE",
+    "name": "BLOOM ENERGY CORP",
+    "q4": 71391210,
+    "q1": 58247083,
+    "chg": -0.18411408071105673
+  },
+  {
+    "symbol": "NRG",
+    "name": "NRG ENERGY INC",
+    "q4": 72507124,
+    "q1": 54671785,
+    "chg": -0.24598050530869214
+  },
+  {
+    "symbol": "SHOP",
+    "name": "SHOPIFY INC",
+    "q4": 76330233,
+    "q1": 56419042,
+    "chg": -0.26085589179322954
+  },
+  {
+    "symbol": "BKNG",
+    "name": "BOOKING HOLDINGS INC",
+    "q4": 19743988,
+    "q1": 13877620,
+    "chg": -0.29712173650024504
+  },
+  {
+    "symbol": "AXON",
+    "name": "AXON ENTERPRISE INC",
+    "q4": 45994569,
+    "q1": 30796336,
+    "chg": -0.33043538249048493
+  },
+  {
+    "symbol": "CFLT",
+    "name": "FLUENT INC",
+    "q4": 1059989,
+    "q1": 573254,
+    "chg": -0.4591887274301903
+  }
+]
