@@ -1,0 +1,39 @@
+
+=== SESSION 2 — 2026-03-26 ===
+Baseline: 23.37% OOS CAGR, Sharpe 1.91, MaxDD -6.71%
+
+BUILT:
+- Regime-conditional stop confirmation (BEAR=exit immediately, BULL/CHOPPY=close+volume confirmation)
+  - Data: 63% TRENDING_BULL stops, 71% CHOPPY stops are whipsaws
+  - vol_ratio > 1.5 OR close >3% below stop required for exit
+- Delta-neutral conviction calls overlay (ML + PEAD + revision + streak)
+  - Budget: call delta × budget = total delta-adjusted exposure stays within Kelly
+  - 50bps slippage both legs
+- SI velocity from FINRA (7 features, 447/447 symbols cached)
+- 13F institutional flow from SEC EDGAR (Vanguard + State Street, 301 stocks matched)
+- Adaptive accumulation thresholds (percentile-based, not hardcoded)
+- Kelly ML buckets (90th/75th percentile, not hardcoded 0.95/0.90)
+- Alpha decomposition: OOS Jensen's alpha +15.27%, IR=0.59, beat SPY 3/4 OOS years
+- Confirmed: NOT a tech momentum strategy (non-tech PnL $97k > tech $80k)
+- Confirmed: stop whipsaw is the main cause of 2019/2025 underperformance
+- ML ranker retraining with new features (VIX spike, streak×PEAD, SI×PEAD, momentum persistence, SI velocity, 13F flow)
+
+TESTED AND REJECTED:
+- VIX puts on spike>30: -2.62% CAGR (strike too far OTM)
+- VXX short in TRENDING_BULL: -0.28% CAGR (tail risk + regime friction)
+- SVXY long: +0.74% CAGR MARGINAL (Volmageddon 87% single-day loss risk)
+- SPY floor allocation: cannot fix 2019/2021/2025 gaps (38% deficit too large)
+
+PENDING (next backtest):
+- Regime-conditional stops vs baseline
+- Delta-neutral conviction calls vs baseline
+- New ML features (VIX spike, SI velocity, 13F) after ranker retrain
+- Expected: 25-28% OOS CAGR if all three contribute
+
+NEXT SESSION:
+- Earnings straddles on high-PEAD mid-caps
+- Covered calls on positions up >15%
+- Cash-secured puts for CHOPPY entries
+- Protective puts on concentrated positions
+- PEAD momentum calls 90-DTE
+- Insider clusters in BEAR regime

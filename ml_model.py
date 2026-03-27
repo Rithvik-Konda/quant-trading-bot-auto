@@ -662,6 +662,22 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
     else:
         d["momentum_persistence"] = pd.Series(0.5, index=df.index)
 
+    # Insider flow features — SEC EDGAR Form 4 (filed within 2 days)
+    # insider_cluster: 3+ insiders buying = strongest signal (Seyhun 1998)
+    # insider_net_buying: buys minus sells — positive = bullish insider sentiment
+    # Most powerful in BEAR regime but valid signal in all regimes
+    try:
+        import sys as _si_sys2
+        _si_sys2.path.insert(0, '/Users/rick/ai_trading_bot_v2')
+        from insider_flow import compute_insider_features as _ins_feats
+        _ins = _ins_feats(symbol or '')
+        for _k, _v in _ins.items():
+            d[_k] = pd.Series(float(_v), index=df.index)
+    except Exception:
+        for _k in ['insider_buy_count','insider_buy_value','insider_cluster',
+                   'insider_ceo_buying','insider_net_buying']:
+            d[_k] = pd.Series(0.0, index=df.index)
+
     # Institutional flow features — SEC EDGAR 13F quarterly
     # Measures Vanguard+BlackRock+StateStreet QoQ share count changes
     # Filtered to exclude passive rebalancing artifacts (>50% changes)

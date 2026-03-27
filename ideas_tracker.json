@@ -16,20 +16,20 @@
     "reason": "Structure valid, Cremers & Weinbaum confirmed directionally. But retrospective test is circular \u2014 conviction score correlated with known winners. Must integrate into backtester main loop for honest measurement."
   },
   "protective_puts": {
-    "status": "PENDING",
-    "reason": "Caps worst losses directly"
+    "status": "REVISIT",
+    "reason": "No qualifying trades \u2014 need larger positions"
   },
   "pead_calls_90dte": {
-    "status": "PENDING",
-    "reason": "Confirmed alpha exists (IC=0.043)"
+    "status": "PAPER_TRADE",
+    "reason": "+14-20% range, real edge likely exists, validate IV assumption live"
   },
   "earnings_straddles": {
-    "status": "PENDING",
-    "reason": "Session 3"
+    "status": "BLOCKED",
+    "reason": "Requires historical options IV data. Free sources unavailable. OptionsDX ~$20/mo when live. Cannot honestly backtest with BS estimates \u2014 IV varies 25-120% per stock."
   },
   "covered_calls": {
-    "status": "PENDING",
-    "reason": "Session 3"
+    "status": "DEPLOY_LIVE",
+    "reason": "+1.61% CAGR, low IV sensitivity, validate live"
   },
   "csp_entries": {
     "status": "PENDING",
@@ -70,5 +70,9 @@
   "ml_vix_models": {
     "status": "BUILT",
     "reason": "AUC=0.90 spike predictor, MAE=3.47 VIX points 30d forecast. Use as feature in ML ranker."
+  },
+  "cash_secured_puts": {
+    "status": "PAPER_TRADE",
+    "reason": "+0.36% marginal, validate live before deploying"
   }
 }
