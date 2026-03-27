@@ -629,7 +629,18 @@ def run_backtest_v2(
         recent_stop_dates[:] = [d for d in recent_stop_dates if (date - d).days <= 5]
         cascade_freeze = len(recent_stop_dates) >= 2
 
-        if len(long_positions) < max_longs and cooldown_ok and not cascade_freeze:
+        # Reserve 1 dedicated slot for >0.99 ML rank trades
+        # Data: >0.99 avg=$3,192 vs 0.97-0.99 avg=$300 — phase transition at 0.99
+        _has_top_slot = len(long_positions) < max_longs
+        _top_slot_reserved = len(long_positions) == max_longs - 1
+        _top_candidate_exists = any(
+            v.ml_rank_pct > 0.99
+            for v in snapshots.values()
+            if v.symbol not in long_positions
+        )
+        _effective_max = max_longs + 1 if (_top_slot_reserved and _top_candidate_exists) else max_longs
+
+        if len(long_positions) < _effective_max and cooldown_ok and not cascade_freeze:
             # Get ML threshold for current regime
             ml_min = getattr(params, 'ml_rank_min', getattr(params, 'ml_rank_min_long', 0.80))
 
@@ -676,10 +687,12 @@ def run_backtest_v2(
                     continue
 
                 # Fix 1: Entry confirmation — must rank top decile 2 consecutive days
+                # Exception: >0.99 trades bypass confirmation — signal too strong to delay
                 ml_min_threshold = getattr(params, 'ml_rank_min', getattr(params, 'ml_rank_min_long', 0.80))
-                if prev_ml_ranks.get(s, 0.0) < ml_min_threshold:
-                    prev_ml_ranks[s] = snap.ml_rank_pct
-                    continue
+                if snap.ml_rank_pct <= 0.99:  # normal trades need confirmation
+                    if prev_ml_ranks.get(s, 0.0) < ml_min_threshold:
+                        prev_ml_ranks[s] = snap.ml_rank_pct
+                        continue
 
                 # Quality gate — don't buy high-momentum low-quality stocks
                 # Research: momentum+quality combo reduces drawdowns 30-40% vs momentum alone
@@ -747,6 +760,11 @@ def run_backtest_v2(
                 base_conviction = conviction_multiplier(snap)
                 ml_conv = 0.5 + (snap.ml_rank_pct - ml_min_threshold) / max(1.0 - ml_min_threshold, 0.01)
                 ml_conv = float(_np.clip(ml_conv, 0.5, 1.5))
+                # >0.99 tier: 1.5x size multiplier
+                # Data: avg=$3,192 vs $300 for 0.97-0.99, stop avg only -$578
+                # Kelly optimal is much larger — 1.5x is conservative
+                if snap.ml_rank_pct > 0.99:
+                    ml_conv = min(ml_conv * 1.5, 2.5)
                 conviction = base_conviction * ml_conv
 
                 # Fix 6: Volatility-scaled position sizing (Moreira & Muir 2017)
