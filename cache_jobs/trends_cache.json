@@ -1,0 +1,198 @@
+{
+  "NVDA": {
+    "recent": 2.0,
+    "baseline": 4.111111111111111,
+    "velocity": -0.5135135135135135,
+    "job_expanding": 0.0,
+    "job_contracting": 1.0
+  },
+  "MSFT": {
+    "recent": 6.0,
+    "baseline": 8.622222222222222,
+    "velocity": -0.30412371134020616,
+    "job_expanding": 0.0,
+    "job_contracting": 1.0
+  },
+  "META": {
+    "recent": 0.0,
+    "baseline": 0.0,
+    "velocity": 0.0,
+    "job_expanding": 0.0,
+    "job_contracting": 0.0
+  },
+  "AMZN": {
+    "recent": 72.25,
+    "baseline": 81.08888888888889,
+    "velocity": -0.10900246642915867,
+    "job_expanding": 0.0,
+    "job_contracting": 0.0
+  },
+  "GOOGL": {
+    "recent": 29.0,
+    "baseline": 32.8,
+    "velocity": -0.11585365853658529,
+    "job_expanding": 0.0,
+    "job_contracting": 0.0
+  },
+  "AAPL": {
+    "recent": 51.0,
+    "baseline": 64.31111111111112,
+    "velocity": -0.20697995853489987,
+    "job_expanding": 0.0,
+    "job_contracting": 1.0
+  },
+  "TSLA": {
+    "recent": 13.0,
+    "baseline": 17.711111111111112,
+    "velocity": -0.26599749058971145,
+    "job_expanding": 0.0,
+    "job_contracting": 1.0
+  },
+  "SNOW": {
+    "recent": 1.25,
+    "baseline": 1.5777777777777777,
+    "velocity": -0.2077464788732394,
+    "job_expanding": 0.0,
+    "job_contracting": 1.0
+  },
+  "DDOG": {
+    "recent": 0.5,
+    "baseline": 0.0,
+    "velocity": 0.0,
+    "job_expanding": 0.0,
+    "job_contracting": 0.0
+  },
+  "NET": {
+    "recent": 1.0,
+    "baseline": 1.711111111111111,
+    "velocity": -0.41558441558441556,
+    "job_expanding": 0.0,
+    "job_contracting": 1.0
+  },
+  "SHOP": {
+    "recent": 20.0,
+    "baseline": 43.71111111111111,
+    "velocity": -0.5424504321301474,
+    "job_expanding": 0.0,
+    "job_contracting": 1.0
+  },
+  "NOW": {
+    "recent": 17.75,
+    "baseline": 14.222222222222221,
+    "velocity": 0.24804687500000006,
+    "job_expanding": 1.0,
+    "job_contracting": 0.0
+  },
+  "CRWD": {
+    "recent": 4.75,
+    "baseline": 0.0,
+    "velocity": 0.0,
+    "job_expanding": 0.0,
+    "job_contracting": 0.0
+  },
+  "PANW": {
+    "recent": 2.0,
+    "baseline": 0.7111111111111111,
+    "velocity": 1.0,
+    "job_expanding": 1.0,
+    "job_contracting": 0.0
+  },
+  "PLTR": {
+    "recent": 15.25,
+    "baseline": 9.355555555555556,
+    "velocity": 0.6300475059382422,
+    "job_expanding": 1.0,
+    "job_contracting": 0.0
+  },
+  "ADBE": {
+    "recent": 22.5,
+    "baseline": 29.622222222222224,
+    "velocity": -0.24043510877719435,
+    "job_expanding": 0.0,
+    "job_contracting": 1.0
+  },
+  "ORCL": {
+    "recent": 28.5,
+    "baseline": 39.71111111111111,
+    "velocity": -0.2823167319529938,
+    "job_expanding": 0.0,
+    "job_contracting": 1.0
+  },
+  "CRM": {
+    "recent": 28.75,
+    "baseline": 41.022222222222226,
+    "velocity": -0.299160346695558,
+    "job_expanding": 0.0,
+    "job_contracting": 1.0
+  },
+  "WDAY": {
+    "recent": 52.25,
+    "baseline": 49.977777777777774,
+    "velocity": 0.045464650955980505,
+    "job_expanding": 0.0,
+    "job_contracting": 0.0
+  },
+  "HUBS": {
+    "recent": 7.75,
+    "baseline": 9.71111111111111,
+    "velocity": -0.2019450800915331,
+    "job_expanding": 0.0,
+    "job_contracting": 1.0
+  },
+  "UBER": {
+    "recent": 9.5,
+    "baseline": 13.622222222222222,
+    "velocity": -0.3026101141924959,
+    "job_expanding": 0.0,
+    "job_contracting": 1.0
+  },
+  "ABNB": {
+    "recent": 8.0,
+    "baseline": 10.822222222222223,
+    "velocity": -0.2607802874743327,
+    "job_expanding": 0.0,
+    "job_contracting": 1.0
+  },
+  "RDDT": {
+    "recent": 90.0,
+    "baseline": 80.31111111111112,
+    "velocity": 0.1206419479800774,
+    "job_expanding": 0.0,
+    "job_contracting": 0.0
+  },
+  "TTD": {
+    "recent": 0.0,
+    "baseline": 0.0,
+    "velocity": 0.0,
+    "job_expanding": 0.0,
+    "job_contracting": 0.0
+  },
+  "COIN": {
+    "recent": 0.75,
+    "baseline": 0.8666666666666667,
+    "velocity": -0.13461538461538464,
+    "job_expanding": 0.0,
+    "job_contracting": 0.0
+  },
+  "APP": {
+    "recent": 0.0,
+    "baseline": 0.0,
+    "velocity": 0.0,
+    "job_expanding": 0.0,
+    "job_contracting": 0.0
+  },
+  "DUOL": {
+    "recent": 18.5,
+    "baseline": 1.8666666666666667,
+    "velocity": 1.0,
+    "job_expanding": 1.0,
+    "job_contracting": 0.0
+  },
+  "AXON": {
+    "recent": 10.75,
+    "baseline": 2.1777777777777776,
+    "velocity": 1.0,
+    "job_expanding": 1.0,
+    "job_contracting": 0.0
+  }
+}

@@ -662,6 +662,23 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
     else:
         d["momentum_persistence"] = pd.Series(0.5, index=df.index)
 
+    # Job posting velocity — Indeed RSS, 2-3 quarter leading indicator
+    try:
+        import json as _jj
+        _jp = "/Users/rick/ai_trading_bot_v2/cache_jobs/job_signals.json"
+        if os.path.exists(_jp):
+            _jd = {r["symbol"]: r for r in _jj.load(open(_jp))}
+            _j  = _jd.get(symbol or "", {})
+            d["job_velocity"]    = pd.Series(float(_j.get("job_velocity", 0)), index=df.index)
+            d["job_expanding"]   = pd.Series(float(_j.get("job_expanding", 0)), index=df.index)
+            d["job_contracting"] = pd.Series(float(_j.get("job_contracting", 0)), index=df.index)
+        else:
+            for _k in ["job_velocity","job_expanding","job_contracting"]:
+                d[_k] = pd.Series(0.0, index=df.index)
+    except Exception:
+        for _k in ["job_velocity","job_expanding","job_contracting"]:
+            d[_k] = pd.Series(0.0, index=df.index)
+
     # Insider flow features — SEC EDGAR Form 4 (filed within 2 days)
     # insider_cluster: 3+ insiders buying = strongest signal (Seyhun 1998)
     # insider_net_buying: buys minus sells — positive = bullish insider sentiment
