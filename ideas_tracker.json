@@ -74,5 +74,37 @@
   "cash_secured_puts": {
     "status": "PAPER_TRADE",
     "reason": "+0.36% marginal, validate live before deploying"
+  },
+  "congressional_trading": {
+    "status": "PENDING",
+    "reason": "Free via Capitol Trades API. STOCK Act disclosures within 45d. Use as ML feature \u2014 congressional cluster buys in TRENDING_BULL."
+  },
+  "put_call_ratio": {
+    "status": "PENDING",
+    "reason": "CBOE publishes daily put/call ratios free. Contrarian signal \u2014 extreme put buying = near-term bottom. Wire into ML ranker."
+  },
+  "job_posting_velocity": {
+    "status": "PENDING",
+    "reason": "Indeed/LinkedIn job posting changes predict revenue growth 2-3 quarters ahead. Free scraping via Indeed RSS."
+  },
+  "web_traffic_trends": {
+    "status": "PENDING",
+    "reason": "SimilarWeb free tier. Rising web traffic before earnings = revenue beat predictor. IC ~0.02-0.03."
+  },
+  "options_iv_rank": {
+    "status": "PENDING",
+    "reason": "IV rank (IVR) from yfinance current options. High IVR = sell premium (covered calls). Low IVR = buy calls (PEAD). Solves options pricing gap."
+  },
+  "dark_pool_prints": {
+    "status": "PENDING",
+    "reason": "Unusual Whales free tier has some dark pool data. Large dark pool buys = institutional accumulation confirmation."
+  },
+  "alpha101_factors": {
+    "status": "PENDING",
+    "reason": "WorldQuant 101 formulaic alphas \u2014 open source. 101 additional cross-sectional features, many uncorrelated with our current 260."
+  },
+  "bid_ask_spread_trend": {
+    "status": "PENDING",
+    "reason": "Wider spread = illiquidity = higher expected return (Amihud 2002). Computable from yfinance options chains."
   }
 }
