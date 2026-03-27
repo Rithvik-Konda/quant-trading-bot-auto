@@ -106,5 +106,9 @@
   "bid_ask_spread_trend": {
     "status": "PENDING",
     "reason": "Wider spread = illiquidity = higher expected return (Amihud 2002). Computable from yfinance options chains."
+  },
+  "8k_sentiment": {
+    "status": "NEEDS_FIX",
+    "reason": "EDGAR rate limited. Fix: target EX-99.1 exhibits not 8-K cover page. Use adsh from EFTS search to construct direct URL. Add 2-3s delays between requests. Retry next session after IP cooldown."
   }
 }

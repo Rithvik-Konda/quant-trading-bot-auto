@@ -54,7 +54,10 @@ class Trade:
     rule_score:     float
     combined_score: float
     side:           str   = "long"   # "long" or "short"
-    regime:         str   = ""       # regime at entry — for Kelly sizing
+    regime:         str   = ""       # regime at entry
+    ann_vol:        float = 0.0     # annualized vol at entry
+    call_cost:      float = 0.0     # conviction call premium paid
+    call_pnl:       float = 0.0     # conviction call PnL at exit — for Kelly sizing
     ann_vol:        float = 0.35     # annualized vol at entry — for Kelly bucketing
 
 

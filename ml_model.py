@@ -931,8 +931,24 @@ def build_panel_from_store(store: dict, horizon: int) -> pd.DataFrame:
     panel = pd.concat(frames)
     panel["target_rank"] = panel.groupby("date")["target"].rank(pct=True)
 
+    # Static snapshot features — valid for live trading but POISON for backtesting
+    # They are zero for all historical dates, teaching the ranker a false zero-pattern
+    LIVE_ONLY_FEATURES = {
+        "congress_cluster", "congress_net_buying", "congress_buy_count",
+        "congress_sell_count", "congress_committee",
+        "pcr_total", "pcr_equity", "pcr_5d_ma", "pcr_fear_signal",
+        "pcr_complacency", "pcr_extreme",
+        "job_velocity", "job_expanding", "job_contracting",
+        "insider_seq_buy", "insider_seq_sell", "insider_seq_strength",
+        "app_rating", "app_rating_high", "app_rating_low",
+        "squeeze_alert",
+        "8k_sentiment", "8k_negative", "8k_positive", "8k_count",
+        "fda_catalyst_near", "fda_catalyst_days",
+        "inst_buying", "inst_selling", "inst_chg_pct",
+    }
     feature_cols = [c for c in panel.columns
-                    if c not in {"date", "symbol", "target_raw", "target", "target_rank"}]
+                    if c not in {"date", "symbol", "target_raw", "target", "target_rank"}
+                    and c not in LIVE_ONLY_FEATURES]
     cs_ranks = {}
     for c in feature_cols:
         cs_ranks[f"{c}_cs_rank"] = panel.groupby("date")[c].rank(pct=True)
@@ -968,8 +984,24 @@ def _build_model(horizon: int):
 
 
 def train_ranker(panel: pd.DataFrame, horizon: int, oos_only: bool = False):
+    # Static snapshot features — valid for live trading but POISON for backtesting
+    # They are zero for all historical dates, teaching the ranker a false zero-pattern
+    LIVE_ONLY_FEATURES = {
+        "congress_cluster", "congress_net_buying", "congress_buy_count",
+        "congress_sell_count", "congress_committee",
+        "pcr_total", "pcr_equity", "pcr_5d_ma", "pcr_fear_signal",
+        "pcr_complacency", "pcr_extreme",
+        "job_velocity", "job_expanding", "job_contracting",
+        "insider_seq_buy", "insider_seq_sell", "insider_seq_strength",
+        "app_rating", "app_rating_high", "app_rating_low",
+        "squeeze_alert",
+        "8k_sentiment", "8k_negative", "8k_positive", "8k_count",
+        "fda_catalyst_near", "fda_catalyst_days",
+        "inst_buying", "inst_selling", "inst_chg_pct",
+    }
     feature_cols = [c for c in panel.columns
-                    if c not in {"date", "symbol", "target_raw", "target", "target_rank"}]
+                    if c not in {"date", "symbol", "target_raw", "target", "target_rank"}
+                    and c not in LIVE_ONLY_FEATURES]
 
     panel        = panel.sort_values(["date", "symbol"])
     unique_dates = sorted(panel["date"].unique())

@@ -416,34 +416,14 @@ def run_backtest_v2(
             hold_d      = pos.age_days(pd.Timestamp(date).to_pydatetime())
             exit_reason = exit_ref = None
 
-            # Regime-conditional stop confirmation.
-            # Empirical whipsaw rates from 264 historical stops:
-            #   BEAR=0%, TRENDING_BULL=63%, CHOPPY=71%
-            # In BEAR: exit immediately — stops are almost never false.
-            # In BULL/CHOPPY: require close below stop (not just intraday low)
-            #   AND vol_ratio < 2.0 (high volume = real selling, not noise)
-            # This is learned from data, not hardcoded preference.
-            _stop_triggered = low <= stop_px
-            if _stop_triggered:
-                if _current_regime == BEAR:
-                    # BEAR: 0% whipsaw — exit immediately
-                    exit_reason = "stop"
-                    exit_ref    = stop_px
-                else:
-                    # BULL/CHOPPY: 63-71% whipsaw rate
-                    # Require close-based confirmation AND check volume
-                    _close_below = close <= stop_px
-                    # Volume ratio — high volume on stop day = real selling
-                    _df_vol    = prices_by_symbol[s].loc[:date]['volume']
-                    _vol_avg   = float(_df_vol.tail(20).mean()) if len(_df_vol) >= 20 else 1
-                    _vol_today = float(_df_vol.iloc[-1]) if len(_df_vol) > 0 else 1
-                    _vol_ratio = _vol_today / _vol_avg if _vol_avg > 0 else 1.0
-                    # Exit if: close below stop AND volume confirms (vol_ratio > 1.5)
-                    # OR close is >3% below stop (not just touching)
-                    _deep_break = close <= stop_px * 0.97
-                    if _close_below and (_vol_ratio > 1.5 or _deep_break):
-                        exit_reason = "stop"
-                        exit_ref    = stop_px
+            # Stop exit — original logic restored.
+            # Regime-conditional confirmation (vol_ratio>1.5 OR >3% break)
+            # caused WR to drop to 13% by holding through real breakdowns.
+            # Lesson: whipsaw reduction via confirmation delays real exits too long.
+            # Simple close-below-stop is more robust across regimes.
+            if low <= stop_px:
+                exit_reason = "stop"
+                exit_ref    = stop_px
             elif close >= pos.entry_price * (1 + getattr(params, 'take_profit_pct', getattr(params, 'take_profit_long', 0.40))):
                 # Take profit — trailing ATR stop handles secular winners naturally
                 # Removed fitted suppression (0.90/0.85/0.65 thresholds were fitted to APP/NVDA/VRT)
@@ -469,26 +449,8 @@ def run_backtest_v2(
                 pnl  = (fill - pos.entry_price) * pos.qty - comm
                 cash += fill * pos.qty - comm
                 meta  = entry_meta.get(s, {})
-                trades.append(Trade(
-                    symbol=s, entry_date=pos.entry_time,
-                    exit_date=str(date.date()), entry_price=pos.entry_price,
-                    exit_price=fill, qty=pos.qty, pnl=pnl,
-                    reason=exit_reason,
-                    ml_rank_pct=float(meta.get("ml_rank_pct", 0)),
-                    rule_score=float(meta.get("rule_score", 0)),
-                    combined_score=float(meta.get("combined_score", 0)),
-                    side="long",
-                    regime=meta.get("regime", _current_regime),
-                    ann_vol=float(meta.get("ann_vol", 0.35)),
-                ))
-                if exit_reason == "stop" or (exit_reason == "max_hold" and pnl < 0):
-                    long_stop_dates[s] = date
-                if exit_reason == "stop":
-                    recent_stop_dates.append(date)
-                if exit_reason == "regime_exit":
-                    last_regime_exit_date = date
-
-                # ── Settle conviction call at bid price ───────────────────
+                # Settle conviction call before recording trade
+                _call_pnl = 0.0
                 OPTIONS_SLIP_EXIT = 0.005
                 if meta.get("call_contracts", 0) > 0:
                     try:
@@ -508,12 +470,34 @@ def run_backtest_v2(
                         else:
                             _T_rem2 = max((_DTE2 - _days_held2) / 365.0, 0.01)
                             _mid2   = _bs_call2(fill, _K2, _T_rem2, 0.05, _sigma2)
-                        _bid2    = _mid2 * (1 - OPTIONS_SLIP_EXIT)
-                        _payoff2 = _n2 * _bid2 * 100
-                        cash    += _payoff2
-                        pnl     += _payoff2 - _cost2
+                        _bid2      = _mid2 * (1 - OPTIONS_SLIP_EXIT)
+                        _payoff2   = _n2 * _bid2 * 100
+                        _call_pnl  = _payoff2 - _cost2
+                        cash      += _payoff2
+                        pnl       += _call_pnl
                     except Exception:
                         pass
+
+                trades.append(Trade(
+                    symbol=s, entry_date=pos.entry_time,
+                    exit_date=str(date.date()), entry_price=pos.entry_price,
+                    exit_price=fill, qty=pos.qty, pnl=pnl,
+                    reason=exit_reason,
+                    ml_rank_pct=float(meta.get("ml_rank_pct", 0)),
+                    rule_score=float(meta.get("rule_score", 0)),
+                    combined_score=float(meta.get("combined_score", 0)),
+                    side="long",
+                    regime=meta.get("regime", _current_regime),
+                    ann_vol=float(meta.get("ann_vol", 0.35)),
+                    call_cost=float(meta.get("call_cost", 0.0)),
+                    call_pnl=float(_call_pnl),
+                ))
+                if exit_reason == "stop" or (exit_reason == "max_hold" and pnl < 0):
+                    long_stop_dates[s] = date
+                if exit_reason == "stop":
+                    recent_stop_dates.append(date)
+                if exit_reason == "regime_exit":
+                    last_regime_exit_date = date
 
                 del long_positions[s]
                 entry_meta.pop(s, None)

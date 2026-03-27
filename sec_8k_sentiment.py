@@ -78,16 +78,24 @@ def score_8k_sentiment(texts):
         words = item["text"].lower().split()
         for w in words:
             w_clean = re.sub(r"[^a-z]", "", w)
-            if any(pos in w_clean for pos in LM_POSITIVE):
+            if not w_clean:
+                continue
+            # Check if word is in positive set OR starts with a positive stem
+            is_pos = w_clean in LM_POSITIVE or any(w_clean.startswith(p) for p in LM_POSITIVE)
+            is_neg = w_clean in LM_NEGATIVE or any(w_clean.startswith(n) for n in LM_NEGATIVE)
+            if is_pos:
                 total_pos += 1
-            if any(neg in w_clean for neg in LM_NEGATIVE):
+            if is_neg:
                 total_neg += 1
             total_words += 1
     if total_words == 0:
         return {"8k_sentiment": 0.0, "8k_positive": 0.0, "8k_negative": 0.0, "8k_count": 0.0}
     pos_rate = total_pos / total_words
     neg_rate = total_neg / total_words
-    sentiment = (pos_rate - neg_rate) / (pos_rate + neg_rate + 1e-8)
+    # Net sentiment: positive - negative, normalized
+    net = pos_rate - neg_rate
+    denom = pos_rate + neg_rate + 1e-8
+    sentiment = net / denom
     return {
         "8k_sentiment": float(np.clip(sentiment, -1, 1)),
         "8k_positive":  float(np.clip(pos_rate * 100, 0, 10)),
@@ -104,7 +112,7 @@ if __name__ == "__main__":
     from insider_flow import get_cik
     print("Fetching 8-K sentiment for watchlist...")
     results = []
-    for sym in config.WATCHLIST[:60]:
+    for sym in config.WATCHLIST:
         cik = get_cik(sym)
         if not cik:
             continue
