@@ -455,33 +455,12 @@ def run_backtest_v2(
                 exit_reason = "take_profit"
                 exit_ref    = close
             elif hold_d >= getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12)):
-                # Secular winner extension — data shows 180d hold 3x's returns vs 30d
-                # For >0.95 ML rank: no time limit — trailing stop only
-                # For >0.85 ML rank: extend 2x if up >8%
-                # For normal trades: standard max_hold
-                meta_ml = entry_meta.get(s, {}).get("ml_rank_pct", 0.0)
+                base_max = getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12))
                 ml_score = ml_scores.get(s, 0.0)
-                current_ml = max(meta_ml, ml_score)
-
-                # Secular winner: top 5% cross-sectional rank = no time exit
-                # Principle: if still ranked in top 5% of universe, the edge persists
-                # Exit when rank drops below top 20% — edge has dissipated
-                # This is purely relative rank — no fitted absolute numbers
-                _n_avail = max(len(available_symbols), 100)
-                _top5pct  = 1.0 - (5.0  / _n_avail)   # ~0.989 for 447 stocks
-                _top20pct = 1.0 - (20.0 / _n_avail)   # ~0.955 for 447 stocks
-
-                if current_ml >= _top5pct:
-                    # Still top 5% of universe — edge persists, no time exit
-                    # Let trailing stop manage the position
-                    pass
-                else:
-                    base_max = getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12))
-                    # Extend if still top 20% and profitable
-                    extended = int(base_max * 2.0) if (unrealized_pct > 0.08 and current_ml >= _top20pct) else base_max
-                    if hold_d >= extended:
-                        exit_reason = "max_hold"
-                        exit_ref    = close
+                extended = int(base_max * 1.5) if (unrealized_pct > 0.08 and ml_score > 0.85) else base_max
+                if hold_d >= extended:
+                    exit_reason = "max_hold"
+                    exit_ref    = close
             elif _current_regime == BEAR and sector_map.get(s) not in strat_bear.DEFENSIVE_SECTORS:
                 exit_reason = "regime_exit"
                 exit_ref    = close
@@ -652,14 +631,7 @@ def run_backtest_v2(
         # Data: >0.99 avg=$3,192 vs 0.97-0.99 avg=$300 — phase transition at 0.99
         _has_top_slot = len(long_positions) < max_longs
         _top_slot_reserved = len(long_positions) == max_longs - 1
-        _top_candidate_exists = any(
-            v.ml_rank_pct > 0.99
-            for v in snapshots.values()
-            if v.symbol not in long_positions
-        )
-        _effective_max = max_longs + 1 if (_top_slot_reserved and _top_candidate_exists) else max_longs
-
-        if len(long_positions) < _effective_max and cooldown_ok and not cascade_freeze:
+        if len(long_positions) < max_longs and cooldown_ok and not cascade_freeze:
             # Get ML threshold for current regime
             ml_min = getattr(params, 'ml_rank_min', getattr(params, 'ml_rank_min_long', 0.80))
 
@@ -707,15 +679,10 @@ def run_backtest_v2(
                 # Top 1% cross-sectional rank bypasses confirmation
                 # Principle: if ranked #1-4 out of 447 stocks today, signal is strong
                 # This is relative rank, not a fitted absolute threshold
-                _n_available = max(len(available_symbols), 100)
-                _top1pct_threshold = 1.0 - (1.0 / _n_available)  # ~0.997 for 447 stocks
-                _is_top_rank = snap.ml_rank_pct >= _top1pct_threshold
-                if not _is_top_rank:  # normal trades need confirmation
-                    if prev_ml_ranks.get(s, 0.0) < ml_min_threshold:
-                        prev_ml_ranks[s] = snap.ml_rank_pct
-                        continue
-
-                # Quality gate — don't buy high-momentum low-quality stocks
+                ml_min_threshold = getattr(params, 'ml_rank_min', getattr(params, 'ml_rank_min_long', 0.80))
+                if prev_ml_ranks.get(s, 0.0) < ml_min_threshold:
+                    prev_ml_ranks[s] = snap.ml_rank_pct
+                    continue
                 # Research: momentum+quality combo reduces drawdowns 30-40% vs momentum alone
                 # (Fama-French 5-factor, SGH 2024, abrdn 2024)
                 q_feat = feature_store.get(s)
@@ -733,22 +700,11 @@ def run_backtest_v2(
                 if _spy_5d_returns.get(date, 0.0) < -0.015:
                     continue
 
-                # Market breadth filter — most important entry filter
-                # Data: breadth<50% has WR=18%, stop_rate=73%, avg=-$897
-                # Breadth>50% has WR=60%+, improves every year without exception
+                # Breadth stored for diagnostics only — no hard block
+                # Data: breadth 40-50% has WR=65% avg=$2,186 — filter was blocking good trades
                 _breadth = _compute_breadth(date)
-                if _breadth < 0.40:
-                    continue  # market internals too weak — skip all new entries
-                # Soft signal: reduce position size when breadth 40-55%
-                _breadth_scalar = 1.0 if _breadth >= 0.55 else 0.7
-
-                # HYG credit stress filter
-                # Credit leads equity — HYG breakdown precedes stock selloffs
                 _hyg_hist = hyg_close.loc[:date]
-                if len(_hyg_hist) >= 10:
-                    _hyg_10d = float(_hyg_hist.iloc[-1] / _hyg_hist.iloc[-10] - 1)
-                    if _hyg_10d < -0.02:
-                        continue  # credit stress — avoid new longs
+                _hyg_10d = float(_hyg_hist.iloc[-1] / _hyg_hist.iloc[-10] - 1) if len(_hyg_hist) >= 10 else 0.0
 
 
 
@@ -785,11 +741,9 @@ def run_backtest_v2(
                 ml_conv = float(_np.clip(ml_conv, 0.5, 1.5))
                 # Rank-proportional sizing — pure Kelly principle
                 # Size scales continuously with rank percentile
-                # No fitted multipliers — mathematical relationship only
-                # Top 1%: ~2x base size. Top 5%: ~1.5x. Top 20%: ~1x.
-                _rank_scalar = 1.0 + max(0, snap.ml_rank_pct - ml_min_threshold) / (1.0 - ml_min_threshold)
-                _rank_scalar = float(min(_rank_scalar, 2.0))  # cap at 2x for risk management
-                ml_conv = ml_conv * _rank_scalar
+                base_conviction = conviction_multiplier(snap)
+                ml_conv = 0.5 + (snap.ml_rank_pct - ml_min_threshold) / max(1.0 - ml_min_threshold, 0.01)
+                ml_conv = float(_np.clip(ml_conv, 0.5, 1.5))
                 conviction = base_conviction * ml_conv
 
                 # Fix 6: Volatility-scaled position sizing (Moreira & Muir 2017)
