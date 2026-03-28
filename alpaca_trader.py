@@ -100,6 +100,25 @@ def run_daily_execution():
     for sym, pos in positions.items():
         print(f"  {sym:<6}: {pos['qty']} shares  PnL=${pos['unrealized_pnl']:>+,.0f} ({pos['unrealized_pct']:>+.1%})")
 
+    # Reconcile tracked vs actual Alpaca positions
+    pos_file = os.path.join(CACHE_DIR, 'positions.json')
+    tracked  = json.load(open(pos_file)) if os.path.exists(pos_file) else {}
+    # Add any positions in Alpaca not in tracked
+    for sym in positions:
+        if sym not in tracked:
+            print(f"  RECONCILE: {sym} in Alpaca but not tracked — adding")
+            tracked[sym] = {
+                "entry_date":  str(datetime.now().date()),
+                "entry_price": positions[sym]['entry_price'],
+                "stop_pct":    0.08,
+                "ml_rank_pct": 0.0,
+            }
+    # Remove any in tracked but not in Alpaca (already closed)
+    for sym in list(tracked.keys()):
+        if sym not in positions and 'exit_date' not in tracked[sym]:
+            print(f"  RECONCILE: {sym} in tracked but not Alpaca — removing")
+            tracked.pop(sym)
+
     # Load scanner
     scan_file = '/Users/rick/ai_trading_bot_v2/cache_scanner/daily_scan.json'
     if not os.path.exists(scan_file):
@@ -112,9 +131,7 @@ def run_daily_execution():
     fda_flags = scan.get('fda_flags', [])
     print(f"\nRegime: {regime}  Can trade: {can_trade}")
 
-    # Load tracked positions
-    pos_file = os.path.join(CACHE_DIR, 'positions.json')
-    tracked  = json.load(open(pos_file)) if os.path.exists(pos_file) else {}
+    # tracked already loaded and reconciled above
 
     # ── EXITS ─────────────────────────────────────────────────
     print(f"\n── EXITS ──")
@@ -266,14 +283,28 @@ def run_daily_execution():
                 print(f"  ENTER {sym}: qty={qty}  rank={cand['ml_rank_pct']:.3f}  vix_scalar={vol_scalar}")
                 order = submit_order(api, sym, qty, "buy")
                 if order:
+                    # Wait for fill confirmation — poll up to 10s
+                    import time as _t
+                    fill_price = price  # fallback to quote
+                    for _ in range(10):
+                        _t.sleep(1)
+                        try:
+                            _o = api.get_order(order.id)
+                            if _o.status == 'filled':
+                                fill_price = float(_o.filled_avg_price)
+                                print(f"    Fill confirmed: ${fill_price:.2f} (quote was ${price:.2f})")
+                                break
+                        except:
+                            pass
                     tracked[sym] = {
                         "entry_date":  str(datetime.now().date()),
-                        "entry_price": price,
+                        "entry_price": fill_price,
                         "stop_pct":    0.08,
                         "ml_rank_pct": cand["ml_rank_pct"],
+                        "order_id":    order.id,
                     }
                     entered += 1
-                import time as _t; _t.sleep(0.5)
+                    _t.sleep(0.5)
     # ── BEAR SHORT ENTRIES ───────────────────────────────────
     if regime == 'BEAR' and not cascade_freeze:
         print(f"\n── BEAR SHORTS ──")
