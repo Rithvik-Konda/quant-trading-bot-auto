@@ -4,6 +4,7 @@ alpaca_trader.py — Paper trading execution via Alpaca
 Run at 9:30am ET after daily_scanner.py completes.
 """
 import os, sys, json, time
+import yfinance as yf
 import pandas as pd
 import numpy as np
 from datetime import datetime
@@ -155,42 +156,147 @@ def run_daily_execution():
     elif slots <= 0:
         print(f"  Portfolio full (6 positions)")
     else:
-        print(f"  {slots} slot(s) available — scoring watchlist...")
-        candidates = get_ml_scores()
-        entered = 0
-        for cand in candidates:
-            if entered >= slots:
-                break
-            sym = cand['symbol']
-            if sym in positions or sym in bearish or sym in fda_flags:
-                continue
-            if cand.get('ml_rank_pct', 0) < 0.90:
-                continue
-            # Size position
-            portfolio   = account['portfolio_value']
-            risk_budget = portfolio * 0.025
-            try:
-                import yfinance as yf
-                price = float(yf.Ticker(sym).info.get('regularMarketPrice', 0))
-            except:
-                continue
-            if price <= 0:
-                continue
-            qty = int(risk_budget / (price * 0.08))
-            qty = min(qty, int(portfolio * 0.20 / price))
-            if qty <= 0:
-                continue
-            print(f"  ENTER {sym}: qty={qty}  rank={cand['ml_rank_pct']:.3f}")
-            order = submit_order(api, sym, qty, 'buy')
-            if order:
-                tracked[sym] = {
-                    'entry_date':  str(datetime.now().date()),
-                    'entry_price': price,
-                    'stop_pct':    0.08,
-                    'ml_rank_pct': cand['ml_rank_pct'],
-                }
-                entered += 1
-            time.sleep(0.5)
+        # ── Pre-entry market filters ──────────────────────────
+        # SPY 5-day momentum filter
+        try:
+            spy_hist = yf.Ticker('SPY').history(period='10d')
+            spy_5d = float(spy_hist['Close'].iloc[-1] / spy_hist['Close'].iloc[-5] - 1)
+        except:
+            spy_5d = 0.0
+        if spy_5d < -0.015:
+            print(f"  SPY 5d={spy_5d:+.1%} — momentum filter blocking entries")
+            spy_ok = False
+        else:
+            spy_ok = True
+            print(f"  SPY 5d={spy_5d:+.1%} ✓")
+
+        # VIX level for sizing
+        try:
+            vix_level = float(yf.Ticker('^VIX').info.get('regularMarketPrice', 20))
+        except:
+            vix_level = 20.0
+        if vix_level >= 35:
+            vol_scalar = 0.0
+        elif vix_level >= 25:
+            vol_scalar = 0.5
+        elif vix_level >= 20:
+            vol_scalar = 0.75
+        else:
+            vol_scalar = 1.0
+        print(f"  VIX={vix_level:.1f}  size_scalar={vol_scalar}")
+
+        # Earnings calendar — block entries within 10 days of earnings
+        earnings_dates = {}
+        try:
+            import config as _cfg
+            for sym in _cfg.WATCHLIST[:100]:
+                try:
+                    cal = yf.Ticker(sym).get_earnings_dates(limit=8)
+                    if cal is not None:
+                        earnings_dates[sym] = list(pd.to_datetime(cal.index).tz_localize(None))
+                except:
+                    pass
+        except:
+            pass
+
+        if not spy_ok or vol_scalar == 0.0:
+            print(f"  Market conditions block entries")
+        else:
+            print(f"  {slots} slot(s) available — scoring watchlist...")
+            candidates = get_ml_scores()
+            entered = 0
+            for cand in candidates:
+                if entered >= slots:
+                    break
+                sym = cand['symbol']
+                if sym in positions or sym in bearish or sym in fda_flags:
+                    continue
+                if cand.get('ml_rank_pct', 0) < 0.90:
+                    continue
+                # Earnings filter
+                earn = earnings_dates.get(sym, [])
+                if earn:
+                    days_to_earn = min(abs((pd.Timestamp.now() - d).days) for d in earn)
+                    if days_to_earn <= 10:
+                        continue
+                # Quality gate — filter low quality stocks in TRENDING_BULL
+                if regime == 'TRENDING_BULL':
+                    try:
+                        from ml_model import compute_features
+                        from backtester_clean import fetch_history as _fhq
+                        _df_q = _fhq(sym, days=200)
+                        _df_q.index = pd.to_datetime(_df_q.index).tz_localize(None)
+                        _feats_q = compute_features(_df_q, symbol=sym)
+                        if _feats_q is not None and 'quality_composite' in _feats_q.columns:
+                            _qual = float(_feats_q['quality_composite'].iloc[-1])
+                            if _qual < 0.20:
+                                continue
+                    except:
+                        pass
+
+                # Entry confirmation — top decile 2 consecutive days
+                import os as _os
+                _ranks_file = _os.path.join(CACHE_DIR, "prev_ml_ranks.json")
+                _prev = json.load(open(_ranks_file)) if _os.path.exists(_ranks_file) else {}
+                if _prev.get(sym, 0) < 0.80:
+                    continue
+                # Accumulation filter
+                try:
+                    from entry_filter import is_in_accumulation
+                    from backtester_clean import fetch_history as _fh
+                    _df_s = _fh(sym, days=200)
+                    _df_s.index = pd.to_datetime(_df_s.index).tz_localize(None)
+                    if not is_in_accumulation(_df_s, regime):
+                        continue
+                except:
+                    pass
+                # Size position
+                portfolio   = account["portfolio_value"]
+                risk_budget = portfolio * 0.025 * vol_scalar
+                try:
+                    price = float(yf.Ticker(sym).info.get("regularMarketPrice", 0))
+                except:
+                    continue
+                if price <= 0:
+                    continue
+                qty = int(risk_budget / (price * 0.08))
+                qty = min(qty, int(portfolio * 0.20 / price))
+                if qty <= 0:
+                    continue
+                print(f"  ENTER {sym}: qty={qty}  rank={cand['ml_rank_pct']:.3f}  vix_scalar={vol_scalar}")
+                order = submit_order(api, sym, qty, "buy")
+                if order:
+                    tracked[sym] = {
+                        "entry_date":  str(datetime.now().date()),
+                        "entry_price": price,
+                        "stop_pct":    0.08,
+                        "ml_rank_pct": cand["ml_rank_pct"],
+                    }
+                    entered += 1
+                import time as _t; _t.sleep(0.5)
+    # ── BEAR SHORT ENTRIES ───────────────────────────────────
+    if regime == 'BEAR' and not cascade_freeze:
+        print(f"\n── BEAR SHORTS ──")
+        try:
+            from strategy_bear import get_bear_candidates
+            bear_candidates = get_bear_candidates()
+            short_positions = {s: p for s, p in get_positions(api).items()
+                              if int(p['qty']) < 0}
+            short_slots = 3 - len(short_positions)
+            for sym in bear_candidates[:short_slots]:
+                if sym in short_positions:
+                    continue
+                portfolio = account['portfolio_value']
+                try:
+                    price = float(yf.Ticker(sym).info.get('regularMarketPrice', 0))
+                except:
+                    continue
+                qty = int(portfolio * 0.015 / max(price, 1))
+                if qty > 0:
+                    print(f"  SHORT {sym}: qty={qty}")
+                    submit_order(api, sym, qty, 'sell')
+        except Exception as e:
+            print(f"  Bear strategy error: {e}")
 
     with open(pos_file, 'w') as f:
         json.dump(tracked, f, indent=2)
