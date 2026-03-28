@@ -1,0 +1,631 @@
+[
+  {
+    "symbol": "MU",
+    "inflection_score": 5,
+    "signals": [
+      "rev_growth_positive",
+      "margin_positive",
+      "high_analyst_upside",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.722,
+    "rev_growth": 1.963,
+    "gross_margin": 0.584,
+    "analyst_upside": 0.477,
+    "n_analysts": 40,
+    "ret_20d": -0.134,
+    "ret_60d": 0.252,
+    "price": 357.22,
+    "rec_mean": 1.58
+  },
+  {
+    "symbol": "STX",
+    "inflection_score": 5,
+    "signals": [
+      "rev_growth_positive",
+      "margin_positive",
+      "high_analyst_upside",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.799,
+    "rev_growth": 0.215,
+    "gross_margin": 0.388,
+    "analyst_upside": 0.251,
+    "n_analysts": 21,
+    "ret_20d": 0.001,
+    "ret_60d": 0.38,
+    "price": 380.07,
+    "rec_mean": 3
+  },
+  {
+    "symbol": "SNDK",
+    "inflection_score": 5,
+    "signals": [
+      "rev_growth_positive",
+      "margin_positive",
+      "high_analyst_upside",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.784,
+    "rev_growth": 0.612,
+    "gross_margin": 0.348,
+    "analyst_upside": 0.251,
+    "n_analysts": 19,
+    "ret_20d": -0.005,
+    "ret_60d": 1.594,
+    "price": 615.83,
+    "rec_mean": 1.7
+  },
+  {
+    "symbol": "QCOM",
+    "inflection_score": 5,
+    "signals": [
+      "near_52w_low",
+      "margin_positive",
+      "high_analyst_upside",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.074,
+    "rev_growth": 0.05,
+    "gross_margin": 0.551,
+    "analyst_upside": 0.225,
+    "n_analysts": 27,
+    "ret_20d": -0.093,
+    "ret_60d": -0.252,
+    "price": 127.11,
+    "rec_mean": 2.57
+  },
+  {
+    "symbol": "SWKS",
+    "inflection_score": 5,
+    "signals": [
+      "near_52w_low",
+      "margin_positive",
+      "high_analyst_upside",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.133,
+    "rev_growth": -0.031,
+    "gross_margin": 0.411,
+    "analyst_upside": 0.252,
+    "n_analysts": 19,
+    "ret_20d": -0.09,
+    "ret_60d": -0.144,
+    "price": 53.65,
+    "rec_mean": 2.68
+  },
+  {
+    "symbol": "NEM",
+    "inflection_score": 5,
+    "signals": [
+      "rev_growth_positive",
+      "margin_positive",
+      "high_analyst_upside",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.644,
+    "rev_growth": 0.206,
+    "gross_margin": 0.632,
+    "analyst_upside": 0.375,
+    "n_analysts": 20,
+    "ret_20d": -0.205,
+    "ret_60d": 0.025,
+    "price": 102.1,
+    "rec_mean": 1.62
+  },
+  {
+    "symbol": "TOL",
+    "inflection_score": 5,
+    "signals": [
+      "rev_growth_positive",
+      "margin_positive",
+      "high_analyst_upside",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.544,
+    "rev_growth": 0.154,
+    "gross_margin": 0.254,
+    "analyst_upside": 0.317,
+    "n_analysts": 16,
+    "ret_20d": -0.15,
+    "ret_60d": -0.029,
+    "price": 131.12,
+    "rec_mean": 3
+  },
+  {
+    "symbol": "ROK",
+    "inflection_score": 5,
+    "signals": [
+      "rev_growth_positive",
+      "margin_positive",
+      "high_analyst_upside",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.61,
+    "rev_growth": 0.119,
+    "gross_margin": 0.485,
+    "analyst_upside": 0.226,
+    "n_analysts": 25,
+    "ret_20d": -0.147,
+    "ret_60d": -0.093,
+    "price": 351.5,
+    "rec_mean": 2.14
+  },
+  {
+    "symbol": "TXN",
+    "inflection_score": 4,
+    "signals": [
+      "rev_growth_positive",
+      "margin_positive",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.551,
+    "rev_growth": 0.104,
+    "gross_margin": 0.57,
+    "analyst_upside": 0.164,
+    "n_analysts": 32,
+    "ret_20d": -0.093,
+    "ret_60d": 0.104,
+    "price": 190.33,
+    "rec_mean": 2.54
+  },
+  {
+    "symbol": "XOM",
+    "inflection_score": 4,
+    "signals": [
+      "margin_positive",
+      "consecutive_beats",
+      "early_momentum"
+    ],
+    "pct_from_low": 0.997,
+    "rev_growth": -0.013,
+    "gross_margin": 0.31,
+    "analyst_upside": -0.085,
+    "n_analysts": 24,
+    "ret_20d": 0.109,
+    "ret_60d": 0.43,
+    "price": 170.99,
+    "rec_mean": 2.31
+  },
+  {
+    "symbol": "CVX",
+    "inflection_score": 4,
+    "signals": [
+      "margin_positive",
+      "consecutive_beats",
+      "early_momentum"
+    ],
+    "pct_from_low": 0.984,
+    "rev_growth": -0.082,
+    "gross_margin": 0.419,
+    "analyst_upside": -0.053,
+    "n_analysts": 24,
+    "ret_20d": 0.114,
+    "ret_60d": 0.399,
+    "price": 211.15,
+    "rec_mean": 2.0
+  },
+  {
+    "symbol": "OXY",
+    "inflection_score": 4,
+    "signals": [
+      "rev_growth_positive",
+      "margin_positive",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.978,
+    "rev_growth": 1.489,
+    "gross_margin": 0.698,
+    "analyst_upside": -0.077,
+    "n_analysts": 25,
+    "ret_20d": 0.211,
+    "ret_60d": 0.596,
+    "price": 65.32,
+    "rec_mean": 2.65
+  },
+  {
+    "symbol": "PHM",
+    "inflection_score": 4,
+    "signals": [
+      "margin_positive",
+      "high_analyst_upside",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.471,
+    "rev_growth": -0.063,
+    "gross_margin": 0.269,
+    "analyst_upside": 0.251,
+    "n_analysts": 14,
+    "ret_20d": -0.141,
+    "ret_60d": -0.02,
+    "price": 114.63,
+    "rec_mean": 3
+  },
+  {
+    "symbol": "DE",
+    "inflection_score": 4,
+    "signals": [
+      "rev_growth_positive",
+      "margin_positive",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.601,
+    "rev_growth": 0.13,
+    "gross_margin": 0.262,
+    "analyst_upside": 0.162,
+    "n_analysts": 23,
+    "ret_20d": -0.102,
+    "ret_60d": 0.217,
+    "price": 566.64,
+    "rec_mean": 2.24
+  },
+  {
+    "symbol": "ETN",
+    "inflection_score": 4,
+    "signals": [
+      "rev_growth_positive",
+      "margin_positive",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.711,
+    "rev_growth": 0.131,
+    "gross_margin": 0.378,
+    "analyst_upside": 0.152,
+    "n_analysts": 28,
+    "ret_20d": -0.05,
+    "ret_60d": 0.125,
+    "price": 357.36,
+    "rec_mean": 1.77
+  },
+  {
+    "symbol": "EMR",
+    "inflection_score": 4,
+    "signals": [
+      "margin_positive",
+      "high_analyst_upside",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.471,
+    "rev_growth": 0.041,
+    "gross_margin": 0.528,
+    "analyst_upside": 0.322,
+    "n_analysts": 27,
+    "ret_20d": -0.175,
+    "ret_60d": -0.052,
+    "price": 125.4,
+    "rec_mean": 2.03
+  },
+  {
+    "symbol": "WDC",
+    "inflection_score": 3,
+    "signals": [
+      "margin_positive",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.848,
+    "rev_growth": 0,
+    "gross_margin": 0.427,
+    "analyst_upside": 0.166,
+    "n_analysts": 23,
+    "ret_20d": 0.02,
+    "ret_60d": 0.599,
+    "price": 275.34,
+    "rec_mean": 1.62
+  },
+  {
+    "symbol": "FCX",
+    "inflection_score": 3,
+    "signals": [
+      "margin_positive",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.679,
+    "rev_growth": -0.015,
+    "gross_margin": 0.371,
+    "analyst_upside": 0.2,
+    "n_analysts": 20,
+    "ret_20d": -0.176,
+    "ret_60d": 0.11,
+    "price": 56.24,
+    "rec_mean": 1.67
+  },
+  {
+    "symbol": "AA",
+    "inflection_score": 3,
+    "signals": [
+      "margin_positive",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.787,
+    "rev_growth": -0.011,
+    "gross_margin": 0.179,
+    "analyst_upside": 0.154,
+    "n_analysts": 13,
+    "ret_20d": -0.087,
+    "ret_60d": 0.101,
+    "price": 58.41,
+    "rec_mean": 2.14
+  },
+  {
+    "symbol": "CMC",
+    "inflection_score": 3,
+    "signals": [
+      "rev_growth_positive",
+      "margin_positive",
+      "high_analyst_upside"
+    ],
+    "pct_from_low": 0.434,
+    "rev_growth": 0.11,
+    "gross_margin": 0.165,
+    "analyst_upside": 0.397,
+    "n_analysts": 10,
+    "ret_20d": -0.208,
+    "ret_60d": -0.156,
+    "price": 58.28,
+    "rec_mean": 1.91
+  },
+  {
+    "symbol": "JBHT",
+    "inflection_score": 3,
+    "signals": [
+      "margin_positive",
+      "consecutive_beats"
+    ],
+    "pct_from_low": 0.731,
+    "rev_growth": -0.016,
+    "gross_margin": 0.189,
+    "analyst_upside": 0.03,
+    "n_analysts": 23,
+    "ret_20d": -0.114,
+    "ret_60d": 0.06,
+    "price": 205.59,
+    "rec_mean": 2.0
+  },
+  {
+    "symbol": "NVR",
+    "inflection_score": 3,
+    "signals": [
+      "near_52w_low",
+      "margin_positive",
+      "high_analyst_upside"
+    ],
+    "pct_from_low": 0.065,
+    "rev_growth": -0.05,
+    "gross_margin": 0.229,
+    "analyst_upside": 0.241,
+    "n_analysts": 5,
+    "ret_20d": -0.13,
+    "ret_60d": -0.115,
+    "price": 6450.76,
+    "rec_mean": 3
+  },
+  {
+    "symbol": "DVN",
+    "inflection_score": 2,
+    "signals": [
+      "margin_positive",
+      "early_momentum"
+    ],
+    "pct_from_low": 0.986,
+    "rev_growth": -0.121,
+    "gross_margin": 0.477,
+    "analyst_upside": 0.07,
+    "n_analysts": 26,
+    "ret_20d": 0.164,
+    "ret_60d": 0.429,
+    "price": 52.07,
+    "rec_mean": 1.62
+  },
+  {
+    "symbol": "HAL",
+    "inflection_score": 2,
+    "signals": [
+      "margin_positive",
+      "early_momentum"
+    ],
+    "pct_from_low": 1.0,
+    "rev_growth": 0.008,
+    "gross_margin": 0.157,
+    "analyst_upside": -0.078,
+    "n_analysts": 25,
+    "ret_20d": 0.129,
+    "ret_60d": 0.437,
+    "price": 40.42,
+    "rec_mean": 1.89
+  },
+  {
+    "symbol": "SLB",
+    "inflection_score": 2,
+    "signals": [
+      "margin_positive",
+      "early_momentum"
+    ],
+    "pct_from_low": 0.991,
+    "rev_growth": 0.05,
+    "gross_margin": 0.187,
+    "analyst_upside": 0.034,
+    "n_analysts": 28,
+    "ret_20d": 0.043,
+    "ret_60d": 0.402,
+    "price": 53.5,
+    "rec_mean": 1.59
+  },
+  {
+    "symbol": "LEN",
+    "inflection_score": 2,
+    "signals": [
+      "near_52w_low",
+      "margin_positive"
+    ],
+    "pct_from_low": 0.011,
+    "rev_growth": -0.133,
+    "gross_margin": 0.169,
+    "analyst_upside": 0.129,
+    "n_analysts": 14,
+    "ret_20d": -0.184,
+    "ret_60d": -0.118,
+    "price": 90.25,
+    "rec_mean": 3.15
+  },
+  {
+    "symbol": "CAT",
+    "inflection_score": 2,
+    "signals": [
+      "rev_growth_positive",
+      "margin_positive"
+    ],
+    "pct_from_low": 0.819,
+    "rev_growth": 0.18,
+    "gross_margin": 0.288,
+    "analyst_upside": 0.059,
+    "n_analysts": 26,
+    "ret_20d": -0.076,
+    "ret_60d": 0.217,
+    "price": 695.4,
+    "rec_mean": 2.14
+  },
+  {
+    "symbol": "INTC",
+    "inflection_score": 1,
+    "signals": [
+      "margin_positive"
+    ],
+    "pct_from_low": 0.689,
+    "rev_growth": -0.041,
+    "gross_margin": 0.366,
+    "analyst_upside": 0.092,
+    "n_analysts": 41,
+    "ret_20d": -0.052,
+    "ret_60d": 0.169,
+    "price": 43.13,
+    "rec_mean": 3
+  },
+  {
+    "symbol": "ON",
+    "inflection_score": 1,
+    "signals": [
+      "margin_positive"
+    ],
+    "pct_from_low": 0.639,
+    "rev_growth": -0.112,
+    "gross_margin": 0.383,
+    "analyst_upside": 0.152,
+    "n_analysts": 29,
+    "ret_20d": -0.122,
+    "ret_60d": 0.078,
+    "price": 58.35,
+    "rec_mean": 2.38
+  },
+  {
+    "symbol": "NUE",
+    "inflection_score": 1,
+    "signals": [
+      "rev_growth_positive"
+    ],
+    "pct_from_low": 0.662,
+    "rev_growth": 0.086,
+    "gross_margin": 0.12,
+    "analyst_upside": 0.15,
+    "n_analysts": 13,
+    "ret_20d": -0.095,
+    "ret_60d": 0.002,
+    "price": 163.37,
+    "rec_mean": 1.53
+  },
+  {
+    "symbol": "STLD",
+    "inflection_score": 1,
+    "signals": [
+      "rev_growth_positive"
+    ],
+    "pct_from_low": 0.644,
+    "rev_growth": 0.14,
+    "gross_margin": 0.132,
+    "analyst_upside": 0.132,
+    "n_analysts": 11,
+    "ret_20d": -0.152,
+    "ret_60d": 0.009,
+    "price": 170.97,
+    "rec_mean": 1.45
+  },
+  {
+    "symbol": "ZIM",
+    "inflection_score": 1,
+    "signals": [
+      "margin_positive"
+    ],
+    "pct_from_low": 0.8,
+    "rev_growth": -0.315,
+    "gross_margin": 0.354,
+    "analyst_upside": -0.128,
+    "n_analysts": 4,
+    "ret_20d": -0.061,
+    "ret_60d": 0.275,
+    "price": 26.19,
+    "rec_mean": 3.0
+  },
+  {
+    "symbol": "MATX",
+    "inflection_score": 1,
+    "signals": [
+      "margin_positive"
+    ],
+    "pct_from_low": 0.785,
+    "rev_growth": -0.043,
+    "gross_margin": 0.228,
+    "analyst_upside": 0.348,
+    "n_analysts": 2,
+    "ret_20d": -0.077,
+    "ret_60d": 0.282,
+    "price": 158.03,
+    "rec_mean": 3
+  },
+  {
+    "symbol": "ODFL",
+    "inflection_score": 1,
+    "signals": [
+      "margin_positive"
+    ],
+    "pct_from_low": 0.652,
+    "rev_growth": -0.057,
+    "gross_margin": 0.39,
+    "analyst_upside": 0.058,
+    "n_analysts": 24,
+    "ret_20d": -0.092,
+    "ret_60d": 0.203,
+    "price": 188.34,
+    "rec_mean": 2.65
+  },
+  {
+    "symbol": "SAIA",
+    "inflection_score": 1,
+    "signals": [
+      "margin_positive"
+    ],
+    "pct_from_low": 0.523,
+    "rev_growth": 0.001,
+    "gross_margin": 0.237,
+    "analyst_upside": 0.183,
+    "n_analysts": 20,
+    "ret_20d": -0.18,
+    "ret_60d": 0.024,
+    "price": 334.31,
+    "rec_mean": 2.36
+  },
+  {
+    "symbol": "DHI",
+    "inflection_score": 1,
+    "signals": [
+      "margin_positive"
+    ],
+    "pct_from_low": 0.32,
+    "rev_growth": -0.095,
+    "gross_margin": 0.221,
+    "analyst_upside": 0.193,
+    "n_analysts": 15,
+    "ret_20d": -0.131,
+    "ret_60d": -0.066,
+    "price": 134.19,
+    "rec_mean": 2.52
+  }
+]

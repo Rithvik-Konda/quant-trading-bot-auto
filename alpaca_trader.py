@@ -271,6 +271,14 @@ def run_daily_execution():
                 _new_file   = "/Users/rick/ai_trading_bot_v2/cache_newlistings/rs_scores.json"
                 if os.path.exists(_theme_file):
                     hot_stocks += json.load(open(_theme_file)).get("stocks", [])
+                # Load cyclical inflection candidates
+                _cyc_file = "/Users/rick/ai_trading_bot_v2/cache_cyclical/inflection_scores.json"
+                if os.path.exists(_cyc_file):
+                    _cyc = json.load(open(_cyc_file))
+                    # Only add score>=4 with positive analyst upside
+                    hot_stocks += [r["symbol"] for r in _cyc
+                                  if r.get("inflection_score",0) >= 4
+                                  and r.get("analyst_upside",0) > 0.10]
                 if os.path.exists(_new_file):
                     hot_stocks += [r["symbol"] for r in json.load(open(_new_file)) if r.get("tradeable")]
                 hot_stocks = list(set(hot_stocks))
