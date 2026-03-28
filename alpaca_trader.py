@@ -230,20 +230,24 @@ def run_daily_execution():
             spy_ok = True
             print(f"  SPY 5d={spy_5d:+.1%} ✓")
 
-        # VIX level for sizing
+        # VIX spike strategy
         try:
-            vix_level = float(yf.Ticker('^VIX').info.get('regularMarketPrice', 20))
-        except:
-            vix_level = 20.0
-        if vix_level >= 35:
-            vol_scalar = 0.0
-        elif vix_level >= 25:
-            vol_scalar = 0.5
-        elif vix_level >= 20:
-            vol_scalar = 0.75
-        else:
+            from vix_spike_strategy import get_vix_signal, get_uvxy_hedge_qty
+            vix_signal = get_vix_signal()
+            vix_level  = vix_signal["vix_current"]
+            vol_scalar = vix_signal["size_scalar"]
+            vix_hedge  = vix_signal["hedge"]
+            print(f"  VIX={vix_level:.1f} ({vix_signal['signal']})  size={vol_scalar:.0%}  hedge={vix_hedge}")
+            # Buy UVXY hedge if VIX elevated
+            if vix_hedge:
+                _uvxy_qty = get_uvxy_hedge_qty(account["portfolio_value"], vix_level)
+                if _uvxy_qty > 0:
+                    print(f"  Buying {_uvxy_qty} UVXY as VIX hedge")
+                    submit_order(api, "UVXY", _uvxy_qty, "buy")
+        except Exception as _ve:
+            vix_level  = 20.0
             vol_scalar = 1.0
-        print(f"  VIX={vix_level:.1f}  size_scalar={vol_scalar}")
+            vix_hedge  = False
 
         # Earnings calendar — block entries within 10 days of earnings
         earnings_dates = {}
