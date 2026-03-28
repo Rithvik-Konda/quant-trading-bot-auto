@@ -99,7 +99,17 @@ def run_daily_execution():
         print("ERROR: Set ALPACA_KEY and ALPACA_SECRET")
         return
 
+    # Market hours check — don't trade on holidays
+    try:
+        _calendar = api_check.get_clock()
+        if not _calendar.is_open and datetime.now().hour < 12:
+            print(f"Market closed today — skipping execution")
+            return
+    except:
+        pass
+
     api     = get_api()
+    api_check = api  # alias for clarity
     account = get_account(api)
     print(f"\nPortfolio: ${account['portfolio_value']:,.0f}  Cash: ${account['cash']:,.0f}")
 
@@ -142,6 +152,31 @@ def run_daily_execution():
     # tracked already loaded and reconciled above
 
     # ── EXITS ─────────────────────────────────────────────────
+    print(f"\n── DAILY STOP UPDATES ──")
+    for sym, pos in positions.items():
+        if sym not in tracked:
+            continue
+        # Recompute trailing stop daily
+        try:
+            from backtester_clean import fetch_history as _fh3
+            _df3 = _fh3(sym, days=60)
+            _df3.index = pd.to_datetime(_df3.index).tz_localize(None)
+            _atr3 = float((_df3['high'] - _df3['low']).tail(14).mean())
+            _price3 = float(_df3['close'].iloc[-1])
+            _atr_pct3 = _atr3 / _price3
+            _entry3 = float(tracked[sym].get('entry_price', _price3))
+            _unreal3 = (_price3 - _entry3) / _entry3
+            if _unreal3 >= 0.08:
+                _new_stop = max(_entry3, _price3 * (1 - 2 * _atr_pct3))
+            else:
+                _new_stop = _entry3 * (1 - 0.08)
+            _old_stop = tracked[sym].get('stop_price', 0)
+            if _new_stop > _old_stop:
+                tracked[sym]['stop_price'] = round(_new_stop, 2)
+                print(f"  {sym}: stop updated ${_old_stop:.2f} → ${_new_stop:.2f}")
+        except:
+            pass
+
     print(f"\n── EXITS ──")
     for sym, pos in positions.items():
         meta         = tracked.get(sym, {})
