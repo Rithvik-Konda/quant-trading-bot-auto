@@ -1,0 +1,47 @@
+{
+  "date": "2026-03-27",
+  "regime": "CHOPPY",
+  "breadth": 0.148,
+  "breadth_ok": false,
+  "hyg_ok": true,
+  "can_trade": false,
+  "bearish_news": [
+    "NKE"
+  ],
+  "insider_buys": [
+    "CRM",
+    "RDDT",
+    "TTD",
+    "GS",
+    "AXP",
+    "HBAN",
+    "LNC",
+    "BX",
+    "KKR",
+    "TJX",
+    "RIVN",
+    "HOG",
+    "POOL"
+  ],
+  "congress_buys": [],
+  "squeeze_alerts": [],
+  "fda_flags": [
+    "VRTX",
+    "REGN",
+    "ALNY",
+    "INCY",
+    "NBIX",
+    "BIIB",
+    "MRNA",
+    "BNTX",
+    "RARE",
+    "IONS",
+    "HALO",
+    "ACAD",
+    "PRGO",
+    "PCRX",
+    "HOLX",
+    "DXCM",
+    "PODD"
+  ]
+}

@@ -20,6 +20,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 sys.path.insert(0, '/Users/rick/ai_trading_bot_v2')
+sys.path.insert(0, '/Users/rick/ai_trading_bot_v2/v2')
 
 import config
 from backtester_clean import fetch_history

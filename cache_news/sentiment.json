@@ -1,18 +1,18 @@
 {
   "NVDA": {
     "symbol": "NVDA",
-    "score": 0.5,
-    "positive": 12,
-    "negative": 2,
+    "score": 0.4,
+    "positive": 11,
+    "negative": 3,
     "neutral": 6,
     "total": 20,
     "signal": "BULLISH",
     "headlines": [
-      "1 No-Brainer Artificial Intelligence (AI) Stock That Will Skyrocket By the End o",
-      "Nvidia Stock Just Became The Bargain Of The AI Boom",
-      "Vanguard (VONG) vs. iShares (IWO): Which Growth Stock ETF Is Best for Investors?"
+      "Wall Street Insider Who Predicted 2008 Crash Issues Urgent Warning: \"The AI Bubb",
+      "Stock Market Today, March 27: Crude Surges Above $110, Driving Broad Sell-Off",
+      "Stock Market Today, March 27: Nvidia Slides as Valuation Drops Below S&P 500 on "
     ],
-    "updated": "2026-03-27T14:42:34.078595"
+    "updated": "2026-03-27T21:00:07.157067"
   },
   "AVGO": {
     "symbol": "AVGO",
@@ -27,37 +27,37 @@
       "8 Stocks I'd Buy if I Were Starting a Tech Portfolio From Scratch Today",
       "Have Tech Stocks Finally Run Out of Road? Here's What the Data Actually Says."
     ],
-    "updated": "2026-03-27T14:42:34.361547"
+    "updated": "2026-03-27T21:00:07.424860"
   },
   "AMD": {
     "symbol": "AMD",
-    "score": 0.5,
+    "score": 0.389,
     "positive": 9,
-    "negative": 1,
-    "neutral": 6,
-    "total": 16,
+    "negative": 2,
+    "neutral": 7,
+    "total": 18,
     "signal": "BULLISH",
     "headlines": [
-      "8 Stocks I'd Buy if I Were Starting a Tech Portfolio From Scratch Today",
-      "Arm\u2019s New Gambit: Building Chips to Challenge the AI Titans",
-      "The Scrappy $949 GPU Taking Aim at Nvidia's Grip on Local AI"
+      "Stock Market Today, March 27: Nvidia Slides as Valuation Drops Below S&P 500 on ",
+      "Micron Just Started Mass-Producing HBM4 for Nvidia's Vera Rubin. Here's Why This",
+      "8 Stocks I'd Buy if I Were Starting a Tech Portfolio From Scratch Today"
     ],
-    "updated": "2026-03-27T14:42:34.663851"
+    "updated": "2026-03-27T21:00:07.693422"
   },
   "MU": {
     "symbol": "MU",
-    "score": 0.167,
-    "positive": 8,
+    "score": 0.211,
+    "positive": 9,
     "negative": 5,
     "neutral": 5,
-    "total": 18,
+    "total": 19,
     "signal": "NEUTRAL",
     "headlines": [
+      "Micron Just Started Mass-Producing HBM4 for Nvidia's Vera Rubin. Here's Why This",
       "8 Stocks I'd Buy if I Were Starting a Tech Portfolio From Scratch Today",
-      "Is This AI Stock a Better Bargain Than the Magnificent Seven?",
-      "Micron Stock: Did the AI Memory Leader Just Peak?"
+      "Is This AI Stock a Better Bargain Than the Magnificent Seven?"
     ],
-    "updated": "2026-03-27T14:42:34.960087"
+    "updated": "2026-03-27T21:00:07.982019"
   },
   "MRVL": {
     "symbol": "MRVL",
@@ -71,7 +71,7 @@
       "Marvell's Data Center Revenue Just Grew 21%. Here's Why This Artificial Intellig",
       "DesignCon 2026 Wraps with Focus on Innovation, Artificial Intelligence"
     ],
-    "updated": "2026-03-27T14:42:35.248302"
+    "updated": "2026-03-27T21:00:08.234690"
   },
   "QCOM": {
     "score": 0.0,
@@ -534,63 +534,29 @@
     "error": 429
   },
   "CME": {
-    "symbol": "CME",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T14:43:00.062551"
+    "error": 429
   },
   "AIG": {
-    "symbol": "AIG",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T14:43:00.364916"
+    "error": 429
   },
   "CB": {
-    "symbol": "CB",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T14:43:00.656078"
+    "error": 429
   },
   "PGR": {
-    "symbol": "PGR",
-    "score": -1.0,
-    "positive": 0,
-    "negative": 1,
-    "neutral": 0,
-    "total": 1,
-    "signal": "BEARISH",
-    "headlines": [
-      "State Farm, Travelers, and Progressive Homeowners Insurance Customers Have Oppor"
-    ],
-    "updated": "2026-03-27T14:43:00.967886"
+    "score": 0.0,
+    "total": 0,
+    "error": 429
   },
   "TRV": {
-    "symbol": "TRV",
-    "score": -1.0,
-    "positive": 0,
-    "negative": 1,
-    "neutral": 0,
-    "total": 1,
-    "signal": "BEARISH",
-    "headlines": [
-      "State Farm, Travelers, and Progressive Homeowners Insurance Customers Have Oppor"
-    ],
-    "updated": "2026-03-27T14:43:01.249408"
+    "score": 0.0,
+    "total": 0,
+    "error": 429
   },
   "USB": {
     "score": 0.0,
@@ -1108,29 +1074,69 @@
     "error": 429
   },
   "HD": {
-    "score": 0.0,
-    "total": 0,
-    "error": 429
+    "symbol": "HD",
+    "score": 0.333,
+    "positive": 1,
+    "negative": 0,
+    "neutral": 2,
+    "total": 3,
+    "signal": "BULLISH",
+    "headlines": [
+      "Les Jeux du Canada honorent six l\u00e9gendes du sport",
+      "What Happens If the Nasdaq and S&P 500 Both Fall Into Correction Territory?",
+      "Construction Resources Company, LLC Acquires Ramos Marble & Granite, Premier Sur"
+    ],
+    "updated": "2026-03-27T21:01:00.155817"
   },
   "LOW": {
+    "symbol": "LOW",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-27T21:01:00.417379"
   },
   "NKE": {
-    "score": 0.0,
-    "total": 0,
-    "error": 429
+    "symbol": "NKE",
+    "score": -0.333,
+    "positive": 0,
+    "negative": 1,
+    "neutral": 2,
+    "total": 3,
+    "signal": "BEARISH",
+    "headlines": [
+      "Should You Buy Nike (NKE) Stock Before March 31?",
+      "Why On Holding's Stock Crashed 11% After CEO Exit",
+      "With the Stock Down Roughly 60% Over the Past 5 Years, Should Investors Buy Nike"
+    ],
+    "updated": "2026-03-27T21:01:00.677854"
   },
   "MCD": {
+    "symbol": "MCD",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-27T21:01:00.932904"
   },
   "SBUX": {
+    "symbol": "SBUX",
     "score": 0.0,
-    "total": 0,
-    "error": 429
+    "positive": 0,
+    "negative": 0,
+    "neutral": 1,
+    "total": 1,
+    "signal": "NEUTRAL",
+    "headlines": [
+      "Why On Holding's Stock Crashed 11% After CEO Exit"
+    ],
+    "updated": "2026-03-27T21:01:01.201391"
   },
   "CMG": {
     "score": 0.0,
@@ -1648,61 +1654,29 @@
     "error": 429
   },
   "FANG": {
-    "symbol": "FANG",
-    "score": 1.0,
-    "positive": 1,
-    "negative": 0,
-    "neutral": 0,
-    "total": 1,
-    "signal": "BULLISH",
-    "headlines": [
-      "5 Ripple Effects From the Strait of Hormuz Blockade Affecting Energy Stocks"
-    ],
-    "updated": "2026-03-27T14:44:00.299661"
+    "score": 0.0,
+    "total": 0,
+    "error": 429
   },
   "APA": {
-    "symbol": "APA",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T14:44:00.646754"
+    "error": 429
   },
   "KMI": {
-    "symbol": "KMI",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T14:44:00.930334"
+    "error": 429
   },
   "WMB": {
-    "symbol": "WMB",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T14:44:01.238401"
+    "error": 429
   },
   "OKE": {
-    "symbol": "OKE",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T14:44:01.513381"
+    "error": 429
   },
   "EPD": {
     "score": 0.0,
@@ -2315,29 +2289,59 @@
     "error": 429
   },
   "AVAV": {
+    "symbol": "AVAV",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-27T21:02:00.204059"
   },
   "HEI": {
+    "symbol": "HEI",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-27T21:02:00.456672"
   },
   "SHLS": {
+    "symbol": "SHLS",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-27T21:02:00.806406"
   },
   "STEM": {
+    "symbol": "STEM",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-27T21:02:01.065482"
   },
   "RUN": {
+    "symbol": "RUN",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-27T21:02:01.310912"
   },
   "AMR": {
     "score": 0.0,
