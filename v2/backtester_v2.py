@@ -735,19 +735,10 @@ def run_backtest_v2(
                 if remaining <= 0:
                     break
 
-                # Regime-conditional leverage — principled not fitted
-                _vix_ok        = True  # VIX not available in backtester — use regime only
-                # Rolling stop rate monitor — adaptive sizing
-                # Principle: if recent signals are failing, reduce size
-                # Not fitted — pure signal quality feedback
-                _recent_n     = min(20, len(trades))
-                _recent       = trades[-_recent_n:] if _recent_n >= 10 else []
-                _recent_stops = sum(1 for t in _recent if t.reason == "stop")
-                _stop_rate    = _recent_stops / _recent_n if _recent_n >= 10 else 0.35
-                _momentum_scalar = 0.50 if _stop_rate > 0.55 else \
-                                   0.75 if _stop_rate > 0.45 else 1.0
+                # Regime-conditional leverage — 1.3x in TRENDING_BULL
+                # Principled: amplify edge when conditions favorable
                 _leverage_mult = 1.3 if _current_regime == TRENDING_BULL else 1.0
-                risk_budget    = config.INITIAL_CAPITAL * risk_pt * scalar * conviction * _leverage_mult * _momentum_scalar
+                risk_budget    = config.INITIAL_CAPITAL * risk_pt * scalar * conviction * _leverage_mult
                 risk_per_share = px * stop_pct
                 qty_risk       = int(risk_budget / risk_per_share) if risk_per_share > 0 else 0
                 max_wt         = getattr(params, 'max_position_weight', 0.35)
@@ -756,11 +747,6 @@ def run_backtest_v2(
                     cash, remaining,
                 )
                 qty = min(qty_risk, int(max_dollars / px) if px > 0 else 0)
-                # 1.5% max loss per trade — Van Tharp fixed fractional
-                # Scales with capital, not fitted to backtest
-                _max_loss   = config.INITIAL_CAPITAL * 0.015
-                _qty_capped = int(_max_loss / (px * stop_pct)) if px * stop_pct > 0 else qty
-                qty         = min(qty, _qty_capped)
                 # Vol-aware sizing: use ML stop width to scale position size.
                 # Wider ML stop = model expects more noise = smaller position.
                 # stop_pct already set by ML model above — use it directly.
