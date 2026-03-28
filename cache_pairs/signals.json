@@ -1,0 +1,49 @@
+{
+  "date": "2026-03-28",
+  "pairs": [
+    {
+      "sym1": "V",
+      "sym2": "MA",
+      "z_score": -0.624,
+      "hedge_ratio": 0.5606,
+      "spread": 24.0326,
+      "price1": 295.52,
+      "price2": 484.24,
+      "signal": "NEUTRAL \u2014 wait",
+      "action": "wait"
+    },
+    {
+      "sym1": "DDOG",
+      "sym2": "ZS",
+      "z_score": 0.465,
+      "hedge_ratio": 0.2839,
+      "spread": 76.6728,
+      "price1": 114.48,
+      "price2": 133.16,
+      "signal": "CLOSE \u2014 spread reverted",
+      "action": "close"
+    },
+    {
+      "sym1": "XOM",
+      "sym2": "VLO",
+      "z_score": -1.007,
+      "hedge_ratio": 0.6746,
+      "spread": -0.5663,
+      "price1": 170.99,
+      "price2": 254.32,
+      "signal": "NEUTRAL \u2014 wait",
+      "action": "wait"
+    },
+    {
+      "sym1": "LOW",
+      "sym2": "MCD",
+      "z_score": -1.199,
+      "hedge_ratio": 0.8004,
+      "spread": -14.5185,
+      "price1": 230.31,
+      "price2": 305.9,
+      "signal": "NEUTRAL \u2014 wait",
+      "action": "wait"
+    }
+  ]
+}
