@@ -99,7 +99,6 @@ def run_backtest_v2(
     print("[prep] loading macro data (SPY/HYG/VIX)...", flush=True)
     macro_cache = os.path.join(os.path.dirname(__file__), '..', CACHE_DIR)
     spy_macro, hyg_macro, vix_macro = load_macro_data(cache_dir=macro_cache)
-    hyg_close = hyg_macro['close'] if 'close' in hyg_macro.columns else hyg_macro.iloc[:,0]
     regime_clf = RegimeClassifier()
     print("[ok]   macro data loaded", flush=True)
 
@@ -119,28 +118,6 @@ def run_backtest_v2(
     print(f"[info] loaded {len(hist)} symbols", flush=True)
 
     spy              = hist[config.BENCHMARK_SYMBOL]
-
-    # ── Market breadth (% of watchlist above 50d MA) ─────────────
-    # Data: breadth<50% has 73% stop rate vs 32% above 80%
-    # Improves every year — fundamental market internal filter
-    # Computed weekly to avoid O(n) daily recalculation
-    _breadth_cache: Dict[pd.Timestamp, float] = {}
-    def _compute_breadth(as_of: pd.Timestamp) -> float:
-        # Round to nearest week for caching
-        week_key = as_of - pd.Timedelta(days=as_of.dayofweek)
-        if week_key in _breadth_cache:
-            return _breadth_cache[week_key]
-        above = total = 0
-        for _bs in list(prices_by_symbol.keys())[:150]:
-            _bp = prices_by_symbol[_bs].loc[:as_of]['close']
-            if len(_bp) >= 50:
-                _bma = float(_bp.tail(50).mean())
-                if float(_bp.iloc[-1]) > _bma:
-                    above += 1
-                total += 1
-        result = above / total if total > 0 else 0.5
-        _breadth_cache[week_key] = result
-        return result
     prices_by_symbol = {k: v for k, v in hist.items() if k != config.BENCHMARK_SYMBOL}
     symbols          = list(prices_by_symbol.keys())
 
@@ -308,8 +285,7 @@ def run_backtest_v2(
     trades:          List[Trade]              = []
     equity:          List[Tuple]              = []
 
-    long_stop_dates:  Dict[str, tuple] = {}  # (stop_date, cooldown_days) — frozen at stop time
-
+    long_stop_dates:  Dict[str, pd.Timestamp] = {}
     short_stop_dates: Dict[str, pd.Timestamp] = {}
     prev_ml_ranks:    Dict[str, float]         = {}  # Fix 1: entry confirmation
     recent_stop_dates: List[pd.Timestamp]      = []  # cascade sensor
@@ -440,24 +416,27 @@ def run_backtest_v2(
             hold_d      = pos.age_days(pd.Timestamp(date).to_pydatetime())
             exit_reason = exit_ref = None
 
-            # Stop exit with minimum hold period.
-            # Validated across 3 independent windows: WR=5-10% <10d vs 59-65% >=10d
-            # Emergency stop at >15% loss always overrides.
-            _emergency_stop = low <= pos.entry_price * 0.85
-            _normal_stop    = low <= stop_px
-            _min_hold_met   = hold_d >= 10
-            if _emergency_stop or (_normal_stop and _min_hold_met):
+            # Stop exit — original logic restored.
+            # Regime-conditional confirmation (vol_ratio>1.5 OR >3% break)
+            # caused WR to drop to 13% by holding through real breakdowns.
+            # Lesson: whipsaw reduction via confirmation delays real exits too long.
+            # Simple close-below-stop is more robust across regimes.
+            if low <= stop_px:
                 exit_reason = "stop"
-                exit_ref    = stop_px if not _emergency_stop else pos.entry_price * 0.85
+                exit_ref    = stop_px
             elif close >= pos.entry_price * (1 + getattr(params, 'take_profit_pct', getattr(params, 'take_profit_long', 0.40))):
                 # Take profit — trailing ATR stop handles secular winners naturally
                 # Removed fitted suppression (0.90/0.85/0.65 thresholds were fitted to APP/NVDA/VRT)
                 exit_reason = "take_profit"
                 exit_ref    = close
             elif hold_d >= getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12)):
-                base_max = getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12))
-                ml_score = ml_scores.get(s, 0.0)
-                extended = int(base_max * 1.5) if (unrealized_pct > 0.08 and ml_score > 0.85) else base_max
+                # Profit-based hold extension: let winners run.
+                # If position is up >8% AND ML score is top-decile, extend by 50%.
+                # Data: 129 trades forced out at max_hold while up >$1000 — these
+                # are genuine winners being killed by an arbitrary time limit.
+                base_max   = getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12))
+                ml_score   = ml_scores.get(s, 0.0)
+                extended   = int(base_max * 1.5) if (unrealized_pct > 0.08 and ml_score > 0.85) else base_max
                 if hold_d >= extended:
                     exit_reason = "max_hold"
                     exit_ref    = close
@@ -512,25 +491,9 @@ def run_backtest_v2(
                     ann_vol=float(meta.get("ann_vol", 0.35)),
                     call_cost=float(meta.get("call_cost", 0.0)),
                     call_pnl=float(_call_pnl),
-                    breadth_at_entry=float(meta.get("breadth_at_entry", 0.0)),
-                    min_hold_triggered=int(meta.get("min_hold_triggered", 0)),
-                    cooldown_days=int(meta.get("cooldown_days", 0)),
-                    hyg_stress=float(meta.get("hyg_stress", 0.0)),
-                    top1pct_bypass=int(meta.get("top1pct_bypass", 0)),
-                    secular_hold=int(meta.get("secular_hold", 0)),
-                    rank_at_exit=float(ml_scores.get(s, 0.0)),
                 ))
                 if exit_reason == "stop" or (exit_reason == "max_hold" and pnl < 0):
-                    # Freeze cooldown at stop time — don't recompute at entry time
-                    # Bug was: vol drops after stop, cooldown shrinks, re-enters too early
-                    _df_cool_stop = hist.get(s)
-                    if _df_cool_stop is not None and len(_df_cool_stop.loc[:date]) >= 20:
-                        _cool_vol_stop = float(_df_cool_stop.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5))
-                        _cool_days_frozen = 180 if _cool_vol_stop > 0.70 else 90 if _cool_vol_stop > 0.50 else 45 if _cool_vol_stop > 0.30 else 15
-                    else:
-                        _cool_days_frozen = 45
-                    long_stop_dates[s] = (date, _cool_days_frozen)
-
+                    long_stop_dates[s] = date
                 if exit_reason == "stop":
                     recent_stop_dates.append(date)
                 if exit_reason == "regime_exit":
@@ -627,10 +590,6 @@ def run_backtest_v2(
         recent_stop_dates[:] = [d for d in recent_stop_dates if (date - d).days <= 5]
         cascade_freeze = len(recent_stop_dates) >= 2
 
-        # Reserve 1 dedicated slot for >0.99 ML rank trades
-        # Data: >0.99 avg=$3,192 vs 0.97-0.99 avg=$300 — phase transition at 0.99
-        _has_top_slot = len(long_positions) < max_longs
-        _top_slot_reserved = len(long_positions) == max_longs - 1
         if len(long_positions) < max_longs and cooldown_ok and not cascade_freeze:
             # Get ML threshold for current regime
             ml_min = getattr(params, 'ml_rank_min', getattr(params, 'ml_rank_min_long', 0.80))
@@ -653,14 +612,15 @@ def run_backtest_v2(
 
                 # Vol-proportional cooldown — high-vol stocks need longer cooling.
                 # APP vol=0.94: 180 days. NVDA vol=0.34: 30 days. Flat 15d let APP enter 4x in 2025.
-                # Vol-scaled cooldown handles repeat entries — no fitted stop count needed
-                # The frozen cooldown (bug fix) already prevents premature re-entry
-
                 last_stop = long_stop_dates.get(s)
                 if last_stop:
-                    # Use frozen cooldown from stop time — not recomputed current vol
-                    _stop_date, _cool_days_frozen = last_stop
-                    if (date - _stop_date).days < _cool_days_frozen:
+                    _df_cool = hist.get(s)
+                    if _df_cool is not None and len(_df_cool) >= 20:
+                        _cool_vol = float(_df_cool.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5))
+                        _cool_days = 180 if _cool_vol > 0.70 else 90 if _cool_vol > 0.50 else 45 if _cool_vol > 0.30 else 15
+                    else:
+                        _cool_days = 15
+                    if (date - last_stop).days < _cool_days:
                         continue
 
                 # Earnings calendar filter — avoid entries within 5 days of earnings
@@ -674,15 +634,12 @@ def run_backtest_v2(
                     continue
 
                 # Fix 1: Entry confirmation — must rank top decile 2 consecutive days
-                # Exception: >0.99 trades bypass confirmation — signal too strong to delay
-                ml_min_threshold = getattr(params, 'ml_rank_min', getattr(params, 'ml_rank_min_long', 0.80))
-                # Top 1% cross-sectional rank bypasses confirmation
-                # Principle: if ranked #1-4 out of 447 stocks today, signal is strong
-                # This is relative rank, not a fitted absolute threshold
                 ml_min_threshold = getattr(params, 'ml_rank_min', getattr(params, 'ml_rank_min_long', 0.80))
                 if prev_ml_ranks.get(s, 0.0) < ml_min_threshold:
                     prev_ml_ranks[s] = snap.ml_rank_pct
                     continue
+
+                # Quality gate — don't buy high-momentum low-quality stocks
                 # Research: momentum+quality combo reduces drawdowns 30-40% vs momentum alone
                 # (Fama-French 5-factor, SGH 2024, abrdn 2024)
                 q_feat = feature_store.get(s)
@@ -699,12 +656,6 @@ def run_backtest_v2(
                 # Even in TRENDING_BULL, short-term dips cause clustered stops
                 if _spy_5d_returns.get(date, 0.0) < -0.015:
                     continue
-
-                # Breadth stored for diagnostics only — no hard block
-                # Data: breadth 40-50% has WR=65% avg=$2,186 — filter was blocking good trades
-                _breadth = _compute_breadth(date)
-                _hyg_hist = hyg_close.loc[:date]
-                _hyg_10d = float(_hyg_hist.iloc[-1] / _hyg_hist.iloc[-10] - 1) if len(_hyg_hist) >= 10 else 0.0
 
 
 
@@ -736,11 +687,6 @@ def run_backtest_v2(
                 stop_pct   = float(np.clip(snap.stop_pct, getattr(params, 'stop_min_pct', getattr(params, 'stop_min_long', 0.02)), getattr(params, 'stop_max_pct', getattr(params, 'stop_max_long', 0.12))))
                 # Fix 2: ML-rank-scaled conviction sizing
                 import numpy as _np
-                base_conviction = conviction_multiplier(snap)
-                ml_conv = 0.5 + (snap.ml_rank_pct - ml_min_threshold) / max(1.0 - ml_min_threshold, 0.01)
-                ml_conv = float(_np.clip(ml_conv, 0.5, 1.5))
-                # Rank-proportional sizing — pure Kelly principle
-                # Size scales continuously with rank percentile
                 base_conviction = conviction_multiplier(snap)
                 ml_conv = 0.5 + (snap.ml_rank_pct - ml_min_threshold) / max(1.0 - ml_min_threshold, 0.01)
                 ml_conv = float(_np.clip(ml_conv, 0.5, 1.5))
@@ -912,14 +858,6 @@ def run_backtest_v2(
                 except Exception:
                     pass
 
-                _conv_meta.update({
-                    "breadth_at_entry": float(_compute_breadth(date)),
-                    "hyg_stress":       float(_hyg_10d) if '_hyg_10d' in dir() else 0.0,
-                    "top1pct_bypass":   int(_bypassed_confirmation) if '_bypassed_confirmation' in dir() else 0,
-                    "min_hold_triggered": 0,  # updated at exit
-                    "cooldown_days":    0,
-                    "secular_hold":     0,
-                })
                 entry_meta[s] = _conv_meta
 
         # ── Short entries (bear regime only) ──────────────────────────────
