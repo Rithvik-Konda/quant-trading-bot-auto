@@ -1006,6 +1006,11 @@ def build_panel_from_store(store: dict, horizon: int) -> pd.DataFrame:
         "8k_sentiment", "8k_negative", "8k_positive", "8k_count",
         "fda_catalyst_near", "fda_catalyst_days",
         "inst_buying", "inst_selling", "inst_chg_pct",
+        # Accruals/eps features — static snapshots, poison for backtesting
+        # These use TODAY's financial statements, not historical quarterly data
+        # Including them teaches ranker zero-patterns for all historical dates
+        "accrual_ratio", "cash_earnings", "earnings_quality",
+        "eps_beat_rate", "eps_avg_surprise", "eps_beat_streak",
     }
     feature_cols = [c for c in panel.columns
                     if c not in {"date", "symbol", "target_raw", "target", "target_rank"}
@@ -1059,6 +1064,11 @@ def train_ranker(panel: pd.DataFrame, horizon: int, oos_only: bool = False):
         "8k_sentiment", "8k_negative", "8k_positive", "8k_count",
         "fda_catalyst_near", "fda_catalyst_days",
         "inst_buying", "inst_selling", "inst_chg_pct",
+        # Accruals/eps features — static snapshots, poison for backtesting
+        # These use TODAY's financial statements, not historical quarterly data
+        # Including them teaches ranker zero-patterns for all historical dates
+        "accrual_ratio", "cash_earnings", "earnings_quality",
+        "eps_beat_rate", "eps_avg_surprise", "eps_beat_streak",
     }
     feature_cols = [c for c in panel.columns
                     if c not in {"date", "symbol", "target_raw", "target", "target_rank"}
