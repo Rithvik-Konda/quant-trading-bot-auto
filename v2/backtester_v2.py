@@ -747,7 +747,16 @@ def run_backtest_v2(
                 if remaining <= 0:
                     break
 
-                risk_budget    = config.INITIAL_CAPITAL * risk_pt * scalar * conviction
+                # Rolling stop rate monitor — if momentum has broken down, size down
+                # Principle: adaptive position sizing based on recent signal quality
+                # Not fitted — pure signal quality feedback loop
+                _recent_n     = min(20, len(trades))
+                _recent       = trades[-_recent_n:] if _recent_n > 0 else []
+                _recent_stops = sum(1 for t in _recent if t.reason == 'stop')
+                _stop_rate    = _recent_stops / _recent_n if _recent_n >= 10 else 0.35
+                _momentum_scalar = 0.50 if _stop_rate > 0.55 else                                    0.75 if _stop_rate > 0.45 else 1.0
+
+                risk_budget    = config.INITIAL_CAPITAL * risk_pt * scalar * conviction * _momentum_scalar
                 risk_per_share = px * stop_pct
                 qty_risk       = int(risk_budget / risk_per_share) if risk_per_share > 0 else 0
                 max_wt         = getattr(params, 'max_position_weight', 0.35)

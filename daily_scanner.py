@@ -148,6 +148,27 @@ def run_daily_scan():
     print(f"  Watch (squeeze):             {squeeze_alerts}")
     print(f"  Avoid (FDA binary risk):     {fda_flags[:5]}")
 
+    # ── New listing momentum scan ────────────────────────────
+    print("\n[9] Scanning new listings for RS momentum...")
+    try:
+        from new_listing_scanner import scan_new_listings
+        new_listing_results = scan_new_listings()
+        tradeable_new = [r['symbol'] for r in new_listing_results if r.get('tradeable')]
+        print(f"  Tradeable new listings: {tradeable_new}")
+    except Exception as e:
+        print(f"  New listing scan failed: {e}")
+        tradeable_new = []
+
+    # ── Thematic momentum scan ────────────────────────────────
+    print("\n[10] Scanning investment themes...")
+    try:
+        from thematic_scanner import scan_themes
+        hot_themes = scan_themes()
+        n_hot = len(hot_themes)
+        print(f"  Hot themes: {n_hot}")
+    except Exception as e:
+        print(f"  Theme scan failed: {e}")
+
     # ── Pre-score all 447 symbols for trader ─────────────────
     print("\n[9] Pre-scoring ML ranks for all symbols...")
     try:

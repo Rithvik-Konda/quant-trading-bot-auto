@@ -1,0 +1,116 @@
+[
+  {
+    "symbol": "SNDK",
+    "rs_score": 1.4485,
+    "ret_20d": -0.0052,
+    "ret_60d": 1.5943,
+    "ret_90d": 4.0824,
+    "rs_vs_spy": 1.6619,
+    "vol_trend": 0.959,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 615.83
+  },
+  {
+    "symbol": "KVYO",
+    "rs_score": -0.236,
+    "ret_20d": 0.0253,
+    "ret_60d": -0.425,
+    "ret_90d": -0.286,
+    "rs_vs_spy": -0.3574,
+    "vol_trend": 0.836,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 18.67
+  },
+  {
+    "symbol": "ARM",
+    "rs_score": 0.1636,
+    "ret_20d": 0.1589,
+    "ret_60d": 0.3185,
+    "ret_90d": -0.0774,
+    "rs_vs_spy": 0.3861,
+    "vol_trend": 1.04,
+    "tradeable": true,
+    "days_listed": 120,
+    "price": 144.13
+  },
+  {
+    "symbol": "BIRK",
+    "rs_score": -0.1872,
+    "ret_20d": -0.1959,
+    "ret_60d": -0.1641,
+    "ret_90d": -0.2481,
+    "rs_vs_spy": -0.0965,
+    "vol_trend": 0.868,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 34.19
+  },
+  {
+    "symbol": "CART",
+    "rs_score": -0.1319,
+    "ret_20d": -0.056,
+    "ret_60d": -0.2059,
+    "ret_90d": -0.0563,
+    "rs_vs_spy": -0.1383,
+    "vol_trend": 0.785,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 35.72
+  },
+  {
+    "symbol": "CAVA",
+    "rs_score": 0.1255,
+    "ret_20d": -0.0391,
+    "ret_60d": 0.2851,
+    "ret_90d": 0.1821,
+    "rs_vs_spy": 0.3527,
+    "vol_trend": 0.868,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 75.42
+  },
+  {
+    "symbol": "RDDT",
+    "rs_score": -0.3294,
+    "ret_20d": -0.1718,
+    "ret_60d": -0.47,
+    "ret_90d": -0.4017,
+    "rs_vs_spy": -0.4024,
+    "vol_trend": 0.905,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 121.84
+  },
+  {
+    "symbol": "ASTERA",
+    "rs_score": 0,
+    "tradeable": false,
+    "reason": "insufficient history (0 days)"
+  },
+  {
+    "symbol": "RKLB",
+    "rs_score": -0.0841,
+    "ret_20d": -0.1415,
+    "ret_60d": -0.1266,
+    "ret_90d": 0.0415,
+    "rs_vs_spy": -0.059,
+    "vol_trend": 1.006,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 60.93
+  },
+  {
+    "symbol": "ASTS",
+    "rs_score": 0.0091,
+    "ret_20d": -0.0949,
+    "ret_60d": 0.0832,
+    "ret_90d": 0.0791,
+    "rs_vs_spy": 0.1508,
+    "vol_trend": 0.884,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 78.67
+  }
+]

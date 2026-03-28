@@ -264,6 +264,23 @@ def run_daily_execution():
         else:
             print(f"  {slots} slot(s) available — scoring watchlist...")
             candidates = get_ml_scores()
+            # Load hot theme stocks — prioritize in entry selection
+            hot_stocks = []
+            try:
+                _theme_file = "/Users/rick/ai_trading_bot_v2/cache_themes/hot_stocks.json"
+                _new_file   = "/Users/rick/ai_trading_bot_v2/cache_newlistings/rs_scores.json"
+                if os.path.exists(_theme_file):
+                    hot_stocks += json.load(open(_theme_file)).get("stocks", [])
+                if os.path.exists(_new_file):
+                    hot_stocks += [r["symbol"] for r in json.load(open(_new_file)) if r.get("tradeable")]
+                hot_stocks = list(set(hot_stocks))
+                if hot_stocks:
+                    print(f"  Hot theme stocks: {hot_stocks[:8]}")
+                    theme_cands = [c for c in candidates if c["symbol"] in hot_stocks]
+                    other_cands = [c for c in candidates if c["symbol"] not in hot_stocks]
+                    candidates  = theme_cands + other_cands
+            except Exception as _e:
+                pass
             entered = 0
             for cand in candidates:
                 if entered >= slots:
