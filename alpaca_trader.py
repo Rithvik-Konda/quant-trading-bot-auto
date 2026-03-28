@@ -43,15 +43,25 @@ def submit_order(api, symbol, qty, side):
         return None
 
 def get_ml_scores():
-    """Score all watchlist symbols with current ML ranker."""
+    """Load pre-scored ML ranks from daily_scanner.py cache.
+    Scanner runs at 9:00am and pre-scores all 447 symbols.
+    Trader reads cache at 9:30am — no rescoring needed.
+    """
+    cache_file = os.path.join(CACHE_DIR, 'today_ml_ranks.json')
+    if os.path.exists(cache_file):
+        candidates = json.load(open(cache_file))
+        print(f"  Loaded {len(candidates)} pre-scored ranks from scanner cache")
+        return candidates
+
+    # Fallback: score live if cache missing
+    print("  No pre-scored cache — scoring live (slow)...")
     from strategy_core import load_ranker_ensemble
     from backtester_clean import fetch_history
     from ml_model import compute_features
     import config
 
-    rankers = load_ranker_ensemble()
+    rankers   = load_ranker_ensemble()
     candidates = []
-    print(f"  Scoring {len(config.WATCHLIST)} symbols...")
     for i, sym in enumerate(config.WATCHLIST):
         try:
             df = fetch_history(sym, days=400)
@@ -70,15 +80,13 @@ def get_ml_scores():
         except:
             pass
         if (i+1) % 50 == 0:
-            print(f"  {i+1}/{len(config.WATCHLIST)} scored...", end='\r')
+            print(f"  {i+1}/{len(config.WATCHLIST)} scored...", end="\r")
 
-    # Convert to cross-sectional percentile rank
     if candidates:
         scores_arr = np.array([c['ml_score'] for c in candidates])
         ranks = scores_arr.argsort().argsort() / max(len(scores_arr)-1, 1)
         for c, r in zip(candidates, ranks):
             c['ml_rank_pct'] = float(r)
-
     candidates.sort(key=lambda x: x.get('ml_rank_pct', 0), reverse=True)
     return candidates
 

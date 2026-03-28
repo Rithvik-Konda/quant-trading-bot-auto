@@ -148,6 +148,56 @@ def run_daily_scan():
     print(f"  Watch (squeeze):             {squeeze_alerts}")
     print(f"  Avoid (FDA binary risk):     {fda_flags[:5]}")
 
+    # ── Pre-score all 447 symbols for trader ─────────────────
+    print("\n[9] Pre-scoring ML ranks for all symbols...")
+    try:
+        from strategy_core import load_ranker_ensemble
+        from backtester_clean import fetch_history
+        from ml_model import compute_features
+        import config, numpy as np
+
+        rankers = load_ranker_ensemble()
+        ml_scores = []
+        for sym in config.WATCHLIST:
+            try:
+                df = fetch_history(sym, days=400)
+                df.index = pd.to_datetime(df.index).tz_localize(None)
+                feats = compute_features(df, symbol=sym)
+                if feats is None or len(feats) == 0:
+                    continue
+                latest = feats.iloc[-1]
+                scores = []
+                for horizon, r in rankers.items():
+                    X = pd.DataFrame([latest], columns=feats.columns)
+                    X = X.reindex(columns=r['features'], fill_value=0)
+                    scores.append(float(r['model'].predict(X)[0]))
+                if scores:
+                    ml_scores.append({'symbol': sym, 'ml_score': float(np.mean(scores))})
+            except:
+                pass
+
+        # Convert to cross-sectional percentile rank
+        if ml_scores:
+            scores_arr = np.array([c['ml_score'] for c in ml_scores])
+            ranks = scores_arr.argsort().argsort() / max(len(scores_arr)-1, 1)
+            for c, r in zip(ml_scores, ranks):
+                c['ml_rank_pct'] = float(r)
+            ml_scores.sort(key=lambda x: x['ml_rank_pct'], reverse=True)
+
+        # Save as prev_ml_ranks for confirmation + today's ranks for entry
+        prev_ranks = {c['symbol']: c['ml_rank_pct'] for c in ml_scores}
+        os.makedirs('/Users/rick/ai_trading_bot_v2/cache_alpaca', exist_ok=True)
+        with open('/Users/rick/ai_trading_bot_v2/cache_alpaca/prev_ml_ranks.json', 'w') as f:
+            json.dump(prev_ranks, f)
+        with open('/Users/rick/ai_trading_bot_v2/cache_alpaca/today_ml_ranks.json', 'w') as f:
+            json.dump(ml_scores, f, indent=2)
+
+        top5 = ml_scores[:5]
+        print(f"  Scored {len(ml_scores)} symbols")
+        print(f"  Top 5: {[c['symbol'] for c in top5]}")
+    except Exception as e:
+        print(f"  ML pre-scoring failed: {e}")
+
     # Save scan results
     result = {
         'date': str(today.date()),
