@@ -350,9 +350,9 @@ CORRELATION_BUCKETS = {
 ROTATION_SCORE_GAP = 0.08
 
 # ─── Execution costs ─────────────────────────────────────────────────────────
-SLIPPAGE_BPS           = 10
-COMMISSION_PER_SHARE   = 0.005
-COMMISSION_MAX_PCT     = 0.005
+SLIPPAGE_BPS           = 20   # 20bps per side = realistic for momentum names
+COMMISSION_PER_SHARE   = 0.0  # Alpaca is commission-free
+COMMISSION_MAX_PCT     = 0.0  # Alpaca is commission-free
 
 COOLDOWN_AFTER_WIN_MINUTES  = 10
 COOLDOWN_AFTER_LOSS_MINUTES = 30

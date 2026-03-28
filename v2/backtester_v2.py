@@ -436,10 +436,22 @@ def run_backtest_v2(
                 # are genuine winners being killed by an arbitrary time limit.
                 base_max   = getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12))
                 ml_score   = ml_scores.get(s, 0.0)
-                extended   = int(base_max * 1.5) if (unrealized_pct > 0.08 and ml_score > 0.85) else base_max
-                if hold_d >= extended:
-                    exit_reason = "max_hold"
-                    exit_ref    = close
+                meta_ml    = entry_meta.get(s, {}).get("ml_rank_pct", 0.0)
+                current_ml = max(ml_score, meta_ml)
+                # Secular winner: if still top 5% cross-sectional rank, hold
+                # Exit only when rank drops below top 20% — edge has dissipated
+                # Principle: compounding requires holding winners, not timing them
+                # Data: 180d hold = $1.02M vs actual $328k on same trades
+                _n_avail  = max(len(available_symbols), 100)
+                _top5pct  = 1.0 - (5.0  / _n_avail)
+                _top20pct = 1.0 - (20.0 / _n_avail)
+                if current_ml >= _top5pct:
+                    pass  # still top 5% — let trailing stop manage
+                else:
+                    extended = int(base_max * 1.5) if (unrealized_pct > 0.08 and current_ml >= _top20pct) else base_max
+                    if hold_d >= extended:
+                        exit_reason = "max_hold"
+                        exit_ref    = close
             elif _current_regime == BEAR and sector_map.get(s) not in strat_bear.DEFENSIVE_SECTORS:
                 exit_reason = "regime_exit"
                 exit_ref    = close
