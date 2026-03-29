@@ -430,22 +430,16 @@ def run_backtest_v2(
                 exit_reason = "take_profit"
                 exit_ref    = close
             elif hold_d >= getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12)):
-                # Adaptive exit: rank decay signal
-                # Exit when ML rank drops significantly from entry rank
-                # Principle: edge exists while stock is top cross-sectional pick
-                # When rank decays our alpha source is gone — exit regardless of time
-                base_max    = getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12))
-                entry_rank  = pos.meta.get("entry_ml_rank", 0.85) if hasattr(pos, "meta") and pos.meta else 0.85
-                current_rank = ml_scores.get(s, entry_rank)
-                rank_decay   = entry_rank - current_rank  # positive = rank fell
-                # Dynamic threshold: decay tolerance scales with how strong entry was
-                # Strong entry (rank=0.99) tolerates more decay than weak entry (rank=0.85)
-                decay_tolerance = max(0.10, entry_rank - 0.70)  # 0.10 to 0.29
-                rank_exited = rank_decay > decay_tolerance and hold_d > 10
-                # Also extend if rank is still strong — let true winners run
-                extended    = int(base_max * 2.0) if current_rank > 0.90 and unrealized_pct > 0.05 else base_max
-                if hold_d >= extended or rank_exited:
+                # Profit-based hold extension: let winners run.
+                # If position is up >8% AND ML score is top-decile, extend by 50%.
+                # Data: 129 trades forced out at max_hold while up >$1000 — these
+                # are genuine winners being killed by an arbitrary time limit.
+                base_max   = getattr(params, 'max_hold_days', getattr(params, 'max_hold_days_long', 12))
+                ml_score   = ml_scores.get(s, 0.0)
+                extended   = int(base_max * 1.5) if (unrealized_pct > 0.08 and ml_score > 0.85) else base_max
+                if hold_d >= extended:
                     exit_reason = "max_hold"
+                    exit_ref    = close
             elif _current_regime == BEAR and sector_map.get(s) not in strat_bear.DEFENSIVE_SECTORS:
                 exit_reason = "regime_exit"
                 exit_ref    = close
@@ -591,19 +585,14 @@ def run_backtest_v2(
             (date - last_regime_exit_date).days >= getattr(config, "REGIME_EXIT_COOLDOWN_DAYS", 10)
         )
 
+        # Stop cascade sensor — if ≥2 stops fired in last 5 trading days,
+        # freeze new entries. Macro shocks cluster stops before regime flips.
         recent_stop_dates[:] = [d for d in recent_stop_dates if (date - d).days <= 5]
         cascade_freeze = len(recent_stop_dates) >= 2
 
         if len(long_positions) < max_longs and cooldown_ok and not cascade_freeze:
             # Get ML threshold for current regime
             ml_min = getattr(params, 'ml_rank_min', getattr(params, 'ml_rank_min_long', 0.80))
-            # Rank velocity: adaptive entry threshold
-            # Improving rank = lower barrier, decaying rank = higher barrier
-            _rank_velocity_bonus = {}
-            for _sym, _snap in snapshots.items():
-                _prior = _snap.meta.get("rank_5d_ago", _snap.ml_rank_pct) if hasattr(_snap, "meta") and _snap.meta else _snap.ml_rank_pct
-                _vel   = _snap.ml_rank_pct - _prior
-                _rank_velocity_bonus[_sym] = float(np.clip(-_vel * 0.5, -0.05, 0.05))
 
             long_candidates = select_top_candidates(
                 snapshots={k: v for k, v in snapshots.items() if v.ml_rank_pct >= ml_min},
@@ -689,34 +678,13 @@ def run_backtest_v2(
                     sector = sector_map.get(s)
                     if sector not in strat_bear.DEFENSIVE_SECTORS:
                         continue
-                px         = open_next_prices[s]
-                # Adaptive stop: 1.5x ATR(14) — scales to each stock's realized volatility
-                # Principle: stop must be wider than noise to avoid stopping out on normal moves
-                # ATR captures actual daily range — much better than fixed % of price
-                _df_stop = prices_by_symbol.get(s)
-                if _df_stop is not None and len(_df_stop) >= 15:
-                    _hi = _df_stop["high"].tail(14)
-                    _lo = _df_stop["low"].tail(14)
-                    _cl = _df_stop["close"].tail(15)
-                    _tr = pd.concat([
-                        _hi - _lo,
-                        (_hi - _cl.shift(1)).abs(),
-                        (_lo - _cl.shift(1)).abs()
-                    ], axis=1).max(axis=1)
-                    _atr = float(_tr.mean())
-                    _atr_pct = _atr / px if px > 0 else 0.06
-                    # Stop = 1.5x ATR — enough room for normal moves, not for trend reversal
-                    _adaptive_stop = float(np.clip(_atr_pct * 1.5,
-                        getattr(params, "stop_min_pct", 0.03),
-                        getattr(params, "stop_max_pct", 0.15)))
-                else:
-                    _adaptive_stop = float(snap.stop_pct)
-                stop_pct = _adaptive_stop
-                if len(df_s) >= 200:
-                    ma200 = df_s["close"].rolling(200).mean().iloc[-1]
-                    if df_s["close"].iloc[-1] < ma200:
-                        continue
+                    if len(df_s) >= 200:
+                        ma200 = df_s["close"].rolling(200).mean().iloc[-1]
+                        if df_s["close"].iloc[-1] < ma200:
+                            continue
 
+                px         = open_next_prices[s]
+                stop_pct   = float(np.clip(snap.stop_pct, getattr(params, 'stop_min_pct', getattr(params, 'stop_min_long', 0.02)), getattr(params, 'stop_max_pct', getattr(params, 'stop_max_long', 0.12))))
                 # Fix 2: ML-rank-scaled conviction sizing
                 import numpy as _np
                 base_conviction = conviction_multiplier(snap)
