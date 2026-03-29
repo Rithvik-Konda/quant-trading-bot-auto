@@ -578,7 +578,15 @@ def run_backtest_v2(
 
         # ── Long entries ──────────────────────────────────────────────────
         max_longs  = getattr(params, 'max_positions', getattr(params, 'max_positions_long', 4))
+        # Expand to 8 positions in strong TRENDING_BULL
+        if _current_regime == TRENDING_BULL:
+            _spy_mom = spy_5d_returns.get(date, 0)
+            if _spy_mom > 0.01:
+                max_longs = min(max_longs + 2, 8)
         max_shorts = getattr(params, 'max_positions_short', 0)
+        # Expand shorts in CHOPPY — short high-beta losers
+        if _current_regime == CHOPPY:
+            max_shorts = min(max_shorts + 2, 6)
 
         cooldown_ok = (
             last_regime_exit_date is None or
@@ -593,6 +601,31 @@ def run_backtest_v2(
         if len(long_positions) < max_longs and cooldown_ok and not cascade_freeze:
             # Get ML threshold for current regime
             ml_min = getattr(params, 'ml_rank_min', getattr(params, 'ml_rank_min_long', 0.80))
+
+            # CHOPPY regime: re-score using CHOPPY-specific ML model
+            # OOS IC=0.1241 vs main ranker 0.0769 — better in CHOPPY
+            if _current_regime == CHOPPY:
+                try:
+                    import joblib as _jl, os as _os
+                    _cp = '/Users/rick/ai_trading_bot_v2/choppy_ranker.joblib'
+                    if _os.path.exists(_cp):
+                        _cr = _jl.load(_cp)
+                        _cm, _cf = _cr['model'], _cr['features']
+                        from v2.strategy_choppy_ml import compute_choppy_features as _ccf
+                        for _sym, _snap in list(snapshots.items()):
+                            try:
+                                _ph = prices_by_symbol.get(_sym)
+                                if _ph is not None and len(_ph) >= 60:
+                                    _fts = _ccf(_ph.loc[_ph.index <= date])
+                                    if len(_fts) > 0:
+                                        _row = _fts.iloc[-1].reindex(_cf, fill_value=0)
+                                        _sc  = float(_cm.predict([_row.values])[0])
+                                        _new_rank = float(max(0, min(1, 0.5 + _sc * 5)))
+                                        snapshots[_sym] = _snap._replace(ml_rank_pct=_new_rank)
+                            except:
+                                pass
+                except:
+                    pass
 
             long_candidates = select_top_candidates(
                 snapshots={k: v for k, v in snapshots.items() if v.ml_rank_pct >= ml_min},
@@ -826,18 +859,9 @@ def run_backtest_v2(
                             _n_contracts = max(1, int(_call_budget / (_call_ask * 100)))
                             _call_cost   = _n_contracts * _call_ask * 100
 
-                            # Reduce stock by equivalent delta exposure
-                            from scipy.stats import norm as _norm2
-                            _d1    = (np.log(fill / _K) + (0.05 + 0.5*_sigma_c**2)*_T_call) / (_sigma_c*np.sqrt(_T_call))
-                            _delta = float(np.clip(_norm2.cdf(_d1), 0.05, 0.95))
-                            _call_delta_equiv = _n_contracts * _delta * 100 * fill
-                            _shares_to_remove = max(0, int(_call_delta_equiv / fill))
-                            _new_qty = max(1, qty - _shares_to_remove)
-                            _refund  = (qty - _new_qty) * fill
-                            cash    += _refund
-
+                            # Calls are ADDITIVE — keep full stock position
                             long_positions[s] = Position(
-                                symbol=s, qty=_new_qty, entry_price=fill,
+                                symbol=s, qty=qty, entry_price=fill,
                                 entry_time=str(next_date.date()),
                                 stop_pct=stop_pct,
                                 initial_stop=fill * (1 - stop_pct),

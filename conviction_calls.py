@@ -48,18 +48,20 @@ def conviction_score(ml_rank, pead, revision, streak):
     Returns 0.0-1.0 based on combined signal strength.
     No hardcoded thresholds — score is continuous.
     """
-    # ML rank is the primary signal — sufficient alone
-    # Other signals are bonus multipliers, not hard requirements
-    ml_norm  = float(np.clip((ml_rank - 0.85) / 0.15, 0, 1))
-    if ml_norm < 0.3:  # must be top ~95th percentile minimum
+    # All signals must be positive direction
+    if pead <= 0 or revision <= 0 or streak <= 0:
         return 0.0
-    # Bonus from other signals (all optional)
-    pead_n   = float(np.clip(pead / 0.20, 0, 1)) if pead > 0 else 0.5
-    rev_n    = float(np.clip(revision / 0.50, 0, 1)) if revision > 0 else 0.5
-    streak_n = float(np.clip(streak / 1.0, 0, 1)) if streak > 0 else 0.5
-    # ML rank 60%, other signals 40%
-    score = ml_norm * 0.60 + (pead_n + rev_n + streak_n) / 3 * 0.40
-    return float(np.clip(score, 0, 1))
+
+    # Conviction = geometric mean of normalized signals
+    ml_norm  = float(np.clip((ml_rank - 0.85) / 0.15, 0, 1))
+    pead_n   = float(np.clip(pead / 0.20, 0, 1))
+    rev_n    = float(np.clip(revision / 0.50, 0, 1))
+    streak_n = float(np.clip(streak / 1.0, 0, 1))
+
+    if min(ml_norm, pead_n, rev_n, streak_n) < 0.3:
+        return 0.0
+
+    return float(np.power(ml_norm * pead_n * rev_n * streak_n, 0.25))
 
 
 def compute_options_budget(
