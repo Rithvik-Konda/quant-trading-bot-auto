@@ -744,12 +744,6 @@ def run_backtest_v2(
                     cash, remaining,
                 )
                 qty = min(qty_risk, int(max_dollars / px) if px > 0 else 0)
-                # 1.5% max loss per trade (Van Tharp fixed fractional)
-                # Must come BEFORE leverage — caps individual position risk
-                # On $100k: max $1,500 loss. Scales with capital.
-                _max_loss   = config.INITIAL_CAPITAL * 0.015
-                _qty_capped = int(_max_loss / (px * stop_pct)) if px * stop_pct > 0 else qty
-                qty         = min(qty, _qty_capped)
                 # Vol-aware sizing: use ML stop width to scale position size.
                 # Wider ML stop = model expects more noise = smaller position.
                 # stop_pct already set by ML model above — use it directly.
