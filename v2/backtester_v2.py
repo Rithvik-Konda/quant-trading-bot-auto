@@ -698,6 +698,25 @@ def run_backtest_v2(
                 ml_conv = float(_np.clip(ml_conv, 0.5, 1.5))
                 conviction = base_conviction * ml_conv
 
+                # Barroso & Santa-Clara (2015): scale by inverse realized momentum variance
+                # Nearly doubles Sharpe by reducing size when momentum factor is volatile
+                try:
+                    if len(long_positions) >= 2:
+                        _pos_rets = []
+                        for _ps, _pp in long_positions.items():
+                            _pdf = prices_by_symbol.get(_ps)
+                            if _pdf is not None and len(_pdf) > 21:
+                                _pr = _pdf.loc[:date]["close"].pct_change().dropna().tail(21)
+                                if len(_pr) >= 15:
+                                    _pos_rets.append(float(_pr.std() * (252**0.5)))
+                        if _pos_rets:
+                            _mom_vol = float(np.mean(_pos_rets))
+                            _target_vol = 0.25
+                            _vol_scale = float(np.clip(_target_vol / max(_mom_vol, 0.05), 0.3, 2.0))
+                            conviction = conviction * _vol_scale
+                except Exception:
+                    pass
+
                 # Fix 6: Volatility-scaled position sizing (Moreira & Muir 2017)
                 # Reduce size when VIX elevated — directly addresses Feb 2025 cluster
                 vix_now = vix_macro["close"].reindex([date], method="ffill")
