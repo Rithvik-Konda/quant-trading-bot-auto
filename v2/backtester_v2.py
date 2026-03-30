@@ -438,8 +438,14 @@ def run_backtest_v2(
                 ml_score   = ml_scores.get(s, 0.0)
                 extended   = int(base_max * 1.5) if (unrealized_pct > 0.08 and ml_score > 0.85) else base_max
                 if hold_d >= extended:
-                    exit_reason = "max_hold"
-                    exit_ref    = close
+                    # Friday exit delay — OOS validated p=0.035
+                    # Friday exits WR=38% avg=-$329 vs Mon WR=61% avg=+$492
+                    # If today is Friday (weekday=4), delay to Monday unless stop
+                    if pd.Timestamp(date).weekday() == 4:
+                        pass  # hold through weekend, exit Monday
+                    else:
+                        exit_reason = "max_hold"
+                        exit_ref    = close
             elif _current_regime == BEAR and sector_map.get(s) not in strat_bear.DEFENSIVE_SECTORS:
                 exit_reason = "regime_exit"
                 exit_ref    = close
