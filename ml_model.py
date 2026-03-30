@@ -1180,15 +1180,7 @@ def build_panel_from_store(store: dict, horizon: int) -> pd.DataFrame:
         # Accruals/eps features — static snapshots, poison for backtesting
         # These use TODAY's financial statements, not historical quarterly data
         # Including them teaches ranker zero-patterns for all historical dates
-        "accrual_ratio", "cash_earnings", "earnings_quality", "upstream_prop_1d",
-        "overnight_mom_5d", "overnight_mom_20d", "intraday_mom_5d",
-        "intraday_mom_20d", "overnight_share_20d", "gap_up_freq_20d",
-        "gap_down_freq_20d", "intraday_win_rate_20d",
-        "ca_hy_spread_level", "ca_hy_spread_chg_20d", "ca_hy_spread_chg_60d",
-        "ca_hy_danger", "ca_yield_curve", "ca_yield_curve_chg", "ca_yield_inverted",
-        "ca_yield_steepening", "ca_copper_ret_21d", "ca_copper_ret_63d",
-        "ca_copper_momentum", "ca_copper_accel", "ca_ig_spread_chg",
-        "ca_credit_risk_on", "ca_breakeven_level", "ca_breakeven_rising", "upstream_prop_3d", "upstream_large_move_1d", "upstream_signed_1d",
+        
         "eps_beat_rate", "eps_avg_surprise", "eps_beat_streak",
     }
     feature_cols = [c for c in panel.columns
@@ -1246,7 +1238,6 @@ def train_ranker(panel: pd.DataFrame, horizon: int, oos_only: bool = False):
         # Accruals/eps features — static snapshots, poison for backtesting
         # These use TODAY's financial statements, not historical quarterly data
         # Including them teaches ranker zero-patterns for all historical dates
-        "accrual_ratio", "cash_earnings", "earnings_quality",
         "eps_beat_rate", "eps_avg_surprise", "eps_beat_streak",
     }
     feature_cols = [c for c in panel.columns
