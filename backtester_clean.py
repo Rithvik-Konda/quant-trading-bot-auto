@@ -462,10 +462,15 @@ def build_fast_snapshots(
 
 
 def conviction_multiplier(snap: SignalSnapshot) -> float:
-    if snap.ml_rank_pct >= 0.97: return 1.15
-    if snap.ml_rank_pct >= 0.93: return 1.00
-    if snap.ml_rank_pct >= 0.88: return 0.85
-    return 0.70
+    if snap.ml_rank_pct >= 0.97:   base = 1.15
+    elif snap.ml_rank_pct >= 0.93: base = 1.00
+    elif snap.ml_rank_pct >= 0.88: base = 0.85
+    else:                          base = 0.70
+    ann_vol = getattr(snap, 'ann_vol', 0.30)
+    if ann_vol > 0.40:   vol_mult = 1.20
+    elif ann_vol < 0.20: vol_mult = 0.85
+    else:                vol_mult = 1.00
+    return base * vol_mult
 
 
 def current_gross_exposure(

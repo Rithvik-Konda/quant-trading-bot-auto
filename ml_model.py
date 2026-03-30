@@ -111,6 +111,17 @@ def fetch_data(symbol: str, days: int = 3650, refresh: bool = False) -> Optional
 def _get_fundamentals(symbol: str) -> dict:
     if symbol in _fund_cache:
         return _fund_cache[symbol]
+    # Try JSON cache first — avoids live API calls during training
+    try:
+        import json as _json
+        _fc = os.path.expanduser('~/ai_trading_bot_v2/cache_fundamentals/info_cache.json')
+        if os.path.exists(_fc):
+            _all = _json.load(open(_fc))
+            if symbol in _all:
+                _fund_cache[symbol] = _all[symbol]
+                return _fund_cache[symbol]
+    except Exception:
+        pass
     result = {}
     try:
         import yfinance as yf
@@ -780,6 +791,8 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
     # Works because of accounting reality — true since double-entry bookkeeping 1494
     # High accruals stock underperforms by 10%/yr (Sloan 1996, 40-year study)
     try:
+        # Skip live accruals during training — too slow, in LIVE_ONLY_FEATURES anyway
+        raise Exception("skip accruals during training")
         import yfinance as _yf_aq
         _aq_tick = _yf_aq.Ticker(symbol or '')
         _cf = _aq_tick.cashflow
