@@ -1217,6 +1217,7 @@ def build_panel_from_store(store: dict, horizon: int) -> pd.DataFrame:
         # Including them teaches ranker zero-patterns for all historical dates
         
         "eps_beat_rate", "eps_avg_surprise", "eps_beat_streak",
+        "sym_historical_stop_rate", "sym_historical_wr", "sym_n_trades",
     }
     feature_cols = [c for c in panel.columns
                     if c not in {"date", "symbol", "target_raw", "target", "target_rank"}
