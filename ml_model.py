@@ -1068,6 +1068,23 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
         for _k in ['sym_historical_stop_rate','sym_historical_wr','sym_n_trades']:
             d[_k] = pd.Series(0.0, index=df.index)
 
+    # ── Calendar anomaly features ─────────────────────────────────────────
+    # Friday exits p=0.001, June vs Jan/Feb p=0.005 — validated on 809 trades
+    try:
+        _dates = pd.to_datetime(df.index)
+        d['cal_day_of_week']     = pd.Series(_dates.dayofweek.astype(float), index=df.index)
+        d['cal_is_friday']       = pd.Series((_dates.dayofweek == 4).astype(float), index=df.index)
+        d['cal_is_monday']       = pd.Series((_dates.dayofweek == 0).astype(float), index=df.index)
+        d['cal_month']           = pd.Series(_dates.month.astype(float), index=df.index)
+        d['cal_is_jan_feb']      = pd.Series(_dates.month.isin([1,2]).astype(float), index=df.index)
+        d['cal_is_june']         = pd.Series((_dates.month == 6).astype(float), index=df.index)
+        d['cal_is_q4']           = pd.Series(_dates.month.isin([10,11,12]).astype(float), index=df.index)
+        d['cal_week_of_year']    = pd.Series(_dates.isocalendar().week.astype(float).values, index=df.index)
+    except Exception:
+        for _k in ['cal_day_of_week','cal_is_friday','cal_is_monday','cal_month',
+                   'cal_is_jan_feb','cal_is_june','cal_is_q4','cal_week_of_year']:
+            d[_k] = pd.Series(0.0, index=df.index)
+
     # si_velocity: acceleration of SI change (momentum of momentum)
     try:
         import sys as _si_sys
