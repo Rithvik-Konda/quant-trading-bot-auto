@@ -1046,6 +1046,28 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
                    'gap_down_freq_20d','intraday_win_rate_20d']:
             d[_f] = pd.Series(0.0, index=df.index)
 
+    # ── Symbol historical trade performance (from live trading history) ──
+    # Correlation stop_rate → avg_pnl = -0.438 (validated on 809 trades)
+    # SMCI 100% stop rate, PANW 86%, EBAY 65% — ranker should learn to avoid
+    try:
+        import json as _jth
+        _th_path = os.path.expanduser('~/ai_trading_bot_v2/cache_fundamentals/symbol_trade_history.json')
+        if os.path.exists(_th_path) and symbol:
+            _th = _jth.load(open(_th_path))
+            _sym_data = _th.get(symbol, {})
+            d['sym_historical_stop_rate'] = pd.Series(
+                float(_sym_data.get('historical_stop_rate', 0.30)), index=df.index)
+            d['sym_historical_wr'] = pd.Series(
+                float(_sym_data.get('historical_wr', 0.50)), index=df.index)
+            d['sym_n_trades'] = pd.Series(
+                float(_sym_data.get('n_trades', 0)), index=df.index)
+        else:
+            for _k in ['sym_historical_stop_rate','sym_historical_wr','sym_n_trades']:
+                d[_k] = pd.Series(0.0, index=df.index)
+    except Exception:
+        for _k in ['sym_historical_stop_rate','sym_historical_wr','sym_n_trades']:
+            d[_k] = pd.Series(0.0, index=df.index)
+
     # si_velocity: acceleration of SI change (momentum of momentum)
     try:
         import sys as _si_sys
