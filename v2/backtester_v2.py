@@ -988,7 +988,7 @@ def run_oos_test_v2():
     print("  OOS       : 2022-2025")
     print("="*60 + "\n")
 
-    equity_full, trades_full, _ = run_backtest_v2(days=3650)
+    equity_full, trades_full, _ = run_backtest_v2(days=args.days)
 
     oos_cutoff  = pd.Timestamp("2022-01-01")
     eq_in       = equity_full[equity_full.index <  oos_cutoff]

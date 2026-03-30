@@ -1,9 +1,9 @@
 {
-  "vix_current": 31.05,
-  "vix_20d_avg": 25.36,
-  "vix_spike_pct": 0.224,
+  "vix_current": 30.48,
+  "vix_20d_avg": 25.82,
+  "vix_spike_pct": 0.181,
   "signal": "ELEVATED",
   "size_scalar": 0.5,
   "hedge": true,
-  "date": "2026-03-28"
+  "date": "2026-03-30"
 }
