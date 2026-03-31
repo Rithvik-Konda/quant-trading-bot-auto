@@ -1,1 +1,1 @@
-[]
+[{"date": "2026-03-12", "name": "CARNEY LLOYD", "title": "", "code": "S", "shares": 650.0, "price": 309.6198, "value": 201252.87, "is_buy": false, "is_sell": true, "is_director": true, "is_officer": false, "is_ceo": false}, {"date": "2026-01-05", "name": "MCINERNEY RYAN", "title": "Chief Executive Officer", "code": "S", "shares": 10485.0, "price": 349.18, "value": 3661152.3000000003, "is_buy": false, "is_sell": true, "is_director": true, "is_officer": true, "is_ceo": true}]

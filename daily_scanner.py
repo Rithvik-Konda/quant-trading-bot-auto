@@ -175,7 +175,7 @@ def run_daily_scan():
         from strategy_core import load_ranker_ensemble
         from backtester_clean import fetch_history
         from ml_model import compute_features
-        import config, numpy as np
+        import numpy as np
 
         rankers = load_ranker_ensemble()
         ml_scores = []

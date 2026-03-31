@@ -1,13 +1,11 @@
 {
-  "date": "2026-03-27",
+  "date": "2026-03-31",
   "regime": "CHOPPY",
-  "breadth": 0.148,
-  "breadth_ok": false,
+  "breadth": 0.5,
+  "breadth_ok": true,
   "hyg_ok": true,
-  "can_trade": false,
-  "bearish_news": [
-    "NKE"
-  ],
+  "can_trade": true,
+  "bearish_news": [],
   "insider_buys": [
     "CRM",
     "RDDT",

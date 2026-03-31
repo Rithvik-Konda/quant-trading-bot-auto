@@ -1,1 +1,1 @@
-[]
+[{"date": "2026-03-05", "name": "Furman Matthew", "title": "General Counsel", "code": "S", "shares": 3000.0, "price": 304.0029, "value": 912008.7000000001, "is_buy": false, "is_sell": true, "is_director": false, "is_officer": true, "is_ceo": false}, {"date": "2026-02-17", "name": "Clarke Lucy", "title": "President of Risk & Broking", "code": "P", "shares": 3500.0, "price": 284.8368, "value": 996928.7999999999, "is_buy": true, "is_sell": false, "is_director": false, "is_officer": true, "is_ceo": true}]

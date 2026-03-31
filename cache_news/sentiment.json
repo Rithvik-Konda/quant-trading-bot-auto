@@ -1,77 +1,74 @@
 {
   "NVDA": {
     "symbol": "NVDA",
-    "score": 0.4,
-    "positive": 11,
-    "negative": 3,
-    "neutral": 6,
+    "score": 0.15,
+    "positive": 8,
+    "negative": 5,
+    "neutral": 7,
     "total": 20,
-    "signal": "BULLISH",
+    "signal": "NEUTRAL",
     "headlines": [
-      "Wall Street Insider Who Predicted 2008 Crash Issues Urgent Warning: \"The AI Bubb",
-      "Stock Market Today, March 27: Crude Surges Above $110, Driving Broad Sell-Off",
-      "Stock Market Today, March 27: Nvidia Slides as Valuation Drops Below S&P 500 on "
+      "Michael Burry Says 'Shorts Are Not Forever' As Palantir, Nvidia Stocks Wrap A Ro",
+      "The Vanguard ETF That's Quietly Crushing the Market in 2026",
+      "Want AI Growth With Limited Risk? 3 Smart Stocks for Cautious Investors."
     ],
-    "updated": "2026-03-27T21:00:07.157067"
+    "updated": "2026-03-31T13:44:46.728803"
   },
   "AVGO": {
     "symbol": "AVGO",
-    "score": 0.75,
-    "positive": 9,
+    "score": 0.8,
+    "positive": 4,
     "negative": 0,
-    "neutral": 3,
-    "total": 12,
+    "neutral": 1,
+    "total": 5,
     "signal": "BULLISH",
     "headlines": [
-      "3 AI Stocks to Buy Before the Next Leg Up",
-      "8 Stocks I'd Buy if I Were Starting a Tech Portfolio From Scratch Today",
-      "Have Tech Stocks Finally Run Out of Road? Here's What the Data Actually Says."
+      "2 Beaten-Down AI Stocks to Buy Before the Next Bull Market",
+      "Everyone Is Rotating Out of Artificial Intelligence (AI) Stocks. Here's Why That",
+      "Was Artificial Intelligence (AI) Just the Biggest Hype Cycle of This Generation?"
     ],
-    "updated": "2026-03-27T21:00:07.424860"
+    "updated": "2026-03-31T13:44:47.038656"
   },
   "AMD": {
     "symbol": "AMD",
-    "score": 0.389,
-    "positive": 9,
-    "negative": 2,
-    "neutral": 7,
-    "total": 18,
+    "score": 0.333,
+    "positive": 1,
+    "negative": 0,
+    "neutral": 2,
+    "total": 3,
     "signal": "BULLISH",
     "headlines": [
-      "Stock Market Today, March 27: Nvidia Slides as Valuation Drops Below S&P 500 on ",
-      "Micron Just Started Mass-Producing HBM4 for Nvidia's Vera Rubin. Here's Why This",
-      "8 Stocks I'd Buy if I Were Starting a Tech Portfolio From Scratch Today"
+      "How Much Higher Can DigitalOcean Stock Go?",
+      "Consumer Tech News (March 23-27): Netflix & Sony Hikes Prices, OpenAI Flags Micr",
+      "1 Supercharged Growth Stock to Buy Before It Soars 318%"
     ],
-    "updated": "2026-03-27T21:00:07.693422"
+    "updated": "2026-03-31T13:44:47.332477"
   },
   "MU": {
     "symbol": "MU",
-    "score": 0.211,
-    "positive": 9,
-    "negative": 5,
-    "neutral": 5,
-    "total": 19,
-    "signal": "NEUTRAL",
+    "score": 0.364,
+    "positive": 7,
+    "negative": 3,
+    "neutral": 1,
+    "total": 11,
+    "signal": "BULLISH",
     "headlines": [
-      "Micron Just Started Mass-Producing HBM4 for Nvidia's Vera Rubin. Here's Why This",
-      "8 Stocks I'd Buy if I Were Starting a Tech Portfolio From Scratch Today",
-      "Is This AI Stock a Better Bargain Than the Magnificent Seven?"
+      "These 3 Stocks Just Rewarded Investors With Big Dividend Bumps",
+      "Micron Technology Is Having Its Nvidia Moment. Is It Still a Buy?",
+      "Should You Buy Micron Stock Right Now After the Pullback?"
     ],
-    "updated": "2026-03-27T21:00:07.982019"
+    "updated": "2026-03-31T13:44:47.621643"
   },
   "MRVL": {
     "symbol": "MRVL",
-    "score": 1.0,
-    "positive": 2,
+    "score": 0.0,
+    "positive": 0,
     "negative": 0,
     "neutral": 0,
-    "total": 2,
-    "signal": "BULLISH",
-    "headlines": [
-      "Marvell's Data Center Revenue Just Grew 21%. Here's Why This Artificial Intellig",
-      "DesignCon 2026 Wraps with Focus on Innovation, Artificial Intelligence"
-    ],
-    "updated": "2026-03-27T21:00:08.234690"
+    "total": 0,
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-31T13:44:47.905637"
   },
   "QCOM": {
     "score": 0.0,
@@ -294,29 +291,61 @@
     "error": 429
   },
   "GTLB": {
+    "symbol": "GTLB",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-31T13:45:00.133061"
   },
   "BILL": {
+    "symbol": "BILL",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-31T13:45:00.444636"
   },
   "CFLT": {
+    "symbol": "CFLT",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-31T13:45:00.805747"
   },
   "S": {
+    "symbol": "S",
     "score": 0.0,
-    "total": 0,
-    "error": 429
+    "positive": 0,
+    "negative": 0,
+    "neutral": 1,
+    "total": 1,
+    "signal": "NEUTRAL",
+    "headlines": [
+      "Palo Alto CEO Nikesh Arora Warns OpenAI, Anthropic Models Could Boost Cyberattac"
+    ],
+    "updated": "2026-03-31T13:45:01.362408"
   },
   "ESTC": {
+    "symbol": "ESTC",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-31T13:45:01.654651"
   },
   "MNDY": {
     "score": 0.0,
@@ -1074,69 +1103,29 @@
     "error": 429
   },
   "HD": {
-    "symbol": "HD",
-    "score": 0.333,
-    "positive": 1,
-    "negative": 0,
-    "neutral": 2,
-    "total": 3,
-    "signal": "BULLISH",
-    "headlines": [
-      "Les Jeux du Canada honorent six l\u00e9gendes du sport",
-      "What Happens If the Nasdaq and S&P 500 Both Fall Into Correction Territory?",
-      "Construction Resources Company, LLC Acquires Ramos Marble & Granite, Premier Sur"
-    ],
-    "updated": "2026-03-27T21:01:00.155817"
+    "score": 0.0,
+    "total": 0,
+    "error": 429
   },
   "LOW": {
-    "symbol": "LOW",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T21:01:00.417379"
+    "error": 429
   },
   "NKE": {
-    "symbol": "NKE",
-    "score": -0.333,
-    "positive": 0,
-    "negative": 1,
-    "neutral": 2,
-    "total": 3,
-    "signal": "BEARISH",
-    "headlines": [
-      "Should You Buy Nike (NKE) Stock Before March 31?",
-      "Why On Holding's Stock Crashed 11% After CEO Exit",
-      "With the Stock Down Roughly 60% Over the Past 5 Years, Should Investors Buy Nike"
-    ],
-    "updated": "2026-03-27T21:01:00.677854"
+    "score": 0.0,
+    "total": 0,
+    "error": 429
   },
   "MCD": {
-    "symbol": "MCD",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T21:01:00.932904"
+    "error": 429
   },
   "SBUX": {
-    "symbol": "SBUX",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 1,
-    "total": 1,
-    "signal": "NEUTRAL",
-    "headlines": [
-      "Why On Holding's Stock Crashed 11% After CEO Exit"
-    ],
-    "updated": "2026-03-27T21:01:01.201391"
+    "total": 0,
+    "error": 429
   },
   "CMG": {
     "score": 0.0,
@@ -1399,29 +1388,59 @@
     "error": 429
   },
   "CSX": {
+    "symbol": "CSX",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-31T13:46:00.219489"
   },
   "UNP": {
+    "symbol": "UNP",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-31T13:46:00.510028"
   },
   "NSC": {
+    "symbol": "NSC",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-31T13:46:00.864281"
   },
   "MMM": {
+    "symbol": "MMM",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-31T13:46:01.142205"
   },
   "DOV": {
+    "symbol": "DOV",
     "score": 0.0,
+    "positive": 0,
+    "negative": 0,
+    "neutral": 0,
     "total": 0,
-    "error": 429
+    "signal": "NEUTRAL",
+    "headlines": [],
+    "updated": "2026-03-31T13:46:01.546840"
   },
   "IR": {
     "score": 0.0,
@@ -2289,59 +2308,29 @@
     "error": 429
   },
   "AVAV": {
-    "symbol": "AVAV",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T21:02:00.204059"
+    "error": 429
   },
   "HEI": {
-    "symbol": "HEI",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T21:02:00.456672"
+    "error": 429
   },
   "SHLS": {
-    "symbol": "SHLS",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T21:02:00.806406"
+    "error": 429
   },
   "STEM": {
-    "symbol": "STEM",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T21:02:01.065482"
+    "error": 429
   },
   "RUN": {
-    "symbol": "RUN",
     "score": 0.0,
-    "positive": 0,
-    "negative": 0,
-    "neutral": 0,
     "total": 0,
-    "signal": "NEUTRAL",
-    "headlines": [],
-    "updated": "2026-03-27T21:02:01.310912"
+    "error": 429
   },
   "AMR": {
     "score": 0.0,

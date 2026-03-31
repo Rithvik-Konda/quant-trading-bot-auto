@@ -69,3 +69,43 @@ OOS CAGR: 18.11%  Sharpe: 1.62  MaxDD: -7.51%  (improved from 18.60%/1.55/-13.55
 ### Live Trader
 - Still running, CHOPPY regime, correctly in cash
 - New 375-feature ranker deployed automatically
+
+## Session 7 Summary (2026-03-31 / 2026-04-01)
+
+### Key Findings
+- 22.56% baseline (commit 21bf4d0) does NOT reproduce — was artifact of older ranker
+- Real baseline is 18.11% OOS CAGR (HEAD commit 9d3989f)
+- Ranker only had 204 features despite 375 being computed — overnight/intraday/earnings missing
+- LIVE_ONLY_FEATURES bug: eps_beat_rate, eps_avg_surprise, eps_beat_streak wrongly excluded
+  → These have real time-series data in cache_earnings/ going back to 2006
+  → Fixed: removed from LIVE_ONLY_FEATURES in both build_panel and train_ranker
+
+### Changes Made
+- ml_model.py: removed eps_beat_rate/eps_avg_surprise/eps_beat_streak from LIVE_ONLY_FEATURES
+- strategy_choppy.py: added mean reversion entry path (RSI2 < 15 + 200d SMA + quality > 0.5)
+- backtester_v2.py: added MR entry block + MR exit logic (mr_max_hold, mr_sma_exit)
+- Retrain running: /tmp/retrain.log (adds 16 new features including overnight/intraday)
+- MR CHOPPY backtest running: /tmp/backtest_mr_choppy.log
+
+### Pending (check on next session)
+- /tmp/retrain.log → did retrain complete? New rankers saved?
+- /tmp/backtest_mr_choppy.log → does MR improve 2019/2025/2026 CHOPPY years?
+  Compare: 2019 was -6.1%, 2025 was -2.1% — both CHOPPY-dominant years
+- If MR backtest improves OOS CAGR: commit + run new retrain with regime-aware MR features
+- If retrain improves IC: backtest again with new rankers
+
+### Research Completed This Session
+- Overnight/intraday decomposition: IC=0.047 on YOUR data (intraday positive, overnight NEGATIVE)
+- Supply chain momentum: IC 0.01-0.02 incremental, needs EDGAR parsing
+- Quality-filtered mean reversion: 3.6x improvement over vanilla (Zhu et al 2019)
+- VRP engine: realistic 8-12% on allocated capital, near-zero correlation to momentum
+- Dynamic capital allocation: risk parity + 30% Sharpe tilt, monthly rebalancing
+- PEAD dead for large caps post-2006, text-based PEAD.txt still works (3.9 bps/day)
+- Same-weekday momentum (Da & Zhang 2024): IC 0.02-0.03, worth adding as feature
+
+### Next Priority Order
+1. Validate MR CHOPPY backtest result
+2. If improved: commit, run retrain with regime-aware features
+3. Add same-weekday momentum as LightGBM feature
+4. Build PEAD text engine (FinBERT on earnings calls)
+5. After 60 days live: add cash-secured put selling on CHOPPY idle cash

@@ -1,8 +1,8 @@
 {
   "Data Centers": {
     "etf": "DTCR",
-    "rs_60d": 0.123,
-    "rs_20d": -0.0065,
+    "rs_60d": 0.1223,
+    "rs_20d": -0.013,
     "stocks": [
       "EQIX",
       "DLR",
@@ -10,6 +10,19 @@
       "VRT",
       "DELL",
       "HPE"
+    ]
+  },
+  "Energy Transition": {
+    "etf": "ICLN",
+    "rs_60d": 0.114,
+    "rs_20d": 0.0542,
+    "stocks": [
+      "ENPH",
+      "FSLR",
+      "CEG",
+      "VST",
+      "NEE",
+      "PLUG"
     ]
   }
 }
