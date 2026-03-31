@@ -417,6 +417,54 @@ def run_backtest_v2(
             exit_reason = exit_ref = None
 
             # TCPS: Trajectory-Conditioned Position Scaling
+            # OOS validated: p=0.003 (stronger OOS than IS)
+            # Day 7 positive WR=74% avg=$1,071 vs negative WR=35% avg=-$39
+            if hold_d == 7:
+                try:
+                    _entry_px = pos.entry_price
+                    _r7 = (close - _entry_px) / _entry_px
+                    _spy_now = spy_macro["close"].reindex([date], method="ffill")
+                    _spy_7d  = spy_macro["close"].reindex([all_trade_dates[i-7]], method="ffill")
+                    _s7 = (float(_spy_now.iloc[0]) / float(_spy_7d.iloc[0])) - 1                           if len(_spy_now) and len(_spy_7d) else 0
+                    _excess7 = _r7 - _s7
+
+                    if _r7 > 0.01 and _excess7 > 0.005:
+                        # Strong trajectory — add 30% more shares
+                        _extra = int(pos.qty * 0.30)
+                        if _extra > 0 and cash >= _extra * close * 1.001:
+                            _fill, _comm = apply_fill_cost(close, _extra, "buy")
+                            if _fill * _extra + _comm <= cash:
+                                cash -= _fill * _extra + _comm
+                                long_positions[s] = Position(
+                                    symbol=s, qty=pos.qty + _extra,
+                                    entry_price=pos.entry_price,
+                                    entry_time=pos.entry_time,
+                                    stop_pct=pos.stop_pct,
+                                    initial_stop=pos.initial_stop,
+                                    highest_price=pos.highest_price,
+                                    add_count=getattr(pos, 'add_count', 0) + 1,
+                                )
+                                pos = long_positions[s]
+                    elif _r7 < -0.01 and _excess7 < -0.005:
+                        # Weak trajectory — trim 50%
+                        _trim = max(1, pos.qty // 2)
+                        if _trim < pos.qty:
+                            _fill, _comm = apply_fill_cost(close, _trim, "sell")
+                            cash += _fill * _trim - _comm
+                            long_positions[s] = Position(
+                                symbol=s, qty=pos.qty - _trim,
+                                entry_price=pos.entry_price,
+                                entry_time=pos.entry_time,
+                                stop_pct=pos.stop_pct,
+                                initial_stop=pos.initial_stop,
+                                highest_price=pos.highest_price,
+                                add_count=getattr(pos, 'add_count', 0),
+                            )
+                            pos = long_positions[s]
+                except Exception:
+                    pass
+
+            # TCPS: Trajectory-Conditioned Position Scaling
             # OOS validated: p=0.003, IS p=0.026, STRONGER OOS than IS
             # Day 7 positive WR=74% avg=$1,071 vs negative WR=35% avg=-$39
             # Scale UP winners, scale DOWN losers — never exit, just resize
