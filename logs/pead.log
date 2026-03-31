@@ -1,0 +1,11 @@
+HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: MMC"}}}
+HTTP Error 500: {"quoteSummary":{"result":null,"error":{"code":"internal-error","description":"internal-error"}}}
+============================================================
+PEAD SCANNER — 2026-03-31
+============================================================
+Post-Earnings Announcement Drift — Bernard & Thomas 1989
+Enter day after earnings beat >5%, hold 5-7 days
+
+No qualifying earnings beats in last 7 days
+
+Saved 0 PEAD signals

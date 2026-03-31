@@ -1,8 +1,8 @@
 {
   "Data Centers": {
     "etf": "DTCR",
-    "rs_60d": 0.1757,
-    "rs_20d": -0.0037,
+    "rs_60d": 0.123,
+    "rs_20d": -0.0065,
     "stocks": [
       "EQIX",
       "DLR",
@@ -10,55 +10,6 @@
       "VRT",
       "DELL",
       "HPE"
-    ]
-  },
-  "Energy Transition": {
-    "etf": "ICLN",
-    "rs_60d": 0.154,
-    "rs_20d": 0.0475,
-    "stocks": [
-      "ENPH",
-      "FSLR",
-      "CEG",
-      "VST",
-      "NEE",
-      "PLUG"
-    ]
-  },
-  "Reshoring/Mfg": {
-    "etf": "MADE",
-    "rs_60d": 0.1225,
-    "rs_20d": -0.0276,
-    "stocks": [
-      "CAT",
-      "DE",
-      "ETN",
-      "PWR",
-      "MTZ",
-      "STRL"
-    ]
-  },
-  "Memory/Storage": {
-    "etf": "SOXQ",
-    "rs_60d": 0.1203,
-    "rs_20d": -0.0103,
-    "stocks": [
-      "MU",
-      "WDC",
-      "SNDK",
-      "STX",
-      "NAND"
-    ]
-  },
-  "Nuclear Energy": {
-    "etf": "NLR",
-    "rs_60d": 0.1153,
-    "rs_20d": -0.0804,
-    "stocks": [
-      "CEG",
-      "CCJ",
-      "VST",
-      "NRG"
     ]
   }
 }
