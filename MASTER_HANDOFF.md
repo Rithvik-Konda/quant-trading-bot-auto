@@ -36,3 +36,36 @@
 
 ### Total features: 336 (was 316)
 ### Baseline still locked at commit 3f2dd20
+
+## Session 6 Summary (2026-03-31)
+
+### New Baseline
+OOS CAGR: 18.11%  Sharpe: 1.62  MaxDD: -7.51%  (improved from 18.60%/1.55/-13.55%)
+
+### Changes Committed
+- 375 features (overnight/intraday IC=0.047, cross-asset copper IC=0.117)
+- Friday exit delay (OOS p=0.035)
+- Barroso vol scaling TRIED and REVERTED (-7.33% CAGR)
+- Symbol historical stop rate added to LIVE_ONLY_FEATURES
+- TCPS (trajectory-conditioned position sizing) added to backtester
+  - Day 7 positive trajectory: OOS p=0.003, WR=74% avg=$1,071
+  - Day 7 negative trajectory: OOS WR=35% avg=-$39
+
+### Pending (check on wake)
+- /tmp/backtest_tcps.log — TCPS backtest result vs 18.11% baseline
+- If TCPS OOS CAGR > 18.11%: keep it, commit, deploy to live trader
+- If TCPS OOS CAGR < 18.11%: revert TCPS from backtester_v2.py
+
+### Signals Validated This Session
+- TCPS day 7: IS p=0.026, OOS p=0.003 — STRONGEST signal of session
+- Friday exit: IS p=0.002, OOS p=0.035 — IMPLEMENTED
+- June vs JanFeb: IS p=0.079, OOS p=0.022 — validated, not yet implemented
+- Intraday momentum 10am: WR=55% p=0.009 — real but costs kill it
+
+### Dead This Session
+- Barroso vol scaling, earnings acceleration, idiosyncratic strength,
+  return consistency, sector rotation, regime age filter, all CHOPPY strategies
+
+### Live Trader
+- Still running, CHOPPY regime, correctly in cash
+- New 375-feature ranker deployed automatically
