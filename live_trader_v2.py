@@ -126,6 +126,14 @@ def run_live_day():
     print(f"LIVE TRADER V2 — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     print("=" * 60)
 
+    # Market hours check — only trade 9:25am to 3:55pm ET
+    now = datetime.now()
+    market_open  = now.replace(hour=9,  minute=25, second=0)
+    market_close = now.replace(hour=15, minute=55, second=0)
+    if not (market_open <= now <= market_close):
+        print(f"Market closed ({now.strftime('%H:%M')}) — skipping execution")
+        return
+
     # ── Account ────────────────────────────────────────────────────────────────
     account   = get_account()
     portfolio = account['portfolio']
@@ -290,8 +298,8 @@ def run_live_day():
             tracked.pop(sym, None)
             continue
 
-        # Take profit on shorts (price falls 15%)
-        if price > 0 and price < entry * 0.85:
+        # Take profit on shorts (price falls 8%)
+        if price > 0 and price < entry * 0.92:
             print(f"  COVER PROFIT {sym}: -{(1-price/entry):.1%}")
             submit_order(sym, abs(pos['qty']), 'buy')
             tracked.pop(sym, None)
@@ -313,14 +321,45 @@ def run_live_day():
         long_candidates = [(sym, rank) for sym, rank in ranks.items()
                           if rank >= ml_min and sym not in long_positions]
         long_candidates.sort(key=lambda x: x[1], reverse=True)
+        # Load prev ML ranks for entry confirmation
+        prev_ranks_file = '/Users/rick/ai_trading_bot_v2/cache_alpaca/prev_ml_ranks.json'
+        prev_ranks = {}
+        if os.path.exists(prev_ranks_file):
+            pr = json.load(open(prev_ranks_file))
+            prev_ranks = {r['symbol']: r['ml_rank_pct'] for r in pr} if isinstance(pr, list) else pr
+
+        # VIX scalar
+        vix_level = signals.get('vix_level', 20)
+        vol_scalar = 0.0 if vix_level >= 35 else 0.5 if vix_level >= 25 else 0.75 if vix_level >= 20 else 1.0
+        if signals.get('spy_5d', 0) < -0.015:
+            vol_scalar = 0.0
+            print(f"  SPY weak — blocking new longs")
+        if vol_scalar == 0.0:
+            print(f"  VIX={vix_level:.0f} — no new longs")
+
         entered = 0
         for sym, rank in long_candidates[:long_slots * 2]:
             if entered >= long_slots: break
+            if vol_scalar == 0.0: break
+            # Entry confirmation
+            if prev_ranks.get(sym, 0) < ml_min:
+                continue
             price = get_current_price(sym)
             if price <= 0: continue
-            # Risk-based sizing
-            stop_pct   = 0.08
-            risk_budget = portfolio * 0.035
+            # ATR-based stop
+            try:
+                import pandas as pd
+                df = fetch_data(sym)
+                if df is not None and len(df) >= 14:
+                    tr = pd.concat([df['high']-df['low'],
+                        (df['high']-df['close'].shift()).abs(),
+                        (df['low']-df['close'].shift()).abs()], axis=1).max(axis=1)
+                    stop_pct = float(np.clip(2.0 * tr.tail(14).mean() / df['close'].iloc[-1], 0.04, 0.20))
+                else:
+                    stop_pct = 0.08
+            except:
+                stop_pct = 0.08
+            risk_budget = portfolio * 0.035 * vol_scalar
             qty = int(risk_budget / (price * stop_pct))
             qty = min(qty, int(portfolio * 0.15 / price))
             if qty < 1: continue
@@ -329,6 +368,7 @@ def run_live_day():
                 tracked[sym] = {
                     'entry_date': today_str,
                     'entry_price': price,
+                    'highest_price': price,
                     'stop_pct': stop_pct,
                     'ml_rank': rank,
                     'side': 'long'
