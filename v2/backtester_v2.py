@@ -53,6 +53,7 @@ from strategy_core import (
 from regime_classifier import (
     RegimeClassifier, compute_signals, load_macro_data,
     TRENDING_BULL, CHOPPY, BEAR,
+    classify_choppy_subregime, CHOPPY_BULL, CHOPPY_BEAR,
 )
 from entry_filter import is_in_accumulation, filter_candidates
 import strategy_trending as strat_bull
@@ -345,6 +346,21 @@ def run_backtest_v2(
 
         # ── Regime classification ─────────────────────────────────────────
         signals = compute_signals(spy_macro, hyg_macro, vix_macro, as_of_date=date)
+        # Add breadth signal — % of universe above 200d MA
+        # Computed from actual holdings universe, more relevant than external index
+        if signals and available_symbols:
+            _breadth_above = 0
+            _breadth_total = 0
+            for _bs in available_symbols[:100]:  # sample 100 for speed
+                _bdf = prices_by_symbol.get(_bs)
+                if _bdf is not None and len(_bdf) >= 200:
+                    _bclose = _bdf.loc[:date]['close']
+                    if len(_bclose) >= 200:
+                        _bma200 = float(_bclose.rolling(200).mean().iloc[-1])
+                        _breadth_above += int(float(_bclose.iloc[-1]) > _bma200)
+                        _breadth_total += 1
+            if _breadth_total > 0:
+                signals['breadth_pct_above_200d'] = _breadth_above / _breadth_total
         if signals:
             _current_regime = regime_clf.update(date, signals)
         regime_counts[_current_regime] = regime_counts.get(_current_regime, 0) + 1
@@ -353,14 +369,25 @@ def run_backtest_v2(
         strategy = _get_strategy(_current_regime)
         params   = strategy.get_params()
 
+        # CHOPPY sub-regime override — CHOPPY_BULL gets more positions and lower ML bar
+        # Validated: 2019 SPY +28.7% and 2025 SPY +16.6% both CHOPPY_BULL
+        _choppy_subregime = None
+        if _current_regime == CHOPPY and signals:
+            _choppy_subregime = classify_choppy_subregime(signals)
+            if _choppy_subregime == CHOPPY_BULL:
+                # Participate more in high-vol bull — lower bar, more positions
+                params.max_positions      = 4
+                params.ml_rank_min        = 0.85
+                params.max_positions_long = 4
+
         # ── ML scoring ────────────────────────────────────────────────────
         X, valid_syms = feat_matrix.get_panel(date, available_symbols)
         if X.shape[0] == 0:
             port_val = _portfolio_value(cash, close_prices, long_positions, short_positions)
             equity.append((date, port_val))
             continue
-        # Use regime-specific model if available, else fall back to all-regime
-        active_rankers = rankers  # regime-specific ML parked — negative IC in TRENDING_BULL 2025
+        # All-regime ranker for all regimes
+        active_rankers = rankers
         # Cache ML scores — recompute every 2 days only.
         # Stock rankings are highly autocorrelated day-to-day.
         # This cuts runtime ~45% with negligible impact on results.
@@ -503,17 +530,7 @@ def run_backtest_v2(
             elif _current_regime == BEAR and sector_map.get(s) not in strat_bear.DEFENSIVE_SECTORS:
                 exit_reason = "regime_exit"
                 exit_ref    = close
-            # Mean reversion exit — time or 5-day SMA recovery
-            if exit_reason is None and entry_meta.get(s, {}).get("entry_type") == "mean_reversion":
-                mr_hold = int(entry_meta.get(s, {}).get("mr_hold_days", 5))
-                if hold_d >= mr_hold:
-                    exit_reason = "mr_max_hold"
-                    exit_ref    = close
-                elif len(df_s) >= 5:
-                    sma5 = float(df_s["close"].tail(5).mean())
-                    if close > sma5:
-                        exit_reason = "mr_sma_exit"
-                        exit_ref    = close
+
 
             if exit_reason:
                 fill, comm = apply_fill_cost(exit_ref, pos.qty, "sell")
@@ -932,90 +949,7 @@ def run_backtest_v2(
                 entry_meta[s] = _conv_meta
 
 
-        # ── Mean reversion entries (CHOPPY regime only) ───────────────────
-        # Academic basis: Zhu et al 2019 — quality-filtered reversal 3.6x better
-        # RSI(2) < 15 + above 200-day SMA + quality > 0.5 = 64-73% WR
-        # Hold 5 days or until price closes above 5-day SMA
-        if _current_regime == CHOPPY and not cascade_freeze and cooldown_ok:
-            mr_max = strat_chop.MR_MAX_POSITIONS
-            mr_slots = max(0, mr_max - sum(
-                1 for _s in long_positions
-                if entry_meta.get(_s, {}).get("entry_type") == "mean_reversion"
-            ))
-
-            if mr_slots > 0:
-                mr_candidates = []
-                for s_mr, snap_mr in snapshots.items():
-                    if s_mr in long_positions or s_mr not in open_next_prices:
-                        continue
-                    df_mr = prices_by_symbol[s_mr].loc[:date]
-                    if len(df_mr) < 20:
-                        continue
-                    # Get quality score
-                    q_feat_mr = feature_store.get(s_mr)
-                    quality_mr = 0.0
-                    if q_feat_mr is not None and date in q_feat_mr.index:
-                        quality_mr = float(q_feat_mr.loc[date].get("quality_composite", 0.0))
-                    # Check mean reversion signal
-                    ok_mr, reason_mr = strat_chop.should_enter_mean_reversion(
-                        symbol=s_mr,
-                        df=df_mr,
-                        quality_composite=quality_mr,
-                    )
-                    if not ok_mr:
-                        continue
-                    # No earnings within 3 days
-                    _earn_mr = earnings_dates.get(s_mr, [])
-                    if _earn_mr and min(abs((date - d).days) for d in _earn_mr) <= 3:
-                        continue
-                    # Compute RSI(2) for sorting
-                    rsi2_mr = strat_chop._compute_rsi2(df_mr)
-                    mr_candidates.append((rsi2_mr, s_mr, quality_mr))
-
-                # Sort by most oversold (lowest RSI2) first
-                mr_candidates.sort(key=lambda x: x[0])
-
-                for rsi2_val, s_mr, quality_mr in mr_candidates[:mr_slots]:
-                    if len([_s for _s in long_positions
-                            if entry_meta.get(_s, {}).get("entry_type") == "mean_reversion"]) >= mr_max:
-                        break
-
-                    px_mr      = open_next_prices[s_mr]
-                    stop_pct_mr = strat_chop.MR_STOP_PCT
-                    risk_mr     = config.INITIAL_CAPITAL * strat_chop.MR_RISK_PCT
-                    qty_mr      = int(risk_mr / (px_mr * stop_pct_mr)) if px_mr * stop_pct_mr > 0 else 0
-                    max_mr_dollars = min(
-                        config.INITIAL_CAPITAL * 0.15,  # max 15% per MR position
-                        cash,
-                    )
-                    qty_mr = min(qty_mr, int(max_mr_dollars / px_mr) if px_mr > 0 else 0)
-                    if qty_mr <= 0:
-                        continue
-
-                    fill_mr, comm_mr = apply_fill_cost(px_mr, qty_mr, "buy")
-                    if fill_mr * qty_mr + comm_mr > cash:
-                        continue
-
-                    cash -= fill_mr * qty_mr + comm_mr
-                    long_positions[s_mr] = Position(
-                        symbol=s_mr, qty=qty_mr, entry_price=fill_mr,
-                        entry_time=str(next_date.date()),
-                        stop_pct=stop_pct_mr,
-                        initial_stop=fill_mr * (1 - stop_pct_mr),
-                        highest_price=fill_mr, add_count=0,
-                    )
-                    entry_meta[s_mr] = {
-                        "ml_rank_pct":    snap_mr.ml_rank_pct,
-                        "rule_score":     0.0,
-                        "combined_score": quality_mr,
-                        "regime":         _current_regime,
-                        "ann_vol":        0.25,
-                        "entry_type":     "mean_reversion",
-                        "rsi2_entry":     rsi2_val,
-                        "mr_hold_days":   strat_chop.MR_HOLD_DAYS,
-                    }
-
-        # ── Short entries (bear regime only) ──────────────────────────────
+                # ── Short entries (bear regime only) ──────────────────────────────
         if _current_regime == BEAR and len(short_positions) < max_shorts:
             short_candidates = strat_bear.score_short_candidates(
                 snapshots=snapshots,

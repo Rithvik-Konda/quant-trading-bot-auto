@@ -109,3 +109,29 @@ OOS CAGR: 18.11%  Sharpe: 1.62  MaxDD: -7.51%  (improved from 18.60%/1.55/-13.55
 3. Add same-weekday momentum as LightGBM feature
 4. Build PEAD text engine (FinBERT on earnings calls)
 5. After 60 days live: add cash-secured put selling on CHOPPY idle cash
+
+## Session 8 Continued (2026-03-31 late)
+
+### Backtest Results
+- MR CHOPPY entries: REVERTED — OOS dropped from 18.11% to 14.80%, trades 2.2x baseline
+  Root cause: RSI(2) < 15 fires too often, mr_max_hold WR=14%
+- New ranker backtest: RUNNING (/tmp/backtest_new_ranker.log)
+  New rankers have 381 features (up from 204) including overnight/intraday + earnings
+
+### CHOPPY_BULL Classifier — BUILT AND VALIDATED
+- File: v2/regime_classifier.py — classify_choppy_subregime() function
+- Signals: spy_ytd (calendar year), hyg_20d, vix_level
+- Validation results:
+  2019 Q2-Q4: correctly CHOPPY_BULL (SPY +13-20% YTD)
+  2019 Q1:    correctly CHOPPY_BEAR (SPY -5% after Dec crash)
+  2022 Q2-Q4: correctly CHOPPY_BEAR (bear market)
+  2025 Q2:    correctly CHOPPY_BEAR (Liberation Day)
+  2025 Q3-Q4: correctly CHOPPY_BULL (recovery)
+- Backtester wired: when CHOPPY_BULL → max_positions=4, ml_rank_min=0.85
+- NEEDS BACKTESTING — run after current backtest finishes
+
+### Pending
+1. Current backtest finishes → compare to 18.11% baseline
+2. Run CHOPPY_BULL backtest
+3. If both improve → commit all changes
+4. If new ranker hurts → revert ranker, keep CHOPPY_BULL

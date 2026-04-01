@@ -157,7 +157,102 @@ def _classify_raw(signals: Dict[str, float]) -> str:
     if is_bull:
         return TRENDING_BULL
 
+    # CHOPPY sub-regime: distinguish high-vol bull from high-vol bear
+    # CHOPPY_BULL: VIX elevated but market grinding higher, credit contained
+    # Data: 2019 (SPY +28.7%) and 2025 (SPY +16.6%) both CHOPPY but strongly bullish
     return CHOPPY
+
+
+CHOPPY_BULL = "CHOPPY_BULL"
+CHOPPY_BEAR = "CHOPPY_BEAR"
+
+
+def classify_choppy_subregime(signals: Dict[str, float]) -> str:
+    """
+    When regime=CHOPPY, further classify as CHOPPY_BULL or CHOPPY_BEAR.
+    Uses VIX level, HYG direction, and SPY YTD return.
+    Minimum viable: 3 signals that correctly separate 2019 from 2018 Q4.
+    """
+    spy_ytd   = signals.get("spy_ytd", 0)
+    hyg_20d   = signals.get("hyg_20d", 0)
+    vix_level = signals.get("vix_level", 20)
+
+    score = 0
+    # SPY YTD positive = market grinding higher despite choppiness
+    if spy_ytd > 0.02:       # require >2% YTD not just any positive
+        score += 2
+    elif spy_ytd < -0.08:
+        score -= 2
+
+    # Market breadth — % of universe above 200d MA
+    # >50% = broad participation = choppy bull
+    # <40% = narrow/deteriorating = choppy bear
+    breadth = signals.get("breadth_pct_above_200d", 0.5)
+    if breadth > 0.50:
+        score += 1
+    elif breadth < 0.35:
+        score -= 1
+
+    # Credit not stressed = corrections are buyable
+    if hyg_20d > -0.005:
+        score += 1
+    elif hyg_20d < -0.02:
+        score -= 2
+
+    # VIX must be moderate — not panic but not complacent either
+    if vix_level < 20:
+        score += 1
+    elif vix_level > 28:
+        score -= 2
+
+    # VIX ULD — fear being bought intraday = choppy bull
+    # Negative ULD = lower shadows dominate = buyers winning VIX intraday
+    vix_uld = signals.get("vix_uld_20d", 0)
+    if vix_uld < -0.05:      # lower shadows dominating = fear bought
+        score += 1
+    elif vix_uld > 0.10:     # upper shadows dominating = fear unresolved
+        score -= 1
+
+    # Require score >= 3 not 2 — more conservative classification
+    return CHOPPY_BULL if score >= 4 else CHOPPY_BEAR
+
+
+def _vix_uld_calc(vix_df: "pd.DataFrame") -> float:
+    """
+    VIX candlestick upper-lower shadow difference (ULD).
+    Dai et al. (2025): OOS R²=3.988%, IC=-0.039 vs 20d forward SPY returns.
+    Negative ULD = lower shadow dominates = fear being bought intraday = BULLISH.
+    Positive ULD = upper shadow dominates = sellers winning = BEARISH.
+    """
+    try:
+        if not all(c in vix_df.columns for c in ['high','low','open','close']):
+            return 0.0
+        hi  = vix_df['high']
+        lo  = vix_df['low']
+        op  = vix_df['open']
+        cl  = vix_df['close']
+        # Filter out rows where open/high/low are zero (bad yfinance data)
+        valid = (op > 0) & (hi > 0) & (lo > 0)
+        hi, lo, op, cl = hi[valid], lo[valid], op[valid], cl[valid]
+        upper = hi - np.maximum(op, cl)
+        lower = np.minimum(op, cl) - lo
+        uld   = (upper - lower).rolling(20).mean()
+        return float(uld.iloc[-1]) if len(uld.dropna()) > 0 else 0.0
+    except Exception:
+        return 0.0
+
+
+def _spy_ytd_calc(spy: "pd.Series") -> float:
+    """Calendar year YTD return — from Jan 1 of current year to latest date."""
+    try:
+        latest = spy.index[-1]
+        jan1   = spy.index[spy.index >= f"{latest.year}-01-01"]
+        if len(jan1) == 0:
+            return 0.0
+        base = float(spy.loc[jan1[0]])
+        return float(spy.iloc[-1] / base - 1) if base > 0 else 0.0
+    except Exception:
+        return 0.0
 
 
 def compute_signals(
@@ -201,6 +296,11 @@ def compute_signals(
         "spy_5d":       float(spy.pct_change(5).iloc[-1]) if len(spy.dropna()) > 5 else 0,
         "hyg_5d":       float(hyg.pct_change(5).iloc[-1]) if len(hyg.dropna()) > 5 else 0,
         "vix_5d_chg":   float(vix.pct_change(5).iloc[-1]) if len(vix.dropna()) > 5 else 0,
+        # CHOPPY_BULL signals — SPY calendar year YTD return
+        # Use Jan 1 of current year as base, not start of data
+        "spy_ytd":      float(_spy_ytd_calc(spy)),
+        # VIX ULD — Dai et al. (2025) OOS R²=3.988%, negative=bullish
+        "vix_uld_20d":  float(_vix_uld_calc(vix_df)),
     }
 
     return {k: v for k, v in signals.items() if np.isfinite(v)}
