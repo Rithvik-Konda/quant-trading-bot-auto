@@ -427,7 +427,12 @@ def run_backtest_v2(
                         (df_s["low"]  - df_s["close"].shift()).abs(),
                     ], axis=1).max(axis=1)
                     _true_atr_pct = float(_tr.tail(14).mean() / df_s["close"].iloc[-1])
-                    stop_pct = float(np.clip(2.0 * _true_atr_pct, 0.04, 0.20))
+                    # Widen stops for top 5% ML rank — data: 67 stops WR=21% avg=-$814
+                    # These are high-conviction stocks being shaken out by noise
+                    # ATR×3 in TRENDING_BULL, ATR×2 elsewhere
+                    _ml_s = ml_scores.get(s, 0.0)
+                    _atr_mult = 3.0 if (_ml_s >= 0.95 and _current_regime == TRENDING_BULL) else 2.0
+                    stop_pct = float(np.clip(_atr_mult * _true_atr_pct, 0.04, 0.20))
                 else:
                     stop_pct = 0.08
 
