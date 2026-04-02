@@ -41,6 +41,14 @@ BASE_URL      = 'https://paper-api.alpaca.markets'
 CACHE_DIR     = '/Users/rick/ai_trading_bot_v2/cache_live_v2'
 os.makedirs(CACHE_DIR, exist_ok=True)
 
+# Sector map for macro theme integration
+_sector_map = {}
+try:
+    import config as _cfg
+    for _etf, _syms in getattr(_cfg, 'SECTOR_ETFS', {}).items():
+        for _s in _syms: _sector_map[_s] = _etf
+except: pass
+
 HEADERS = {
     'APCA-API-KEY-ID': ALPACA_KEY,
     'APCA-API-SECRET-KEY': ALPACA_SECRET,
@@ -321,7 +329,23 @@ def run_live_day():
         long_candidates = [(sym, rank) for sym, rank in ranks.items()
                           if rank >= ml_min and sym not in long_positions]
         long_candidates.sort(key=lambda x: x[1], reverse=True)
-        # Load prev ML ranks for entry confirmation
+        # Load macro/news signals from scanner
+    scan_file = '/Users/rick/ai_trading_bot_v2/cache_scanner/daily_scan.json'
+    macro_risk         = False
+    news_score         = 0.0
+    macro_long_sectors = set()
+    macro_short_sectors= set()
+    if os.path.exists(scan_file):
+        _scan = json.load(open(scan_file))
+        macro_risk          = _scan.get('macro_risk', False)
+        news_score          = _scan.get('news_score', 0.0)
+        macro_long_sectors  = set(_scan.get('macro_long_sectors', []))
+        macro_short_sectors = set(_scan.get('macro_short_sectors', []))
+        if macro_risk:
+            print(f"  ⚠️  Macro risk detected — news_score={news_score:+.2f}")
+            print(f"  Long sectors: {macro_long_sectors}  Short sectors: {macro_short_sectors}")
+
+    # Load prev ML ranks for entry confirmation
         prev_ranks_file = '/Users/rick/ai_trading_bot_v2/cache_alpaca/prev_ml_ranks.json'
         prev_ranks = {}
         if os.path.exists(prev_ranks_file):
@@ -359,7 +383,17 @@ def run_live_day():
                     stop_pct = 0.08
             except:
                 stop_pct = 0.08
-            risk_budget = portfolio * 0.035 * vol_scalar
+            # Macro confirmation — size up if ML + macro aligned
+            _sym_sector = _sector_map.get(sym, '') if '_sector_map' in dir() else ''
+            _macro_conf = _sym_sector in macro_long_sectors if macro_long_sectors else False
+            _macro_fade = _sym_sector in macro_short_sectors if macro_short_sectors else False
+            if _macro_fade:
+                print(f"  MACRO FADE {sym} — sector {_sym_sector} in macro short list, skipping")
+                continue
+            _size_mult = 1.3 if _macro_conf else 1.0
+            if macro_risk and not _macro_conf:
+                _size_mult = 0.7  # reduce size in macro risk if not confirmed
+            risk_budget = portfolio * 0.035 * vol_scalar * _size_mult
             qty = int(risk_budget / (price * stop_pct))
             qty = min(qty, int(portfolio * 0.15 / price))
             if qty < 1: continue
