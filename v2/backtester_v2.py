@@ -386,7 +386,9 @@ def run_backtest_v2(
             port_val = _portfolio_value(cash, close_prices, long_positions, short_positions)
             equity.append((date, port_val))
             continue
-        # All-regime ranker for all regimes
+        # All-regime ranker — regime-specific rankers tested and hurt OOS
+        # BEAR ranker damaged 2023 (+30% vs +48% baseline) and 2025
+        # Regime-specific models may need more BEAR training data to be useful
         active_rankers = rankers
         # Cache ML scores — recompute every 2 days only.
         # Stock rankings are highly autocorrelated day-to-day.
