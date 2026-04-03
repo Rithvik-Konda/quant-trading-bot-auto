@@ -59,6 +59,7 @@ class Trade:
     call_cost:      float = 0.0     # conviction call premium paid
     call_pnl:       float = 0.0     # conviction call PnL at exit — for Kelly sizing
     ann_vol:        float = 0.35     # annualized vol at entry — for Kelly bucketing
+    engine:         str   = "momentum"  # "momentum" or "meanrev"
 
 
 # ─────────────────────────────────────────────────────────────────────────────
