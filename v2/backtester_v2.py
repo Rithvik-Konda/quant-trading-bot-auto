@@ -1003,7 +1003,10 @@ def run_backtest_v2(
         # ── Mean reversion entries (CHOPPY regime only) ───────────────────────
         # Only fire after momentum is fully deployed — meanrev is additive, not a replacement
         _momentum_slots_filled = len([s for s in long_positions if entry_meta.get(s, {}).get("engine", "momentum") == "momentum"]) >= max_longs
-        if _current_regime == CHOPPY and _momentum_slots_filled and _daily_vol_scalar > 0 and not cascade_freeze:
+        # In BEAR regime momentum is suppressed to defensive only — slots rarely fill
+        # Allow meanrev to fire independently in BEAR on quality oversold names
+        _mr_slots_ok = _momentum_slots_filled or _current_regime == BEAR
+        if _current_regime in (CHOPPY, BEAR) and _mr_slots_ok and _daily_vol_scalar > 0 and not cascade_freeze:
             _mr_params = strat_mr.MeanRevParams()
             _mr_slots  = max(0, _mr_params.max_positions - sum(
                 1 for s in long_positions

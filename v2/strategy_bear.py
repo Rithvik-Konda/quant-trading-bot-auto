@@ -52,7 +52,7 @@ from regime_classifier import BEAR
 
 # ── Strategy parameters ───────────────────────────────────────────────────────
 MAX_POSITIONS_LONG   = 2       # minimal longs
-MAX_POSITIONS_SHORT  = 6       # active short book
+MAX_POSITIONS_SHORT  = 3       # active short book — reduced to limit squeeze exposure
 ML_RANK_MIN_LONG     = 0.95    # only top 5% for longs
 ML_RANK_MAX_SHORT    = 0.08    # bottom 8% — only strongest short signals
 MAX_HOLD_DAYS_LONG   = 8       # short hold for longs
@@ -70,7 +70,7 @@ STOP_SHORT_DISASTER  = 0.25    # 25% disaster backstop — only for catastrophic
 RISK_PER_TRADE_LONG  = 0.015   # 1.5% risk on longs
 RISK_PER_TRADE_SHORT = 0.025   # 2.5% risk on shorts
 POSITION_SCALAR_LONG = 0.40    # 40% sizing on longs
-POSITION_SCALAR_SHORT= 0.60    # 60% sizing on shorts
+POSITION_SCALAR_SHORT= 0.40    # 40% sizing on shorts — smaller book, less squeeze risk
 
 # Short entry confirmation thresholds
 # Require confirmed breakdown, not just a bad day
