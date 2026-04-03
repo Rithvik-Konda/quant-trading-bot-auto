@@ -267,18 +267,30 @@ def run_backtest_v2(
     # Precompute earnings dates for all symbols once before main loop
     print("[prep] loading earnings calendars...", flush=True)
     earnings_dates: Dict[str, List[pd.Timestamp]] = {}
-    try:
-        import yfinance as _yf
-        for _sym in symbols:
-            try:
-                _cal = _yf.Ticker(_sym).get_earnings_dates(limit=20)
-                if _cal is not None and len(_cal) > 0:
-                    earnings_dates[_sym] = list(pd.to_datetime(_cal.index).tz_localize(None))
-            except Exception:
-                pass
-        print(f"[ok]   earnings calendars loaded ({len(earnings_dates)} symbols)", flush=True)
-    except Exception:
-        print("[warn] earnings calendar load failed — skipping filter", flush=True)
+    _earn_cache_path = os.path.join(CACHE_DIR, "earnings_calendar_cache.pkl")
+    _earn_cache_age  = 0
+    if os.path.exists(_earn_cache_path):
+        _earn_cache_age = (pd.Timestamp.now() - pd.Timestamp(os.path.getmtime(_earn_cache_path), unit="s")).total_seconds() / 3600
+    if os.path.exists(_earn_cache_path) and _earn_cache_age < 24:
+        import pickle as _pkl
+        with open(_earn_cache_path, "rb") as _ef:
+            earnings_dates = _pkl.load(_ef)
+        print(f"[ok]   earnings calendars loaded from cache ({len(earnings_dates)} symbols, {_earn_cache_age:.1f}h old)", flush=True)
+    else:
+        try:
+            import yfinance as _yf, pickle as _pkl
+            for _sym in symbols:
+                try:
+                    _cal = _yf.Ticker(_sym).get_earnings_dates(limit=20)
+                    if _cal is not None and len(_cal) > 0:
+                        earnings_dates[_sym] = list(pd.to_datetime(_cal.index).tz_localize(None))
+                except Exception:
+                    pass
+            with open(_earn_cache_path, "wb") as _ef:
+                _pkl.dump(earnings_dates, _ef)
+            print(f"[ok]   earnings calendars loaded ({len(earnings_dates)} symbols) — cached", flush=True)
+        except Exception:
+            print("[warn] earnings calendar load failed — skipping filter", flush=True)
 
     print("[ok]   ready\n", flush=True)
 
