@@ -660,7 +660,7 @@ def run_backtest_v2(
             elif pos.age_days(pd.Timestamp(date).to_pydatetime()) >= bear_params.max_hold_days_short:
                 exit_reason = "short_max_hold"
                 exit_ref    = close
-            elif _current_regime in (TRENDING_BULL, CHOPPY) and pos.age_days(pd.Timestamp(date).to_pydatetime()) <= 7:
+            elif _current_regime == TRENDING_BULL or (_current_regime == CHOPPY and not _cascade_bear and pos.age_days(pd.Timestamp(date).to_pydatetime()) <= 7):
                 exit_reason = "regime_cover"
                 exit_ref    = close
             elif high >= pos.entry_price * 1.40:
@@ -711,6 +711,20 @@ def run_backtest_v2(
             date=date, available_symbols=list(snapshots.keys()),
             hist=prices_by_symbol, lookback=config.CORRELATION_LOOKBACK_DAYS,
         )
+
+        # ── Daily VIX scalar — shared by momentum AND meanrev ────────────
+        # Computed once per day so both engines see the same market stress level
+        # Meanrev was bypassing this entirely — fired in Feb 2025 at VIX 27-30
+        _vix_now = vix_macro["close"].reindex([date], method="ffill")
+        _vix_level = float(_vix_now.iloc[0]) if len(_vix_now) and not _vix_now.isna().all() else 20.0
+        if _vix_level >= 35.0:
+            _daily_vol_scalar = 0.0    # acute stress — no new longs either engine
+        elif _vix_level >= 25.0:
+            _daily_vol_scalar = 0.5    # elevated stress — half size
+        elif _vix_level >= 20.0:
+            _daily_vol_scalar = 0.75   # mild stress — 75% size
+        else:
+            _daily_vol_scalar = 1.0    # calm — full size
 
         # ── Long entries ──────────────────────────────────────────────────
         max_longs  = getattr(params, 'max_positions', getattr(params, 'max_positions_long', 4))
@@ -828,18 +842,8 @@ def run_backtest_v2(
                 ml_conv = float(_np.clip(ml_conv, 0.5, 1.5))
                 conviction = base_conviction * ml_conv
 
-                # Fix 6: Volatility-scaled position sizing (Moreira & Muir 2017)
-                # Reduce size when VIX elevated — directly addresses Feb 2025 cluster
-                vix_now = vix_macro["close"].reindex([date], method="ffill")
-                vix_level = float(vix_now.iloc[0]) if len(vix_now) and not vix_now.isna().all() else 20.0
-                if vix_level >= 35.0:
-                    vol_scalar = 0.0   # VIX > 35: no new longs (acute stress)
-                elif vix_level >= 25.0:
-                    vol_scalar = 0.5   # VIX 25-35: half size
-                elif vix_level >= 20.0:
-                    vol_scalar = 0.75  # VIX 20-25: 75% size
-                else:
-                    vol_scalar = 1.0   # VIX < 20: full size
+                # Use daily VIX scalar computed once above — same for momentum and meanrev
+                vol_scalar = _daily_vol_scalar
                 if vol_scalar == 0.0:
                     continue           # skip this entry entirely
                 conviction = conviction * vol_scalar
@@ -999,7 +1003,7 @@ def run_backtest_v2(
         # ── Mean reversion entries (CHOPPY regime only) ───────────────────────
         # Only fire after momentum is fully deployed — meanrev is additive, not a replacement
         _momentum_slots_filled = len([s for s in long_positions if entry_meta.get(s, {}).get("engine", "momentum") == "momentum"]) >= max_longs
-        if _current_regime == CHOPPY and _momentum_slots_filled:
+        if _current_regime == CHOPPY and _momentum_slots_filled and _daily_vol_scalar > 0 and not cascade_freeze:
             _mr_params = strat_mr.MeanRevParams()
             _mr_slots  = max(0, _mr_params.max_positions - sum(
                 1 for s in long_positions
@@ -1079,10 +1083,19 @@ def run_backtest_v2(
                         add_count=0,
                     )
                     entry_meta[s] = {"engine": "meanrev", "entry_date": str(date),
-                                     "rsi2": mr_snap.rsi2}
+                                     "rsi2": mr_snap.rsi2,
+                                     "ml_rank_pct": _mr_ml_rank,
+                                     "ann_vol": mr_snap.ann_vol,
+                                     "regime": _current_regime}
 
         # ── Short entries (bear regime only) ──────────────────────────────
-        if _current_regime == BEAR and len(short_positions) < max_shorts:
+        # Cascade bear — activate short book in CHOPPY when market is breaking down
+        # Data: cascade + SPY_5d < -1.5% correctly identifies Feb 24 - Mar 10 2025
+        # Does NOT fire when cascade fires during SPY uptrend (Feb 7-21 2025)
+        _spy_5d_now = _spy_5d_returns.get(date, 0.0)
+        _cascade_bear = cascade_freeze and _spy_5d_now < -0.015
+
+        if (_current_regime == BEAR or _cascade_bear) and len(short_positions) < max_shorts:
             short_candidates = strat_bear.score_short_candidates(
                 snapshots=snapshots,
                 prices=prices_by_symbol,
