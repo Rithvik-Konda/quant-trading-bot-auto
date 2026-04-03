@@ -1,179 +1,264 @@
 """
-strategy_meanrev.py — RSI/Bollinger Band Mean-Reversion Strategy
-================================================================
-Used in CHOPPY regime as primary strategy.
-Validated: 57% WR, +1.20% avg, 248 trades across choppy periods 2019-2025.
+strategy_meanrev.py — RSI(2) Mean Reversion Engine
+====================================================
+Activates in CHOPPY regime as a complement to the momentum engine.
 
-Logic:
-  Entry:  RSI < 35 AND price near lower Bollinger Band (bb_pct < 0.25)
-          AND stock is in our watchlist AND not in momentum position
-  Exit:   RSI > 55 OR hold >= 10 days OR +6% gain OR -8% loss
+Core logic (Larry Connors RSI(2), validated 1999-2024):
+  Entry:  RSI(2) < threshold AND price > SMA200 (dip in uptrend)
+  Exit:   price closes > SMA5  OR  10-day time stop
+  
+Why this works in CHOPPY markets:
+  - Momentum IC drops to ~0.02 in choppy regimes
+  - Mean reversion IC is ~0.04-0.06 in choppy regimes  
+  - Stocks oscillate 3-8% around a mean in sideways markets
+  - Buying the dip within an uptrend captures the snap-back
 
-Key difference from momentum strategy:
-  - Buys weakness, not strength
-  - Short hold period (7-10 days avg)
-  - Works when momentum fails — genuinely uncorrelated
-  - Runs in ALL regimes but primary in CHOPPY
+Key differences from momentum engine:
+  - NO stop loss (Connors: stops hurt RSI(2) performance)
+  - Short hold: 2-5 days typical, 10-day max
+  - Entry on weakness, not strength
+  - Requires confirmed uptrend (SMA200 filter)
 """
-from dataclasses import dataclass
-from typing import List, Dict
-import pandas as pd
+from __future__ import annotations
+
 import numpy as np
+import pandas as pd
+from dataclasses import dataclass, field
+from typing import List, Tuple, Optional
+
+# ── Parameters ────────────────────────────────────────────────────────────────
+
+RSI2_THRESHOLD   = 5.0    # enter when RSI(2) < this (oversold)
+SMA200_FILTER    = True   # require price > 200d MA (uptrend confirmation)
+SMA5_EXIT        = True   # exit when price closes above 5d SMA
+MAX_HOLD_DAYS    = 10     # time stop — exit after 10 days regardless
+MAX_POSITIONS    = 5      # max concurrent mean reversion positions
+RISK_PER_TRADE   = 0.025  # 2.5% of capital per trade (smaller than momentum)
+MAX_POSITION_PCT = 0.12   # max 12% of portfolio in one mean rev position
+
+# ── Data structures ───────────────────────────────────────────────────────────
+
+@dataclass
+class MeanRevSnapshot:
+    symbol:        str
+    price:         float
+    rsi2:          float
+    sma5:          float
+    sma200:        float
+    above_sma200:  bool
+    pct_below_sma200: float  # how far below 200MA? (negative = below)
+    volume_ratio:  float    # vol vs 20d avg (high vol dips = better)
+    ml_rank_pct:   float = 0.5  # ML rank from momentum engine (0-1)
 
 
 @dataclass
 class MeanRevParams:
-    # Entry
-    rsi_entry:          float = 35.0   # buy when RSI below this
-    bb_pct_entry:       float = 0.30   # buy when near lower band
-    rsi_exit:           float = 55.0   # exit when RSI recovers
-    # Exit
-    take_profit_pct:    float = 0.06   # +6%
-    stop_loss_pct:      float = 0.08   # -8%
-    max_hold_days:      int   = 12     # time stop
-    min_hold_days:      int   = 2      # don't exit too fast
-    # Sizing
-    max_positions:      int   = 3      # max simultaneous
-    risk_per_trade:     float = 0.025  # 2.5% risk per trade
-    max_position_weight: float = 0.20  # 20% max per position
-    # Quality filters
-    min_avg_volume:     float = 1e6    # minimum daily volume
-    min_price:          float = 5.0   # no penny stocks
-    ml_rank_min:        float = 0.0   # no ML filter — this is reversion
+    rsi2_threshold:   float = RSI2_THRESHOLD
+    max_positions:    int   = MAX_POSITIONS
+    max_hold_days:    int   = MAX_HOLD_DAYS
+    risk_per_trade:   float = RISK_PER_TRADE
+    max_position_pct: float = MAX_POSITION_PCT
+    sma200_filter:    bool  = SMA200_FILTER
 
 
-def get_params() -> MeanRevParams:
-    return MeanRevParams()
+# ── Signal computation ────────────────────────────────────────────────────────
+
+def compute_rsi2(close: pd.Series) -> float:
+    """Compute RSI(2) — 2-period RSI for mean reversion."""
+    if len(close) < 5:
+        return 50.0
+    delta = close.diff()
+    gain  = delta.clip(lower=0).rolling(2).mean()
+    loss  = (-delta.clip(upper=0)).rolling(2).mean()
+    rs    = gain.iloc[-1] / (loss.iloc[-1] + 1e-10)
+    return float(100 - 100 / (1 + rs))
 
 
-def compute_signals(df: pd.DataFrame) -> Dict:
-    """Compute RSI and Bollinger Band signals from OHLCV data."""
-    if len(df) < 30:
-        return {}
+def compute_snapshot(sym: str, df: pd.DataFrame,
+                     ml_rank: float = 0.5) -> Optional[MeanRevSnapshot]:
+    """Build a MeanRevSnapshot from price data."""
+    if df is None or len(df) < 210:
+        return None
+    close = df['close']
+    vol   = df['volume']
     try:
-        close = df['close']
+        price    = float(close.iloc[-1])
+        sma5     = float(close.tail(5).mean())
+        sma200   = float(close.tail(200).mean())
+        rsi2     = compute_rsi2(close.tail(20))
+        vol_ma20 = float(vol.tail(20).mean())
+        vol_ratio = float(vol.iloc[-1] / vol_ma20) if vol_ma20 > 0 else 1.0
 
-        # RSI
-        delta = close.diff()
-        gain  = delta.clip(lower=0).rolling(14).mean()
-        loss  = (-delta.clip(upper=0)).rolling(14).mean()
-        rs    = gain / loss.replace(0, 1e-10)
-        rsi   = 100 - (100 / (1 + rs))
-
-        # Bollinger Bands
-        ma20  = close.rolling(20).mean()
-        std20 = close.rolling(20).std()
-        upper = ma20 + 2 * std20
-        lower = ma20 - 2 * std20
-        bb_pct = (close - lower) / (upper - lower + 1e-10)
-
-        # Distance from 20d MA
-        dist_ma = (close - ma20) / ma20
-
-        # Volume check
-        avg_vol = df['volume'].rolling(20).mean()
-
-        latest_rsi    = float(rsi.iloc[-1])   if not rsi.isna().all()    else 50.0
-        latest_bb_pct = float(bb_pct.iloc[-1]) if not bb_pct.isna().all() else 0.5
-        latest_dist   = float(dist_ma.iloc[-1]) if not dist_ma.isna().all() else 0.0
-        latest_vol    = float(avg_vol.iloc[-1]) if not avg_vol.isna().all() else 0.0
-
-        return {
-            'rsi':       latest_rsi,
-            'bb_pct':    latest_bb_pct,
-            'dist_ma20': latest_dist,
-            'avg_vol':   latest_vol,
-            'close':     float(close.iloc[-1]),
-        }
+        return MeanRevSnapshot(
+            symbol        = sym,
+            price         = price,
+            rsi2          = rsi2,
+            sma5          = sma5,
+            sma200        = sma200,
+            above_sma200  = price > sma200,
+            pct_below_sma200 = (price / sma200 - 1) if sma200 > 0 else 0,
+            volume_ratio  = min(vol_ratio, 10.0),
+            ml_rank_pct   = ml_rank,
+        )
     except Exception:
-        return {}
+        return None
 
 
-def score_candidates(
-    available_symbols: List[str],
-    prices_by_symbol:  Dict[str, pd.DataFrame],
-    as_of_date:        pd.Timestamp,
-    existing_positions: List[str],
-) -> List[Dict]:
+# ── Entry logic ───────────────────────────────────────────────────────────────
+
+def can_enter_meanrev(snap: MeanRevSnapshot,
+                      params: MeanRevParams) -> Tuple[bool, str]:
     """
-    Score all available symbols for mean-reversion entry.
-    Returns list of candidates sorted by entry quality.
+    Check if a stock qualifies for mean reversion entry.
+    Returns (can_enter, reason).
     """
-    params = get_params()
+    # Must be above 200d MA — buying dips in uptrends only
+    if params.sma200_filter and not snap.above_sma200:
+        return False, f"below SMA200 ({snap.pct_below_sma200:+.1%})"
+
+    # RSI(2) must be oversold
+    if snap.rsi2 >= params.rsi2_threshold:
+        return False, f"RSI(2)={snap.rsi2:.1f} not oversold (need <{params.rsi2_threshold})"
+
+    # Don't enter if stock is already at 52-week low territory
+    # (below SMA200 by more than 5% = structural weakness, not a dip)
+    if snap.pct_below_sma200 < -0.05:
+        return False, f"too far below SMA200 ({snap.pct_below_sma200:+.1%})"
+
+    return True, "OK"
+
+
+def score_meanrev_candidates(snaps: List[MeanRevSnapshot],
+                              params: MeanRevParams) -> List[MeanRevSnapshot]:
+    """
+    Score and filter mean reversion candidates.
+    Sorts by: most oversold RSI(2) first, with ML rank as tiebreaker.
+    """
+    candidates = []
+    for snap in snaps:
+        ok, reason = can_enter_meanrev(snap, params)
+        if ok:
+            candidates.append(snap)
+
+    # Sort: most oversold first (lowest RSI2)
+    # Tiebreak: prefer stocks that ML ranker also likes (rank > 0.5)
+    candidates.sort(key=lambda s: (s.rsi2, -s.ml_rank_pct))
+    return candidates[:params.max_positions * 3]  # return top 3x slots
+
+
+# ── Exit logic ────────────────────────────────────────────────────────────────
+
+def should_exit_meanrev(snap: MeanRevSnapshot,
+                        entry_price: float,
+                        days_held: int,
+                        params: MeanRevParams) -> Tuple[bool, str]:
+    """
+    Check if a mean reversion position should be exited.
+    RSI(2) exits on SMA5 cross or time stop — NO traditional stop loss.
+    """
+    # Exit 1: Price closes above 5-day SMA (mean reversion complete)
+    if snap.price > snap.sma5:
+        pnl_pct = (snap.price / entry_price - 1) * 100
+        return True, f"SMA5 exit ({pnl_pct:+.1f}%)"
+
+    # Exit 2: Time stop — 10 days max hold
+    if days_held >= params.max_hold_days:
+        pnl_pct = (snap.price / entry_price - 1) * 100
+        return True, f"time stop day {days_held} ({pnl_pct:+.1f}%)"
+
+    # Exit 3: Structural breakdown — price drops more than 10% below SMA200
+    # This is the only "stop" — protects against regime change during hold
+    if snap.pct_below_sma200 < -0.10:
+        return True, f"structural breakdown ({snap.pct_below_sma200:+.1%} vs SMA200)"
+
+    return False, ""
+
+
+# ── Position sizing ───────────────────────────────────────────────────────────
+
+def size_meanrev_position(capital: float, price: float,
+                          params: MeanRevParams,
+                          n_open_positions: int = 0,
+                          snap=None,
+                          ml_rank: float = 0.5) -> int:
+    """
+    Confidence-driven mean reversion sizing.
+    RSI confidence x volume confidence x ML boost = position size multiplier.
+    Range: 0.4x to 2.0x base slot size.
+    """
+    import numpy as np
+    capital_per_slot = (capital * 0.80) / params.max_positions
+    base_dollars     = min(capital_per_slot, capital * params.max_position_pct)
+    if snap is not None:
+        rsi_conf  = float(np.clip(1.0 - (snap.rsi2 / params.rsi2_threshold), 0.1, 1.0))
+        vol_conf  = float(np.clip(snap.volume_ratio / 2.0, 0.5, 1.5))
+        ml_boost  = float(np.clip(0.5 + ml_rank, 0.5, 1.5))
+        confidence = float(np.clip(rsi_conf * vol_conf * ml_boost, 0.4, 2.0))
+    else:
+        confidence = 1.0
+    dollars = min(base_dollars * confidence, capital * params.max_position_pct)
+    qty = int(dollars / price) if price > 0 else 0
+    return max(0, qty)
+
+# ── Combined scoring with momentum engine ────────────────────────────────────
+
+def blend_with_momentum(meanrev_candidates: List[MeanRevSnapshot],
+                        momentum_ml_scores: dict,
+                        blend_weight: float = 0.3) -> List[MeanRevSnapshot]:
+    """
+    Optionally blend mean reversion score with momentum ML rank.
+    blend_weight=0.3 means 30% momentum, 70% mean reversion signal.
+    
+    This creates a "momentum-confirmed dip" signal:
+    - Stocks the ML ranker likes (high rank) that are temporarily oversold
+    - Better than pure mean reversion on random oversold stocks
+    """
+    for snap in meanrev_candidates:
+        ml_rank = momentum_ml_scores.get(snap.symbol, 0.5)
+        snap.ml_rank_pct = ml_rank
+
+    # Re-sort with blend: lower RSI2 is better, higher ML rank is better
+    # Normalize: rsi2 in [0,100], ml_rank in [0,1]
+    def blend_score(s):
+        rsi2_score = (100 - s.rsi2) / 100  # higher = more oversold = better
+        return (1 - blend_weight) * rsi2_score + blend_weight * s.ml_rank_pct
+
+    meanrev_candidates.sort(key=blend_score, reverse=True)
+    return meanrev_candidates
+
+
+if __name__ == '__main__':
+    # Quick test
+    import yfinance as yf
+    import sys
+    sys.path.insert(0, '/Users/rick/ai_trading_bot_v2')
+    import config
+
+    print("Testing RSI(2) mean reversion signal on current market...")
+    print(f"{'Symbol':<8} {'RSI(2)':>7} {'vs200MA':>8} {'Vol':>6} {'Signal':>10}")
+    print("-" * 45)
+
+    params = MeanRevParams()
     candidates = []
 
-    for sym in available_symbols:
-        if sym in existing_positions:
-            continue
-        df = prices_by_symbol.get(sym)
-        if df is None or len(df) < 30:
-            continue
-        df_now = df.loc[:as_of_date]
-        if len(df_now) < 30:
-            continue
+    for sym in list(config.WATCHLIST)[:80]:
+        try:
+            hist = yf.Ticker(sym).history(period='18mo')
+            if len(hist) < 210: continue
+            hist.columns = [c.lower() for c in hist.columns]
+            snap = compute_snapshot(sym, hist)
+            if snap is None: continue
+            ok, reason = can_enter_meanrev(snap, params)
+            if ok:
+                candidates.append(snap)
+        except: continue
 
-        sig = compute_signals(df_now)
-        if not sig:
-            continue
+    candidates.sort(key=lambda s: s.rsi2)
+    for snap in candidates[:10]:
+        print(f"  {snap.symbol:<6} {snap.rsi2:>7.1f} {snap.pct_below_sma200:>+8.1%} "
+              f"{snap.volume_ratio:>6.1f}x  ✓ ENTRY")
 
-        # Quality gates
-        if sig['close'] < params.min_price:
-            continue
-        if sig['avg_vol'] < params.min_avg_volume:
-            continue
-
-        # Entry signal
-        rsi_signal = sig['rsi'] < params.rsi_entry
-        bb_signal  = sig['bb_pct'] < params.bb_pct_entry
-
-        if not (rsi_signal and bb_signal):
-            continue
-
-        # Score — lower RSI + lower BB pct = stronger signal
-        score = (params.rsi_entry - sig['rsi']) / params.rsi_entry + \
-                (params.bb_pct_entry - sig['bb_pct']) / params.bb_pct_entry
-
-        candidates.append({
-            'symbol':  sym,
-            'score':   score,
-            'rsi':     sig['rsi'],
-            'bb_pct':  sig['bb_pct'],
-            'close':   sig['close'],
-            'avg_vol': sig['avg_vol'],
-        })
-
-    return sorted(candidates, key=lambda x: x['score'], reverse=True)
-
-
-def should_exit(
-    df_now:      pd.DataFrame,
-    entry_price: float,
-    hold_days:   int,
-    params:      MeanRevParams = None,
-) -> str:
-    """Check exit conditions. Returns reason string or empty string."""
-    if params is None:
-        params = get_params()
-    if len(df_now) < 14:
-        return ''
-    if hold_days < params.min_hold_days:
-        return ''
-
-    sig   = compute_signals(df_now)
-    close = float(df_now['close'].iloc[-1])
-    pnl_pct = (close - entry_price) / entry_price
-
-    # Stop loss
-    if pnl_pct <= -params.stop_loss_pct:
-        return 'meanrev_stop'
-    # Take profit
-    if pnl_pct >= params.take_profit_pct:
-        return 'meanrev_take_profit'
-    # RSI recovery
-    if sig.get('rsi', 50) > params.rsi_exit:
-        return 'meanrev_rsi_exit'
-    # Time stop
-    if hold_days >= params.max_hold_days:
-        return 'meanrev_max_hold'
-
-    return ''
+    if not candidates:
+        print("  No mean reversion signals today (market not oversold)")
+    else:
+        print(f"\n{len(candidates)} candidates found in first 80 symbols")

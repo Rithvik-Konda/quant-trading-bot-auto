@@ -76,9 +76,9 @@ def _get_strategy(regime: str):
 
 def _compute_one(args):
     """Module-level worker for parallel feature computation."""
-    sym, df, vix_df = args
+    sym, df, vix_df, streak_store, insider_store = args
     try:
-        f = compute_features(df, symbol=sym, vix_macro=vix_df, streak_store=_streak_store, insider_store=_insider_store)
+        f = compute_features(df, symbol=sym, vix_macro=vix_df, streak_store=streak_store, insider_store=insider_store)
         return sym, f.replace([np.inf, -np.inf], np.nan) if f is not None and len(f) else pd.DataFrame()
     except Exception:
         return sym, pd.DataFrame()
@@ -192,7 +192,7 @@ def run_backtest_v2(
     if to_compute:
         import multiprocessing
         n_workers = max(1, multiprocessing.cpu_count() - 1)
-        args_list = [(s, prices_by_symbol[s], vix_macro) for s in to_compute]
+        args_list = [(s, prices_by_symbol[s], vix_macro, _streak_store, _insider_store) for s in to_compute]
         done = 0
         with ProcessPoolExecutor(max_workers=n_workers) as executor:
             futures = {executor.submit(_compute_one, a): a[0] for a in args_list}
@@ -1015,10 +1015,13 @@ def run_backtest_v2(
                         p.qty * close_prices.get(s2, p.entry_price)
                         for s2, p in long_positions.items()
                     )
+                    _mr_ml_rank = float(ml_scores.get(s, 0.5)) if isinstance(ml_scores.get(s, 0.5), float) else 0.5
                     qty = strat_mr.size_meanrev_position(
                         capital=port_val_mr, price=px,
                         params=_mr_params,
                         n_open_positions=len(long_positions),
+                        snap=mr_snap,
+                        ml_rank=_mr_ml_rank,
                     )
                     if qty < 1 or qty * px > cash * 0.95: continue
                     cash -= qty * px
