@@ -1338,6 +1338,8 @@ def train_ranker(panel: pd.DataFrame, horizon: int, oos_only: bool = False):
         # Snapshot-only features — valid live but no historical time series
         "iv_term_structure", "iv_backwardation", "iv_contango_steep",
         "analyst_score", "analyst_momentum", "analyst_consensus",
+        # Symbol history features — lookahead bias if included in training
+        "sym_historical_stop_rate", "sym_historical_wr", "sym_n_trades",
 
     }
     feature_cols = [c for c in panel.columns

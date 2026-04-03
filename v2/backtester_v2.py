@@ -1027,8 +1027,11 @@ def run_backtest_v2(
                     cash -= qty * px
                     long_positions[s] = Position(
                         symbol=s, qty=qty, entry_price=px,
-                        entry_date=pd.Timestamp(date).to_pydatetime(),
-                        side="long",
+                        entry_time=str(next_date.date()),
+                        stop_pct=0.10,
+                        initial_stop=px * 0.90,
+                        highest_price=px,
+                        add_count=0,
                     )
                     entry_meta[s] = {"engine": "meanrev", "entry_date": str(date),
                                      "rsi2": mr_snap.rsi2}

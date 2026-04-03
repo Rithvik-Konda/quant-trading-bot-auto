@@ -1,124 +1,76 @@
 WATCHLIST = [
 
 # ===== SEMICONDUCTORS / AI HARDWARE =====
-"NVDA","AVGO","AMD","MU","MRVL","QCOM","TXN","INTC","ADI",
-"AMAT","LRCX","KLAC","SMCI","ANET","ARM","MPWR","ON",
-"SWKS","NXPI","SNPS","CDNS","STX","WDC",
+"NVDA", "AVGO", "AMD", "MU", "MRVL", "QCOM", "TXN", "INTC", "ADI", "AMAT", "LRCX", "KLAC", "SMCI", "ANET", "ARM", "MPWR", "ON", "SWKS", "NXPI", "SNPS", "CDNS", "STX", "WDC",
 
 # ===== MEGA CAP TECH =====
-"MSFT","META","AMZN","GOOGL","AAPL","TSLA",
+"MSFT", "META", "AMZN", "GOOGL", "AAPL", "TSLA",
 
 # ===== CLOUD / SOFTWARE =====
-"SNOW","MDB","DDOG","NET","TEAM","ZS","SHOP","NOW",
-"CRWD","PANW","PLTR","ADBE","ORCL","CRM","INTU",
-"WDAY","OKTA","DOCU","HUBS","FTNT",
-"GTLB","BILL","CFLT","S","ESTC","MNDY","TOST",
+"SNOW", "MDB", "DDOG", "NET", "TEAM", "ZS", "SHOP", "NOW", "CRWD", "PANW", "PLTR", "ADBE", "ORCL", "CRM", "INTU", "WDAY", "OKTA", "DOCU", "HUBS", "FTNT", "GTLB", "BILL", "S", "ESTC", "MNDY", "TOST",
 
 # ===== HARDWARE / ENTERPRISE TECH =====
-"DELL","HPQ","HPE","PSTG","NTAP","CDW","FFIV",
-"ZBRA","CGNX","TDY","TRMB",
+"DELL", "HPQ", "HPE", "PSTG", "NTAP", "CDW", "FFIV", "ZBRA", "CGNX", "TDY", "TRMB",
 
 # ===== INTERNET / DIGITAL MEDIA =====
-"NFLX","UBER","ABNB","DASH","PINS","SNAP","RDDT",
-"TTD","ZG","IAC",
+"NFLX", "UBER", "ABNB", "DASH", "PINS", "SNAP", "RDDT", "TTD", "ZG", "IAC",
 
 # ===== FINTECH =====
-"V","MA","PYPL","AFRM","UPST","SOFI","NU",
-"ALLY","HOOD","COIN",
+"V", "MA", "PYPL", "AFRM", "UPST", "SOFI", "NU", "ALLY", "HOOD", "COIN",
 
 # ===== FINANCIALS — BANKS =====
-"JPM","BAC","C","GS","MS","BLK","SCHW","AXP",
-"SPGI","ICE","CME","AIG","CB","PGR","TRV",
-"USB","PNC","TFC","COF","BK","MTB","CFG",
-"HBAN","RF","KEY","FITB","ZION","CMA","WAL",
+"JPM", "BAC", "C", "GS", "MS", "BLK", "SCHW", "AXP", "SPGI", "ICE", "CME", "AIG", "CB", "PGR", "TRV", "USB", "PNC", "TFC", "COF", "BK", "MTB", "CFG", "HBAN", "RF", "KEY", "FITB", "ZION", "WAL",
 
 # ===== FINANCIALS — INSURANCE / ASSET MGMT =====
-"MET","PRU","AFL","ALL","HIG","LNC",
-"RJF","LPLA","WTW","AON","MMC","AJG","BRO","ERIE",
-"BX","KKR","APO","CG","ARES",
+"MET", "PRU", "AFL", "ALL", "HIG", "LNC", "RJF", "LPLA", "WTW", "AON", "AJG", "BRO", "ERIE", "BX", "KKR", "APO", "CG", "ARES",
 
 # ===== HEALTHCARE — PHARMA / BIOTECH =====
-"UNH","LLY","JNJ","PFE","ABBV","MRK","TMO","ISRG",
-"DHR","ABT","BMY","AMGN","GILD","VRTX","REGN",
-"ZTS","SYK","BSX","MDT","CI","CVS","HUM","CNC",
-"MRNA","BNTX","BIIB","ALNY","INCY","NBIX","JAZZ",
+"UNH", "LLY", "JNJ", "PFE", "ABBV", "MRK", "TMO", "ISRG", "DHR", "ABT", "BMY", "AMGN", "GILD", "VRTX", "REGN", "ZTS", "SYK", "BSX", "MDT", "CI", "CVS", "HUM", "CNC", "MRNA", "BNTX", "BIIB", "ALNY", "INCY", "NBIX", "JAZZ",
 
 # ===== HEALTHCARE — DEVICES / SERVICES =====
-"EW","HOLX","DXCM","PODD","ALGN","IART",
-"HCA","THC","UHS","LH","DGX","EXAS","NTRA",
-"VEEV","DOCS",
+"EW", "HOLX", "DXCM", "PODD", "ALGN", "IART", "HCA", "THC", "UHS", "LH", "DGX", "NTRA", "VEEV", "DOCS",
 
 # ===== CONSUMER STAPLES =====
-"PG","KO","PEP","COST","WMT","PM","MO","CL",
-"KMB","GIS","HSY","EL","MDLZ","CAG","CPB",
-"SJM","HRL","TSN","KHC","MKC","CHD","CLX",
-"KR","BJ","SFM",
+"PG", "KO", "PEP", "COST", "WMT", "PM", "MO", "CL", "KMB", "GIS", "HSY", "EL", "MDLZ", "CAG", "CPB", "SJM", "HRL", "TSN", "KHC", "MKC", "CHD", "CLX", "KR", "BJ", "SFM",
 
 # ===== CONSUMER DISCRETIONARY — RETAIL =====
-"HD","LOW","NKE","MCD","SBUX","CMG","MAR",
-"BKNG","TJX","ROST","EBAY","ETSY","ULTA",
-"TGT","BBY","ANF","URBN","WSM","RH",
-"BOOT","DRVN",
+"HD", "LOW", "NKE", "MCD", "SBUX", "CMG", "MAR", "BKNG", "TJX", "ROST", "EBAY", "ETSY", "ULTA", "TGT", "BBY", "ANF", "URBN", "WSM", "RH", "BOOT", "DRVN",
 
 # ===== CONSUMER DISCRETIONARY — AUTOS / LEISURE =====
-"F","GM","RIVN","HOG","POOL",
-"LVS","MGM","WYNN","CZR","PENN","DKNG",
-"DIS","WBD","CNK","IMAX",
+"F", "GM", "RIVN", "HOG", "POOL", "LVS", "MGM", "WYNN", "CZR", "PENN", "DKNG", "DIS", "WBD", "CNK", "IMAX",
 
 # ===== INDUSTRIALS — AEROSPACE / DEFENSE =====
-"LMT","BA","RTX","GD","NOC","HII","TXT","KTOS",
-"RKLB",
+"LMT", "BA", "RTX", "GD", "NOC", "HII", "TXT", "KTOS", "RKLB",
 
 # ===== INDUSTRIALS — MACHINERY / EQUIPMENT =====
-"CAT","DE","HON","UPS","FDX","WM","GE","PH",
-"ETN","ITW","EMR","ROK","CSX","UNP","NSC",
-"MMM","DOV","IR","XYL","GNRC",
-"FAST","GWW","MSC","WSO",
+"CAT", "DE", "HON", "UPS", "FDX", "WM", "GE", "PH", "ETN", "ITW", "EMR", "ROK", "CSX", "UNP", "NSC", "MMM", "DOV", "IR", "XYL", "GNRC", "FAST", "GWW", "MSC", "WSO",
 
 # ===== INDUSTRIALS — CONSTRUCTION =====
-"PWR","PRIM","MTZ","STRL",
-"VMC","MLM","EXP",
-"MAS","TREX",
-"NVR","PHM","DHI","LEN","TOL","KBH",
-"TMHC","SKY",
+"PWR", "PRIM", "MTZ", "STRL", "VMC", "MLM", "EXP", "MAS", "TREX", "NVR", "PHM", "DHI", "LEN", "TOL", "KBH", "TMHC", "SKY",
 
 # ===== INDUSTRIALS — TRANSPORTATION / LOGISTICS =====
-"CHRW","EXPD","XPO","ODFL","SAIA",
-"JBHT","KNX","WERN","ARCB",
-"MATX","ZIM",
+"CHRW", "EXPD", "XPO", "ODFL", "SAIA", "JBHT", "KNX", "WERN", "ARCB", "MATX", "ZIM",
 
 # ===== ENERGY — OIL & GAS =====
-"XOM","CVX","COP","EOG","SLB","PSX","VLO","MPC",
-"OXY","HAL","DVN","FANG","APA",
-"KMI","WMB","OKE","EPD","ET","MPLX",
+"XOM", "CVX", "COP", "EOG", "SLB", "PSX", "VLO", "MPC", "OXY", "HAL", "DVN", "FANG", "APA", "KMI", "WMB", "OKE", "EPD", "ET", "MPLX",
 
 # ===== ENERGY — CLEAN / POWER =====
-"NEE","VST","CEG","NRG","AES","CWEN",
-"ENPH","SEDG","FSLR","ARRY",
-"BE","PLUG",
+"NEE", "VST", "CEG", "NRG", "AES", "CWEN", "ENPH", "SEDG", "FSLR", "ARRY", "BE", "PLUG",
 
 # ===== UTILITIES =====
-"DUK","SO","D","EXC","AEP","SRE","PEG",
-"EIX","PCG","PPL","WEC","ES","CNP","CMS",
-"NI","PNW",
+"DUK", "SO", "D", "EXC", "AEP", "SRE", "PEG", "EIX", "PCG", "PPL", "WEC", "ES", "CNP", "CMS", "NI", "PNW",
 
 # ===== MATERIALS =====
-"LIN","APD","NEM","FCX","ECL","SHW","DD","DOW",
-"PPG","RPM","EMN","CE","OLN",
-"AA","NUE","STLD","CMC","ATI","RS",
-"ALB","MP","AVY","PKG","IP","AMCR",
+"LIN", "APD", "NEM", "FCX", "ECL", "SHW", "DD", "DOW", "PPG", "RPM", "EMN", "CE", "OLN", "AA", "NUE", "STLD", "CMC", "ATI", "RS", "ALB", "MP", "AVY", "PKG", "IP", "AMCR",
 
 # ===== REAL ESTATE =====
-"EQIX","DLR","AMT","CCI","SBAC","PLD","PSA",
-"SPG","O","VICI","WELL","VTR",
-"EQR","AVB","ESS","MAA",
-"KIM","REG","STAG","EGP","REXR",
+"EQIX", "DLR", "AMT", "CCI", "SBAC", "PLD", "PSA", "SPG", "O", "VICI", "WELL", "VTR", "EQR", "AVB", "ESS", "MAA", "KIM", "REG", "STAG", "EGP", "REXR",
 
 # ===== INFRASTRUCTURE / DATA CENTERS =====
-"VRT","NDAQ","MSCI","CBOE","FDS",
+"VRT", "NDAQ", "MSCI", "CBOE", "FDS",
 
 # ===== COMMUNICATIONS =====
-"T","VZ","TMUS","CHTR","CMCSA","LBRDA",
+"T", "VZ", "TMUS", "CHTR", "CMCSA", "LBRDA",
 
 ]
 
@@ -128,64 +80,37 @@ TOP_SECTORS_TO_TRADE    = 3
 
 SECTOR_ETFS = {
     "XLK": [
-        "NVDA","AVGO","AMD","MU","MRVL","QCOM","TXN","INTC","ADI","AMAT","LRCX","KLAC",
-        "SMCI","ANET","ARM","MSFT","AAPL","ORCL","CRM","INTU","ADBE","SNOW","MDB","DDOG",
-        "NET","TEAM","ZS","NOW","CRWD","PANW","PLTR","FTNT","VRT","DELL","HPQ","HPE",
-        "PSTG","NTAP","CDW","FFIV","MPWR","ON","NXPI","SNPS","CDNS",
-        "ZBRA","CGNX","TDY","TRMB","GTLB","BILL","CFLT","S","ESTC","MNDY","TOST",
-        "APP","DUOL","AXON","BRZE","ASAN","PCTY","PAYC",
+        "NVDA", "AVGO", "AMD", "MU", "MRVL", "QCOM", "TXN", "INTC", "ADI", "AMAT", "LRCX", "KLAC", "SMCI", "ANET", "ARM", "MSFT", "AAPL", "ORCL", "CRM", "INTU", "ADBE", "SNOW", "MDB", "DDOG", "NET", "TEAM", "ZS", "NOW", "CRWD", "PANW", "PLTR", "FTNT", "VRT", "DELL", "HPQ", "HPE", "PSTG", "NTAP", "CDW", "FFIV", "MPWR", "ON", "NXPI", "SNPS", "CDNS", "ZBRA", "CGNX", "TDY", "TRMB", "GTLB", "BILL", "S", "ESTC", "MNDY", "TOST", "APP", "DUOL", "AXON", "BRZE", "ASAN", "PCTY", "PAYC",
     ],
     "XLC": [
-        "META","GOOGL","NFLX","T","VZ","TMUS","CMCSA","CHTR","DIS","WBD",
-        "SNAP","PINS","RDDT","TTD","IAC","LBRDA",
+        "META", "GOOGL", "NFLX", "T", "VZ", "TMUS", "CMCSA", "CHTR", "DIS", "WBD", "SNAP", "PINS", "RDDT", "TTD", "IAC", "LBRDA",
     ],
     "XLY": [
-        "AMZN","TSLA","HD","LOW","NKE","MCD","SBUX","CMG","MAR","BKNG","TJX","ROST",
-        "EBAY","ETSY","ULTA","SHOP","TGT","BBY","F","GM","RIVN","LVS","MGM","WYNN",
-        "CZR","PENN","DKNG","ABNB","DASH","UBER","ANF","URBN","WSM","RH","POOL",
-        "HOG","BOOT","DIS","WBD","CNK","IMAX",
-        "WING","CAVA","TXRH","SHAK","DECK","CROX","WRBY","PTON","PLNT","DRVN",
+        "AMZN", "TSLA", "HD", "LOW", "NKE", "MCD", "SBUX", "CMG", "MAR", "BKNG", "TJX", "ROST", "EBAY", "ETSY", "ULTA", "SHOP", "TGT", "BBY", "F", "GM", "RIVN", "LVS", "MGM", "WYNN", "CZR", "PENN", "DKNG", "ABNB", "DASH", "UBER", "ANF", "URBN", "WSM", "RH", "POOL", "HOG", "BOOT", "DIS", "WBD", "CNK", "IMAX", "WING", "CAVA", "TXRH", "SHAK", "DECK", "CROX", "WRBY", "PTON", "PLNT", "DRVN",
     ],
     "XLP": [
-        "PG","KO","PEP","COST","WMT","PM","MO","CL","KMB","GIS","HSY","EL",
-        "MDLZ","CAG","CPB","SJM","HRL","TSN","KHC","MKC","CHD","CLX","KR","BJ","SFM",
+        "PG", "KO", "PEP", "COST", "WMT", "PM", "MO", "CL", "KMB", "GIS", "HSY", "EL", "MDLZ", "CAG", "CPB", "SJM", "HRL", "TSN", "KHC", "MKC", "CHD", "CLX", "KR", "BJ", "SFM",
     ],
     "XLF": [
-        "JPM","BAC","C","GS","MS","BLK","SCHW","AXP","SPGI","ICE","CME","AIG","CB",
-        "PGR","TRV","USB","PNC","TFC","COF","BK","MTB","CFG","HBAN","RF","KEY","FITB",
-        "ZION","CMA","WAL","V","MA","PYPL","AFRM","UPST","SOFI","NU","ALLY",
-        "HOOD","COIN","MET","PRU","AFL","ALL","HIG","LNC","AON","MMC","AJG","BRO",
-        "ERIE","RJF","LPLA","WTW","BX","KKR","APO","CG","ARES",
+        "JPM", "BAC", "C", "GS", "MS", "BLK", "SCHW", "AXP", "SPGI", "ICE", "CME", "AIG", "CB", "PGR", "TRV", "USB", "PNC", "TFC", "COF", "BK", "MTB", "CFG", "HBAN", "RF", "KEY", "FITB", "ZION", "WAL", "V", "MA", "PYPL", "AFRM", "UPST", "SOFI", "NU", "ALLY", "HOOD", "COIN", "MET", "PRU", "AFL", "ALL", "HIG", "LNC", "AON", "AJG", "BRO", "ERIE", "RJF", "LPLA", "WTW", "BX", "KKR", "APO", "CG", "ARES",
     ],
     "XLV": [
-        "UNH","LLY","JNJ","PFE","ABBV","MRK","TMO","ISRG","DHR","ABT","BMY","AMGN",
-        "GILD","VRTX","REGN","ZTS","SYK","BSX","MDT","CI","CVS","HUM","CNC","MRNA",
-        "BNTX","BIIB","ALNY","INCY","NBIX","JAZZ","EW","HOLX","DXCM","PODD","ALGN",
-        "HCA","THC","UHS","LH","DGX","EXAS","NTRA","VEEV","DOCS",
-        "ACAD","RARE","IONS","HALO","PRGO","PCRX","OMCL","GDRX","PRVA","IRTC","INSP","TNDM",
+        "UNH", "LLY", "JNJ", "PFE", "ABBV", "MRK", "TMO", "ISRG", "DHR", "ABT", "BMY", "AMGN", "GILD", "VRTX", "REGN", "ZTS", "SYK", "BSX", "MDT", "CI", "CVS", "HUM", "CNC", "MRNA", "BNTX", "BIIB", "ALNY", "INCY", "NBIX", "JAZZ", "EW", "HOLX", "DXCM", "PODD", "ALGN", "HCA", "THC", "UHS", "LH", "DGX", "NTRA", "VEEV", "DOCS", "ACAD", "RARE", "IONS", "HALO", "PRGO", "PCRX", "OMCL", "GDRX", "PRVA", "IRTC", "INSP", "TNDM",
     ],
     "XLI": [
-        "CAT","DE","HON","LMT","BA","RTX","UPS","FDX","WM","GE","PH","ETN","ITW",
-        "EMR","ROK","GD","NOC","CSX","UNP","NSC","MMM","DOV","IR","XYL","GNRC",
-        "FAST","GWW","MSC","WSO","PWR","PRIM","MTZ","STRL","ODFL","SAIA","JBHT",
-        "KNX","XPO","CHRW","EXPD","HII","TXT","KTOS","RKLB",
+        "CAT", "DE", "HON", "LMT", "BA", "RTX", "UPS", "FDX", "WM", "GE", "PH", "ETN", "ITW", "EMR", "ROK", "GD", "NOC", "CSX", "UNP", "NSC", "MMM", "DOV", "IR", "XYL", "GNRC", "FAST", "GWW", "MSC", "WSO", "PWR", "PRIM", "MTZ", "STRL", "ODFL", "SAIA", "JBHT", "KNX", "XPO", "CHRW", "EXPD", "HII", "TXT", "KTOS", "RKLB",
     ],
     "XLE": [
-        "XOM","CVX","COP","EOG","SLB","PSX","VLO","MPC","OXY","HAL","DVN","FANG",
-        "APA","KMI","WMB","OKE","EPD","ET","MPLX",
-        "NEE","VST","CEG","NRG","AES","CWEN","ENPH","SEDG","FSLR","ARRY","BE","PLUG",
+        "XOM", "CVX", "COP", "EOG", "SLB", "PSX", "VLO", "MPC", "OXY", "HAL", "DVN", "FANG", "APA", "KMI", "WMB", "OKE", "EPD", "ET", "MPLX", "NEE", "VST", "CEG", "NRG", "AES", "CWEN", "ENPH", "SEDG", "FSLR", "ARRY", "BE", "PLUG",
     ],
     "XLU": [
-        "DUK","SO","D","EXC","AEP","SRE","PEG","EIX","PCG","PPL","WEC","ES","CNP",
-        "CMS","NI","PNW",
+        "DUK", "SO", "D", "EXC", "AEP", "SRE", "PEG", "EIX", "PCG", "PPL", "WEC", "ES", "CNP", "CMS", "NI", "PNW",
     ],
     "XLB": [
-        "LIN","APD","NEM","FCX","ECL","SHW","DD","DOW","PPG","RPM","EMN","CE","OLN",
-        "AA","NUE","STLD","CMC","ATI","RS","ALB","MP","AVY","PKG","IP","AMCR",
+        "LIN", "APD", "NEM", "FCX", "ECL", "SHW", "DD", "DOW", "PPG", "RPM", "EMN", "CE", "OLN", "AA", "NUE", "STLD", "CMC", "ATI", "RS", "ALB", "MP", "AVY", "PKG", "IP", "AMCR",
     ],
     "XLRE": [
-        "EQIX","DLR","AMT","CCI","SBAC","PLD","PSA","SPG","O","VICI","WELL","VTR",
-        "EQR","AVB","ESS","MAA","KIM","REG","STAG","EGP","REXR",
+        "EQIX", "DLR", "AMT", "CCI", "SBAC", "PLD", "PSA", "SPG", "O", "VICI", "WELL", "VTR", "EQR", "AVB", "ESS", "MAA", "KIM", "REG", "STAG", "EGP", "REXR",
     ],
 }
 
@@ -316,35 +241,7 @@ CORRELATION_PENALTY_MULT       = 0.50
 MAX_CORRELATED_BUCKET_WEIGHT   = 0.35
 
 CORRELATION_BUCKETS = {
-    "NVDA": "semis", "AVGO": "semis", "AMD": "semis", "MU": "semis",
-    "SMCI": "semis", "MRVL": "semis", "ANET": "semis", "KLAC": "semis",
-    "LRCX": "semis", "AMAT": "semis", "QCOM": "semis", "TXN": "semis",
-    "INTC": "semis", "ADI": "semis",  "ARM": "semis",  "MPWR": "semis",
-    "ON": "semis",   "NXPI": "semis", "SNPS": "semis", "CDNS": "semis",
-    "MSFT": "software", "PLTR": "software", "CRWD": "software",
-    "PANW": "software", "SNOW": "software", "MDB":  "software",
-    "DDOG": "software", "NET":  "software", "TEAM": "software",
-    "ZS":   "software", "SHOP": "software", "NOW":  "software",
-    "GTLB": "software", "BILL": "software", "CFLT": "software",
-    "S":    "software", "MNDY": "software", "TOST": "software",
-    "VST":  "power",    "CEG":  "power",    "NRG":  "power",
-    "VRT":  "power",    "ETN":  "industrial","PH":  "industrial",
-    "GE":   "industrial","DELL":"hardware",  "HPQ": "hardware",
-    "HPE":  "hardware", "PSTG":"hardware",
-    "META": "mega_cap", "AMZN": "mega_cap", "GOOGL":"mega_cap",
-    "AAPL": "mega_cap", "TSLA": "mega_cap",
-    "JPM":  "banks",    "BAC":  "banks",    "C":    "banks",
-    "GS":   "banks",    "MS":   "banks",    "USB":  "banks",
-    "PNC":  "banks",    "TFC":  "banks",    "COF":  "banks",
-    "MTB":  "banks",    "CFG":  "banks",    "HBAN": "banks",
-    "RF":   "banks",    "KEY":  "banks",    "FITB": "banks",
-    "BX":   "alt_asset","KKR":  "alt_asset","APO":  "alt_asset",
-    "CG":   "alt_asset","ARES": "alt_asset",
-    "XOM":  "energy",   "CVX":  "energy",   "COP":  "energy",
-    "EOG":  "energy",   "OXY":  "energy",   "DVN":  "energy",
-    "FANG": "energy",   "APA":  "energy",   "MRO":  "energy",
-    "NVR":  "homebuilder","PHM":"homebuilder","DHI": "homebuilder",
-    "LEN":  "homebuilder","TOL":"homebuilder","KBH": "homebuilder",
+    "NVDA": "semis", "AVGO": "semis", "AMD": "semis", "MU": "semis", "SMCI": "semis", "MRVL": "semis", "ANET": "semis", "KLAC": "semis", "LRCX": "semis", "AMAT": "semis", "QCOM": "semis", "TXN": "semis", "INTC": "semis", "ADI": "semis", "ARM": "semis", "MPWR": "semis", "ON": "semis", "NXPI": "semis", "SNPS": "semis", "CDNS": "semis", "MSFT": "software", "PLTR": "software", "CRWD": "software", "PANW": "software", "SNOW": "software", "MDB":  "software", "DDOG": "software", "NET":  "software", "TEAM": "software", "ZS":   "software", "SHOP": "software", "NOW":  "software", "GTLB": "software", "BILL": "software", : "software", "S":    "software", "MNDY": "software", "TOST": "software", "VST":  "power", "CEG":  "power", "NRG":  "power", "VRT":  "power", "ETN":  "industrial", "PH":  "industrial", "GE":   "industrial", "DELL":"hardware", "HPQ": "hardware", "HPE":  "hardware", "PSTG":"hardware", "META": "mega_cap", "AMZN": "mega_cap", "GOOGL":"mega_cap", "AAPL": "mega_cap", "TSLA": "mega_cap", "JPM":  "banks", "BAC":  "banks", "C":    "banks", "GS":   "banks", "MS":   "banks", "USB":  "banks", "PNC":  "banks", "TFC":  "banks", "COF":  "banks", "MTB":  "banks", "CFG":  "banks", "HBAN": "banks", "RF":   "banks", "KEY":  "banks", "FITB": "banks", "BX":   "alt_asset", "KKR":  "alt_asset", "APO":  "alt_asset", "CG":   "alt_asset", "ARES": "alt_asset", "XOM":  "energy", "CVX":  "energy", "COP":  "energy", "EOG":  "energy", "OXY":  "energy", "DVN":  "energy", "FANG": "energy", "APA":  "energy", "MRO":  "energy", "NVR":  "homebuilder", "PHM":"homebuilder", "DHI": "homebuilder", "LEN":  "homebuilder", "TOL":"homebuilder", "KBH": "homebuilder",
 }
 
 ROTATION_SCORE_GAP = 0.08
@@ -385,18 +282,17 @@ REGIME_WEIGHT_DXY        = 0.06  # dollar (inverted)
 # ===== MIDCAP EXPANSION — Russell Midcap additions =====
 MIDCAP_WATCHLIST = [
     # High-growth tech
-    "APP","DUOL","AXON","CELH","ASAN","BRZE","PCTY","PAYC",
+    "APP", "DUOL", "AXON", "CELH", "ASAN", "BRZE", "PCTY", "PAYC",
     # Healthcare mid-cap
-    "ACAD","RARE","IONS","HALO","PRGO","PCRX","OMCL","GDRX",
-    "PRVA","IRTC","INSP","TNDM",
+    "ACAD", "RARE", "IONS", "HALO", "PRGO", "PCRX", "OMCL", "GDRX", "PRVA", "IRTC", "INSP", "TNDM",
     # Consumer mid-cap
-    "WING","TXRH","SHAK","CAVA","DECK","CROX","WRBY","PTON","PLNT",
+    "WING", "TXRH", "SHAK", "CAVA", "DECK", "CROX", "WRBY", "PTON", "PLNT",
     # Industrial / defense mid-cap
-    "TDG","WWD","LDOS","SAIC","BAH","AVAV","HEI",
+    "TDG", "WWD", "LDOS", "SAIC", "BAH", "AVAV", "HEI",
     # Energy transition
-    "SHLS","STEM","RUN",
+    "SHLS", "STEM", "RUN",
     # Materials
-    "AMR","METC",
+    "AMR", "METC",
 ]
 
 

@@ -593,6 +593,36 @@ def run_entry_scan(regime, choppy_sub, signals, ranks, tracked, portfolio):
                 entered += 1
                 short_positions[sym] = {'side': 'short', 'qty': -qty, 'entry': price, 'pnl': 0, 'pnl_pct': 0}
 
+
+    # ── SPY deployment floor (TRENDING_BULL only) ─────────────────────────────
+    # In bull markets idle cash underperforms. When regime=TRENDING_BULL and
+    # cash > 30% of portfolio, buy SPY up to 20% of portfolio as a beta floor.
+    if regime == TRENDING_BULL and vol_scalar > 0:
+        account_now  = get_account()
+        cash_now     = account_now.get('cash', 0)
+        cash_pct     = cash_now / portfolio if portfolio > 0 else 0
+        if cash_pct > 0.30:
+            spy_price = get_current_price('SPY')
+            positions_now = get_positions()
+            spy_held  = abs(positions_now.get('SPY', {}).get('qty', 0))
+            spy_value = spy_held * spy_price if spy_price > 0 else 0
+            spy_target = portfolio * 0.20
+            if spy_value < spy_target and spy_price > 0:
+                dollars_to_buy = min(spy_target - spy_value, cash_now * 0.80)
+                qty_spy = int(dollars_to_buy / spy_price)
+                if qty_spy >= 1:
+                    result = submit_order('SPY', qty_spy, 'buy')
+                    if result:
+                        today_str = str(datetime.now().date())
+                        tracked['SPY'] = {
+                            'entry_date':  today_str,
+                            'entry_price': spy_price,
+                            'engine':      'spy_floor',
+                            'side':        'long',
+                            'stop_pct':    0.10,
+                        }
+                        print(f"  ✓ SPY floor: {qty_spy} shares @ ${spy_price:.2f} (cash was {cash_pct:.0%})")
+
     return entered
 
 def run_entries():
