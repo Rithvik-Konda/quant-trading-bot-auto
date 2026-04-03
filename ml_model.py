@@ -1185,6 +1185,7 @@ def build_symbol_store(symbols: List[str], days: int, refresh: bool = False) -> 
         from earnings_streak import build_streak_store
         streak_store = build_streak_store(symbols, verbose=False)
         log(f"INFO | Earnings streak store: {len(streak_store)} symbols")
+        import joblib as _jl; _jl.dump(streak_store, "streak_store.joblib")
     except Exception as _e:
         log(f"WARN | Earnings streak store failed: {_e}")
         streak_store = {}
@@ -1193,6 +1194,7 @@ def build_symbol_store(symbols: List[str], days: int, refresh: bool = False) -> 
         from insider_signal import build_insider_store
         insider_store = build_insider_store(symbols, verbose=False)
         log(f"INFO | Insider store: {len(insider_store)} symbols with buy data")
+        import joblib as _jl; _jl.dump(insider_store, "insider_store.joblib")
     except Exception as _e:
         log(f"WARN | Insider store failed: {_e}")
         insider_store = {}

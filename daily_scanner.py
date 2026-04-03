@@ -35,6 +35,9 @@ def run_daily_scan():
     print("\n[1] Computing regime...")
     cache_dir = os.path.join(os.path.dirname(__file__), 'cache_prices')
     spy_macro, hyg_macro, vix_macro = load_macro_data(cache_dir=cache_dir)
+    import joblib as _jl, os as _os
+    _streak_store  = _jl.load("streak_store.joblib")  if _os.path.exists("streak_store.joblib")  else {}
+    _insider_store = _jl.load("insider_store.joblib") if _os.path.exists("insider_store.joblib") else {}
     clf     = RegimeClassifier()
     today   = pd.Timestamp.now().normalize()
     signals = compute_signals(spy_macro, hyg_macro, vix_macro, as_of_date=today)
@@ -183,7 +186,7 @@ def run_daily_scan():
             try:
                 df = fetch_history(sym, days=400)
                 df.index = pd.to_datetime(df.index).tz_localize(None)
-                feats = compute_features(df, symbol=sym)
+                feats = compute_features(df, symbol=sym, vix_macro=vix_macro, streak_store=_streak_store, insider_store=_insider_store)
                 if feats is None or len(feats) == 0:
                     continue
                 latest = feats.iloc[-1]

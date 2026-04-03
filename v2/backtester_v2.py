@@ -58,6 +58,7 @@ from regime_classifier import (
 from entry_filter import is_in_accumulation, filter_candidates
 import strategy_trending as strat_bull
 import strategy_choppy  as strat_chop
+import strategy_meanrev as strat_mr
 import strategy_bear    as strat_bear
 
 CACHE_DIR = "cache_prices"
@@ -77,7 +78,7 @@ def _compute_one(args):
     """Module-level worker for parallel feature computation."""
     sym, df, vix_df = args
     try:
-        f = compute_features(df, symbol=sym, vix_macro=vix_df)
+        f = compute_features(df, symbol=sym, vix_macro=vix_df, streak_store=_streak_store, insider_store=_insider_store)
         return sym, f.replace([np.inf, -np.inf], np.nan) if f is not None and len(f) else pd.DataFrame()
     except Exception:
         return sym, pd.DataFrame()
@@ -132,6 +133,9 @@ def run_backtest_v2(
     # ── 4. ML ensemble ────────────────────────────────────────────────────
     print("[prep] loading ML ensemble...", flush=True)
     rankers = load_ranker_ensemble()
+    import joblib as _jl, os as _os
+    _streak_store  = _jl.load("streak_store.joblib")  if _os.path.exists("streak_store.joblib")  else {}
+    _insider_store = _jl.load("insider_store.joblib") if _os.path.exists("insider_store.joblib") else {}
     feat_cols_union = sorted(set(
         list(rankers[3]["features"]) +
         list(rankers[5]["features"]) +
@@ -507,6 +511,27 @@ def run_backtest_v2(
                 except Exception:
                     pass
 
+            # ── Mean reversion exit (different logic from momentum) ──────
+            # RSI(2) positions: exit on SMA5 cross or 10-day timeout
+            # NO ATR stop — Connors research: stops hurt RSI(2) performance
+            if entry_meta.get(s, {}).get("engine") == "meanrev":
+                _mr_sma5 = float(df_s["close"].tail(5).mean()) if len(df_s) >= 5 else close
+                _mr_days = getattr(strat_mr, 'MAX_HOLD_DAYS', 10)
+                if close > _mr_sma5:
+                    exit_reason = "max_hold"  # reuse max_hold label for stats
+                    exit_ref    = close
+                elif hold_d >= _mr_days:
+                    exit_reason = "max_hold"
+                    exit_ref    = close
+                elif close < pos.entry_price * 0.90:
+                    # Emergency exit: down >10% = structural breakdown not a dip
+                    exit_reason = "stop"
+                    exit_ref    = close
+                if exit_reason:
+                    pass  # falls through to standard exit handler below
+                else:
+                    continue  # skip ATR stop logic for meanrev positions
+
             # Stop exit — original logic restored.
             # Regime-conditional confirmation (vol_ratio>1.5 OR >3% break)
             # caused WR to drop to 13% by holding through real breakdowns.
@@ -589,6 +614,7 @@ def run_backtest_v2(
                     ann_vol=float(meta.get("ann_vol", 0.35)),
                     call_cost=float(meta.get("call_cost", 0.0)),
                     call_pnl=float(_call_pnl),
+                    engine=str(entry_meta.get(s, {}).get("engine", "momentum")),
                 ))
                 if exit_reason == "stop" or (exit_reason == "max_hold" and pnl < 0):
                     long_stop_dates[s] = date
@@ -958,8 +984,53 @@ def run_backtest_v2(
 
                 entry_meta[s] = _conv_meta
 
+        # ── Mean reversion entries (CHOPPY regime only) ───────────────────────
+        if _current_regime == CHOPPY:
+            _mr_params = strat_mr.MeanRevParams()
+            _mr_slots  = max(0, _mr_params.max_positions - sum(
+                1 for s in long_positions
+                if entry_meta.get(s, {}).get("engine") == "meanrev"
+            ))
+            if _mr_slots > 0:
+                _mr_snaps = []
+                for sym in valid_syms:
+                    if sym in long_positions: continue
+                    df_s2 = prices_by_symbol.get(sym)
+                    if df_s2 is None: continue
+                    _ml_r = 0.5
+                    _ml_val = ml_scores.get(sym, 0.5)
+                    if isinstance(_ml_val, dict):
+                        _ml_r = float(_ml_val.get("ml_rank_pct", 0.5))
+                    elif isinstance(_ml_val, (int, float)):
+                        _ml_r = float(_ml_val)
+                    snap_mr = strat_mr.compute_snapshot(sym, df_s2.loc[:date], ml_rank=_ml_r)
+                    if snap_mr is not None:
+                        _mr_snaps.append(snap_mr)
+                _mr_candidates = strat_mr.score_meanrev_candidates(_mr_snaps, _mr_params)
+                for mr_snap in _mr_candidates[:_mr_slots]:
+                    s = mr_snap.symbol
+                    if s in long_positions or s not in open_next_prices: continue
+                    px  = open_next_prices[s]
+                    port_val_mr = cash + sum(
+                        p.qty * close_prices.get(s2, p.entry_price)
+                        for s2, p in long_positions.items()
+                    )
+                    qty = strat_mr.size_meanrev_position(
+                        capital=port_val_mr, price=px,
+                        params=_mr_params,
+                        n_open_positions=len(long_positions),
+                    )
+                    if qty < 1 or qty * px > cash * 0.95: continue
+                    cash -= qty * px
+                    long_positions[s] = Position(
+                        symbol=s, qty=qty, entry_price=px,
+                        entry_date=pd.Timestamp(date).to_pydatetime(),
+                        side="long",
+                    )
+                    entry_meta[s] = {"engine": "meanrev", "entry_date": str(date),
+                                     "rsi2": mr_snap.rsi2}
 
-                # ── Short entries (bear regime only) ──────────────────────────────
+        # ── Short entries (bear regime only) ──────────────────────────────
         if _current_regime == BEAR and len(short_positions) < max_shorts:
             short_candidates = strat_bear.score_short_candidates(
                 snapshots=snapshots,
@@ -1063,6 +1134,12 @@ def _print_results(stats, trades, regime_counts):
             wr = (grp["pnl"] > 0).mean()
             print(f"    {reason:<20} {len(grp):4d}  WR={wr:.0%}  avg=${grp['pnl'].mean():.0f}")
 
+        # Mean reversion vs momentum breakdown
+        if "engine" in trade_df.columns:
+            print(f"\n  By engine:")
+            for eng, grp in trade_df.groupby("engine"):
+                wr = (grp["pnl"] > 0).mean()
+                print(f"    {str(eng):<15} {len(grp):4d} trades  WR={wr:.0%}  avg=${grp['pnl'].mean():.0f}")
         print(f"\n  By regime entered:")
         if "regime" in trade_df.columns:
             for regime, grp in trade_df.groupby("regime"):
