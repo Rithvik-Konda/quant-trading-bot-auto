@@ -423,7 +423,14 @@ def run_entry_scan(regime, choppy_sub, signals, ranks, tracked, portfolio):
     today_str = str(datetime.now().date())
 
     # VIX gate
-    vix_level  = signals.get('vix_level', 20)
+    # Refresh VIX live — don't use stale morning reading
+    # If Trump tweets mid-session, VIX can spike from 20 to 40 in minutes
+    try:
+        import yfinance as _yf_vix
+        _vix_live = _yf_vix.Ticker('^VIX').history(period='1d', interval='5m')
+        vix_level = float(_vix_live['Close'].iloc[-1]) if len(_vix_live) > 0 else signals.get('vix_level', 20)
+    except Exception:
+        vix_level = signals.get('vix_level', 20)
     vol_scalar = 0.0 if vix_level >= 35 else 0.5 if vix_level >= 25 else 0.75 if vix_level >= 20 else 1.0
     if signals.get('spy_5d', 0) < -0.015:
         vol_scalar = 0.0
@@ -497,9 +504,47 @@ def run_entry_scan(regime, choppy_sub, signals, ranks, tracked, portfolio):
 
         if mr_slots > 0:
             # Get oversold candidates from full universe
+            # Load earnings calendar for filter
+            import pickle as _pkl
+            _earn_cache = '/Users/rick/ai_trading_bot_v2/cache_prices/earnings_calendar_cache.pkl'
+            _earn_dates = {}
+            try:
+                import os as _os2
+                if _os2.path.exists(_earn_cache):
+                    with open(_earn_cache, 'rb') as _ef:
+                        _earn_dates = _pkl.load(_ef)
+            except Exception:
+                pass
+
             mr_candidates = []
+            _mr_sectors_open = {_sector_map.get(s2, '') for s2 in tracked
+                                if tracked.get(s2, {}).get('engine') == 'meanrev'}
+            import pandas as _pd2
             for sym in config.WATCHLIST:
                 if sym in long_positions or sym in tracked: continue
+
+                # Earnings filter — block 10 days BEFORE and 2 days AFTER
+                _sym_earn = _earn_dates.get(sym, [])
+                if _sym_earn:
+                    _today = _pd2.Timestamp.now().normalize()
+                    _days_to_earn = [(d - _today).days for d in _sym_earn]
+                    if any(-2 <= d <= 10 for d in _days_to_earn):
+                        continue
+
+                # Liquidity filter — no thin stocks
+                try:
+                    _liq_df = fetch_data(sym)
+                    if _liq_df is None or len(_liq_df) < 30: continue
+                    _avg_dv = float(_liq_df['volume'].tail(30).mean() * _liq_df['close'].iloc[-1])
+                    if _avg_dv < 50_000_000: continue
+                except: continue
+
+                # Sector concentration — max 1 meanrev per sector
+                _sym_sector = _sector_map.get(sym, '')
+                if _sym_sector and _sym_sector in _mr_sectors_open:
+                    continue
+                _mr_sectors_open.add(_sym_sector)
+
                 try:
                     df = fetch_data(sym)
                     if df is None or len(df) < 210: continue

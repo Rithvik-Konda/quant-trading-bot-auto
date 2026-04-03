@@ -997,7 +997,9 @@ def run_backtest_v2(
                 entry_meta[s] = _conv_meta
 
         # ── Mean reversion entries (CHOPPY regime only) ───────────────────────
-        if _current_regime == CHOPPY:
+        # Only fire after momentum is fully deployed — meanrev is additive, not a replacement
+        _momentum_slots_filled = len([s for s in long_positions if entry_meta.get(s, {}).get("engine", "momentum") == "momentum"]) >= max_longs
+        if _current_regime == CHOPPY and _momentum_slots_filled:
             _mr_params = strat_mr.MeanRevParams()
             _mr_slots  = max(0, _mr_params.max_positions - sum(
                 1 for s in long_positions
@@ -1007,6 +1009,9 @@ def run_backtest_v2(
                 _mr_snaps = []
                 for sym in valid_syms:
                     if sym in long_positions: continue
+                    # Cooldown — no meanrev re-entry within 60 days of any stop on this symbol
+                    _mr_last_stop = long_stop_dates.get(sym)
+                    if _mr_last_stop and (date - _mr_last_stop).days < 60: continue
                     df_s2 = prices_by_symbol.get(sym)
                     if df_s2 is None: continue
                     _ml_r = 0.5
@@ -1019,9 +1024,37 @@ def run_backtest_v2(
                     if snap_mr is not None:
                         _mr_snaps.append(snap_mr)
                 _mr_candidates = strat_mr.score_meanrev_candidates(_mr_snaps, _mr_params)
+                # Track sectors already in meanrev to avoid clustering
+                _mr_sectors_open = {sector_map.get(s2, '') for s2 in long_positions
+                                    if entry_meta.get(s2, {}).get("engine") == "meanrev"}
+
                 for mr_snap in _mr_candidates[:_mr_slots]:
                     s = mr_snap.symbol
                     if s in long_positions or s not in open_next_prices: continue
+
+                    # Earnings filter — same as momentum, block within 7 days
+                    _mr_earn = earnings_dates.get(s, [])
+                    if _mr_earn:
+                        _days_to_earn = [(d - date).days for d in _mr_earn]
+                        # Block 10 days BEFORE earnings (upcoming) and 2 days AFTER (gap still open)
+                        if any(-2 <= d <= 10 for d in _days_to_earn):
+                            continue
+
+                    # Minimum liquidity — no meanrev on thin stocks
+                    # Thin stocks gap through stops (RKLB, ZIM pattern)
+                    _mr_df = prices_by_symbol.get(s)
+                    if _mr_df is not None and len(_mr_df) >= 30:
+                        _mr_avg_vol = float(_mr_df.loc[:date]['volume'].tail(30).mean())
+                        _mr_price   = float(_mr_df.loc[:date]['close'].iloc[-1])
+                        _mr_dollar_vol = _mr_avg_vol * _mr_price
+                        if _mr_dollar_vol < 50_000_000:  # $50M daily dollar volume minimum
+                            continue
+
+                    # Sector concentration — max 1 meanrev per sector
+                    _mr_sector = sector_map.get(s, '')
+                    if _mr_sector and _mr_sector in _mr_sectors_open:
+                        continue
+                    _mr_sectors_open.add(_mr_sector)
                     px  = open_next_prices[s]
                     port_val_mr = cash + sum(
                         p.qty * close_prices.get(s2, p.entry_price)
@@ -1073,7 +1106,7 @@ def run_backtest_v2(
                 scalar     = bear_params.position_scalar_short
                 risk_budget= config.INITIAL_CAPITAL * bear_params.risk_per_trade_short * scalar
                 qty_risk   = int(risk_budget / (px * stop_pct)) if px * stop_pct > 0 else 0
-                qty        = min(qty_risk, int(35_000 / px) if px > 0 else 0)
+                qty        = min(qty_risk, int(config.INITIAL_CAPITAL * 0.08 / px) if px > 0 else 0)  # max 8% of initial capital per short
                 if qty <= 0:
                     continue
 

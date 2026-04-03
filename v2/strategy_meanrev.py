@@ -32,7 +32,7 @@ RSI2_THRESHOLD   = 5.0    # enter when RSI(2) < this (oversold)
 SMA200_FILTER    = True   # require price > 200d MA (uptrend confirmation)
 SMA5_EXIT        = True   # exit when price closes above 5d SMA
 MAX_HOLD_DAYS    = 10     # time stop — exit after 10 days regardless
-MAX_POSITIONS    = 5      # max concurrent mean reversion positions
+MAX_POSITIONS    = 2      # max concurrent mean reversion positions — additive to momentum, not dominant
 RISK_PER_TRADE   = 0.025  # 2.5% of capital per trade (smaller than momentum)
 MAX_POSITION_PCT = 0.12   # max 12% of portfolio in one mean rev position
 
@@ -48,6 +48,8 @@ class MeanRevSnapshot:
     above_sma200:  bool
     pct_below_sma200: float  # how far below 200MA? (negative = below)
     volume_ratio:  float    # vol vs 20d avg (high vol dips = better)
+    sma50:         float = 0.0  # 50d MA for short-term trend filter
+    ann_vol:       float = 0.35 # annualized volatility — filters high-vol names
     ml_rank_pct:   float = 0.5  # ML rank from momentum engine (0-1)
 
 
@@ -111,22 +113,30 @@ def can_enter_meanrev(snap: MeanRevSnapshot,
     """
     Check if a stock qualifies for mean reversion entry.
     Returns (can_enter, reason).
+
+    Connors research: RSI(2) works on quality stocks in uptrends.
+    NOT on broken stocks, high-vol names, or stocks near earnings.
     """
     # Must be above 200d MA — buying dips in uptrends only
     if params.sma200_filter and not snap.above_sma200:
         return False, f"below SMA200 ({snap.pct_below_sma200:+.1%})"
-
     # RSI(2) must be oversold
     if snap.rsi2 >= params.rsi2_threshold:
         return False, f"RSI(2)={snap.rsi2:.1f} not oversold (need <{params.rsi2_threshold})"
-
-    # Don't enter if stock is already at 52-week low territory
-    # (below SMA200 by more than 5% = structural weakness, not a dip)
+    # Not too far below SMA200 — structural weakness not a dip
     if snap.pct_below_sma200 < -0.05:
         return False, f"too far below SMA200 ({snap.pct_below_sma200:+.1%})"
-
+    # Must be above SMA50 — short-term trend must also be up
+    # Filters stocks above SMA200 but in short-term downtrend (PTON, ZIM pattern)
+    if hasattr(snap, 'sma50') and snap.sma50 > 0:
+        if snap.price < snap.sma50:
+            return False, "below SMA50 — short-term downtrend"
+    # Volatility cap — no meanrev on high-vol names
+    # High vol = binary event risk = gaps through stops
+    # PTON, METC, ZIM, RKLB all had ann_vol > 0.60
+    if hasattr(snap, 'ann_vol') and snap.ann_vol > 0.65:  # research-validated: PTON=0.72, HOOD=0.76, APP=0.90 all blocked
+        return False, f"ann_vol={snap.ann_vol:.2f} too high (max 0.55)"
     return True, "OK"
-
 
 def score_meanrev_candidates(snaps: List[MeanRevSnapshot],
                               params: MeanRevParams) -> List[MeanRevSnapshot]:
