@@ -323,11 +323,17 @@ def run_exits():
         price      = get_current_price(sym)
         entry      = pos['entry']
 
-        # Regime → BEAR: exit all longs
+        # cascade_bear: regime → BEAR exits all longs EXCEPT defensive sectors
+        # Mirrors backtester_v2.py line 589: strat_bear.DEFENSIVE_SECTORS exempt
         if regime == BEAR:
-            print(f"  EXIT {sym}: regime → BEAR")
-            submit_order(sym, abs(pos['qty']), 'sell')
-            tracked.pop(sym, None); continue
+            _sym_sector = _sector_map.get(sym, '')
+            _defensive = getattr(strat_bear, 'DEFENSIVE_SECTORS', {'XLP', 'XLU', 'XLV', 'XLRE'})
+            if _sym_sector not in _defensive:
+                print(f"  EXIT {sym}: cascade_bear — regime=BEAR, sector={_sym_sector}")
+                submit_order(sym, abs(pos['qty']), 'sell')
+                tracked.pop(sym, None); continue
+            else:
+                print(f"  HOLD {sym}: BEAR but defensive sector {_sym_sector} — exempt")
 
         # Mean reversion exits (different logic)
         if engine == 'meanrev':
@@ -357,7 +363,24 @@ def run_exits():
 
         stop_pct = entry_info.get('stop_pct', 0.08)
         if price > 0 and price < entry * (1 - stop_pct):
-            print(f"  STOP {sym}: ${price:.2f} below stop ${entry*(1-stop_pct):.2f}")
+            # ML conviction stop — mirrors backtester_v2.py lines 552-566.
+            # In TRENDING_BULL, hold through stop IF ML still ranks stock high
+            # AND loss hasn't exceeded 2× original stop (structural breakdown).
+            _ml_ranks_now = load_ml_ranks() or {}
+            _current_ml   = _ml_ranks_now.get(sym, 0.0)
+            _entry_ml_min = getattr(params, 'ml_rank_min',
+                            getattr(params, 'ml_rank_min_long', 0.80))
+            _max_pain     = stop_pct * 2
+            _unrealized   = (price - entry) / entry if entry > 0 else 0
+            _ml_believes  = (_current_ml >= _entry_ml_min and
+                             regime == TRENDING_BULL and
+                             _unrealized > -_max_pain)
+            if _ml_believes:
+                print(f"  HOLD {sym}: ML conviction override — ML={_current_ml:.2f}>={_entry_ml_min:.2f}, "
+                      f"regime=TRENDING_BULL, loss={_unrealized:+.1%} within {_max_pain:.0%} max pain")
+                continue
+            print(f"  STOP {sym}: ${price:.2f} below stop ${entry*(1-stop_pct):.2f} "
+                  f"(ML={_current_ml:.2f}, regime={regime})")
             submit_order(sym, abs(pos['qty']), 'sell')
             tracked.pop(sym, None); continue
 
@@ -575,6 +598,14 @@ def run_entry_scan(regime, choppy_sub, signals, ranks, tracked, portfolio):
                 if snap is None: continue
 
                 ml_rank = ranks.get(sym, 0.5)
+                # ML rank filter — mirrors backtester_v2.py lines 1086-1088.
+                # Data: 30-50% ML bucket avg=-$73, 85%+ avg=$235-277.
+                _mr_ml_min = getattr(strat_mr, 'ML_RANK_MIN',
+                             getattr(params, 'ml_rank_min',
+                             getattr(params, 'ml_rank_min_long', 0.80)))
+                if ml_rank < _mr_ml_min:
+                    print(f"  SKIP {sym} meanrev: ML rank {ml_rank:.2f} < {_mr_ml_min:.2f}")
+                    continue
                 qty     = strat_mr.size_meanrev_position(capital=portfolio, price=price, params=strat_mr.MeanRevParams(), n_open_positions=len(mr_positions), snap=snap, ml_rank=ml_rank)
                 if qty < 1: continue
 
