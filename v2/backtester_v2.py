@@ -550,8 +550,20 @@ def run_backtest_v2(
             # Lesson: whipsaw reduction via confirmation delays real exits too long.
             # Simple close-below-stop is more robust across regimes.
             if low <= stop_px:
-                exit_reason = "stop"
-                exit_ref    = stop_px
+                # ML conviction check — only hold through stop in TRENDING_BULL
+                # if model still ranks stock above entry threshold.
+                # Max pain = 2x original stop_pct — structural breakdown, not dip.
+                _current_ml_rank    = prev_ml_ranks.get(s, 0.0)
+                _entry_ml_threshold = getattr(params, 'ml_rank_min',
+                                      getattr(params, 'ml_rank_min_long', 0.80))
+                _original_stop_pct  = entry_meta.get(s, {}).get('stop_pct', stop_pct)
+                _max_pain           = _original_stop_pct * 2
+                _ml_still_believes  = (_current_ml_rank >= _entry_ml_threshold and
+                                       _current_regime == TRENDING_BULL and
+                                       unrealized_pct > -_max_pain)
+                if not _ml_still_believes:
+                    exit_reason = "stop"
+                    exit_ref    = stop_px
             elif close >= pos.entry_price * (1 + getattr(params, 'take_profit_pct', getattr(params, 'take_profit_long', 0.40))):
                 # Take profit — trailing ATR stop handles secular winners naturally
                 # Removed fitted suppression (0.90/0.85/0.65 thresholds were fitted to APP/NVDA/VRT)
