@@ -33,23 +33,29 @@ TRENDING_BULL = "TRENDING_BULL"
 CHOPPY        = "CHOPPY"
 BEAR          = "BEAR"
 
-# ── Thresholds (derived from empirical analysis of 2014-2026 data) ────────────
+# ── Thresholds ──────────────────────────────────────────────────────────────
+# ORIGIN: derived from empirical analysis of 2014-2026 data.
+# WARNING: These thresholds ARE fitted to historical data. They were chosen
+# by examining regime transitions across 12 years of SPY/HYG/VIX data.
+# For a clean holdout test, LOCK all values below — do NOT change after
+# seeing 2025 results. Any change invalidates the holdout.
+#
 # Bear conditions — any one triggers BEAR
-BEAR_SPY_VS_200MA   = -0.02   # SPY more than 2% below 200-day MA
-BEAR_HYG_20D        = -0.025  # HYG down 2.5%+ in 20 days (credit stress)
-BEAR_VIX_LEVEL      = 30.0    # VIX above 30 (fear elevated)
-BEAR_SPY_60D        = -0.05   # SPY down 5%+ over 60 days
+BEAR_SPY_VS_200MA   = -0.02   # SPY 2% below 200MA. Origin: standard technical level.
+BEAR_HYG_20D        = -0.025  # HYG credit stress. Origin: fitted to 2018/2020/2022 bear starts.
+BEAR_VIX_LEVEL      = 30.0    # VIX fear. Origin: CBOE convention (>30 = "fear").
+BEAR_SPY_60D        = -0.05   # SPY drawdown. Origin: standard correction threshold.
 
 # Recovery override — fast bounce exits bear faster
-RECOVERY_SPY_20D    = 0.05    # SPY up 5%+ in 20 days
-RECOVERY_HYG_20D    = 0.01    # HYG positive
+RECOVERY_SPY_20D    = 0.05    # Origin: fitted to 2020 March-April recovery.
+RECOVERY_HYG_20D    = 0.01    # Origin: credit normalization signal.
 
 # Trending bull conditions — ALL must be true
-BULL_SPY_SLOPE      = 0.0     # 20-day MA slope positive
-BULL_SPY_20D        = 0.0     # SPY positive over 20 days
-BULL_VIX_20D_CHG    = 0.15    # VIX not spiking more than 15% over 20 days
-BULL_HYG_20D        =  0.000  # HYG not deteriorating
-BULL_SPY_VS_200MA   = 0.03    # SPY at least 3% above 200-day MA
+BULL_SPY_SLOPE      = 0.0     # Origin: mathematical (positive slope = uptrend).
+BULL_SPY_20D        = 0.0     # Origin: same.
+BULL_VIX_20D_CHG    = 0.15    # Origin: fitted — VIX spike >15% historically preceded corrections.
+BULL_HYG_20D        =  0.000  # Origin: credit must not be deteriorating.
+BULL_SPY_VS_200MA   = 0.03    # Origin: fitted — 3% buffer prevents whipsawing at 200MA.
 
 # Hysteresis — regime must hold N days before officially changing
 # Prevents whipsawing during volatile oscillations

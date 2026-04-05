@@ -28,13 +28,35 @@ from typing import List, Tuple, Optional
 
 # ── Parameters ────────────────────────────────────────────────────────────────
 
-RSI2_THRESHOLD   = 5.0    # enter when RSI(2) < this (oversold)
-SMA200_FILTER    = True   # require price > 200d MA (uptrend confirmation)
-SMA5_EXIT        = True   # exit when price closes above 5d SMA
-MAX_HOLD_DAYS    = 10     # time stop — exit after 10 days regardless
-MAX_POSITIONS    = 2      # max concurrent mean reversion positions — additive to momentum, not dominant
-RISK_PER_TRADE   = 0.025  # 2.5% of capital per trade (smaller than momentum)
-MAX_POSITION_PCT = 0.12   # max 12% of portfolio in one mean rev position
+# ── THRESHOLD ORIGINS (documented for holdout integrity) ─────────────────────
+# RSI(2) < 5: Connors & Alvarez (2009) "Short Term Trading Strategies That Work"
+#   Published academic result, not optimized on our data. Used as-is.
+RSI2_THRESHOLD   = 5.0
+
+# SMA200 filter: Faber (2007) "A Quantitative Approach to Tactical Asset Allocation"
+#   Standard trend filter used across the industry. Not optimized.
+SMA200_FILTER    = True
+
+# SMA5 exit: Connors & Alvarez (2009). Mean reversion target = SMA5 cross.
+#   Published rule, not optimized on our data.
+SMA5_EXIT        = True
+
+# 10-day time stop: chosen as 2× the typical 5-day mean reversion window.
+#   Origin: reasonable default, NOT optimized on historical data.
+#   LOCKED for holdout — do not change after seeing 2025 results.
+MAX_HOLD_DAYS    = 10
+
+# 2 positions: conservative allocation to avoid over-concentration.
+#   Origin: judgment call, not data-driven optimization.
+MAX_POSITIONS    = 2
+
+# 2.5% risk: half the momentum risk budget (momentum = 3.5%).
+#   Origin: proportional scaling, not optimized.
+RISK_PER_TRADE   = 0.025
+
+# 12% max position: consistent with config.MAX_POSITION_PCT_AUM=15%.
+#   Origin: risk management constraint, not optimized.
+MAX_POSITION_PCT = 0.12
 
 # ── Data structures ───────────────────────────────────────────────────────────
 

@@ -598,14 +598,10 @@ def run_entry_scan(regime, choppy_sub, signals, ranks, tracked, portfolio):
                 if snap is None: continue
 
                 ml_rank = ranks.get(sym, 0.5)
-                # ML rank filter — mirrors backtester_v2.py lines 1086-1088.
-                # Data: 30-50% ML bucket avg=-$73, 85%+ avg=$235-277.
-                _mr_ml_min = getattr(strat_mr, 'ML_RANK_MIN',
-                             getattr(params, 'ml_rank_min',
-                             getattr(params, 'ml_rank_min_long', 0.80)))
-                if ml_rank < _mr_ml_min:
-                    print(f"  SKIP {sym} meanrev: ML rank {ml_rank:.2f} < {_mr_ml_min:.2f}")
-                    continue
+                # BACKFIT FIX: ML rank filter on meanrev REMOVED.
+                # This was added after seeing OOS results (backfitted).
+                # Meanrev enters on pure RSI(2) < 5 only.
+                # See backtester_v2.py line 1083 for matching change.
                 qty     = strat_mr.size_meanrev_position(capital=portfolio, price=price, params=strat_mr.MeanRevParams(), n_open_positions=len(mr_positions), snap=snap, ml_rank=ml_rank)
                 if qty < 1: continue
 
