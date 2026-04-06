@@ -77,35 +77,47 @@ MED_STRENGTH_WORDS = {"key", "significant", "major", "important", "principal", "
 def _extract_business_risk_sections(raw_text: str) -> str:
     """
     Extract Item 1 (Business) + Item 1A (Risk Factors) from 10-K text.
-    Falls back to characters 10000-80000 if section markers not found.
+    Falls back to characters 20000-120000 if section markers not found
+    or if the extracted section is under 5000 chars (TOC false match).
     Caps at 100000 characters.
     """
-    # Search for Item 1 start (Business section)
-    item1_match = re.search(
-        r"(?:^|\s)(ITEM\s+1[.\s]|Item\s+1[.\s])",
-        raw_text, re.IGNORECASE,
-    )
+    # Find ALL Item 1 matches — the first is often a TOC entry
+    # The real section heading is the one followed by substantial text
+    item1_pattern = re.compile(r"(?:^|\s)ITEM\s+1[.\s:]+\s*(?:BUSINESS|Business)", re.IGNORECASE)
+    item2_pattern = re.compile(r"(?:^|\s)ITEM\s+2[.\s:]", re.IGNORECASE)
 
-    # Search for Item 2 start (end of Risk Factors section)
-    item2_match = re.search(
-        r"(?:^|\s)(ITEM\s+2[.\s]|Item\s+2[.\s])",
-        raw_text[item1_match.start() + 100:] if item1_match else raw_text,
-        re.IGNORECASE,
-    )
+    best_text = ""
 
-    if item1_match:
+    for item1_match in item1_pattern.finditer(raw_text):
         start = item1_match.start()
+        # Find the next Item 2 after this Item 1
+        item2_match = item2_pattern.search(raw_text, pos=start + 200)
         if item2_match:
-            # item2_match offset is relative to the sliced string
-            end = start + 100 + item2_match.start()
+            end = item2_match.start()
         else:
             end = start + 100000
-        text = raw_text[start:end]
-    else:
-        # Fallback: skip cover pages (first 10K chars), take middle of document
-        text = raw_text[10000:80000]
+        candidate = raw_text[start:end]
 
-    return text[:100000]
+        # The real section is the longest match (TOC entries are short)
+        if len(candidate) > len(best_text):
+            best_text = candidate
+
+    # If no "BUSINESS" label, try broader Item 1 pattern
+    if len(best_text) < 5000:
+        item1_broad = re.compile(r"(?:^|\s)ITEM\s+1[.\s]", re.IGNORECASE)
+        for item1_match in item1_broad.finditer(raw_text):
+            start = item1_match.start()
+            item2_match = item2_pattern.search(raw_text, pos=start + 200)
+            end = item2_match.start() if item2_match else start + 100000
+            candidate = raw_text[start:end]
+            if len(candidate) > len(best_text):
+                best_text = candidate
+
+    # If extracted section is under 5000 chars, it's a TOC match — fall back
+    if len(best_text) < 5000:
+        best_text = raw_text[20000:120000]
+
+    return best_text[:100000]
 
 
 def get_10k_text(ticker: str, cik: Optional[str] = None) -> Optional[str]:
@@ -176,25 +188,67 @@ def get_10k_text(ticker: str, cik: Optional[str] = None) -> Optional[str]:
     except Exception:
         return None
 
-    # Step 2: fetch the primary document
+    # Step 2: fetch index page, find the largest .htm document (the actual 10-K)
     try:
-        if primary_doc:
-            doc_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc_nodash}/{primary_doc}"
-        else:
-            # Fetch index and find primary doc
-            index_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc_nodash}/"
+        base_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc_nodash}"
+        index_url = f"{base_url}/{acc_nodash}-index.htm"
+        idx_resp = requests.get(index_url, headers=SEC_HEADERS, timeout=15)
+        time.sleep(SEC_SLEEP)
+
+        # If -index.htm fails, try the directory listing
+        if idx_resp.status_code != 200:
+            index_url = f"{base_url}/"
             idx_resp = requests.get(index_url, headers=SEC_HEADERS, timeout=15)
             time.sleep(SEC_SLEEP)
-            if idx_resp.status_code != 200:
-                return None
-            doc_match = re.search(r'href="([^"]*10-?[kK][^"]*\.htm)"', idx_resp.text)
-            if not doc_match:
-                doc_match = re.search(r'href="([^"]*\.htm)"', idx_resp.text)
-            if not doc_match:
-                return None
-            doc_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc_nodash}/{doc_match.group(1)}"
 
-        doc_resp = requests.get(doc_url, headers=SEC_HEADERS, timeout=30)
+        if idx_resp.status_code != 200:
+            return None
+
+        # Find all .htm/.txt document links on the index page
+        doc_links = re.findall(r'href="([^"]+\.(?:htm|txt))"', idx_resp.text, re.IGNORECASE)
+        # Filter out index pages, R-files, and exhibits
+        doc_links = [
+            d for d in doc_links
+            if not d.endswith("-index.htm")
+            and "/R" not in d
+            and "ex" not in d.lower().split("/")[-1][:3]
+        ]
+
+        if not doc_links:
+            # Fallback to primaryDocument from submissions API
+            if primary_doc:
+                doc_links = [primary_doc]
+            else:
+                return None
+
+        # Score documents by size — the real 10-K is the largest .htm file
+        best_doc_url = None
+        best_size = 0
+
+        for doc_href in doc_links:
+            if doc_href.startswith("http"):
+                full_url = doc_href
+            else:
+                full_url = f"{base_url}/{doc_href}"
+            try:
+                head_resp = requests.head(full_url, headers=SEC_HEADERS, timeout=10)
+                time.sleep(SEC_SLEEP)
+                size = int(head_resp.headers.get("Content-Length", 0))
+                if size > best_size:
+                    best_size = size
+                    best_doc_url = full_url
+            except Exception:
+                continue
+
+        # If HEAD requests didn't work, just take the first non-exhibit .htm
+        if best_doc_url is None and doc_links:
+            doc_href = doc_links[0]
+            best_doc_url = f"{base_url}/{doc_href}" if not doc_href.startswith("http") else doc_href
+
+        if best_doc_url is None:
+            return None
+
+        doc_resp = requests.get(best_doc_url, headers=SEC_HEADERS, timeout=30)
         time.sleep(SEC_SLEEP)
 
         if doc_resp.status_code != 200:
