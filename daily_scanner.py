@@ -186,7 +186,7 @@ def run_daily_scan():
             try:
                 df = fetch_history(sym, days=400)
                 df.index = pd.to_datetime(df.index).tz_localize(None)
-                feats = compute_features(df, symbol=sym, vix_macro=vix_macro, streak_store=_streak_store, insider_store=_insider_store)
+                feats = compute_features(df, symbol=sym, vix_macro=vix_macro, streak_store=_streak_store, insider_store=_insider_store, regime=regime)
                 if feats is None or len(feats) == 0:
                     continue
                 latest = feats.iloc[-1]

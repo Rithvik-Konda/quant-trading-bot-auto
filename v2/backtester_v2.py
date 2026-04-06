@@ -417,6 +417,14 @@ def run_backtest_v2(
 
         # ── ML scoring ────────────────────────────────────────────────────
         X, valid_syms = feat_matrix.get_panel(date, available_symbols)
+        # Augment with regime-interacted features (computed daily, not precomputed)
+        _REG_BASE = ["mom_12_1", "ret_60", "ret_20", "rsi_14",
+                      "realized_vol_20", "beta_60", "intraday_mom_20d", "overnight_mom_20d"]
+        for _bf in _REG_BASE:
+            if _bf in X.columns:
+                X[f"reg_{_bf}_x_bull"]   = X[_bf] if _current_regime == TRENDING_BULL else 0.0
+                X[f"reg_{_bf}_x_choppy"] = X[_bf] if _current_regime == CHOPPY else 0.0
+                X[f"reg_{_bf}_x_bear"]   = X[_bf] if _current_regime == BEAR else 0.0
         if X.shape[0] == 0:
             port_val = _portfolio_value(cash, close_prices, long_positions, short_positions)
             equity.append((date, port_val))
