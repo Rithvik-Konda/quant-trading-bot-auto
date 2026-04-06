@@ -204,14 +204,29 @@ def get_10k_text(ticker: str, cik: Optional[str] = None) -> Optional[str]:
         if idx_resp.status_code != 200:
             return None
 
-        # Find all .htm/.txt document links on the index page
-        doc_links = re.findall(r'href="([^"]+\.(?:htm|txt))"', idx_resp.text, re.IGNORECASE)
+        # Find all .htm/.txt document links, including XBRL ix?doc= wrapper links
+        # EDGAR wraps the primary 10-K in an inline viewer: /ix?doc=/Archives/...
+        raw_links = re.findall(
+            r'href="(?:/ix\?doc=)?([^"]+\.(?:htm|txt))"',
+            idx_resp.text, re.IGNORECASE,
+        )
+        # Also extract paths from ix?doc= style links separately
+        ix_links = re.findall(
+            r'href="/ix\?doc=(/Archives/[^"]+\.(?:htm|txt))"',
+            idx_resp.text, re.IGNORECASE,
+        )
+        doc_links = list(dict.fromkeys(raw_links + ix_links))  # dedupe, preserve order
+
         # Filter out index pages, R-files, and exhibits
+        def _is_exhibit(href: str) -> bool:
+            filename = href.split("/")[-1]
+            return bool(re.search(r'(?:^|[-_x])ex\d', filename, re.IGNORECASE))
+
         doc_links = [
             d for d in doc_links
             if not d.endswith("-index.htm")
             and "/R" not in d
-            and "ex" not in d.lower().split("/")[-1][:3]
+            and not _is_exhibit(d)
         ]
 
         if not doc_links:
@@ -228,6 +243,8 @@ def get_10k_text(ticker: str, cik: Optional[str] = None) -> Optional[str]:
         for doc_href in doc_links:
             if doc_href.startswith("http"):
                 full_url = doc_href
+            elif doc_href.startswith("/Archives/"):
+                full_url = f"https://www.sec.gov{doc_href}"
             else:
                 full_url = f"{base_url}/{doc_href}"
             try:
@@ -243,7 +260,12 @@ def get_10k_text(ticker: str, cik: Optional[str] = None) -> Optional[str]:
         # If HEAD requests didn't work, just take the first non-exhibit .htm
         if best_doc_url is None and doc_links:
             doc_href = doc_links[0]
-            best_doc_url = f"{base_url}/{doc_href}" if not doc_href.startswith("http") else doc_href
+            if doc_href.startswith("http"):
+                best_doc_url = doc_href
+            elif doc_href.startswith("/Archives/"):
+                best_doc_url = f"https://www.sec.gov{doc_href}"
+            else:
+                best_doc_url = f"{base_url}/{doc_href}"
 
         if best_doc_url is None:
             return None
