@@ -866,6 +866,10 @@ def run_backtest_v2(
 
                 px         = open_next_prices[s]
                 stop_pct   = float(np.clip(snap.stop_pct, getattr(params, 'stop_min_pct', getattr(params, 'stop_min_long', 0.02)), getattr(params, 'stop_max_pct', getattr(params, 'stop_max_long', 0.12))))
+                # TESTED & REJECTED: wider stops (1.5x) for TRENDING_BULL + ML>=0.85.
+                # Result: OOS CAGR 18.98% vs 25.40% baseline. Stops increased from
+                # 210 to 243. Wider stops held through drawdowns that never recovered.
+                # Keeping tight ATR stops — they exit faster and allow better re-entry.
                 # Fix 2: ML-rank-scaled conviction sizing
                 import numpy as _np
                 base_conviction = conviction_multiplier(snap)
@@ -1039,6 +1043,9 @@ def run_backtest_v2(
         _mr_slots_ok = _momentum_slots_filled or _current_regime == BEAR
         if _current_regime in (CHOPPY, BEAR) and _mr_slots_ok and _daily_vol_scalar > 0 and not cascade_freeze:
             _mr_params = strat_mr.MeanRevParams()
+            # TESTED & REJECTED: 3 meanrev slots in CHOPPY (was 2).
+            # Result: OOS CAGR 15.06% vs 25.40% baseline. 84 extra trades at
+            # lower quality (WR 68% vs 70%, avg $98 vs $125). Keep at 2.
             _mr_slots  = max(0, _mr_params.max_positions - sum(
                 1 for s in long_positions
                 if entry_meta.get(s, {}).get("engine") == "meanrev"
@@ -1158,6 +1165,9 @@ def run_backtest_v2(
                 px         = open_next_prices[s]
                 stop_pct   = bear_params.stop_short
                 scalar     = bear_params.position_scalar_short
+                # TESTED & REJECTED: 1.25x short sizing in BEAR.
+                # Result: OOS CAGR 15.06% vs 25.40% baseline. Larger shorts
+                # increased avg stop loss from $634 to $816. Keep base sizing.
                 risk_budget= config.INITIAL_CAPITAL * bear_params.risk_per_trade_short * scalar
                 qty_risk   = int(risk_budget / (px * stop_pct)) if px * stop_pct > 0 else 0
                 qty        = min(qty_risk, int(config.INITIAL_CAPITAL * 0.08 / px) if px > 0 else 0)  # max 8% of initial capital per short
