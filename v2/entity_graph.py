@@ -180,8 +180,8 @@ def get_10k_text(ticker: str, cik: Optional[str] = None) -> Optional[str]:
         if tenk_idx is None:
             return None
 
-        accession = accessions[tenk_idx]
-        acc_nodash = accession.replace("-", "")
+        acc_dashed = accessions[tenk_idx]           # e.g. "0001045810-26-000021"
+        acc_nodash = acc_dashed.replace("-", "")     # e.g. "000104581026000021"
         primary_doc = primary_docs[tenk_idx] if tenk_idx < len(primary_docs) else None
         cik_clean = cik.lstrip("0") or "0"
 
@@ -191,7 +191,7 @@ def get_10k_text(ticker: str, cik: Optional[str] = None) -> Optional[str]:
     # Step 2: fetch index page, find the largest .htm document (the actual 10-K)
     try:
         base_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc_nodash}"
-        index_url = f"{base_url}/{acc_nodash}-index.htm"
+        index_url = f"{base_url}/{acc_dashed}-index.htm"
         idx_resp = requests.get(index_url, headers=SEC_HEADERS, timeout=15)
         time.sleep(SEC_SLEEP)
 
