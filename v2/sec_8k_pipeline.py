@@ -153,63 +153,43 @@ def get_8k_filings(
             return _get_8k_filings_fulltext(ticker, start_date, end_date)
 
         filings = []
+        ticker_upper = ticker.upper()
         for hit in hits:
             source = hit.get("_source", {})
+
+            # Filter: only filings from the requested company
+            # EDGAR text search matches any document mentioning the ticker
+            display_names = source.get("display_names", [])
+            if not any(f"({ticker_upper})" in dn for dn in display_names):
+                continue
+
+            # Accession number: field is "adsh" (accession-dash-hyphenated)
+            adsh = source.get("adsh", "")
+            ciks = source.get("ciks", [])
+            cik = ciks[0].lstrip("0") if ciks else ""
+            acc_nodash = adsh.replace("-", "")
+
+            # Items: returned as list e.g. ["2.02", "9.01"]
+            items_list = source.get("items", [])
+            items_str = ",".join(items_list) if isinstance(items_list, list) else str(items_list)
+
+            # Document filename from _id: "accession:filename"
+            doc_id = hit.get("_id", "")
+            doc_filename = doc_id.split(":")[-1] if ":" in doc_id else ""
+
             filing = {
                 "ticker": ticker,
                 "date": source.get("file_date", ""),
-                "accession_number": source.get("accession_no", "").replace("-", ""),
-                "url": f"https://www.sec.gov/Archives/edgar/data/{source.get('entity_id', '')}/{source.get('accession_no', '').replace('-', '')}/",
-                "item_types": source.get("items", ""),
+                "accession_number": adsh,
+                "accession_nodash": acc_nodash,
+                "cik": cik,
+                "url": f"https://www.sec.gov/Archives/edgar/data/{cik}/{acc_nodash}/{doc_filename}" if cik and acc_nodash else "",
+                "item_types": items_str,
             }
             if filing["date"]:
                 filings.append(filing)
 
         return filings
-
-    except Exception:
-        return _get_8k_filings_fulltext(ticker, start_date, end_date)
-
-
-def _get_8k_filings_fulltext(
-    ticker: str,
-    start_date: str,
-    end_date: str,
-) -> List[Dict]:
-    """Fallback: use EDGAR full-text search API."""
-    url = "https://efts.sec.gov/LATEST/search-index"
-    params = {
-        "q": f'"{ticker}"',
-        "forms": "8-K",
-        "dateRange": "custom",
-        "startdt": start_date,
-        "enddt": end_date,
-    }
-
-    try:
-        # Try the newer EDGAR search endpoint
-        alt_url = "https://efts.sec.gov/LATEST/search-index"
-        resp = requests.get(alt_url, params=params, headers=SEC_HEADERS, timeout=15)
-        time.sleep(SEC_RATE_LIMIT)
-
-        if resp.status_code != 200:
-            return []
-
-        data = resp.json()
-        hits = data.get("hits", {}).get("hits", [])
-
-        filings = []
-        for hit in hits:
-            source = hit.get("_source", {})
-            filings.append({
-                "ticker": ticker,
-                "date": source.get("file_date", ""),
-                "accession_number": source.get("accession_no", "").replace("-", ""),
-                "url": "",
-                "item_types": source.get("items", ""),
-            })
-
-        return [f for f in filings if f["date"]]
 
     except Exception:
         return []
@@ -228,18 +208,16 @@ def fetch_8k_text(accession_number: str, cik: Optional[str] = None) -> Optional[
     Returns:
         Raw text truncated to first 5000 characters, or None on failure.
     """
-    # Normalize accession number
+    # Normalize accession number: strip dashes for URL path
     acc = accession_number.replace("-", "")
     if len(acc) < 18:
         return None
 
-    # Format with dashes: XXXXXXXXXX-YY-ZZZZZZ
-    acc_dashed = f"{acc[:10]}-{acc[10:12]}-{acc[12:]}"
-
-    # Try to find the filing index page
+    # CIK is required for the EDGAR URL path — not derivable from accession
     if cik:
         cik_clean = cik.lstrip("0") or "0"
     else:
+        # Accession format: {filer_cik}-{yy}-{seq}. First 10 digits = filer CIK.
         cik_clean = acc[:10].lstrip("0") or "0"
 
     index_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc}/"
@@ -545,7 +523,8 @@ def build_8k_history(
             rule_sentiment = score_8k_sentiment(items)
 
             # Fetch text for FinBERT + novelty (best-effort)
-            cik = get_cik(ticker)
+            # Use CIK from filing if available, otherwise look up
+            cik = filing.get("cik") or get_cik(ticker)
             text = fetch_8k_text(filing["accession_number"], cik=cik)
 
             finbert = score_8k_finbert(text or "")
