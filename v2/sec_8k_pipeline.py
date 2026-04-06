@@ -275,11 +275,25 @@ def fetch_8k_text(accession_number: str, cik: Optional[str] = None) -> Optional[
         if doc_resp.status_code != 200:
             return None
 
-        # Strip HTML tags for cleaner text
-        text = re.sub(r"<[^>]+>", " ", doc_resp.text)
-        text = re.sub(r"\s+", " ", text).strip()
+        # Strip XBRL inline viewer markup to extract readable prose
+        raw = doc_resp.text
+        # Remove head/script/style blocks entirely
+        raw = re.sub(r'<head[^>]*>.*?</head>', ' ', raw, flags=re.DOTALL | re.IGNORECASE)
+        raw = re.sub(r'<script[^>]*>.*?</script>', ' ', raw, flags=re.DOTALL | re.IGNORECASE)
+        raw = re.sub(r'<style[^>]*>.*?</style>', ' ', raw, flags=re.DOTALL | re.IGNORECASE)
+        # Strip ix: XBRL tags but keep their text content
+        raw = re.sub(r'<ix:[^>]+>', ' ', raw, flags=re.IGNORECASE)
+        raw = re.sub(r'</ix:[^>]+>', ' ', raw, flags=re.IGNORECASE)
+        raw = re.sub(r'<xbrli:[^>]+>.*?</xbrli:[^>]+>', ' ', raw, flags=re.DOTALL | re.IGNORECASE)
+        # Strip remaining HTML tags
+        raw = re.sub(r'<[^>]+>', ' ', raw)
+        # Normalize whitespace
+        raw = re.sub(r'\s+', ' ', raw).strip()
+        # Filter to prose sentences (skip XBRL namespace junk)
+        sentences = re.split(r'(?<=[.!?])\s+', raw)
+        prose = ' '.join(s for s in sentences if len(s) > 30 and re.search(r'[a-z]{4,}', s))
 
-        return text[:5000]
+        return prose[:5000] if prose else raw[:5000]
 
     except Exception:
         return None
