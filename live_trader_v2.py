@@ -461,12 +461,38 @@ def run_exits():
                 _calls_to_close = check_call_exits(_open_calls, positions, today_str)
                 for _csym in _calls_to_close:
                     _call_info = _open_calls[_csym]
-                    print(f"  EXIT CALL {_csym}: {_call_info.get('expiration','')} "
-                          f"K={_call_info.get('strike','')} "
-                          f"x{_call_info.get('contracts',0)}")
-                    # Note: Alpaca options orders use the option contract symbol,
-                    # not the underlying. For now, just remove from tracking.
-                    # TODO: submit sell-to-close via Alpaca options API
+                    _exp = _call_info.get('expiration', '')  # YYYYMMDD
+                    _k_str = _call_info.get('strike', '0.000')
+                    _contracts = _call_info.get('contracts', 0)
+                    print(f"  EXIT CALL {_csym}: {_exp} K={_k_str} x{_contracts}")
+
+                    # Build OCC contract symbol: {SYM}{YY}{MM}{DD}C{strike_8dig}
+                    # Strike: 8 digits, 3 implied decimals, zero-padded
+                    # e.g. $480.000 → 00480000, $17.500 → 00017500
+                    try:
+                        _k_float = float(_k_str)
+                        _k_padded = f"{int(_k_float * 1000):08d}"
+                        _occ = f"{_csym}{_exp[2:]}C{_k_padded}"
+                        _order_body = {
+                            "symbol": _occ,
+                            "qty": str(_contracts),
+                            "side": "sell",
+                            "type": "market",
+                            "time_in_force": "day",
+                        }
+                        _resp = requests.post(
+                            f"{TRADE_URL}/v2/orders",
+                            headers=HEADERS,
+                            json=_order_body,
+                        )
+                        _order = _resp.json()
+                        if "id" in _order:
+                            print(f"  ✓ SELL-TO-CLOSE {_occ} x{_contracts} → {_order.get('status','')}")
+                        else:
+                            print(f"  ✗ SELL-TO-CLOSE {_occ} FAILED: {_order.get('message', _resp.text[:100])}")
+                    except Exception as _oe:
+                        print(f"  ✗ SELL-TO-CLOSE order failed for {_csym}: {_oe}")
+
                     del _open_calls[_csym]
                 if _calls_to_close:
                     save_open_calls(_open_calls)
