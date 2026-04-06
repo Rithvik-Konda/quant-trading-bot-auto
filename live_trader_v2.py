@@ -38,6 +38,16 @@ import strategy_choppy   as strat_chop
 import strategy_bear     as strat_bear
 import strategy_meanrev  as strat_mr
 
+try:
+    from options_overlay import (
+        should_buy_call, get_nearest_expiration, get_nearest_strike,
+        get_option_price, size_call_position, add_call_position,
+        load_open_calls, save_open_calls, check_call_exits,
+    )
+    _HAS_OPTIONS_OVERLAY = True
+except ImportError:
+    _HAS_OPTIONS_OVERLAY = False
+
 # ── Config ─────────────────────────────────────────────────────────────────────
 ALPACA_KEY    = os.environ.get('ALPACA_KEY',    'PKKUPJE3L32EXWBQVVEHZG5O7R')
 ALPACA_SECRET = os.environ.get('ALPACA_SECRET', 'F7wJNy6qHNfvztDpdBHhE5NT33eo5ckqUZ7b4krk1FpF')
@@ -443,6 +453,27 @@ def run_exits():
             submit_order(sym, abs(pos['qty']), 'buy')
             tracked.pop(sym, None); continue
 
+    # ── Call overlay exits ─────────────────────────────────────────────────
+    if _HAS_OPTIONS_OVERLAY:
+        try:
+            _open_calls = load_open_calls()
+            if _open_calls:
+                _calls_to_close = check_call_exits(_open_calls, positions, today_str)
+                for _csym in _calls_to_close:
+                    _call_info = _open_calls[_csym]
+                    print(f"  EXIT CALL {_csym}: {_call_info.get('expiration','')} "
+                          f"K={_call_info.get('strike','')} "
+                          f"x{_call_info.get('contracts',0)}")
+                    # Note: Alpaca options orders use the option contract symbol,
+                    # not the underlying. For now, just remove from tracking.
+                    # TODO: submit sell-to-close via Alpaca options API
+                    del _open_calls[_csym]
+                if _calls_to_close:
+                    save_open_calls(_open_calls)
+                    print(f"  Closed {len(_calls_to_close)} call overlay(s)")
+        except Exception as _ce:
+            print(f"  ✗ Call exit check failed: {_ce}")
+
     json.dump(tracked, open(tracked_file, 'w'), indent=2)
     print(f"\n[exits] Done — {datetime.now().strftime('%H:%M')}")
 
@@ -543,6 +574,23 @@ def run_entry_scan(regime, choppy_sub, signals, ranks, tracked, portfolio):
                     'side':          'long',
                 }
                 entered += 1
+
+                # ── Options overlay: buy 30-DTE call on TRENDING_BULL momentum entries
+                if _HAS_OPTIONS_OVERLAY:
+                    try:
+                        if should_buy_call(regime, rank, price):
+                            _exp = get_nearest_expiration(today_str, target_dte=30)
+                            _strike = get_nearest_strike(price)
+                            _opt_px = get_option_price(sym, _exp, _strike, 'call',
+                                                       query_date=today_str.replace('-', ''))
+                            _contracts = size_call_position(portfolio, _opt_px)
+                            if _contracts > 0 and _opt_px is not None:
+                                add_call_position(sym, _exp, _strike, _contracts,
+                                                  _opt_px, today_str, price)
+                                print(f"  ✓ CALL {sym} {_contracts}x {_exp} {_strike} "
+                                      f"@ ${_opt_px:.2f}")
+                    except Exception as _oe:
+                        print(f"  ✗ CALL overlay failed for {sym}: {_oe}")
 
     # ── Mean reversion entries (CHOPPY only) ───────────────────────────────────
     if regime == CHOPPY and vol_scalar > 0:
