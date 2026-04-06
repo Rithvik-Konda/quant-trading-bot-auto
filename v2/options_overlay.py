@@ -13,7 +13,6 @@ import os
 import sys
 import json
 import time
-import math
 import requests
 from datetime import datetime, date, timedelta
 from typing import Optional, Dict, List
@@ -108,7 +107,7 @@ def get_option_price(
     expiration: str,
     strike: str,
     right: str = "call",
-    query_date: Optional[str] = None,
+    query_date: str = "",
 ) -> Optional[float]:
     """
     Query ThetaData REST API for option EOD price.
@@ -118,20 +117,13 @@ def get_option_price(
         expiration: 'YYYYMMDD'
         strike: string with 3 decimals e.g. '480.000'
         right: 'call' or 'put'
-        query_date: 'YYYYMMDD' date to query price for.
-                    Defaults to expiration - 1 day.
+        query_date: 'YYYYMMDD' date to query price for. Required.
 
     Returns:
         Mid price (bid+ask)/2 or None if no data.
     """
-    if query_date is None:
-        # Day before expiry
-        exp_dt = datetime.strptime(expiration, "%Y%m%d").date()
-        qd = exp_dt - timedelta(days=1)
-        # Skip weekends
-        while qd.weekday() >= 5:
-            qd -= timedelta(days=1)
-        query_date = qd.strftime("%Y%m%d")
+    if not query_date:
+        return None
 
     url = f"{THETADATA_BASE}/v3/option/history/eod"
     params = {
@@ -379,7 +371,6 @@ def main():
         strike = call.get("strike", "")
         contracts = call.get("contracts", 0)
         entry_px = call.get("entry_price", 0)
-        entry_dt = call.get("entry_date", "")
         eq_entry = call.get("equity_entry_price", 0)
 
         premium = entry_px * contracts * 100
