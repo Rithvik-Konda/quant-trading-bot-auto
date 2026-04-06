@@ -563,12 +563,20 @@ def run_backtest_v2(
                 else:
                     continue  # skip ATR stop logic for meanrev positions
 
+            # Earnings exit — close momentum longs 2 days before earnings
+            # to avoid overnight gap risk from earnings surprises.
+            if entry_meta.get(s, {}).get("engine") == "momentum" and earnings_dates.get(s):
+                _days_to_earn = [(ed - date).days for ed in earnings_dates[s]]
+                if any(0 <= d <= 2 for d in _days_to_earn):
+                    exit_reason = "earnings_exit"
+                    exit_ref    = close
+
             # Stop exit — original logic restored.
             # Regime-conditional confirmation (vol_ratio>1.5 OR >3% break)
             # caused WR to drop to 13% by holding through real breakdowns.
             # Lesson: whipsaw reduction via confirmation delays real exits too long.
             # Simple close-below-stop is more robust across regimes.
-            if low <= stop_px:
+            if not exit_reason and low <= stop_px:
                 # ML conviction check — only hold through stop in TRENDING_BULL
                 # if model still ranks stock above entry threshold.
                 # Max pain = 2x original stop_pct — structural breakdown, not dip.
