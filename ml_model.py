@@ -32,6 +32,18 @@ from typing import Dict, List, Optional, Tuple
 import joblib
 import numpy as np
 import pandas as pd
+
+try:
+    from v2.alpha101 import get_alpha101_row
+    _HAS_ALPHA101 = True
+except ImportError:
+    try:
+        import sys as _sys_a101
+        _sys_a101.path.insert(0, os.path.join(os.path.dirname(__file__), "v2"))
+        from alpha101 import get_alpha101_row
+        _HAS_ALPHA101 = True
+    except ImportError:
+        _HAS_ALPHA101 = False
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
@@ -1164,6 +1176,17 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
         d["vix_spike_prob_10d"] = pd.Series(0.3, index=df.index)
         d["vix_predicted_30d"]  = pd.Series(20.0, index=df.index)
         d["vix_expected_drop"]  = pd.Series(0.0, index=df.index)
+
+    # ── Alpha101 WorldQuant factors (Kakushadze 2016) ──────────────────────
+    # 30 cross-sectional OHLCV factors. Added as additional features with
+    # prefix "a101_". Failures silently fill with 0.
+    if _HAS_ALPHA101:
+        try:
+            a101 = get_alpha101_row(df)
+            for k, v in a101.items():
+                d[k] = pd.Series(v, index=df.index)
+        except Exception:
+            pass  # alpha101 failure is non-fatal — existing features unchanged
 
     feat = pd.DataFrame(d, index=df.index)
     return feat.replace([np.inf, -np.inf], np.nan)
