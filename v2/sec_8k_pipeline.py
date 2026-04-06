@@ -365,6 +365,125 @@ def score_8k_sentiment(item_types: Dict[str, bool]) -> float:
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+#  PART 2B — FINBERT SENTIMENT + NOVELTY SCORING
+# ═══════════════════════════════════════════════════════════════════════════════
+
+_finbert_pipeline = None
+
+
+def score_8k_finbert(
+    text: str,
+    model=None,
+    tokenizer=None,
+) -> Dict[str, float]:
+    """
+    Score 8-K text using ProsusAI/finbert (financial domain BERT).
+    Lazy-loads model on first call, caches globally.
+
+    Args:
+        text: raw 8-K text (truncated to 512 tokens internally)
+        model: optional pre-loaded model (for batch use)
+        tokenizer: optional pre-loaded tokenizer
+
+    Returns:
+        {positive: float, negative: float, neutral: float, compound: float}
+        compound = positive - negative, range -1 to +1
+    """
+    default = {"positive": 0.0, "negative": 0.0, "neutral": 1.0, "compound": 0.0}
+
+    if not text or not text.strip():
+        return default
+
+    global _finbert_pipeline
+
+    try:
+        if model is not None and tokenizer is not None:
+            from transformers import pipeline as hf_pipeline
+            pipe = hf_pipeline("sentiment-analysis", model=model, tokenizer=tokenizer,
+                               truncation=True, max_length=512)
+        elif _finbert_pipeline is not None:
+            pipe = _finbert_pipeline
+        else:
+            from transformers import pipeline as hf_pipeline
+            _finbert_pipeline = hf_pipeline(
+                "sentiment-analysis",
+                model="ProsusAI/finbert",
+                truncation=True,
+                max_length=512,
+            )
+            pipe = _finbert_pipeline
+
+        # Truncate to ~512 tokens worth of text (~2000 chars)
+        truncated = text[:2000]
+        results = pipe(truncated)
+
+        # Results: list of {label: 'positive'/'negative'/'neutral', score: float}
+        scores = {"positive": 0.0, "negative": 0.0, "neutral": 0.0}
+        if isinstance(results, list):
+            for r in results:
+                label = r.get("label", "neutral").lower()
+                score = r.get("score", 0.0)
+                if label in scores:
+                    scores[label] = score
+
+        scores["compound"] = max(-1.0, min(1.0, scores["positive"] - scores["negative"]))
+        return scores
+
+    except ImportError:
+        return default
+    except Exception:
+        return default
+
+
+def score_8k_novelty(text: str, prior_texts: List[str]) -> float:
+    """
+    TF-IDF cosine similarity between current filing and prior filings.
+
+    Args:
+        text: current 8-K filing text
+        prior_texts: list of prior filing texts for the same ticker
+
+    Returns:
+        Float 0-1 where 1.0 = completely novel, 0.0 = identical to prior.
+        Returns 1.0 if prior_texts is empty.
+    """
+    if not text or not text.strip():
+        return 1.0
+
+    if not prior_texts:
+        return 1.0
+
+    # Filter out empty strings
+    valid_priors = [t for t in prior_texts if t and t.strip()]
+    if not valid_priors:
+        return 1.0
+
+    try:
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        from sklearn.metrics.pairwise import cosine_similarity
+
+        corpus = valid_priors + [text]
+        vectorizer = TfidfVectorizer(max_features=1000, stop_words="english")
+        tfidf = vectorizer.fit_transform(corpus)
+
+        # Similarity between current (last) and all priors
+        current_vec = tfidf[-1:]
+        prior_vecs = tfidf[:-1]
+        similarities = cosine_similarity(current_vec, prior_vecs).flatten()
+
+        # Max similarity to any prior filing
+        max_sim = float(similarities.max()) if len(similarities) > 0 else 0.0
+
+        # Novelty = 1 - max_similarity
+        return max(0.0, min(1.0, 1.0 - max_sim))
+
+    except ImportError:
+        return 1.0
+    except Exception:
+        return 1.0
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 #  PART 3 — HISTORICAL BACKFILL
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -413,24 +532,38 @@ def build_8k_history(
             continue
 
         filings = get_8k_filings(ticker, start_date, end_date)
+        prior_texts: List[str] = []  # for novelty scoring within this ticker
 
         for filing in filings:
             # Classify items from the filing metadata
             item_str = filing.get("item_types", "")
             if item_str:
-                # Parse pre-extracted items
                 items = {item: (item in item_str) for item in ITEM_NUMBERS}
             else:
                 items = {}
 
-            sentiment = score_8k_sentiment(items)
+            rule_sentiment = score_8k_sentiment(items)
+
+            # Fetch text for FinBERT + novelty (best-effort)
+            cik = get_cik(ticker)
+            text = fetch_8k_text(filing["accession_number"], cik=cik)
+
+            finbert = score_8k_finbert(text or "")
+            novelty = score_8k_novelty(text or "", prior_texts)
+
+            if text:
+                prior_texts.append(text)
+                # Keep last 10 for novelty comparison
+                prior_texts = prior_texts[-10:]
 
             rows.append({
                 "ticker": ticker,
                 "date": filing["date"],
                 "accession_number": filing["accession_number"],
                 "item_types": ",".join(k for k, v in items.items() if v),
-                "sentiment_score": round(sentiment, 3),
+                "sentiment_score": round(rule_sentiment, 3),
+                "finbert_score": round(finbert["compound"], 3),
+                "novelty_score": round(novelty, 3),
             })
 
     # Combine with existing data
@@ -464,7 +597,8 @@ def load_8k_history(path: str = str(DEFAULT_OUTPUT)) -> pd.DataFrame:
     """
     if not os.path.exists(path):
         return pd.DataFrame(columns=["ticker", "date", "accession_number",
-                                     "item_types", "sentiment_score"])
+                                     "item_types", "sentiment_score",
+                                     "finbert_score", "novelty_score"])
 
     df = pd.read_csv(path)
     df["date"] = pd.to_datetime(df["date"])
@@ -482,10 +616,9 @@ def get_8k_signal(
     query_date: str,
     history_df: pd.DataFrame,
     lookback_days: int = 5,
-) -> float:
+) -> Dict[str, float]:
     """
-    Returns the max absolute sentiment score from any 8-K filed
-    in the lookback window.
+    Returns combined 8-K signal from filings in the lookback window.
 
     Args:
         ticker: stock ticker
@@ -494,16 +627,20 @@ def get_8k_signal(
         lookback_days: number of days to look back (default 5)
 
     Returns:
-        Float -1.0 to +1.0. Returns 0.0 if no filings in window.
+        Dict with keys:
+          sentiment_rule:    max abs rule-based score (-1 to +1)
+          sentiment_finbert: max abs FinBERT compound score (-1 to +1)
+          novelty:           avg novelty score (0 to 1)
+          combined:          0.4*rule + 0.4*finbert + 0.2*novelty
+        All zeros if no filings in window.
     """
+    default = {"sentiment_rule": 0.0, "sentiment_finbert": 0.0,
+               "novelty": 0.0, "combined": 0.0}
+
     if history_df is None or len(history_df) == 0:
-        return 0.0
+        return default
 
-    if isinstance(query_date, str):
-        qd = pd.Timestamp(query_date)
-    else:
-        qd = pd.Timestamp(query_date)
-
+    qd = pd.Timestamp(query_date)
     window_start = qd - pd.Timedelta(days=lookback_days)
 
     mask = (
@@ -514,15 +651,45 @@ def get_8k_signal(
     window = history_df[mask]
 
     if len(window) == 0:
-        return 0.0
+        return default
 
-    scores = window["sentiment_score"].dropna()
-    if len(scores) == 0:
-        return 0.0
+    # Rule-based sentiment: max absolute value
+    rule_scores = window["sentiment_score"].dropna()
+    if len(rule_scores) > 0:
+        rule_idx = rule_scores.abs().idxmax()
+        rule_val = float(rule_scores.loc[rule_idx])
+    else:
+        rule_val = 0.0
 
-    # Return the score with the largest absolute value
-    max_idx = scores.abs().idxmax()
-    return float(scores.loc[max_idx])
+    # FinBERT sentiment: max absolute value
+    finbert_col = "finbert_score"
+    if finbert_col in window.columns:
+        fb_scores = window[finbert_col].dropna()
+        if len(fb_scores) > 0:
+            fb_idx = fb_scores.abs().idxmax()
+            fb_val = float(fb_scores.loc[fb_idx])
+        else:
+            fb_val = 0.0
+    else:
+        fb_val = 0.0
+
+    # Novelty: average across window
+    novelty_col = "novelty_score"
+    if novelty_col in window.columns:
+        nov_scores = window[novelty_col].dropna()
+        nov_val = float(nov_scores.mean()) if len(nov_scores) > 0 else 0.0
+    else:
+        nov_val = 0.0
+
+    combined = 0.4 * rule_val + 0.4 * fb_val + 0.2 * nov_val
+    combined = max(-1.0, min(1.0, combined))
+
+    return {
+        "sentiment_rule": round(rule_val, 4),
+        "sentiment_finbert": round(fb_val, 4),
+        "novelty": round(nov_val, 4),
+        "combined": round(combined, 4),
+    }
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -556,8 +723,12 @@ if __name__ == "__main__":
     elif args.signal:
         ticker, date_str = args.signal
         history = load_8k_history()
-        score = get_8k_signal(ticker, date_str, history)
-        print(f"8-K signal for {ticker} on {date_str}: {score:+.3f}")
+        sig = get_8k_signal(ticker, date_str, history)
+        print(f"8-K signal for {ticker} on {date_str}:")
+        print(f"  Rule-based:  {sig['sentiment_rule']:+.3f}")
+        print(f"  FinBERT:     {sig['sentiment_finbert']:+.3f}")
+        print(f"  Novelty:     {sig['novelty']:.3f}")
+        print(f"  Combined:    {sig['combined']:+.3f}")
 
     else:
         # Default: show summary of cached history
