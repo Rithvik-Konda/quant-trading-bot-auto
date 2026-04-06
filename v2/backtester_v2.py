@@ -418,13 +418,18 @@ def run_backtest_v2(
         # ── ML scoring ────────────────────────────────────────────────────
         X, valid_syms = feat_matrix.get_panel(date, available_symbols)
         # Augment with regime-interacted features (computed daily, not precomputed)
+        # X is ndarray, feat_cols_union is the column name list
         _REG_BASE = ["mom_12_1", "ret_60", "ret_20", "rsi_14",
                       "realized_vol_20", "beta_60", "intraday_mom_20d", "overnight_mom_20d"]
         for _bf in _REG_BASE:
-            if _bf in X.columns:
-                X[f"reg_{_bf}_x_bull"]   = X[_bf] if _current_regime == TRENDING_BULL else 0.0
-                X[f"reg_{_bf}_x_choppy"] = X[_bf] if _current_regime == CHOPPY else 0.0
-                X[f"reg_{_bf}_x_bear"]   = X[_bf] if _current_regime == BEAR else 0.0
+            if _bf in feat_cols_union:
+                _col_idx  = feat_cols_union.index(_bf)
+                _col_vals = X[:, _col_idx]
+                _bull_col   = _col_vals if _current_regime == TRENDING_BULL else np.zeros(len(_col_vals))
+                _choppy_col = _col_vals if _current_regime == CHOPPY else np.zeros(len(_col_vals))
+                _bear_col   = _col_vals if _current_regime == BEAR else np.zeros(len(_col_vals))
+                X = np.column_stack([X, _bull_col, _choppy_col, _bear_col])
+                feat_cols_union = feat_cols_union + [f"reg_{_bf}_x_bull", f"reg_{_bf}_x_choppy", f"reg_{_bf}_x_bear"]
         if X.shape[0] == 0:
             port_val = _portfolio_value(cash, close_prices, long_positions, short_positions)
             equity.append((date, port_val))
