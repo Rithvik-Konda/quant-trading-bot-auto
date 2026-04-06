@@ -15,6 +15,7 @@ import os
 import sys
 import re
 import csv
+import html
 import json
 import time
 import requests
@@ -338,6 +339,11 @@ def extract_relationships(ticker: str, text: str) -> List[Dict]:
     if not text:
         return []
 
+    # Clean residual HTML entities and normalize whitespace
+    text = html.unescape(text)
+    text = re.sub(r'&#\d+;|&[a-zA-Z]+;', ' ', text)
+    text = re.sub(r'\s+', ' ', text)
+
     relationships = []
 
     pattern_groups = [
@@ -374,25 +380,35 @@ def extract_relationships(ticker: str, text: str) -> List[Dict]:
 
 
 def _extract_entity(sentence: str, pattern: str) -> str:
-    """Try to extract a company/entity name from the sentence near the pattern match."""
-    # Look for capitalized multi-word sequences (likely company names)
-    caps = re.findall(r"\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*(?:\s+(?:Inc|Corp|Co|Ltd|LLC|Group|Company)\.?)?)\b", sentence)
-    if caps:
-        # Return the longest capitalized sequence (likely the company name)
-        return max(caps, key=len)
-
-    # Look for quoted names
-    quoted = re.findall(r'"([^"]+)"', sentence)
+    """Extract company/entity name from sentence, in priority order."""
+    # Priority 1: quoted strings
+    quoted = re.findall(r'"([^"]{3,60})"', sentence)
     if quoted:
-        return quoted[0]
+        return quoted[0][:60]
 
-    # Fallback: return the text after the pattern match
-    match = re.search(pattern, sentence, re.IGNORECASE)
-    if match:
-        after = sentence[match.end():match.end() + 50].strip()
-        words = after.split()[:4]
-        return " ".join(words) if words else "unknown"
+    # Priority 2: ALL-CAPS ticker-like tokens (2-5 uppercase letters)
+    SKIP_CAPS = {'AND', 'OR', 'FOR', 'THE', 'NOT', 'INC', 'LLC', 'ANY',
+                 'ALL', 'OUR', 'WE', 'IF', 'US', 'CEO', 'CFO', 'SEC',
+                 'FDA', 'FCC', 'EPA', 'AI', 'IP', 'IT', 'R&D'}
+    caps_tokens = re.findall(r'\b([A-Z]{2,5})\b', sentence)
+    for token in caps_tokens:
+        if token not in SKIP_CAPS:
+            return token
 
+    # Priority 3: multi-word Title Case sequences (2+ words)
+    SKIP_STARTS = {'We', 'Our', 'If', 'For', 'The', 'This', 'These',
+                   'Furthermore', 'Additionally', 'However', 'Such',
+                   'Any', 'Each', 'All', 'While', 'When', 'As'}
+    multi_word = re.findall(r'\b([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)+)\b', sentence)
+    candidates = [m for m in multi_word if m.split()[0] not in SKIP_STARTS]
+    if candidates:
+        return max(candidates, key=len)[:60]
+
+    # Priority 4: fallback — text after the keyword
+    m = re.search(pattern, sentence, re.IGNORECASE)
+    if m:
+        after = sentence[m.end():m.end() + 50].strip()
+        return " ".join(after.split()[:4]) if after else "unknown"
     return "unknown"
 
 
