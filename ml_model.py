@@ -44,6 +44,14 @@ except ImportError:
         _HAS_ALPHA101 = True
     except ImportError:
         _HAS_ALPHA101 = False
+try:
+    from v2.sec_8k_pipeline import load_8k_history, get_8k_signal
+    _8K_HISTORY = load_8k_history(os.path.join(os.path.dirname(__file__), "cache_8k", "8k_history.csv"))
+    _HAS_8K = len(_8K_HISTORY) > 0
+except Exception:
+    _HAS_8K = False
+    _8K_HISTORY = None
+
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
@@ -1193,6 +1201,20 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
                 d[f"reg_{_bf}_x_bull"]   = _base if regime == "TRENDING_BULL" else pd.Series(0.0, index=df.index)
                 d[f"reg_{_bf}_x_choppy"] = _base if regime == "CHOPPY" else pd.Series(0.0, index=df.index)
                 d[f"reg_{_bf}_x_bear"]   = _base if regime == "BEAR" else pd.Series(0.0, index=df.index)
+
+    # ── 8-K sentiment features ──────────────────────────────────────────────
+    # SEC 8-K filing sentiment from rule-based + FinBERT scoring.
+    # Lookback 5 days: captures recent material event impact.
+    if _HAS_8K and symbol is not None:
+        try:
+            last_date = df.index[-1].strftime("%Y-%m-%d")
+            sig = get_8k_signal(symbol, last_date, _8K_HISTORY, lookback_days=5)
+            d["8k_sentiment_rule"]    = pd.Series(sig["sentiment_rule"],    index=df.index)
+            d["8k_sentiment_finbert"] = pd.Series(sig["sentiment_finbert"], index=df.index)
+            d["8k_novelty"]           = pd.Series(sig["novelty"],           index=df.index)
+            d["8k_combined"]          = pd.Series(sig["combined"],          index=df.index)
+        except Exception:
+            pass  # 8K failure is non-fatal
 
     # ── Alpha101 WorldQuant factors (Kakushadze 2016) ──────────────────────
     # 30 cross-sectional OHLCV factors. Added as additional features with
