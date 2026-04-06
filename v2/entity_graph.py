@@ -74,6 +74,40 @@ MED_STRENGTH_WORDS = {"key", "significant", "major", "important", "principal", "
 #  1. FETCH 10-K TEXT
 # ═══════════════════════════════════════════════════════════════════════════════
 
+def _extract_business_risk_sections(raw_text: str) -> str:
+    """
+    Extract Item 1 (Business) + Item 1A (Risk Factors) from 10-K text.
+    Falls back to characters 10000-80000 if section markers not found.
+    Caps at 100000 characters.
+    """
+    # Search for Item 1 start (Business section)
+    item1_match = re.search(
+        r"(?:^|\s)(ITEM\s+1[.\s]|Item\s+1[.\s])",
+        raw_text, re.IGNORECASE,
+    )
+
+    # Search for Item 2 start (end of Risk Factors section)
+    item2_match = re.search(
+        r"(?:^|\s)(ITEM\s+2[.\s]|Item\s+2[.\s])",
+        raw_text[item1_match.start() + 100:] if item1_match else raw_text,
+        re.IGNORECASE,
+    )
+
+    if item1_match:
+        start = item1_match.start()
+        if item2_match:
+            # item2_match offset is relative to the sliced string
+            end = start + 100 + item2_match.start()
+        else:
+            end = start + 100000
+        text = raw_text[start:end]
+    else:
+        # Fallback: skip cover pages (first 10K chars), take middle of document
+        text = raw_text[10000:80000]
+
+    return text[:100000]
+
+
 def get_10k_text(ticker: str, cik: Optional[str] = None) -> Optional[str]:
     """
     Fetch latest 10-K filing text from EDGAR.
@@ -84,7 +118,7 @@ def get_10k_text(ticker: str, cik: Optional[str] = None) -> Optional[str]:
         cik: CIK number (fetched via get_cik if None)
 
     Returns:
-        First 50000 characters of 10-K text, or None on failure.
+        Business + Risk Factors sections (up to 100K chars), or None on failure.
     """
     cache_file = CACHE_DIR / f"{ticker}_10k.txt"
     if cache_file.exists():
@@ -119,12 +153,17 @@ def get_10k_text(ticker: str, cik: Optional[str] = None) -> Optional[str]:
         dates = recent.get("filingDate", [])
         primary_docs = recent.get("primaryDocument", [])
 
-        # Find most recent 10-K
+        # Find most recent 10-K, or 20-F for foreign private issuers (e.g. TSMC)
         tenk_idx = None
         for i, form in enumerate(forms):
             if form == "10-K":
                 tenk_idx = i
                 break
+        if tenk_idx is None:
+            for i, form in enumerate(forms):
+                if form == "20-F":
+                    tenk_idx = i
+                    break
 
         if tenk_idx is None:
             return None
@@ -162,9 +201,11 @@ def get_10k_text(ticker: str, cik: Optional[str] = None) -> Optional[str]:
             return None
 
         # Strip HTML
-        text = re.sub(r"<[^>]+>", " ", doc_resp.text)
-        text = re.sub(r"\s+", " ", text).strip()
-        text = text[:50000]
+        raw = re.sub(r"<[^>]+>", " ", doc_resp.text)
+        raw = re.sub(r"\s+", " ", raw).strip()
+
+        # Extract Business (Item 1) + Risk Factors (Item 1A) sections
+        text = _extract_business_risk_sections(raw)
 
         # Cache
         cache_file.write_text(text)
@@ -315,6 +356,31 @@ def build_graph(tickers: List[str]):
         print(f"  [{i + 1}/{len(tickers)}] {ticker}...", end=" ", flush=True)
 
         cik = get_cik(ticker)
+        if cik is None:
+            # Fallback: search EDGAR for this ticker's 10-K/20-F filings
+            try:
+                _search_url = "https://efts.sec.gov/LATEST/search-index"
+                _search_params = {
+                    "q": f'"{ticker}"',
+                    "dateRange": "custom",
+                    "startdt": "2020-01-01",
+                    "forms": "10-K,20-F",
+                }
+                _search_resp = requests.get(_search_url, params=_search_params,
+                                            headers=SEC_HEADERS, timeout=15)
+                time.sleep(SEC_SLEEP)
+                if _search_resp.status_code == 200:
+                    _hits = _search_resp.json().get("hits", {}).get("hits", [])
+                    for _hit in _hits:
+                        _src = _hit.get("_source", {})
+                        _display = _src.get("display_names", [])
+                        if any(f"({ticker.upper()})" in dn for dn in _display):
+                            _ciks = _src.get("ciks", [])
+                            if _ciks:
+                                cik = _ciks[0].lstrip("0") or _ciks[0]
+                                break
+            except Exception:
+                pass
         if cik is None:
             print("no CIK")
             continue
