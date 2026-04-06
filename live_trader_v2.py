@@ -48,6 +48,12 @@ try:
 except ImportError:
     _HAS_OPTIONS_OVERLAY = False
 
+try:
+    from macro_overlay import get_macro_regime, get_position_scalar
+    _HAS_MACRO_OVERLAY = True
+except ImportError:
+    _HAS_MACRO_OVERLAY = False
+
 # ── Config ─────────────────────────────────────────────────────────────────────
 ALPACA_KEY    = os.environ.get('ALPACA_KEY',    'PKKUPJE3L32EXWBQVVEHZG5O7R')
 ALPACA_SECRET = os.environ.get('ALPACA_SECRET', 'F7wJNy6qHNfvztDpdBHhE5NT33eo5ckqUZ7b4krk1FpF')
@@ -514,6 +520,18 @@ def run_entry_scan(regime, choppy_sub, signals, ranks, tracked, portfolio):
     vol_scalar = 0.0 if vix_level >= 35 else 0.5 if vix_level >= 25 else 0.75 if vix_level >= 20 else 1.0
     if signals.get('spy_5d', 0) < -0.015:
         vol_scalar = 0.0
+
+    # Macro overlay: further reduce sizing when cross-asset stress signals fire
+    if _HAS_MACRO_OVERLAY:
+        try:
+            _macro_regime = get_macro_regime(pd.Timestamp.now().normalize())
+            _macro_scalar = get_position_scalar(_macro_regime, regime)
+            vol_scalar *= _macro_scalar
+            if _macro_regime != "NORMAL":
+                print(f"  MACRO: {_macro_regime} → sizing ×{_macro_scalar:.2f} "
+                      f"(vol_scalar now {vol_scalar:.2f})")
+        except Exception:
+            pass
 
     entered = 0
 

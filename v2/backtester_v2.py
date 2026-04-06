@@ -57,6 +57,11 @@ from regime_classifier import (
 )
 from entry_filter import is_in_accumulation, filter_candidates
 import strategy_trending as strat_bull
+try:
+    from macro_overlay import get_macro_regime, get_position_scalar
+    _HAS_MACRO_OVERLAY = True
+except ImportError:
+    _HAS_MACRO_OVERLAY = False
 import strategy_choppy  as strat_chop
 import strategy_meanrev as strat_mr
 import strategy_bear    as strat_bear
@@ -769,6 +774,18 @@ def run_backtest_v2(
             _daily_vol_scalar = 0.75   # mild stress — 75% size
         else:
             _daily_vol_scalar = 1.0    # calm — full size
+
+        # Macro overlay: reduce sizing when cross-asset stress signals fire
+        if _HAS_MACRO_OVERLAY:
+            try:
+                _macro_prices = {"SPY": hist.get("SPY"), "HYG": hist.get("HYG"),
+                                 "^VIX": vix_macro.to_frame("close") if isinstance(vix_macro, pd.Series) else vix_macro,
+                                 "TLT": hist.get("TLT")}
+                _macro_regime = get_macro_regime(date, _macro_prices)
+                _macro_scalar = get_position_scalar(_macro_regime, _current_regime)
+                _daily_vol_scalar *= _macro_scalar
+            except Exception:
+                pass  # macro overlay failure is non-fatal
 
         # ── Long entries ──────────────────────────────────────────────────
         max_longs  = getattr(params, 'max_positions', getattr(params, 'max_positions_long', 4))
