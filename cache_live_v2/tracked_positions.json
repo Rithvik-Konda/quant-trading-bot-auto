@@ -1,0 +1,16 @@
+{
+  "ASAN": {
+    "entry_date": "2026-04-01",
+    "entry_price": 6.3,
+    "stop_pct": 0.08,
+    "side": "short",
+    "ml_rank": 0.05
+  },
+  "MAS": {
+    "entry_date": "2026-04-01",
+    "entry_price": 59.073558,
+    "stop_pct": 0.08,
+    "side": "short",
+    "ml_rank": 0.05
+  }
+}

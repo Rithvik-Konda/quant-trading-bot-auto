@@ -1,0 +1,69 @@
+============================================================
+DAILY REPORT — 2026-03-31
+============================================================
+Portfolio value: $100,369.89
+Cash:            $100,369.89
+Open positions:  0
+
+Positions:
+
+Total unrealized: $+0.00
+
+Today's regime: CHOPPY
+Breadth: 50%
+
+Saved to cache_alpaca/daily_log.json
+============================================================
+============================================================
+DAILY REPORT — 2026-04-01
+============================================================
+Portfolio value: $100,726.36
+Cash:            $119,634.07
+Open positions:  1
+
+Positions:
+  ASAN  : -2987 shares  entry=$    6.30  current=$    6.33  PnL=$  -89.61 (-0.5%)
+
+Total unrealized: $-89.61
+
+Today's regime: CHOPPY
+Breadth: 50%
+
+Saved to cache_alpaca/daily_log.json
+============================================================
+============================================================
+DAILY REPORT — 2026-04-02
+============================================================
+Portfolio value: $100,555.42
+Cash:            $129,262.34
+Open positions:  2
+
+Positions:
+  ASAN  : -2987 shares  entry=$    6.30  current=$    6.38  PnL=$ -253.90 (-1.3%)
+  MAS   : -163 shares  entry=$   59.07  current=$   59.11  PnL=$   -5.94 (-0.1%)
+
+Total unrealized: $-259.84
+
+Today's regime: CHOPPY
+Breadth: 50%
+
+Saved to cache_alpaca/daily_log.json
+============================================================
+============================================================
+DAILY REPORT — 2026-04-03
+============================================================
+Portfolio value: $100,598.56
+Cash:            $129,262.31
+Open positions:  2
+
+Positions:
+  ASAN  : -2987 shares  entry=$    6.30  current=$    6.37  PnL=$ -209.09 (-1.1%)
+  MAS   : -163 shares  entry=$   59.07  current=$   59.12  PnL=$   -7.57 (-0.1%)
+
+Total unrealized: $-216.66
+
+Today's regime: CHOPPY
+Breadth: 50%
+
+Saved to cache_alpaca/daily_log.json
+============================================================

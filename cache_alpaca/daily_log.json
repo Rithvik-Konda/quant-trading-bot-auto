@@ -5,5 +5,26 @@
     "cash": 100369.89,
     "unrealized_pnl": 0,
     "n_positions": 0
+  },
+  {
+    "date": "2026-04-01",
+    "portfolio": 100726.36,
+    "cash": 119634.07,
+    "unrealized_pnl": -89.61,
+    "n_positions": 1
+  },
+  {
+    "date": "2026-04-02",
+    "portfolio": 100555.42,
+    "cash": 129262.34,
+    "unrealized_pnl": -259.83504600000003,
+    "n_positions": 2
+  },
+  {
+    "date": "2026-04-03",
+    "portfolio": 100598.56,
+    "cash": 129262.31,
+    "unrealized_pnl": -216.660046,
+    "n_positions": 2
   }
 ]

@@ -1,0 +1,41 @@
+{
+  "date": "2026-04-02",
+  "timestamp": "2026-04-02T13:45:54.521398",
+  "market_sentiment": {
+    "score": -0.015,
+    "macro_risk": true,
+    "headlines": [
+      "Wall St inches lower as investors assess Middle East developments - Reuters",
+      "Britain says 40 countries discuss reopening Strait of Hormuz after Iran blockade",
+      "The mood of the stock market is changing fast during Iran war. How to navigate t",
+      "Regional sports networks are faltering even as ratings soar",
+      "UK to host talks with 35 countries on reopening Strait of Hormuz - Reuters",
+      "Iran war exposes frailties of 'no-hire' US economy - Reuters",
+      "US defense stocks see no Iran war lift after early surge - Reuters",
+      "Macron says it is unrealistic to open Hormuz Strait by force - Reuters",
+      "Givers\u2019 regret: What happens when wealthy parents try to claw back fortunes from",
+      "Russia's Putin to host Egypt's foreign minister, focus on Iran war and Middle Ea"
+    ],
+    "reddit_score": -0.006,
+    "hot_tickers": [
+      "IRNA",
+      "EV",
+      "QQQ",
+      "IPO",
+      "FT"
+    ],
+    "wsb_mentions": {
+      "IRNA": 1,
+      "EV": 1,
+      "QQQ": 1,
+      "IPO": 1,
+      "FT": 1,
+      "US": 1,
+      "BJ": 1,
+      "USO": 1,
+      "BNO": 1
+    },
+    "n_sources": 3
+  },
+  "earnings_risk": {}
+}

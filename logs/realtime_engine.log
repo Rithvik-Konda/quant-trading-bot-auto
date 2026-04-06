@@ -1,0 +1,6 @@
+2026-04-04 15:09:25,755 [INFO] Universe: 443 symbols
+2026-04-04 15:09:25,755 [INFO] Precomputing average volumes ...
+2026-04-04 15:09:26,308 [INFO] Precomputed avg 5-min volumes for 443/443 symbols
+2026-04-04 15:09:26,308 [INFO] Loaded 50 ML top-ranked symbols for options flow
+2026-04-04 15:09:26,308 [INFO] --- TEST MODE: running single cycle ---
+2026-04-04 15:09:28,652 [INFO] Test cycle complete.  35 alert(s) fired.

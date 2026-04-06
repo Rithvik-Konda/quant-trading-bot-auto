@@ -1,0 +1,122 @@
+[
+  {
+    "symbol": "SNDK",
+    "rs_score": 1.4895,
+    "ret_20d": 0.3305,
+    "ret_60d": 0.9844,
+    "ret_90d": 5.0011,
+    "rs_vs_spy": 1.0307,
+    "vol_trend": 0.964,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 701.59
+  },
+  {
+    "symbol": "KVYO",
+    "rs_score": -0.2352,
+    "ret_20d": -0.0877,
+    "ret_60d": -0.3562,
+    "ret_90d": -0.2162,
+    "rs_vs_spy": -0.3099,
+    "vol_trend": 0.768,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 19.14
+  },
+  {
+    "symbol": "ARM",
+    "rs_score": 0.2134,
+    "ret_20d": 0.3036,
+    "ret_60d": 0.289,
+    "ret_90d": -0.0368,
+    "rs_vs_spy": 0.3353,
+    "vol_trend": 1.141,
+    "tradeable": true,
+    "days_listed": 120,
+    "price": 149.11
+  },
+  {
+    "symbol": "BIRK",
+    "rs_score": -0.1495,
+    "ret_20d": -0.0913,
+    "ret_60d": -0.1741,
+    "ret_90d": -0.1808,
+    "rs_vs_spy": -0.1278,
+    "vol_trend": 0.837,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 34.62
+  },
+  {
+    "symbol": "CART",
+    "rs_score": -0.0677,
+    "ret_20d": 0.0179,
+    "ret_60d": -0.1321,
+    "ret_90d": 0.012,
+    "rs_vs_spy": -0.0857,
+    "vol_trend": 0.773,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 38.77
+  },
+  {
+    "symbol": "CAVA",
+    "rs_score": 0.1146,
+    "ret_20d": 0.0132,
+    "ret_60d": 0.1728,
+    "ret_90d": 0.2813,
+    "rs_vs_spy": 0.2191,
+    "vol_trend": 0.853,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 79.63
+  },
+  {
+    "symbol": "RDDT",
+    "rs_score": -0.27,
+    "ret_20d": -0.0243,
+    "ret_60d": -0.4677,
+    "ret_90d": -0.315,
+    "rs_vs_spy": -0.4214,
+    "vol_trend": 0.874,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 136.0
+  },
+  {
+    "symbol": "ALAB",
+    "rs_score": -0.2208,
+    "ret_20d": -0.0173,
+    "ret_60d": -0.2934,
+    "ret_90d": -0.4319,
+    "rs_vs_spy": -0.247,
+    "vol_trend": 0.881,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 117.14
+  },
+  {
+    "symbol": "RKLB",
+    "rs_score": -0.0659,
+    "ret_20d": -0.0339,
+    "ret_60d": -0.1945,
+    "ret_90d": 0.054,
+    "rs_vs_spy": -0.1481,
+    "vol_trend": 1.113,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 67.73
+  },
+  {
+    "symbol": "ASTS",
+    "rs_score": 0.0532,
+    "ret_20d": 0.0351,
+    "ret_60d": 0.0804,
+    "ret_90d": 0.1291,
+    "rs_vs_spy": 0.1267,
+    "vol_trend": 0.847,
+    "tradeable": false,
+    "days_listed": 120,
+    "price": 92.62
+  }
+]

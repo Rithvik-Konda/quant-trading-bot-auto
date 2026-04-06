@@ -1,0 +1,23 @@
+=======================================================
+VIX SPIKE MONITOR — 2026-03-30
+=======================================================
+  VIX current:  30.48
+  VIX 20d avg:  25.82
+  Spike vs avg: +18.1%
+  Signal:       ELEVATED
+  Size scalar:  50%
+  Hedge:        YES - buy UVXY
+  UVXY qty:     48 shares
+
+Saved to cache_vix/vix_signal.json
+=======================================================
+VIX SPIKE MONITOR — 2026-04-01
+=======================================================
+  VIX current:  24.33
+  VIX 20d avg:  26.07
+  Spike vs avg: -6.7%
+  Signal:       CAUTION
+  Size scalar:  75%
+  Hedge:        No
+
+Saved to cache_vix/vix_signal.json

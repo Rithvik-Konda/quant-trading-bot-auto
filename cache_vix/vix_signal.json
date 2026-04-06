@@ -1,0 +1,9 @@
+{
+  "vix_current": 24.33,
+  "vix_20d_avg": 26.07,
+  "vix_spike_pct": -0.067,
+  "signal": "CAUTION",
+  "size_scalar": 0.75,
+  "hedge": false,
+  "date": "2026-04-01"
+}

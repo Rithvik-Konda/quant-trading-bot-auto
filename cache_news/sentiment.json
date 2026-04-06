@@ -1,0 +1,2218 @@
+{
+  "NVDA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AVGO": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AMD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MU": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MRVL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "QCOM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TXN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "INTC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ADI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AMAT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "LRCX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "KLAC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SMCI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ANET": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ARM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MPWR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ON": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SWKS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NXPI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SNPS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CDNS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "STX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WDC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MSFT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "META": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AMZN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "GOOGL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AAPL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TSLA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SNOW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MDB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DDOG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NET": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TEAM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ZS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SHOP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NOW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CRWD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PANW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PLTR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ADBE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ORCL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CRM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "INTU": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WDAY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "OKTA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DOCU": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HUBS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "FTNT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "GTLB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BILL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "S": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ESTC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MNDY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TOST": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DELL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HPQ": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HPE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PSTG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NTAP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CDW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "FFIV": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ZBRA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CGNX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TDY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TRMB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NFLX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "UBER": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ABNB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DASH": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PINS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SNAP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "RDDT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TTD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ZG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "IAC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "V": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PYPL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AFRM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "UPST": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SOFI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NU": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ALLY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HOOD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "COIN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "JPM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BAC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "C": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "GS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BLK": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SCHW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AXP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SPGI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ICE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CME": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AIG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PGR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TRV": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "USB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PNC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TFC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "COF": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BK": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MTB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CFG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HBAN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "RF": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "KEY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "FITB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ZION": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WAL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MET": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PRU": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AFL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ALL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HIG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "LNC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "RJF": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "LPLA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WTW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AON": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AJG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BRO": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ERIE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BX": {
+    "symbol": "BX",
+    "score": 0.0,
+    "total": 0,
+    "error": "HTTPSConnectionPool(host='api.polygon.io', port=443): Read timed out. (read timeout=10)"
+  },
+  "KKR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "APO": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ARES": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "UNH": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "LLY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "JNJ": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PFE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ABBV": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MRK": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TMO": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ISRG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DHR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ABT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BMY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AMGN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "GILD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "VRTX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "REGN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ZTS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SYK": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BSX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MDT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CVS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HUM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CNC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MRNA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BNTX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BIIB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ALNY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "INCY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NBIX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "JAZZ": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HOLX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DXCM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PODD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ALGN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "IART": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HCA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "THC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "UHS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "LH": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DGX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NTRA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "VEEV": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DOCS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "KO": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PEP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "COST": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WMT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MO": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "KMB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "GIS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HSY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MDLZ": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CAG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CPB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SJM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HRL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TSN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "KHC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MKC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CHD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CLX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "KR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BJ": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SFM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "LOW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NKE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MCD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SBUX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CMG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MAR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BKNG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TJX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ROST": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EBAY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ETSY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ULTA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TGT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BBY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ANF": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "URBN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WSM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "RH": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BOOT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DRVN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "F": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "GM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "RIVN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HOG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "POOL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "LVS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MGM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WYNN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CZR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PENN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DKNG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DIS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WBD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CNK": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "IMAX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "LMT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "RTX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "GD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NOC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HII": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TXT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "KTOS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "RKLB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CAT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HON": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "UPS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "FDX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "GE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PH": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ETN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ITW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EMR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ROK": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CSX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "UNP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NSC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MMM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DOV": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "IR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "XYL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "GNRC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "FAST": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "GWW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MSC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WSO": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PWR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PRIM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MTZ": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "STRL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "VMC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MLM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EXP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MAS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TREX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NVR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PHM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DHI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "LEN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TOL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "KBH": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TMHC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SKY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CHRW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EXPD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "XPO": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ODFL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SAIA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "JBHT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "KNX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WERN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ARCB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MATX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ZIM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "XOM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CVX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "COP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EOG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SLB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PSX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "VLO": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MPC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "OXY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HAL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DVN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "FANG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "APA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "KMI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WMB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "OKE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EPD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ET": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MPLX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NEE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "VST": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CEG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NRG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AES": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CWEN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ENPH": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SEDG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "FSLR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ARRY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PLUG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DUK": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SO": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "D": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EXC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AEP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SRE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PEG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EIX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PCG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PPL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WEC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ES": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CNP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CMS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PNW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "LIN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "APD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NEM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "FCX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ECL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SHW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DOW": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PPG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "RPM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EMN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "OLN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NUE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "STLD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CMC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ATI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "RS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ALB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AVY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PKG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "IP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AMCR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EQIX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DLR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AMT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CCI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SBAC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PLD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PSA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SPG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "O": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "VICI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WELL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "VTR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EQR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AVB": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ESS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MAA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "KIM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "REG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "STAG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "EGP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "REXR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "VRT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "NDAQ": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "MSCI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CBOE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "FDS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "T": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "VZ": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TMUS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CHTR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CMCSA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "LBRDA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "APP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DUOL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AXON": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CELH": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ASAN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BRZE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PCTY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PAYC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "ACAD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "RARE": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "IONS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HALO": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PRGO": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PCRX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "OMCL": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "GDRX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PRVA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "IRTC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "INSP": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TNDM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WING": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TXRH": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SHAK": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CAVA": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "DECK": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "CROX": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WRBY": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PTON": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "PLNT": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "TDG": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "WWD": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "LDOS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SAIC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "BAH": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AVAV": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "HEI": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "SHLS": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "STEM": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "RUN": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "AMR": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  },
+  "METC": {
+    "score": 0.0,
+    "total": 0,
+    "error": 401
+  }
+}
