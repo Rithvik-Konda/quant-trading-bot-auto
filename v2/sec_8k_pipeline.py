@@ -208,44 +208,66 @@ def fetch_8k_text(accession_number: str, cik: Optional[str] = None) -> Optional[
     Returns:
         Raw text truncated to first 5000 characters, or None on failure.
     """
-    # Normalize accession number: strip dashes for URL path
+    # Normalize accession number: strip dashes for URL directory path
     acc = accession_number.replace("-", "")
     if len(acc) < 18:
         return None
 
-    # CIK is required for the EDGAR URL path — not derivable from accession
+    # Restore dashed format for index filename: XXXXXXXXXX-YY-ZZZZZZ
+    acc_dashed = f"{acc[:10]}-{acc[10:12]}-{acc[12:]}"
+
+    # CIK is required for the EDGAR URL path
     if cik:
         cik_clean = cik.lstrip("0") or "0"
     else:
-        # Accession format: {filer_cik}-{yy}-{seq}. First 10 digits = filer CIK.
         cik_clean = acc[:10].lstrip("0") or "0"
 
-    index_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc}/"
+    index_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc}/{acc_dashed}-index.htm"
 
     try:
         resp = requests.get(index_url, headers=SEC_HEADERS, timeout=10)
         time.sleep(SEC_RATE_LIMIT)
 
+        # Fall back to directory listing if index page not found
+        if resp.status_code != 200:
+            index_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc}/"
+            resp = requests.get(index_url, headers=SEC_HEADERS, timeout=10)
+            time.sleep(SEC_RATE_LIMIT)
+
         if resp.status_code != 200:
             return None
 
-        # Find the primary 8-K document (usually .htm or .txt)
-        doc_match = re.search(
-            r'href="([^"]*(?:8-k|8k)[^"]*\.(?:htm|txt))"',
-            resp.text, re.IGNORECASE,
-        )
-        if not doc_match:
-            # Try any .htm file
-            doc_match = re.search(r'href="([^"]*\.htm)"', resp.text, re.IGNORECASE)
-
-        if not doc_match:
-            return None
-
-        doc_path = doc_match.group(1)
-        if not doc_path.startswith("http"):
-            doc_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc}/{doc_path}"
+        # Find the primary 8-K document
+        # First try: extract path from ix?doc= XBRL inline viewer links
+        doc_url = None
+        ix_match = re.search(r'href="/ix\?doc=(/Archives/[^"]+\.htm)"', resp.text, re.IGNORECASE)
+        if ix_match:
+            doc_url = f"https://www.sec.gov{ix_match.group(1)}"
         else:
-            doc_url = doc_path
+            # Second try: any .htm that is not an exhibit
+            doc_match = re.search(r'href="(/Archives/[^"]+\.htm)"', resp.text, re.IGNORECASE)
+            if doc_match:
+                href = doc_match.group(1)
+                filename = href.split("/")[-1]
+                if not re.search(r'(?:^|[-_x])ex\d', filename, re.IGNORECASE):
+                    doc_url = f"https://www.sec.gov{href}"
+
+        # Third try: relative href links (directory listing format)
+        if doc_url is None:
+            doc_match = re.search(r'href="([^"]*(?:8-k|8k)[^"]*\.htm)"', resp.text, re.IGNORECASE)
+            if not doc_match:
+                doc_match = re.search(r'href="([^"]*\.htm)"', resp.text, re.IGNORECASE)
+            if doc_match:
+                doc_path = doc_match.group(1)
+                if doc_path.startswith("http"):
+                    doc_url = doc_path
+                elif doc_path.startswith("/"):
+                    doc_url = f"https://www.sec.gov{doc_path}"
+                else:
+                    doc_url = f"https://www.sec.gov/Archives/edgar/data/{cik_clean}/{acc}/{doc_path}"
+
+        if doc_url is None:
+            return None
 
         doc_resp = requests.get(doc_url, headers=SEC_HEADERS, timeout=10)
         time.sleep(SEC_RATE_LIMIT)
