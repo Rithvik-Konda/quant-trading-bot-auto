@@ -324,17 +324,6 @@ def run_exits():
     short_positions = {s: p for s, p in positions.items() if p['side'] == 'short'}
     print(f"\n[exits] Longs: {len(long_positions)}  Shorts: {len(short_positions)}")
 
-    # Load earnings calendar for pre-earnings exit
-    import pickle as _pkl
-    _earn_cache = '/Users/rick/ai_trading_bot_v2/cache_prices/earnings_calendar_cache.pkl'
-    _earn_dates = {}
-    try:
-        if os.path.exists(_earn_cache):
-            with open(_earn_cache, 'rb') as _ef:
-                _earn_dates = _pkl.load(_ef)
-    except Exception:
-        pass
-
     # ── Long exits ────────────────────────────────────────────────────────────
     for sym, pos in list(long_positions.items()):
         entry_info = tracked.get(sym, {})
@@ -355,19 +344,6 @@ def run_exits():
                 tracked.pop(sym, None); continue
             else:
                 print(f"  HOLD {sym}: BEAR but defensive sector {_sym_sector} — exempt")
-
-        # Earnings exit — close momentum longs 2 days before earnings to avoid gap risk
-        if engine == 'momentum' and _earn_dates:
-            _sym_earns = _earn_dates.get(sym, [])
-            if _sym_earns:
-                _today_ts = pd.Timestamp.now().normalize()
-                _days_to_earn = [(d - _today_ts).days for d in _sym_earns
-                                 if hasattr(d, 'days') or isinstance(d, pd.Timestamp)]
-                if any(0 <= d <= 2 for d in _days_to_earn):
-                    _next_earn = min(d for d in _days_to_earn if d >= 0)
-                    print(f"  EXIT {sym}: earnings in {_next_earn}d — closing to avoid gap risk")
-                    submit_order(sym, abs(pos['qty']), 'sell')
-                    tracked.pop(sym, None); continue
 
         # Mean reversion exits (different logic)
         if engine == 'meanrev':
