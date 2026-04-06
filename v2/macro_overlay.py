@@ -17,6 +17,21 @@ sys.path.insert(0, os.path.expanduser("~/ai_trading_bot_v2/v2"))
 import numpy as np
 import pandas as pd
 
+# ── Tunable thresholds — change here, not in signal logic ────────────────────
+MACRO_CONFIG = {
+    "vix_spike_level":     22,      # VIX must be above this
+    "vix_spike_5d_chg":    0.15,    # VIX 5d % change must exceed this
+    "hy_spread_5d_bps":    0.25,    # HY OAS 5d change in percentage points
+    "ig_spread_5d_bps":    0.10,    # IG OAS 5d change in percentage points
+    "put_call_level":      1.0,     # put/call ratio above this = stress
+    "hyg_10d_return":     -0.01,    # HYG cumulative 10d return below this
+    "tlt_5d_return":       0.02,    # TLT 5d return above this (flight to safety)
+    "spy_5d_return":      -0.02,    # SPY 5d return below this (equity selloff)
+    "spy_10d_return":     -0.03,    # SPY 10d return below this (extended selloff)
+    "stress_threshold":    0.375,   # risk score >= this → MACRO_STRESS
+    "caution_threshold":   0.125,   # risk score >= this → MACRO_CAUTION
+}
+
 # ── Module-level data cache (loaded once, reloaded if stale) ─────────────────
 
 _CACHE_DIR = os.path.expanduser("~/ai_trading_bot_v2/cache_macro")
@@ -141,12 +156,13 @@ def get_macro_signals(date: pd.Timestamp, price_data: Optional[Dict] = None) -> 
         "yield_curve_stress": False,
     }
 
-    # 1. VIX spike: VIX spot > 25 AND 5d change > +30%
+    # 1. VIX spike: VIX spot > level AND 5d change > threshold
     if _vix_term is not None and "vix_spot" in _vix_term.columns:
         vix_now = _safe_val(_vix_term["vix_spot"], date)
         vix_5d = _safe_val(_vix_term["vix_spot"], date, 5)
         if not np.isnan(vix_now) and not np.isnan(vix_5d) and vix_5d > 0:
-            signals["vix_spike"] = vix_now > 25 and (vix_now / vix_5d - 1) > 0.30
+            signals["vix_spike"] = (vix_now > MACRO_CONFIG["vix_spike_level"] and
+                                    (vix_now / vix_5d - 1) > MACRO_CONFIG["vix_spike_5d_chg"])
 
     # 2. VIX term inversion: vix_spot > vix_3m (fear spike, not chronic)
     if _vix_term is not None and "vix_spot" in _vix_term.columns and "vix_3m" in _vix_term.columns:
@@ -155,46 +171,52 @@ def get_macro_signals(date: pd.Timestamp, price_data: Optional[Dict] = None) -> 
         if not np.isnan(vix_spot) and not np.isnan(vix_3m) and vix_3m > 0:
             signals["vix_term_inversion"] = vix_spot > vix_3m
 
-    # 3. HY spread spike: 5d change > +50bps (0.50 percentage points)
+    # 3. HY spread spike: 5d change > threshold
     if _fred_data is not None and "hy_spread" in _fred_data.columns:
         hy_now = _safe_val(_fred_data["hy_spread"], date)
         hy_5d = _safe_val(_fred_data["hy_spread"], date, 5)
         if not np.isnan(hy_now) and not np.isnan(hy_5d):
-            signals["hy_spread_spike"] = (hy_now - hy_5d) > 0.50
+            signals["hy_spread_spike"] = (hy_now - hy_5d) > MACRO_CONFIG["hy_spread_5d_bps"]
 
-    # 4. IG spread spike: 5d change > +20bps (0.20 percentage points)
+    # 4. IG spread spike: 5d change > threshold
     if _fred_data is not None and "ig_spread" in _fred_data.columns:
         ig_now = _safe_val(_fred_data["ig_spread"], date)
         ig_5d = _safe_val(_fred_data["ig_spread"], date, 5)
         if not np.isnan(ig_now) and not np.isnan(ig_5d):
-            signals["ig_spread_spike"] = (ig_now - ig_5d) > 0.20
+            signals["ig_spread_spike"] = (ig_now - ig_5d) > MACRO_CONFIG["ig_spread_5d_bps"]
 
-    # 5. Put/call spike: ratio > 1.2
+    # 5. Put/call spike: ratio > threshold
     if _pcr_data is not None:
         pcr = _safe_val(_pcr_data, date)
         if not np.isnan(pcr):
-            signals["put_call_spike"] = pcr > 1.2
+            signals["put_call_spike"] = pcr > MACRO_CONFIG["put_call_level"]
 
-    # 6. Credit stress: HYG 10d return < -2%
+    # 6. Credit stress: HYG 10d return < threshold
     if _cross_asset is not None and "HYG" in _cross_asset.columns:
         hyg_rets = _cross_asset["HYG"].loc[:date]
         if len(hyg_rets) >= 10:
-            hyg_10d = float(hyg_rets.tail(10).sum())  # sum of daily returns ≈ cumulative
-            signals["credit_stress"] = hyg_10d < -0.02
+            hyg_10d = float(hyg_rets.tail(10).sum())
+            signals["credit_stress"] = hyg_10d < MACRO_CONFIG["hyg_10d_return"]
 
-    # 7. Cross-asset flight: TLT 5d return > +2% AND SPY 5d return < -2%
+    # 7. Cross-asset flight: (TLT up AND SPY down) OR SPY extended selloff
     if _cross_asset is not None:
         has_tlt = "TLT" in _cross_asset.columns
         has_spy = "SPY" in _cross_asset.columns
-        if has_tlt and has_spy:
-            tlt_rets = _cross_asset["TLT"].loc[:date]
+        if has_spy:
             spy_rets = _cross_asset["SPY"].loc[:date]
-            if len(tlt_rets) >= 5 and len(spy_rets) >= 5:
+            tlt_rets = _cross_asset["TLT"].loc[:date] if has_tlt else None
+
+            flight = False
+            if tlt_rets is not None and len(tlt_rets) >= 5 and len(spy_rets) >= 5:
                 tlt_5d = float(tlt_rets.tail(5).sum())
                 spy_5d = float(spy_rets.tail(5).sum())
-                signals["cross_asset_flight"] = tlt_5d > 0.02 and spy_5d < -0.02
+                flight = tlt_5d > MACRO_CONFIG["tlt_5d_return"] and spy_5d < MACRO_CONFIG["spy_5d_return"]
+            if not flight and len(spy_rets) >= 10:
+                spy_10d = float(spy_rets.tail(10).sum())
+                flight = spy_10d < MACRO_CONFIG["spy_10d_return"]
+            signals["cross_asset_flight"] = flight
 
-    # 8. Yield curve stress: 2Y > 10Y by > 50bps AND spread is widening
+    # 8. Yield curve stress: 2Y-10Y inversion > 50bps AND widening
     if _fred_data is not None and "yield_2y" in _fred_data.columns and "yield_10y" in _fred_data.columns:
         y2_now = _safe_val(_fred_data["yield_2y"], date)
         y10_now = _safe_val(_fred_data["yield_10y"], date)
@@ -203,7 +225,7 @@ def get_macro_signals(date: pd.Timestamp, price_data: Optional[Dict] = None) -> 
         if not any(np.isnan(x) for x in [y2_now, y10_now, y2_5d, y10_5d]):
             inversion_now = y2_now - y10_now
             inversion_5d = y2_5d - y10_5d
-            signals["yield_curve_stress"] = inversion_now > 0.50 and inversion_now > inversion_5d
+            signals["yield_curve_stress"] = inversion_now > 0.50 and inversion_now > inversion_5d  # unchanged — 50bps is structural, not tunable
 
     return signals
 
@@ -228,14 +250,15 @@ def get_macro_risk_score(date: pd.Timestamp, price_data: Optional[Dict] = None) 
 def get_macro_regime(date: pd.Timestamp, price_data: Optional[Dict] = None) -> str:
     """
     Returns macro regime string.
-    - score >= 0.50: MACRO_STRESS  (4+ of 8 signals)
-    - score >= 0.25: MACRO_CAUTION (2-3 of 8 signals)
+    Thresholds from MACRO_CONFIG:
+    - score >= stress_threshold: MACRO_STRESS
+    - score >= caution_threshold: MACRO_CAUTION
     - else: NORMAL
     """
     score = get_macro_risk_score(date, price_data)
-    if score >= 0.50:
+    if score >= MACRO_CONFIG["stress_threshold"]:
         return "MACRO_STRESS"
-    elif score >= 0.25:
+    elif score >= MACRO_CONFIG["caution_threshold"]:
         return "MACRO_CAUTION"
     return "NORMAL"
 
