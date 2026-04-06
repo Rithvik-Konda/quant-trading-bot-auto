@@ -155,7 +155,7 @@ def _get_fundamentals(symbol: str) -> dict:
 
 # ── Feature engineering ───────────────────────────────────────────────────────
 
-def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: Optional[pd.DataFrame] = None, streak_store: Optional[dict] = None, insider_store: Optional[dict] = None, revision_store: Optional[dict] = None) -> pd.DataFrame:
+def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: Optional[pd.DataFrame] = None, streak_store: Optional[dict] = None, insider_store: Optional[dict] = None, revision_store: Optional[dict] = None, regime: Optional[str] = None) -> pd.DataFrame:
     high, low, close, open_, volume = df["high"], df["low"], df["close"], df["open"], df["volume"]
     if vix_macro is None:
         # Load from pre-cached VIX data — ^VIX is the correct yfinance ticker
@@ -1176,6 +1176,23 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
         d["vix_spike_prob_10d"] = pd.Series(0.3, index=df.index)
         d["vix_predicted_30d"]  = pd.Series(20.0, index=df.index)
         d["vix_expected_drop"]  = pd.Series(0.0, index=df.index)
+
+    # ── Regime-interacted features ───────────────────────────��──────────────
+    # Regime-conditioned signal density: features that matter differently
+    # across TRENDING_BULL / CHOPPY / BEAR. Allows the model to learn
+    # regime-specific coefficients without explicit regime switching.
+    if regime is not None:
+        _REG_BASE_FEATURES = [
+            "mom_12_1", "ret_60", "ret_20",
+            "rsi_14", "realized_vol_20", "beta_60",
+            "intraday_mom_20d", "overnight_mom_20d",
+        ]
+        for _bf in _REG_BASE_FEATURES:
+            if _bf in d:
+                _base = d[_bf]
+                d[f"reg_{_bf}_x_bull"]   = _base if regime == "TRENDING_BULL" else pd.Series(0.0, index=df.index)
+                d[f"reg_{_bf}_x_choppy"] = _base if regime == "CHOPPY" else pd.Series(0.0, index=df.index)
+                d[f"reg_{_bf}_x_bear"]   = _base if regime == "BEAR" else pd.Series(0.0, index=df.index)
 
     # ── Alpha101 WorldQuant factors (Kakushadze 2016) ──────────────────────
     # 30 cross-sectional OHLCV factors. Added as additional features with
