@@ -293,7 +293,37 @@ def fetch_8k_text(accession_number: str, cik: Optional[str] = None) -> Optional[
         sentences = re.split(r'(?<=[.!?])\s+', raw)
         prose = ' '.join(s for s in sentences if len(s) > 30 and re.search(r'[a-z]{4,}', s))
 
-        return prose[:5000] if prose else raw[:5000]
+        main_text = prose if prose else raw
+
+        # If this is an earnings 8-K referencing Exhibit 99.1, fetch the press release
+        if re.search(r'Exhibit\s*99\.?1|99\.1', main_text):
+            try:
+                ex99_match = re.search(
+                    r'href="(/Archives/[^"]+(?:ex99|exhibit99|ex-99|99-1)[^"]*\.htm)"',
+                    resp.text, re.IGNORECASE,
+                )
+                if ex99_match:
+                    ex_url = f"https://www.sec.gov{ex99_match.group(1)}"
+                    ex_resp = requests.get(ex_url, headers=SEC_HEADERS, timeout=10)
+                    time.sleep(SEC_RATE_LIMIT)
+                    if ex_resp.status_code == 200:
+                        ex_raw = ex_resp.text
+                        ex_raw = re.sub(r'<head[^>]*>.*?</head>', ' ', ex_raw, flags=re.DOTALL | re.IGNORECASE)
+                        ex_raw = re.sub(r'<script[^>]*>.*?</script>', ' ', ex_raw, flags=re.DOTALL | re.IGNORECASE)
+                        ex_raw = re.sub(r'<style[^>]*>.*?</style>', ' ', ex_raw, flags=re.DOTALL | re.IGNORECASE)
+                        ex_raw = re.sub(r'<ix:[^>]+>', ' ', ex_raw, flags=re.IGNORECASE)
+                        ex_raw = re.sub(r'</ix:[^>]+>', ' ', ex_raw, flags=re.IGNORECASE)
+                        ex_raw = re.sub(r'<xbrli:[^>]+>.*?</xbrli:[^>]+>', ' ', ex_raw, flags=re.DOTALL | re.IGNORECASE)
+                        ex_raw = re.sub(r'<[^>]+>', ' ', ex_raw)
+                        ex_raw = re.sub(r'\s+', ' ', ex_raw).strip()
+                        ex_sentences = re.split(r'(?<=[.!?])\s+', ex_raw)
+                        ex_prose = ' '.join(s for s in ex_sentences if len(s) > 30 and re.search(r'[a-z]{4,}', s))
+                        if ex_prose:
+                            main_text = main_text + " " + ex_prose
+            except Exception:
+                pass  # exhibit fetch failure is non-fatal
+
+        return main_text[:5000]
 
     except Exception:
         return None
