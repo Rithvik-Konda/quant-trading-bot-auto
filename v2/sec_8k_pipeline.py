@@ -744,7 +744,7 @@ if __name__ == "__main__":
         else:
             try:
                 import config
-                tickers = list(config.WATCHLIST)[:50]
+                tickers = list(config.WATCHLIST)
             except ImportError:
                 tickers = ["NVDA", "AAPL", "META", "AMZN", "GOOGL"]
 
