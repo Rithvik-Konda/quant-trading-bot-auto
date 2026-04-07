@@ -599,9 +599,27 @@ def run_backtest_v2(
                                        _current_regime == TRENDING_BULL and
                                        unrealized_pct > -_max_pain)
                 if not _ml_still_believes:
-                    exit_reason = "stop"
-                    exit_ref    = stop_px
-                    # Instrument stop exit for exit model training data
+                    # Query exit model — should we hold through this stop?
+                    _hold_stop = False
+                    try:
+                        from v2.exit_model import should_hold_through_stop
+                        _stop_ctx = {
+                            "regime_entry": entry_meta.get(s, {}).get("regime", ""),
+                            "regime_now": _current_regime,
+                            "unrealized_pct": unrealized_pct,
+                            "days_held": hold_d,
+                            "ml_rank_entry": float(entry_meta.get(s, {}).get("ml_rank_pct", 0.5)),
+                            "ml_rank_now": float(prev_ml_ranks.get(s, 0.5)),
+                            "stop_pct": stop_pct,
+                            "vix_now": float(vix_macro["close"].reindex([date], method="ffill").iloc[0]) if vix_macro is not None and len(vix_macro) > 0 else 15.0,
+                        }
+                        _hold_stop = should_hold_through_stop(_stop_ctx, threshold=0.65)
+                    except Exception:
+                        pass
+                    if not _hold_stop:
+                        exit_reason = "stop"
+                        exit_ref    = stop_px
+                    # Instrument stop exit for exit model training data (always record, even if held)
                     try:
                         import csv as _csv
                         _stop_dir = "cache_backtester"
