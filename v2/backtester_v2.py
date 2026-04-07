@@ -601,6 +601,48 @@ def run_backtest_v2(
                 if not _ml_still_believes:
                     exit_reason = "stop"
                     exit_ref    = stop_px
+                    # Instrument stop exit for exit model training data
+                    try:
+                        import csv as _csv
+                        _stop_dir = "cache_backtester"
+                        os.makedirs(_stop_dir, exist_ok=True)
+                        _stop_file = os.path.join(_stop_dir, "stop_outcomes.csv")
+                        _write_header = not os.path.exists(_stop_file)
+                        # Compute 10-day forward return to label outcome
+                        _df_fwd = prices_by_symbol.get(s, pd.DataFrame())
+                        _future_closes = _df_fwd.loc[_df_fwd.index > date, "close"].head(10)
+                        _recovered = 0
+                        if len(_future_closes) >= 5:
+                            _recovery_threshold = pos.entry_price * (1 + unrealized_pct * 0.5)
+                            _recovered = int((_future_closes >= _recovery_threshold).any())
+                        # Get VIX level
+                        _vix_now_val = float("nan")
+                        try:
+                            _vix_reindexed = vix_macro["close"].reindex([date], method="ffill")
+                            if len(_vix_reindexed) > 0 and not _vix_reindexed.isna().all():
+                                _vix_now_val = round(float(_vix_reindexed.iloc[0]), 2)
+                        except Exception:
+                            pass
+                        _stop_row = {
+                            "date": str(date.date()) if hasattr(date, 'date') else str(date),
+                            "symbol": s,
+                            "regime_entry": entry_meta.get(s, {}).get("regime", ""),
+                            "regime_now": _current_regime,
+                            "unrealized_pct": round(unrealized_pct, 4),
+                            "days_held": hold_d,
+                            "ml_rank_entry": round(float(entry_meta.get(s, {}).get("ml_rank_pct", float("nan"))), 4),
+                            "ml_rank_now": round(float(prev_ml_ranks.get(s, float("nan"))), 4),
+                            "stop_pct": round(stop_pct, 4),
+                            "vix_now": _vix_now_val,
+                            "recovered_10d": _recovered,
+                        }
+                        with open(_stop_file, "a", newline="") as _f:
+                            _w = _csv.DictWriter(_f, fieldnames=list(_stop_row.keys()))
+                            if _write_header:
+                                _w.writeheader()
+                            _w.writerow(_stop_row)
+                    except Exception:
+                        pass  # instrumentation failure is non-fatal
             elif close >= pos.entry_price * (1 + getattr(params, 'take_profit_pct', getattr(params, 'take_profit_long', 0.40))):
                 # Take profit — trailing ATR stop handles secular winners naturally
                 # Removed fitted suppression (0.90/0.85/0.65 thresholds were fitted to APP/NVDA/VRT)
