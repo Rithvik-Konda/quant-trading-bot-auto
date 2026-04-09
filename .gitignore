@@ -4,3 +4,7 @@ __pycache__/
 *.pyc
 trades_v2.csv
 equity_v2.csv
+cache_options/chain_eod_*.parquet
+cache_options/chain_intraday_*.parquet
+logs/*.log
+cache_graph/*_10k.txt
