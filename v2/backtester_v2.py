@@ -57,11 +57,6 @@ from regime_classifier import (
 )
 from entry_filter import is_in_accumulation, filter_candidates
 import strategy_trending as strat_bull
-try:
-    from macro_overlay import get_macro_regime, get_position_scalar
-    _HAS_MACRO_OVERLAY = True
-except ImportError:
-    _HAS_MACRO_OVERLAY = False
 import strategy_choppy  as strat_chop
 import strategy_meanrev as strat_mr
 import strategy_bear    as strat_bear
@@ -422,19 +417,6 @@ def run_backtest_v2(
 
         # ── ML scoring ────────────────────────────────────────────────────
         X, valid_syms = feat_matrix.get_panel(date, available_symbols)
-        # Augment with regime-interacted features (computed daily, not precomputed)
-        # X is ndarray, feat_cols_union is the column name list
-        _REG_BASE = ["mom_12_1", "ret_60", "ret_20", "rsi_14",
-                      "realized_vol_20", "beta_60", "intraday_mom_20d", "overnight_mom_20d"]
-        for _bf in _REG_BASE:
-            if _bf in feat_cols_union:
-                _col_idx  = feat_cols_union.index(_bf)
-                _col_vals = X[:, _col_idx]
-                _bull_col   = _col_vals if _current_regime == TRENDING_BULL else np.zeros(len(_col_vals))
-                _choppy_col = _col_vals if _current_regime == CHOPPY else np.zeros(len(_col_vals))
-                _bear_col   = _col_vals if _current_regime == BEAR else np.zeros(len(_col_vals))
-                X = np.column_stack([X, _bull_col, _choppy_col, _bear_col])
-                feat_cols_union = feat_cols_union + [f"reg_{_bf}_x_bull", f"reg_{_bf}_x_choppy", f"reg_{_bf}_x_bear"]
         if X.shape[0] == 0:
             port_val = _portfolio_value(cash, close_prices, long_positions, short_positions)
             equity.append((date, port_val))
@@ -599,68 +581,8 @@ def run_backtest_v2(
                                        _current_regime == TRENDING_BULL and
                                        unrealized_pct > -_max_pain)
                 if not _ml_still_believes:
-                    # Query exit model — should we hold through this stop?
-                    _hold_stop = False
-                    try:
-                        from v2.exit_model import should_hold_through_stop
-                        _stop_ctx = {
-                            "regime_entry": entry_meta.get(s, {}).get("regime", ""),
-                            "regime_now": _current_regime,
-                            "unrealized_pct": unrealized_pct,
-                            "days_held": hold_d,
-                            "ml_rank_entry": float(entry_meta.get(s, {}).get("ml_rank_pct", 0.5)),
-                            "ml_rank_now": float(prev_ml_ranks.get(s, 0.5)),
-                            "stop_pct": stop_pct,
-                            "vix_now": float(vix_macro["close"].reindex([date], method="ffill").iloc[0]) if vix_macro is not None and len(vix_macro) > 0 else 15.0,
-                        }
-                        _hold_stop = should_hold_through_stop(_stop_ctx, threshold=0.65)
-                    except Exception:
-                        pass
-                    if not _hold_stop:
-                        exit_reason = "stop"
-                        exit_ref    = stop_px
-                    # Instrument stop exit for exit model training data (always record, even if held)
-                    try:
-                        import csv as _csv
-                        _stop_dir = "cache_backtester"
-                        os.makedirs(_stop_dir, exist_ok=True)
-                        _stop_file = os.path.join(_stop_dir, "stop_outcomes.csv")
-                        _write_header = not os.path.exists(_stop_file)
-                        # Compute 10-day forward return to label outcome
-                        _df_fwd = prices_by_symbol.get(s, pd.DataFrame())
-                        _future_closes = _df_fwd.loc[_df_fwd.index > date, "close"].head(10)
-                        _recovered = 0
-                        if len(_future_closes) >= 5:
-                            _recovery_threshold = pos.entry_price * (1 + unrealized_pct * 0.5)
-                            _recovered = int((_future_closes >= _recovery_threshold).any())
-                        # Get VIX level
-                        _vix_now_val = float("nan")
-                        try:
-                            _vix_reindexed = vix_macro["close"].reindex([date], method="ffill")
-                            if len(_vix_reindexed) > 0 and not _vix_reindexed.isna().all():
-                                _vix_now_val = round(float(_vix_reindexed.iloc[0]), 2)
-                        except Exception:
-                            pass
-                        _stop_row = {
-                            "date": str(date.date()) if hasattr(date, 'date') else str(date),
-                            "symbol": s,
-                            "regime_entry": entry_meta.get(s, {}).get("regime", ""),
-                            "regime_now": _current_regime,
-                            "unrealized_pct": round(unrealized_pct, 4),
-                            "days_held": hold_d,
-                            "ml_rank_entry": round(float(entry_meta.get(s, {}).get("ml_rank_pct", float("nan"))), 4),
-                            "ml_rank_now": round(float(prev_ml_ranks.get(s, float("nan"))), 4),
-                            "stop_pct": round(stop_pct, 4),
-                            "vix_now": _vix_now_val,
-                            "recovered_10d": _recovered,
-                        }
-                        with open(_stop_file, "a", newline="") as _f:
-                            _w = _csv.DictWriter(_f, fieldnames=list(_stop_row.keys()))
-                            if _write_header:
-                                _w.writeheader()
-                            _w.writerow(_stop_row)
-                    except Exception:
-                        pass  # instrumentation failure is non-fatal
+                    exit_reason = "stop"
+                    exit_ref    = stop_px
             elif close >= pos.entry_price * (1 + getattr(params, 'take_profit_pct', getattr(params, 'take_profit_long', 0.40))):
                 # Take profit — trailing ATR stop handles secular winners naturally
                 # Removed fitted suppression (0.90/0.85/0.65 thresholds were fitted to APP/NVDA/VRT)
@@ -835,18 +757,6 @@ def run_backtest_v2(
         else:
             _daily_vol_scalar = 1.0    # calm — full size
 
-        # Macro overlay: reduce sizing when cross-asset stress signals fire
-        if _HAS_MACRO_OVERLAY:
-            try:
-                _macro_prices = {"SPY": hist.get("SPY"), "HYG": hist.get("HYG"),
-                                 "^VIX": vix_macro.to_frame("close") if isinstance(vix_macro, pd.Series) else vix_macro,
-                                 "TLT": hist.get("TLT")}
-                _macro_regime = get_macro_regime(date, _macro_prices)
-                _macro_scalar = get_position_scalar(_macro_regime, _current_regime)
-                _daily_vol_scalar *= _macro_scalar
-            except Exception:
-                pass  # macro overlay failure is non-fatal
-
         # ── Long entries ──────────────────────────────────────────────────
         max_longs  = getattr(params, 'max_positions', getattr(params, 'max_positions_long', 4))
         max_shorts = getattr(params, 'max_positions_short', 0)
@@ -956,10 +866,6 @@ def run_backtest_v2(
 
                 px         = open_next_prices[s]
                 stop_pct   = float(np.clip(snap.stop_pct, getattr(params, 'stop_min_pct', getattr(params, 'stop_min_long', 0.02)), getattr(params, 'stop_max_pct', getattr(params, 'stop_max_long', 0.12))))
-                # TESTED & REJECTED: wider stops (1.5x) for TRENDING_BULL + ML>=0.85.
-                # Result: OOS CAGR 18.98% vs 25.40% baseline. Stops increased from
-                # 210 to 243. Wider stops held through drawdowns that never recovered.
-                # Keeping tight ATR stops — they exit faster and allow better re-entry.
                 # Fix 2: ML-rank-scaled conviction sizing
                 import numpy as _np
                 base_conviction = conviction_multiplier(snap)
@@ -1133,9 +1039,6 @@ def run_backtest_v2(
         _mr_slots_ok = _momentum_slots_filled or _current_regime == BEAR
         if _current_regime in (CHOPPY, BEAR) and _mr_slots_ok and _daily_vol_scalar > 0 and not cascade_freeze:
             _mr_params = strat_mr.MeanRevParams()
-            # TESTED & REJECTED: 3 meanrev slots in CHOPPY (was 2).
-            # Result: OOS CAGR 15.06% vs 25.40% baseline. 84 extra trades at
-            # lower quality (WR 68% vs 70%, avg $98 vs $125). Keep at 2.
             _mr_slots  = max(0, _mr_params.max_positions - sum(
                 1 for s in long_positions
                 if entry_meta.get(s, {}).get("engine") == "meanrev"
@@ -1255,9 +1158,6 @@ def run_backtest_v2(
                 px         = open_next_prices[s]
                 stop_pct   = bear_params.stop_short
                 scalar     = bear_params.position_scalar_short
-                # TESTED & REJECTED: 1.25x short sizing in BEAR.
-                # Result: OOS CAGR 15.06% vs 25.40% baseline. Larger shorts
-                # increased avg stop loss from $634 to $816. Keep base sizing.
                 risk_budget= config.INITIAL_CAPITAL * bear_params.risk_per_trade_short * scalar
                 qty_risk   = int(risk_budget / (px * stop_pct)) if px * stop_pct > 0 else 0
                 qty        = min(qty_risk, int(config.INITIAL_CAPITAL * 0.08 / px) if px > 0 else 0)  # max 8% of initial capital per short

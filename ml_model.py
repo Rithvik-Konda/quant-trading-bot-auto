@@ -32,26 +32,6 @@ from typing import Dict, List, Optional, Tuple
 import joblib
 import numpy as np
 import pandas as pd
-
-try:
-    from v2.alpha101 import get_alpha101_row
-    _HAS_ALPHA101 = True
-except ImportError:
-    try:
-        import sys as _sys_a101
-        _sys_a101.path.insert(0, os.path.join(os.path.dirname(__file__), "v2"))
-        from alpha101 import get_alpha101_row
-        _HAS_ALPHA101 = True
-    except ImportError:
-        _HAS_ALPHA101 = False
-try:
-    from v2.sec_8k_pipeline import load_8k_history, get_8k_signal
-    _8K_HISTORY = load_8k_history(os.path.join(os.path.dirname(__file__), "cache_8k", "8k_history.csv"))
-    _HAS_8K = len(_8K_HISTORY) > 0
-except Exception:
-    _HAS_8K = False
-    _8K_HISTORY = None
-
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
@@ -163,7 +143,7 @@ def _get_fundamentals(symbol: str) -> dict:
 
 # ── Feature engineering ───────────────────────────────────────────────────────
 
-def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: Optional[pd.DataFrame] = None, streak_store: Optional[dict] = None, insider_store: Optional[dict] = None, revision_store: Optional[dict] = None, regime: Optional[str] = None) -> pd.DataFrame:
+def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: Optional[pd.DataFrame] = None, streak_store: Optional[dict] = None, insider_store: Optional[dict] = None, revision_store: Optional[dict] = None) -> pd.DataFrame:
     high, low, close, open_, volume = df["high"], df["low"], df["close"], df["open"], df["volume"]
     if vix_macro is None:
         # Load from pre-cached VIX data — ^VIX is the correct yfinance ticker
@@ -1184,117 +1164,6 @@ def compute_features(df: pd.DataFrame, symbol: Optional[str] = None, vix_macro: 
         d["vix_spike_prob_10d"] = pd.Series(0.3, index=df.index)
         d["vix_predicted_30d"]  = pd.Series(20.0, index=df.index)
         d["vix_expected_drop"]  = pd.Series(0.0, index=df.index)
-
-    # ── Regime-interacted features ───────────────────────────��──────────────
-    # Regime-conditioned signal density: features that matter differently
-    # across TRENDING_BULL / CHOPPY / BEAR. Allows the model to learn
-    # regime-specific coefficients without explicit regime switching.
-    if regime is not None:
-        _REG_BASE_FEATURES = [
-            "mom_12_1", "ret_60", "ret_20",
-            "rsi_14", "realized_vol_20", "beta_60",
-            "intraday_mom_20d", "overnight_mom_20d",
-        ]
-        for _bf in _REG_BASE_FEATURES:
-            if _bf in d:
-                _base = d[_bf]
-                d[f"reg_{_bf}_x_bull"]   = _base if regime == "TRENDING_BULL" else pd.Series(0.0, index=df.index)
-                d[f"reg_{_bf}_x_choppy"] = _base if regime == "CHOPPY" else pd.Series(0.0, index=df.index)
-                d[f"reg_{_bf}_x_bear"]   = _base if regime == "BEAR" else pd.Series(0.0, index=df.index)
-
-    # ── 8-K sentiment features ──────────────────────────────────────────────
-    # SEC 8-K filing sentiment from rule-based + FinBERT scoring.
-    # Lookback 5 days: captures recent material event impact.
-    if _HAS_8K and symbol is not None:
-        try:
-            last_date = df.index[-1].strftime("%Y-%m-%d")
-            sig = get_8k_signal(symbol, last_date, _8K_HISTORY, lookback_days=5)
-            d["8k_sentiment_rule"]    = pd.Series(sig["sentiment_rule"],    index=df.index)
-            d["8k_sentiment_finbert"] = pd.Series(sig["sentiment_finbert"], index=df.index)
-            d["8k_novelty"]           = pd.Series(sig["novelty"],           index=df.index)
-            d["8k_combined"]          = pd.Series(sig["combined"],          index=df.index)
-        except Exception:
-            pass  # 8K failure is non-fatal
-
-    # ── Alpha101 WorldQuant factors (Kakushadze 2016) ──────────────────────
-    # 30 cross-sectional OHLCV factors. Added as additional features with
-    # prefix "a101_". Failures silently fill with 0.
-    if _HAS_ALPHA101:
-        try:
-            a101 = get_alpha101_row(df)
-            for k, v in a101.items():
-                d[k] = pd.Series(v, index=df.index)
-        except Exception:
-            pass  # alpha101 failure is non-fatal — existing features unchanged
-
-    # ── Causal features — 8-K sentiment + insider transactions ──────────────
-    # Source: cache_8k/8k_history.csv via event_stream.py
-    # These are time-varying: each date gets the most recent event signal
-    # within a 30-day lookback window with exponential decay (half-life 5 days)
-    try:
-        import sys as _causal_sys
-        _causal_sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-        from v2.event_stream import load_8k_events
-        import math as _math
-
-        _8k_events = load_8k_events()
-        if _8k_events and symbol:
-            _edf = pd.DataFrame(_8k_events)
-            _edf['date'] = pd.to_datetime(_edf['date'])
-
-            _causal_sentiment   = pd.Series(0.0, index=df.index)
-            _causal_has_earn    = pd.Series(0.0, index=df.index)
-            _causal_has_guid    = pd.Series(0.0, index=df.index)
-            _causal_event_count = pd.Series(0.0, index=df.index)
-            _causal_insider_mag = pd.Series(0.0, index=df.index)
-            _causal_insider_dir = pd.Series(0.0, index=df.index)
-
-            _sym_events = _edf[_edf['ticker'] == symbol].copy()
-
-            for _dt in df.index:
-                _lookback = pd.Timestamp(_dt) - pd.Timedelta(days=30)
-                _window = _sym_events[
-                    (_sym_events['date'] > _lookback) &
-                    (_sym_events['date'] <= pd.Timestamp(_dt))
-                ]
-                if len(_window) == 0:
-                    continue
-
-                # Composite sentiment with exponential decay
-                _total_w = 0.0
-                _total_s = 0.0
-                for _, _row in _window.iterrows():
-                    _days_ago = (pd.Timestamp(_dt) - _row['date']).days
-                    _w = float(_row['magnitude']) * _math.exp(-_days_ago / 5.0)
-                    _total_w += _w
-                    _total_s += _w * float(_row['sentiment'])
-                if _total_w > 0:
-                    _causal_sentiment[_dt] = max(-1.0, min(1.0, _total_s / _total_w))
-
-                _causal_event_count[_dt] = float(len(_window))
-                _causal_has_earn[_dt] = float((_window['event_type'] == '8k_earnings').any())
-                _causal_has_guid[_dt] = float((_window['event_type'] == '8k_guidance').any())
-
-                _insider = _window[_window['source'] == 'edgar_form4']
-                if len(_insider) > 0:
-                    _causal_insider_mag[_dt] = float(_insider['magnitude'].max())
-                    _last = _insider.sort_values('date').iloc[-1]
-                    _causal_insider_dir[_dt] = 1.0 if _last['event_type'] == 'insider_buy' else -1.0
-
-            d['causal_sentiment']    = _causal_sentiment
-            d['causal_has_earnings'] = _causal_has_earn
-            d['causal_has_guidance'] = _causal_has_guid
-            d['causal_event_count']  = _causal_event_count
-            d['causal_insider_mag']  = _causal_insider_mag
-            d['causal_insider_dir']  = _causal_insider_dir
-        else:
-            for _k in ['causal_sentiment', 'causal_has_earnings', 'causal_has_guidance',
-                        'causal_event_count', 'causal_insider_mag', 'causal_insider_dir']:
-                d[_k] = pd.Series(0.0, index=df.index)
-    except Exception:
-        for _k in ['causal_sentiment', 'causal_has_earnings', 'causal_has_guidance',
-                    'causal_event_count', 'causal_insider_mag', 'causal_insider_dir']:
-            d[_k] = pd.Series(0.0, index=df.index)
 
     feat = pd.DataFrame(d, index=df.index)
     return feat.replace([np.inf, -np.inf], np.nan)
