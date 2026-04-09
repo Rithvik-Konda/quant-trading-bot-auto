@@ -339,6 +339,7 @@ def run_backtest_v2(
 
     _ml_scores_cache  = None
     _ml_scores_regime = None
+    _lifecycle_rows: list = []
     for step_idx, i in enumerate(range(lookback, len(all_trade_dates) - 1), start=1):
         date      = all_trade_dates[i]
         next_date = all_trade_dates[i + 1]
@@ -1188,6 +1189,53 @@ def run_backtest_v2(
                   f"  L={len(long_positions)} S={len(short_positions)}"
                   f"  trades={len(trades)}", flush=True)
 
+        # ── Position lifecycle logging ────────────────────────────────────
+        if long_positions:
+            _port_rank_mean = float(sum(prev_ml_ranks.get(s, 0.5) for s in long_positions) / len(long_positions))
+            _port_rank_prev = getattr(run_backtest_v2, '_prev_port_rank', _port_rank_mean)
+            _port_rank_vel  = _port_rank_mean - _port_rank_prev
+            run_backtest_v2._prev_port_rank = _port_rank_mean
+            _n_open = len(long_positions)
+            _port_corr = 0.0
+            if _n_open >= 2:
+                try:
+                    _ret_matrix = []
+                    for _ps in list(long_positions.keys())[:8]:
+                        _pdf = prices_by_symbol.get(_ps)
+                        if _pdf is not None:
+                            _rets = _pdf.loc[:date]['close'].pct_change().dropna().tail(20)
+                            if len(_rets) >= 10:
+                                _ret_matrix.append(_rets.values[-10:])
+                    if len(_ret_matrix) >= 2:
+                        _corr_mat = np.corrcoef(np.array(_ret_matrix))
+                        _upper = _corr_mat[np.triu_indices(len(_corr_mat), k=1)]
+                        _port_corr = float(np.mean(_upper))
+                except Exception:
+                    pass
+            for _ls, _lp in list(long_positions.items()):
+                _lc = close_prices.get(_ls)
+                if _lc is None:
+                    continue
+                _unr = (_lc - _lp.entry_price) / _lp.entry_price
+                _hd  = _lp.age_days(pd.Timestamp(date).to_pydatetime())
+                _lifecycle_rows.append({
+                    'date':                str(date.date()),
+                    'symbol':              _ls,
+                    'engine':              entry_meta.get(_ls, {}).get('engine', 'momentum'),
+                    'regime':              _current_regime,
+                    'days_held':           int(_hd),
+                    'ml_rank_entry':       float(entry_meta.get(_ls, {}).get('ml_rank_pct', 0.5)),
+                    'ml_rank_now':         float(prev_ml_ranks.get(_ls, 0.5)),
+                    'ml_rank_delta':       float(prev_ml_ranks.get(_ls, 0.5)) - float(entry_meta.get(_ls, {}).get('ml_rank_pct', 0.5)),
+                    'unrealized_pct':      float(_unr),
+                    'vix_now':             float(_vix_level),
+                    'portfolio_rank_mean': float(_port_rank_mean),
+                    'portfolio_rank_vel':  float(_port_rank_vel),
+                    'portfolio_size':      int(_n_open),
+                    'portfolio_corr':      float(_port_corr),
+                    'ann_vol':             float(entry_meta.get(_ls, {}).get('ann_vol', 0.35)),
+                })
+
         port_val = _portfolio_value(cash, close_prices, long_positions, short_positions)
         equity.append((date, port_val))
 
@@ -1202,6 +1250,13 @@ def run_backtest_v2(
 
     stats = calc_stats(equity_curve, trades)
     _print_results(stats, trades, regime_counts)
+    # Save position lifecycle data for TFT training
+    if _lifecycle_rows:
+        import os as _os2
+        _lc_df = pd.DataFrame(_lifecycle_rows)
+        _lc_path = _os2.path.join(_os2.path.dirname(_os2.path.abspath(__file__)), '..', 'cache_backtester', 'position_lifecycle.csv')
+        _lc_df.to_csv(_lc_path, index=False)
+        print(f"[lifecycle] {len(_lc_df):,} daily snapshots saved → cache_backtester/position_lifecycle.csv", flush=True)
     return equity_curve, trades, stats
 
 
