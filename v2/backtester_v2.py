@@ -579,7 +579,7 @@ def run_backtest_v2(
                 _original_stop_pct  = entry_meta.get(s, {}).get('stop_pct', stop_pct)
                 _max_pain           = _original_stop_pct * 2
                 _ml_still_believes  = (_current_ml_rank >= _entry_ml_threshold and
-                                       _current_regime == TRENDING_BULL and
+                                       _current_regime in (TRENDING_BULL, CHOPPY) and
                                        unrealized_pct > -_max_pain)
                 if not _ml_still_believes:
                     exit_reason = "stop"
