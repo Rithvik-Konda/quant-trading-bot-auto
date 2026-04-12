@@ -1,0 +1,3683 @@
+[
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 34308 shares at $317.30",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 44227 shares at $318.39",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 60049 shares at $319.36",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 48635 shares at $320.31",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 36183 shares at $321.22",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 17083 shares at $322.23",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4736,
+    "raw_text": "SAMUELI HENRY insider_sell 7328 shares at $323.17",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1563,
+    "raw_text": "SAMUELI HENRY insider_sell 2413 shares at $323.92",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 83005 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 69058 shares at $317.27",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 92385 shares at $318.33",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 125292 shares at $319.31",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 107742 shares at $320.26",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 75809 shares at $321.16",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 43188 shares at $322.19",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.8088,
+    "raw_text": "SAMUELI HENRY insider_sell 12514 shares at $323.15",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3727,
+    "raw_text": "SAMUELI HENRY insider_sell 5753 shares at $323.90",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 157090 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 9426 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 172799 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0232,
+    "raw_text": "Velaga S. Ram insider_sell 360 shares at $322.10",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1136,
+    "raw_text": "Velaga S. Ram insider_sell 1758 shares at $323.13",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2317,
+    "raw_text": "Velaga S. Ram insider_sell 3574 shares at $324.20",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3117,
+    "raw_text": "Velaga S. Ram insider_sell 4795 shares at $325.01",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2696,
+    "raw_text": "Velaga S. Ram insider_sell 4134 shares at $326.10",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2662,
+    "raw_text": "Velaga S. Ram insider_sell 4069 shares at $327.13",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3964,
+    "raw_text": "Velaga S. Ram insider_sell 6040 shares at $328.13",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0531,
+    "raw_text": "Velaga S. Ram insider_sell 808 shares at $328.77",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1992,
+    "raw_text": "Velaga S. Ram insider_sell 3132 shares at $317.95",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2447,
+    "raw_text": "Velaga S. Ram insider_sell 3839 shares at $318.74",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4099,
+    "raw_text": "Velaga S. Ram insider_sell 6405 shares at $319.97",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3719,
+    "raw_text": "Velaga S. Ram insider_sell 5796 shares at $320.82",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3491,
+    "raw_text": "Velaga S. Ram insider_sell 5423 shares at $321.89",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3637,
+    "raw_text": "Velaga S. Ram insider_sell 5632 shares at $322.86",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1647,
+    "raw_text": "Velaga S. Ram insider_sell 2543 shares at $323.82",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2155,
+    "raw_text": "Velaga S. Ram insider_sell 3317 shares at $324.84",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1477,
+    "raw_text": "Velaga S. Ram insider_sell 2266 shares at $325.93",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0319,
+    "raw_text": "Velaga S. Ram insider_sell 488 shares at $326.72",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0077,
+    "raw_text": "Spears Kirsten M. insider_sell 120 shares at $321.46",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0755,
+    "raw_text": "Spears Kirsten M. insider_sell 1170 shares at $322.83",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.155,
+    "raw_text": "Spears Kirsten M. insider_sell 2394 shares at $323.79",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3353,
+    "raw_text": "Spears Kirsten M. insider_sell 5163 shares at $324.74",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2461,
+    "raw_text": "Spears Kirsten M. insider_sell 3776 shares at $325.84",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.216,
+    "raw_text": "Spears Kirsten M. insider_sell 3305 shares at $326.79",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3374,
+    "raw_text": "Spears Kirsten M. insider_sell 5147 shares at $327.78",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1831,
+    "raw_text": "Spears Kirsten M. insider_sell 2787 shares at $328.52",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2363,
+    "raw_text": "Spears Kirsten M. insider_sell 3715 shares at $318.05",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2098,
+    "raw_text": "Spears Kirsten M. insider_sell 3290 shares at $318.90",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4228,
+    "raw_text": "Spears Kirsten M. insider_sell 6604 shares at $320.09",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3139,
+    "raw_text": "Spears Kirsten M. insider_sell 4890 shares at $320.99",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3406,
+    "raw_text": "Spears Kirsten M. insider_sell 5289 shares at $322.03",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3395,
+    "raw_text": "Spears Kirsten M. insider_sell 5255 shares at $323.01",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1334,
+    "raw_text": "Spears Kirsten M. insider_sell 2058 shares at $324.12",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1971,
+    "raw_text": "Spears Kirsten M. insider_sell 3032 shares at $324.98",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1095,
+    "raw_text": "Spears Kirsten M. insider_sell 1679 shares at $326.04",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0314,
+    "raw_text": "Spears Kirsten M. insider_sell 480 shares at $326.74",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0077,
+    "raw_text": "Kawwas Charlie B insider_sell 120 shares at $321.29",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1092,
+    "raw_text": "Kawwas Charlie B insider_sell 1691 shares at $323.02",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2205,
+    "raw_text": "Kawwas Charlie B insider_sell 3402 shares at $324.09",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3192,
+    "raw_text": "Kawwas Charlie B insider_sell 4912 shares at $324.90",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2733,
+    "raw_text": "Kawwas Charlie B insider_sell 4191 shares at $326.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2756,
+    "raw_text": "Kawwas Charlie B insider_sell 4214 shares at $327.05",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3614,
+    "raw_text": "Kawwas Charlie B insider_sell 5508 shares at $328.04",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1104,
+    "raw_text": "Kawwas Charlie B insider_sell 1680 shares at $328.69",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2105,
+    "raw_text": "Kawwas Charlie B insider_sell 3310 shares at $317.97",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2369,
+    "raw_text": "Kawwas Charlie B insider_sell 3716 shares at $318.76",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4044,
+    "raw_text": "Kawwas Charlie B insider_sell 6319 shares at $319.97",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3914,
+    "raw_text": "Kawwas Charlie B insider_sell 6100 shares at $320.83",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.352,
+    "raw_text": "Kawwas Charlie B insider_sell 5467 shares at $321.93",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3604,
+    "raw_text": "Kawwas Charlie B insider_sell 5581 shares at $322.87",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1565,
+    "raw_text": "Kawwas Charlie B insider_sell 2417 shares at $323.84",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2256,
+    "raw_text": "Kawwas Charlie B insider_sell 3472 shares at $324.84",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1306,
+    "raw_text": "Kawwas Charlie B insider_sell 2003 shares at $325.91",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0478,
+    "raw_text": "Kawwas Charlie B insider_sell 731 shares at $326.61",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0051,
+    "raw_text": "Brazeal Mark David insider_sell 80 shares at $320.83",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0155,
+    "raw_text": "Brazeal Mark David insider_sell 240 shares at $322.12",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.175,
+    "raw_text": "Brazeal Mark David insider_sell 2707 shares at $323.16",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2842,
+    "raw_text": "Brazeal Mark David insider_sell 4383 shares at $324.24",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3904,
+    "raw_text": "Brazeal Mark David insider_sell 6007 shares at $324.98",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3674,
+    "raw_text": "Brazeal Mark David insider_sell 5633 shares at $326.10",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3532,
+    "raw_text": "Brazeal Mark David insider_sell 5398 shares at $327.16",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.5242,
+    "raw_text": "Brazeal Mark David insider_sell 7986 shares at $328.17",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.05,
+    "raw_text": "Brazeal Mark David insider_sell 760 shares at $328.84",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2724,
+    "raw_text": "Brazeal Mark David insider_sell 4283 shares at $317.97",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3033,
+    "raw_text": "Brazeal Mark David insider_sell 4757 shares at $318.76",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.5238,
+    "raw_text": "Brazeal Mark David insider_sell 8185 shares at $319.96",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4922,
+    "raw_text": "Brazeal Mark David insider_sell 7671 shares at $320.80",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4438,
+    "raw_text": "Brazeal Mark David insider_sell 6894 shares at $321.89",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4706,
+    "raw_text": "Brazeal Mark David insider_sell 7289 shares at $322.82",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2169,
+    "raw_text": "Brazeal Mark David insider_sell 3350 shares at $323.78",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2874,
+    "raw_text": "Brazeal Mark David insider_sell 4424 shares at $324.82",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1813,
+    "raw_text": "Brazeal Mark David insider_sell 2781 shares at $325.89",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0558,
+    "raw_text": "Brazeal Mark David insider_sell 854 shares at $326.67",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-02",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Velaga S. Ram insider_buy 125000 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-02",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Spears Kirsten M. insider_buy 110640 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-02",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Kawwas Charlie B insider_buy 125000 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-02",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Brazeal Mark David insider_buy 151250 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-06",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 27199 shares at $346.75",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-06",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 33078 shares at $347.45",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-06",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.6773,
+    "raw_text": "TAN HOCK E insider_sell 9723 shares at $348.28",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-06",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Brazeal Mark David insider_sell 24113 shares at $346.99",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-06",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4093,
+    "raw_text": "Brazeal Mark David insider_sell 5887 shares at $347.66",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-31",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0016,
+    "raw_text": "Spears Kirsten M. insider_sell 23 shares at $346.64",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-31",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Spears Kirsten M. insider_sell 29977 shares at $347.82",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Brazeal Mark David insider_sell 25921 shares at $352.07",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2887,
+    "raw_text": "TAN HOCK E insider_sell 4257 shares at $339.11",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.328,
+    "raw_text": "TAN HOCK E insider_sell 4820 shares at $340.26",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.7509,
+    "raw_text": "TAN HOCK E insider_sell 11005 shares at $341.17",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.7259,
+    "raw_text": "TAN HOCK E insider_sell 10612 shares at $342.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1548,
+    "raw_text": "TAN HOCK E insider_sell 2255 shares at $343.22",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4141,
+    "raw_text": "TAN HOCK E insider_sell 6016 shares at $344.18",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3747,
+    "raw_text": "TAN HOCK E insider_sell 5426 shares at $345.24",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3198,
+    "raw_text": "TAN HOCK E insider_sell 4615 shares at $346.43",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3702,
+    "raw_text": "TAN HOCK E insider_sell 5329 shares at $347.39",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 20288 shares at $348.38",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 24521 shares at $349.18",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0599,
+    "raw_text": "TAN HOCK E insider_sell 856 shares at $349.85",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-18",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.065,
+    "raw_text": "You Harry L. insider_buy 1000 shares at $325.13",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-18",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 130000 shares at $326.02",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1866,
+    "raw_text": "Brazeal Mark David insider_sell 2895 shares at $322.29",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3536,
+    "raw_text": "Brazeal Mark David insider_sell 5473 shares at $323.08",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.5415,
+    "raw_text": "Brazeal Mark David insider_sell 8354 shares at $324.11",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2366,
+    "raw_text": "Brazeal Mark David insider_sell 3640 shares at $325.06",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1074,
+    "raw_text": "Brazeal Mark David insider_sell 1646 shares at $326.12",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2142,
+    "raw_text": "Brazeal Mark David insider_sell 3274 shares at $327.16",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1063,
+    "raw_text": "Brazeal Mark David insider_sell 1620 shares at $328.10",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0311,
+    "raw_text": "Brazeal Mark David insider_sell 473 shares at $329.06",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.017,
+    "raw_text": "Brazeal Mark David insider_sell 257 shares at $330.23",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0377,
+    "raw_text": "Brazeal Mark David insider_sell 569 shares at $331.29",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0854,
+    "raw_text": "Brazeal Mark David insider_sell 1285 shares at $332.42",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1628,
+    "raw_text": "Brazeal Mark David insider_sell 2442 shares at $333.38",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1652,
+    "raw_text": "Brazeal Mark David insider_sell 2472 shares at $334.19",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.072,
+    "raw_text": "Brazeal Mark David insider_sell 1074 shares at $335.35",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0158,
+    "raw_text": "Brazeal Mark David insider_sell 235 shares at $336.28",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0549,
+    "raw_text": "Brazeal Mark David insider_sell 813 shares at $337.41",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0053,
+    "raw_text": "Brazeal Mark David insider_sell 79 shares at $338.56",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0163,
+    "raw_text": "Brazeal Mark David insider_sell 240 shares at $339.89",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0327,
+    "raw_text": "Brazeal Mark David insider_sell 480 shares at $340.61",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0191,
+    "raw_text": "Brazeal Mark David insider_sell 280 shares at $341.81",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0275,
+    "raw_text": "Brazeal Mark David insider_sell 400 shares at $343.14",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.011,
+    "raw_text": "Brazeal Mark David insider_sell 160 shares at $343.78",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0083,
+    "raw_text": "Brazeal Mark David insider_sell 120 shares at $345.01",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0061,
+    "raw_text": "Kawwas Charlie B insider_sell 90 shares at $337.08",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0084,
+    "raw_text": "Kawwas Charlie B insider_sell 124 shares at $338.48",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0166,
+    "raw_text": "Kawwas Charlie B insider_sell 244 shares at $339.46",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0131,
+    "raw_text": "Kawwas Charlie B insider_sell 192 shares at $340.41",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.013,
+    "raw_text": "Kawwas Charlie B insider_sell 190 shares at $341.57",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0106,
+    "raw_text": "Kawwas Charlie B insider_sell 154 shares at $342.72",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.012,
+    "raw_text": "Kawwas Charlie B insider_sell 175 shares at $343.79",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0039,
+    "raw_text": "Kawwas Charlie B insider_sell 56 shares at $344.93",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0007,
+    "raw_text": "Kawwas Charlie B insider_sell 10 shares at $345.99",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0174,
+    "raw_text": "Kawwas Charlie B insider_sell 270 shares at $322.33",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.021,
+    "raw_text": "Kawwas Charlie B insider_sell 324 shares at $323.83",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0231,
+    "raw_text": "Kawwas Charlie B insider_sell 356 shares at $324.59",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0078,
+    "raw_text": "Kawwas Charlie B insider_sell 120 shares at $325.63",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0111,
+    "raw_text": "Kawwas Charlie B insider_sell 170 shares at $327.11",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0086,
+    "raw_text": "Kawwas Charlie B insider_sell 131 shares at $328.11",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0026,
+    "raw_text": "Kawwas Charlie B insider_sell 40 shares at $330.79",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.013,
+    "raw_text": "Kawwas Charlie B insider_sell 195 shares at $333.12",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0095,
+    "raw_text": "Kawwas Charlie B insider_sell 142 shares at $334.25",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0027,
+    "raw_text": "Kawwas Charlie B insider_sell 40 shares at $335.63",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0022,
+    "raw_text": "Kawwas Charlie B insider_sell 32 shares at $337.09",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.002,
+    "raw_text": "Kawwas Charlie B insider_sell 30 shares at $340.10",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0019,
+    "raw_text": "Kawwas Charlie B insider_sell 28 shares at $341.79",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0021,
+    "raw_text": "Kawwas Charlie B insider_sell 30 shares at $343.04",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0014,
+    "raw_text": "Kawwas Charlie B insider_sell 20 shares at $345.04",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0079,
+    "raw_text": "Spears Kirsten M. insider_sell 117 shares at $337.31",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0247,
+    "raw_text": "Spears Kirsten M. insider_sell 364 shares at $338.61",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0365,
+    "raw_text": "Spears Kirsten M. insider_sell 538 shares at $339.65",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0302,
+    "raw_text": "Spears Kirsten M. insider_sell 443 shares at $340.70",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0186,
+    "raw_text": "Spears Kirsten M. insider_sell 272 shares at $341.93",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0178,
+    "raw_text": "Spears Kirsten M. insider_sell 260 shares at $342.76",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0188,
+    "raw_text": "Spears Kirsten M. insider_sell 273 shares at $343.62",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0077,
+    "raw_text": "Spears Kirsten M. insider_sell 112 shares at $345.80",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0354,
+    "raw_text": "Spears Kirsten M. insider_sell 548 shares at $322.58",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0502,
+    "raw_text": "Spears Kirsten M. insider_sell 775 shares at $323.69",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0305,
+    "raw_text": "Spears Kirsten M. insider_sell 470 shares at $324.56",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0146,
+    "raw_text": "Spears Kirsten M. insider_sell 224 shares at $325.49",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0202,
+    "raw_text": "Spears Kirsten M. insider_sell 309 shares at $326.84",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0157,
+    "raw_text": "Spears Kirsten M. insider_sell 240 shares at $327.77",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.005,
+    "raw_text": "Spears Kirsten M. insider_sell 76 shares at $329.17",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0074,
+    "raw_text": "Spears Kirsten M. insider_sell 112 shares at $331.58",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0113,
+    "raw_text": "Spears Kirsten M. insider_sell 170 shares at $332.70",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0178,
+    "raw_text": "Spears Kirsten M. insider_sell 266 shares at $333.89",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0121,
+    "raw_text": "Spears Kirsten M. insider_sell 180 shares at $334.75",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0051,
+    "raw_text": "Spears Kirsten M. insider_sell 76 shares at $335.59",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0054,
+    "raw_text": "Spears Kirsten M. insider_sell 80 shares at $337.48",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0049,
+    "raw_text": "Spears Kirsten M. insider_sell 72 shares at $340.26",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0052,
+    "raw_text": "Spears Kirsten M. insider_sell 76 shares at $342.88",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0025,
+    "raw_text": "Spears Kirsten M. insider_sell 36 shares at $345.04",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0003,
+    "raw_text": "Spears Kirsten M. insider_sell 4 shares at $346.49",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0472,
+    "raw_text": "Brazeal Mark David insider_sell 700 shares at $337.21",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1743,
+    "raw_text": "Brazeal Mark David insider_sell 2578 shares at $338.13",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2937,
+    "raw_text": "Brazeal Mark David insider_sell 4331 shares at $339.10",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2964,
+    "raw_text": "Brazeal Mark David insider_sell 4357 shares at $340.17",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2914,
+    "raw_text": "Brazeal Mark David insider_sell 4272 shares at $341.06",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2087,
+    "raw_text": "Brazeal Mark David insider_sell 3049 shares at $342.18",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1782,
+    "raw_text": "Brazeal Mark David insider_sell 2596 shares at $343.21",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0996,
+    "raw_text": "Brazeal Mark David insider_sell 1448 shares at $344.03",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0467,
+    "raw_text": "Brazeal Mark David insider_sell 676 shares at $345.30",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0305,
+    "raw_text": "Brazeal Mark David insider_sell 440 shares at $346.21",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0056,
+    "raw_text": "Brazeal Mark David insider_sell 80 shares at $347.14",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-15",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0579,
+    "raw_text": "PAGE JUSTINE insider_sell 800 shares at $361.89",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "PAGE JUSTINE insider_sell 400 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-08",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 21712 shares at $398.14",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-08",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 67610 shares at $399.07",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-08",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 49060 shares at $400.11",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-08",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 131375 shares at $401.02",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-08",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 33746 shares at $402.09",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-08",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.7728,
+    "raw_text": "SAMUELI HENRY insider_sell 9590 shares at $402.94",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-08",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1629,
+    "raw_text": "SAMUELI HENRY insider_sell 2016 shares at $404.01",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-08",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3122,
+    "raw_text": "SAMUELI HENRY insider_sell 3854 shares at $405.01",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-08",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0755,
+    "raw_text": "SAMUELI HENRY insider_sell 929 shares at $406.38",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-08",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0345,
+    "raw_text": "SAMUELI HENRY insider_sell 424 shares at $407.01",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-08",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 68933 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-11-14",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.053,
+    "raw_text": "PAGE JUSTINE insider_sell 800 shares at $331.14",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-14",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.056,
+    "raw_text": "PAGE JUSTINE insider_sell 800 shares at $350.15",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 15532 shares at $334.59",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 33702 shares at $335.50",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 49859 shares at $336.56",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 73344 shares at $337.57",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 72258 shares at $338.50",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 124102 shares at $339.38",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 75678 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 65016 shares at $339.22",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 34984 shares at $340.26",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0458,
+    "raw_text": "Brazeal Mark David insider_sell 640 shares at $358.02",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1335,
+    "raw_text": "Brazeal Mark David insider_sell 1860 shares at $358.92",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3135,
+    "raw_text": "Brazeal Mark David insider_sell 4354 shares at $360.06",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1147,
+    "raw_text": "Brazeal Mark David insider_sell 1590 shares at $360.76",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.103,
+    "raw_text": "Brazeal Mark David insider_sell 1422 shares at $362.16",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0363,
+    "raw_text": "Brazeal Mark David insider_sell 500 shares at $363.15",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0131,
+    "raw_text": "Brazeal Mark David insider_sell 180 shares at $364.11",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0073,
+    "raw_text": "Brazeal Mark David insider_sell 100 shares at $365.15",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0412,
+    "raw_text": "Brazeal Mark David insider_sell 600 shares at $343.13",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1005,
+    "raw_text": "Brazeal Mark David insider_sell 1460 shares at $344.13",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.23,
+    "raw_text": "Brazeal Mark David insider_sell 3332 shares at $345.19",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1961,
+    "raw_text": "Brazeal Mark David insider_sell 2833 shares at $346.08",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0748,
+    "raw_text": "Brazeal Mark David insider_sell 1077 shares at $347.22",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1584,
+    "raw_text": "Brazeal Mark David insider_sell 2275 shares at $348.04",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1254,
+    "raw_text": "Brazeal Mark David insider_sell 1796 shares at $349.09",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0693,
+    "raw_text": "Brazeal Mark David insider_sell 990 shares at $350.06",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.026,
+    "raw_text": "Brazeal Mark David insider_sell 370 shares at $351.53",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0275,
+    "raw_text": "Brazeal Mark David insider_sell 390 shares at $352.18",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0462,
+    "raw_text": "Brazeal Mark David insider_sell 654 shares at $353.42",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0071,
+    "raw_text": "Brazeal Mark David insider_sell 100 shares at $354.05",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.01,
+    "raw_text": "Brazeal Mark David insider_sell 140 shares at $355.57",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.015,
+    "raw_text": "Brazeal Mark David insider_sell 210 shares at $357.51",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0209,
+    "raw_text": "Brazeal Mark David insider_sell 291 shares at $358.49",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0029,
+    "raw_text": "Brazeal Mark David insider_sell 40 shares at $359.58",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0074,
+    "raw_text": "Kawwas Charlie B insider_sell 104 shares at $357.41",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0265,
+    "raw_text": "Kawwas Charlie B insider_sell 369 shares at $358.56",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0423,
+    "raw_text": "Kawwas Charlie B insider_sell 588 shares at $359.74",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0612,
+    "raw_text": "Kawwas Charlie B insider_sell 849 shares at $360.52",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0228,
+    "raw_text": "Kawwas Charlie B insider_sell 315 shares at $361.65",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0137,
+    "raw_text": "Kawwas Charlie B insider_sell 189 shares at $362.87",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0039,
+    "raw_text": "Kawwas Charlie B insider_sell 54 shares at $364.25",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0026,
+    "raw_text": "Kawwas Charlie B insider_sell 36 shares at $365.32",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0288,
+    "raw_text": "Kawwas Charlie B insider_sell 419 shares at $343.93",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0689,
+    "raw_text": "Kawwas Charlie B insider_sell 997 shares at $345.29",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.035,
+    "raw_text": "Kawwas Charlie B insider_sell 505 shares at $346.49",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0423,
+    "raw_text": "Kawwas Charlie B insider_sell 609 shares at $347.50",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0335,
+    "raw_text": "Kawwas Charlie B insider_sell 480 shares at $349.04",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0242,
+    "raw_text": "Kawwas Charlie B insider_sell 345 shares at $350.18",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0102,
+    "raw_text": "Kawwas Charlie B insider_sell 145 shares at $352.07",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0125,
+    "raw_text": "Kawwas Charlie B insider_sell 177 shares at $353.38",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0051,
+    "raw_text": "Kawwas Charlie B insider_sell 72 shares at $354.98",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0054,
+    "raw_text": "Kawwas Charlie B insider_sell 75 shares at $357.64",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0049,
+    "raw_text": "Kawwas Charlie B insider_sell 69 shares at $358.69",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0454,
+    "raw_text": "Spears Kirsten M. insider_sell 634 shares at $358.35",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0599,
+    "raw_text": "Spears Kirsten M. insider_sell 834 shares at $359.25",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1443,
+    "raw_text": "Spears Kirsten M. insider_sell 2003 shares at $360.28",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.047,
+    "raw_text": "Spears Kirsten M. insider_sell 650 shares at $361.41",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0438,
+    "raw_text": "Spears Kirsten M. insider_sell 604 shares at $362.78",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.007,
+    "raw_text": "Spears Kirsten M. insider_sell 96 shares at $363.63",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0287,
+    "raw_text": "Spears Kirsten M. insider_sell 418 shares at $343.68",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.09,
+    "raw_text": "Spears Kirsten M. insider_sell 1306 shares at $344.58",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1163,
+    "raw_text": "Spears Kirsten M. insider_sell 1682 shares at $345.76",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0434,
+    "raw_text": "Spears Kirsten M. insider_sell 626 shares at $346.80",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0808,
+    "raw_text": "Spears Kirsten M. insider_sell 1161 shares at $348.02",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0485,
+    "raw_text": "Spears Kirsten M. insider_sell 695 shares at $348.96",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0473,
+    "raw_text": "Spears Kirsten M. insider_sell 675 shares at $350.08",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0115,
+    "raw_text": "Spears Kirsten M. insider_sell 164 shares at $351.89",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0238,
+    "raw_text": "Spears Kirsten M. insider_sell 337 shares at $353.24",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0113,
+    "raw_text": "Spears Kirsten M. insider_sell 160 shares at $354.16",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0077,
+    "raw_text": "Spears Kirsten M. insider_sell 108 shares at $357.38",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0096,
+    "raw_text": "Spears Kirsten M. insider_sell 134 shares at $358.38",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0023,
+    "raw_text": "Spears Kirsten M. insider_sell 32 shares at $359.58",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-15",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0576,
+    "raw_text": "PAGE JUSTINE insider_sell 800 shares at $360.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-10",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 148154 shares at $336.67",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-08",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.1414,
+    "raw_text": "You Harry L. insider_buy 2050 shares at $344.78",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-09",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0679,
+    "raw_text": "You Harry L. insider_buy 1000 shares at $339.38",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-10",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0363,
+    "raw_text": "You Harry L. insider_buy 500 shares at $363.38",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-08-14",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0492,
+    "raw_text": "PAGE JUSTINE insider_sell 800 shares at $307.46",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-14",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0439,
+    "raw_text": "PAGE JUSTINE insider_sell 800 shares at $274.30",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-09",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 49670 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 40000 shares at $268.29",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1591,
+    "raw_text": "DELLY GAYLA J insider_sell 3000 shares at $265.13",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 153812 shares at $264.16",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 162917 shares at $264.74",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 42141 shares at $265.92",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 58671 shares at $266.92",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 43879 shares at $267.83",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.5171,
+    "raw_text": "SAMUELI HENRY insider_sell 9615 shares at $268.88",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1544,
+    "raw_text": "SAMUELI HENRY insider_sell 2863 shares at $269.62",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 97244 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 94780 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "Brazeal Mark David insider_sell 9450 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Spears Kirsten M. insider_sell 36350 shares at $261.27",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Brazeal Mark David insider_sell 50000 shares at $262.10",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "TAN HOCK E insider_sell 190000 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 40000 shares at $262.17",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Brazeal Mark David insider_sell 50000 shares at $253.28",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-18",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Spears Kirsten M. insider_sell 56310 shares at $251.75",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0401,
+    "raw_text": "PAGE JUSTINE insider_sell 800 shares at $250.35",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-12",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 117758 shares at $252.91",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-11",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.5058,
+    "raw_text": "Kawwas Charlie B insider_sell 10000 shares at $252.88",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-05-14",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0368,
+    "raw_text": "PAGE JUSTINE insider_sell 800 shares at $230.19",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-21",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_buy 1602 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-21",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "You Harry L. insider_buy 1602 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-21",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "PAGE JUSTINE insider_buy 1602 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-21",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Low Check Kian insider_buy 1602 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-21",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "HARTENSTEIN EDDY W insider_buy 1602 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-21",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "DELLY GAYLA J insider_buy 1602 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-21",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bryant Diane M insider_buy 1602 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-21",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hao Kenneth insider_buy 1602 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-14",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0296,
+    "raw_text": "PAGE JUSTINE insider_sell 800 shares at $185.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-11",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.9,
+    "raw_text": "Brazeal Mark David insider_sell 25000 shares at $180.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 32899 shares at $178.36",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 272050 shares at $179.18",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 56756 shares at $180.03",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.7096,
+    "raw_text": "SAMUELI HENRY insider_sell 19599 shares at $181.02",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3171,
+    "raw_text": "SAMUELI HENRY insider_sell 8713 shares at $181.98",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 104041 shares at $183.18",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 35888 shares at $183.88",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 55809 shares at $185.06",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.7353,
+    "raw_text": "SAMUELI HENRY insider_sell 19761 shares at $186.06",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "SAMUELI HENRY insider_sell 44331 shares at $187.15",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.5307,
+    "raw_text": "SAMUELI HENRY insider_sell 14129 shares at $187.79",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 136248 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Brazeal Mark David insider_sell 30000 shares at $194.65",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-15",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Spears Kirsten M. insider_buy 60000 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-15",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Brazeal Mark David insider_buy 60000 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-04",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Spears Kirsten M. insider_buy 118760 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-04",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Kawwas Charlie B insider_buy 150000 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-04",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Brazeal Mark David insider_buy 262500 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-08",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1837,
+    "raw_text": "HARTENSTEIN EDDY W insider_sell 4000 shares at $229.64",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-06",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Low Check Kian insider_sell 48000 shares at $235.35",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-02",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Kawwas Charlie B insider_sell 40000 shares at $231.98",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 45000 shares at $239.96",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "TAN HOCK E insider_sell 130000 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.9632,
+    "raw_text": "Brazeal Mark David insider_sell 20168 shares at $238.79",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-20",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.5773,
+    "raw_text": "Spears Kirsten M. insider_sell 12570 shares at $229.62",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-23",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.68,
+    "raw_text": "Bryant Diane M insider_sell 15000 shares at $226.68",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3139,
+    "raw_text": "You Harry L. insider_sell 6540 shares at $240.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "PAGE JUSTINE insider_sell 1000 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-16",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 137795 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-11-06",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "TAN HOCK E insider_buy 1477110 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-11",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.5788,
+    "raw_text": "Kawwas Charlie B insider_sell 15950 shares at $181.44",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-11",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.6859,
+    "raw_text": "Brazeal Mark David insider_sell 18900 shares at $181.45",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-09",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.6913,
+    "raw_text": "Brazeal Mark David insider_sell 18900 shares at $182.88",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-07",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.7183,
+    "raw_text": "Brazeal Mark David insider_sell 20280 shares at $177.10",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-03",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.6893,
+    "raw_text": "TAN HOCK E insider_sell 20000 shares at $172.32",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-04",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.6995,
+    "raw_text": "TAN HOCK E insider_sell 20000 shares at $174.87",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-01",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3343,
+    "raw_text": "TAN HOCK E insider_sell 10000 shares at $167.14",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-09-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 142988 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-09-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0262,
+    "raw_text": "DELLY GAYLA J insider_sell 750 shares at $174.53",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-09-24",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 150000 shares at $172.94",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-09-19",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.8481,
+    "raw_text": "Kawwas Charlie B insider_sell 25200 shares at $168.27",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-09-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 50000 shares at $163.37",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-11",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "TAN HOCK E insider_sell 7502 shares at $1705.95",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-05",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "TAN HOCK E insider_sell 8200 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-26",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 15815 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-21",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "TAN HOCK E insider_sell 3450 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-20",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0889,
+    "raw_text": "PAGE JUSTINE insider_sell 254 shares at $1750.26",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-21",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "PAGE JUSTINE insider_sell 30 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1123,
+    "raw_text": "PAGE JUSTINE insider_sell 312 shares at $1800.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-17",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.9228,
+    "raw_text": "Kawwas Charlie B insider_sell 2520 shares at $1830.95",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-22",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "You Harry L. insider_buy 189 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-22",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_buy 189 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-22",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "PAGE JUSTINE insider_buy 189 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-22",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Low Check Kian insider_buy 189 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-22",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "HARTENSTEIN EDDY W insider_buy 189 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-22",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "DELLY GAYLA J insider_buy 189 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-22",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hao Kenneth insider_buy 189 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-22",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bryant Diane M insider_buy 189 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "SAMUELI HENRY insider_sell 18601 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-10",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0291,
+    "raw_text": "PAGE JUSTINE insider_sell 110 shares at $1323.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-10",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.6582,
+    "raw_text": "Brazeal Mark David insider_sell 2500 shares at $1316.46",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-05",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.8059,
+    "raw_text": "Spears Kirsten M. insider_sell 3000 shares at $1343.14",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-03",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.6838,
+    "raw_text": "Brazeal Mark David insider_sell 2500 shares at $1367.52",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-02",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.5249,
+    "raw_text": "TAN HOCK E insider_sell 2000 shares at $1312.25",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-28",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "TAN HOCK E insider_sell 7700 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-28",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.6595,
+    "raw_text": "Brazeal Mark David insider_sell 2500 shares at $1318.97",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Kawwas Charlie B insider_sell 5000 shares at $1344.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-25",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.6762,
+    "raw_text": "Brazeal Mark David insider_sell 2500 shares at $1352.35",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-21",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4451,
+    "raw_text": "Hao Kenneth insider_sell 1605 shares at $1386.76",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-21",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.446,
+    "raw_text": "Hao Kenneth insider_sell 1607 shares at $1387.67",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-21",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Hao Kenneth insider_sell 5462 shares at $1388.58",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-21",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.135,
+    "raw_text": "Hao Kenneth insider_sell 486 shares at $1389.20",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-15",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Brazeal Mark David insider_buy 10000 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-12",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2995,
+    "raw_text": "HARTENSTEIN EDDY W insider_sell 1161 shares at $1289.86",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-12",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.5134,
+    "raw_text": "HARTENSTEIN EDDY W insider_sell 1989 shares at $1290.62",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-05",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Spears Kirsten M. insider_buy 28438 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-05",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Kawwas Charlie B insider_buy 17500 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-05",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Brazeal Mark David insider_buy 16375 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-05",
+    "ticker": "AVGO",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hao Kenneth insider_buy 45 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-05",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.5216,
+    "raw_text": "Spears Kirsten M. insider_sell 2500 shares at $1043.14",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-04",
+    "ticker": "AVGO",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "TAN HOCK E insider_sell 32000 shares at $0.00",
+    "source": "edgar_form4"
+  }
+]

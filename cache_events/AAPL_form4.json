@@ -1,0 +1,551 @@
+[
+  {
+    "date": "2024-12-16",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.6924,
+    "raw_text": "WILLIAMS JEFFREY E insider_sell 13925 shares at $248.61",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-16",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "WILLIAMS JEFFREY E insider_sell 34752 shares at $249.50",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-16",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "WILLIAMS JEFFREY E insider_sell 42939 shares at $250.58",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-16",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.421,
+    "raw_text": "WILLIAMS JEFFREY E insider_sell 8384 shares at $251.10",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-11-15",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "LEVINSON ARTHUR D insider_sell 75000 shares at $224.68",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-11-18",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "LEVINSON ARTHUR D insider_sell 75000 shares at $228.66",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-11-19",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "LEVINSON ARTHUR D insider_sell 50000 shares at $229.28",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-11-18",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.189,
+    "raw_text": "KONDO CHRIS insider_sell 4130 shares at $228.87",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-11-05",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "Adams Katherine L. insider_sell 8000 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "KONDO CHRIS insider_buy 8115 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-04",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Maestri Luca insider_sell 59305 shares at $226.52",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "WILLIAMS JEFFREY E insider_buy 127282 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "WILLIAMS JEFFREY E insider_sell 51674 shares at $226.80",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3661,
+    "raw_text": "WILLIAMS JEFFREY E insider_sell 8056 shares at $227.22",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Maestri Luca insider_buy 127282 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Adams Katherine L. insider_buy 127282 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2618,
+    "raw_text": "Adams Katherine L. insider_sell 5850 shares at $223.79",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2899,
+    "raw_text": "Adams Katherine L. insider_sell 6454 shares at $224.59",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3411,
+    "raw_text": "Adams Katherine L. insider_sell 7550 shares at $225.87",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Adams Katherine L. insider_sell 38170 shares at $226.82",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1361,
+    "raw_text": "Adams Katherine L. insider_sell 2995 shares at $227.24",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "COOK TIMOTHY D insider_buy 477301 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "COOK TIMOTHY D insider_sell 109741 shares at $223.75",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "COOK TIMOTHY D insider_sell 61912 shares at $224.46",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "COOK TIMOTHY D insider_sell 45140 shares at $225.86",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3259,
+    "raw_text": "COOK TIMOTHY D insider_sell 7193 shares at $226.57",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "O'BRIEN DEIRDRE insider_buy 127282 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "O'BRIEN DEIRDRE insider_sell 38691 shares at $226.72",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "O'BRIEN DEIRDRE insider_sell 22328 shares at $227.13",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-08-15",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3918,
+    "raw_text": "KONDO CHRIS insider_sell 8706 shares at $225.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-08-09",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2242,
+    "raw_text": "KONDO CHRIS insider_sell 5178 shares at $216.50",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-08-05",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Adams Katherine L. insider_sell 97600 shares at $206.42",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-08-05",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0994,
+    "raw_text": "Adams Katherine L. insider_sell 2400 shares at $207.05",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-08-07",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "Adams Katherine L. insider_sell 4500 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-05-30",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "LEVINSON ARTHUR D insider_sell 75000 shares at $191.58",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-05-15",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1904,
+    "raw_text": "KONDO CHRIS insider_sell 4999 shares at $190.40",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-05-10",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "Adams Katherine L. insider_sell 1850 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "KONDO CHRIS insider_buy 8119 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-11",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "WILLIAMS JEFFREY E insider_sell 59162 shares at $172.22",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-11",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4399,
+    "raw_text": "Maestri Luca insider_sell 12700 shares at $173.19",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-11",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.9611,
+    "raw_text": "Maestri Luca insider_sell 27600 shares at $174.12",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-11",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4513,
+    "raw_text": "Maestri Luca insider_sell 12894 shares at $175.02",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "WILLIAMS JEFFREY E insider_buy 113309 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "O'BRIEN DEIRDRE insider_buy 113309 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "O'BRIEN DEIRDRE insider_sell 54732 shares at $168.91",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Maestri Luca insider_buy 113309 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "COOK TIMOTHY D insider_buy 196410 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-01",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "COOK TIMOTHY D insider_sell 99183 shares at $170.03",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "COOK TIMOTHY D insider_sell 97062 shares at $168.62",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0056,
+    "raw_text": "COOK TIMOTHY D insider_sell 165 shares at $169.30",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Adams Katherine L. insider_buy 113309 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-02",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Adams Katherine L. insider_sell 54732 shares at $168.90",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-29",
+    "ticker": "AAPL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "LEVINSON ARTHUR D insider_sell 100000 shares at $180.94",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "WAGNER SUSAN insider_buy 1852 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "SUGAR RONALD D insider_buy 1852 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "LOZANO MONICA C insider_buy 1852 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "LEVINSON ARTHUR D insider_buy 1852 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "JUNG ANDREA insider_buy 1852 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Gorsky Alex insider_buy 1852 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "GORE ALBERT JR insider_buy 1852 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-01",
+    "ticker": "AAPL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "BELL JAMES A insider_buy 1852 shares at $0.00",
+    "source": "edgar_form4"
+  }
+]

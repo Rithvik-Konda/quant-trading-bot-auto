@@ -1,0 +1,2783 @@
+[
+  {
+    "date": "2026-04-06",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2205,
+    "raw_text": "Koopmans Chris insider_sell 10000 shares at $110.24",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-04-01",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1472,
+    "raw_text": "Casper Mark insider_sell 7000 shares at $105.11",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-04-02",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2323,
+    "raw_text": "Casper Mark insider_sell 10854 shares at $107.01",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-26",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.8848,
+    "raw_text": "Bharathi Sandeep insider_sell 44414 shares at $99.61",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-03-26",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.5922,
+    "raw_text": "MURPHY MATTHEW J insider_sell 30000 shares at $98.70",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-02-02",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 144662 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2552 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 3434 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2555 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 3822 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 3679 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 2462 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 3568 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 1757 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2208 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1394 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1529 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 4497 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 2787 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 4077 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 11038 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 6968 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 8409 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2026-01-05",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0931,
+    "raw_text": "Casper Mark insider_sell 5000 shares at $93.08",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 4714 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 54959 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 54959 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 30534 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 17100 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-12-05",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0253,
+    "raw_text": "Casper Mark insider_sell 1253 shares at $101.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-11-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2486 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 5519 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 6969 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 8409 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-17",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_sell 22722 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 4497 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 2788 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 4077 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 3680 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 2462 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 3567 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 1757 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1520 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 210 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2207 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1394 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1529 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2551 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 3434 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2556 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 3822 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-25",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0531,
+    "raw_text": "Meintjes Willem A insider_buy 3400 shares at $78.03",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-25",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0531,
+    "raw_text": "Bharathi Sandeep insider_buy 3400 shares at $78.03",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-25",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.1061,
+    "raw_text": "Koopmans Chris insider_buy 6800 shares at $78.03",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-09-25",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.2097,
+    "raw_text": "MURPHY MATTHEW J insider_buy 13600 shares at $77.09",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-08-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2486 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-18",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0434,
+    "raw_text": "Casper Mark insider_sell 3000 shares at $72.35",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 3679 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 2462 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 3567 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Bharathi Sandeep insider_buy 1757 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 4497 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 2787 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 4076 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 5519 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 6969 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 8408 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1519 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 209 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2208 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1393 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1528 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2552 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 3434 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2555 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 3822 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-13",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "STRACHAN MICHAEL G insider_buy 4354 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-13",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "STRACHAN MICHAEL G insider_buy 3289 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-13",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "SWITZ ROBERT E insider_buy 3289 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-16",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0206,
+    "raw_text": "Meintjes Willem A insider_sell 1500 shares at $68.52",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-16",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0176,
+    "raw_text": "Dixon Panteha insider_sell 1283 shares at $68.50",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-13",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Brown Tudor insider_buy 3289 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-13",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Knight Marachel insider_buy 3289 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-13",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "WALLACE RICHARD P insider_buy 3289 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-13",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Durn Daniel insider_buy 3289 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-06-13",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Buss Brad W insider_buy 3289 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-05-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2485 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-05-19",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0076,
+    "raw_text": "Casper Mark insider_sell 626 shares at $61.10",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-05-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0781,
+    "raw_text": "Koopmans Chris insider_sell 6000 shares at $65.10",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-05-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0194,
+    "raw_text": "Meintjes Willem A insider_sell 1500 shares at $64.75",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-05-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0161,
+    "raw_text": "Dixon Panteha insider_sell 1239 shares at $65.01",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-05-12",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0167,
+    "raw_text": "Dixon Panteha insider_sell 1286 shares at $65.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-05-12",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.078,
+    "raw_text": "Koopmans Chris insider_sell 6000 shares at $65.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-05-01",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "STRACHAN MICHAEL G insider_buy 4320 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-05-01",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.018,
+    "raw_text": "Meintjes Willem A insider_sell 1500 shares at $60.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-23",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1371,
+    "raw_text": "Casper Mark insider_sell 12460 shares at $55.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 3171 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 5315 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 3252 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 47946 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1203 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1519 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 210 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2208 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1394 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 18186 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 766 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2551 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 3434 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2555 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 11574 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 3075 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 5520 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 6968 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 2187 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 1367 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 4497 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 2788 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 33066 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 412 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 1063 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 716 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 558 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 1778 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-17",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0206,
+    "raw_text": "Meintjes Willem A insider_sell 1500 shares at $68.83",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-17",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0826,
+    "raw_text": "Koopmans Chris insider_sell 6000 shares at $68.83",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-17",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0197,
+    "raw_text": "Dixon Panteha insider_sell 1430 shares at $68.75",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-03-07",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0414,
+    "raw_text": "Buss Brad W insider_buy 3000 shares at $69.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-02-18",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1276,
+    "raw_text": "Koopmans Chris insider_sell 6000 shares at $106.35",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-02-18",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0319,
+    "raw_text": "Meintjes Willem A insider_sell 1500 shares at $106.35",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-02-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2486 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-02-18",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.027,
+    "raw_text": "Casper Mark insider_sell 1253 shares at $107.61",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-22",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1493,
+    "raw_text": "Koopmans Chris insider_sell 6000 shares at $124.40",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1203 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1519 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 209 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2207 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1394 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-17",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1909,
+    "raw_text": "Casper Mark insider_sell 7755 shares at $123.08",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0355,
+    "raw_text": "Meintjes Willem A insider_sell 1500 shares at $118.33",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 765 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2552 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 3434 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2555 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 2187 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 1367 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 4497 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 2787 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 3171 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 5315 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 3252 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 3076 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 5519 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 6969 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 411 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 1063 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 715 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 557 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-06",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.1226,
+    "raw_text": "STRACHAN MICHAEL G insider_sell 5000 shares at $122.65",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2025-01-02",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0565,
+    "raw_text": "Casper Mark insider_sell 2500 shares at $113.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-24",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_sell 13445 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-20",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_sell 2699 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-16",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.147,
+    "raw_text": "Koopmans Chris insider_sell 6000 shares at $122.50",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-16",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0367,
+    "raw_text": "Meintjes Willem A insider_sell 1500 shares at $122.50",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-13",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.2424,
+    "raw_text": "Brown Tudor insider_sell 10005 shares at $121.12",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-12-09",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0,
+    "raw_text": "House Rebecca W insider_sell 1500 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-11-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2485 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-11-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0267,
+    "raw_text": "Meintjes Willem A insider_sell 1500 shares at $89.14",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-11-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.107,
+    "raw_text": "Koopmans Chris insider_sell 6000 shares at $89.14",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-21",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0969,
+    "raw_text": "Koopmans Chris insider_sell 6000 shares at $80.77",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Hussain Muhammad Raghib insider_sell 150000 shares at $80.50",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 3171 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 5315 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 3252 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0242,
+    "raw_text": "Meintjes Willem A insider_sell 1500 shares at $80.50",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 766 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2551 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 3435 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2555 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1203 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1519 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 210 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2208 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1394 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 3075 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 5519 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 6969 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 412 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 1063 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 716 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 558 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 2187 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 1367 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 4497 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 2788 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-14",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.2018,
+    "raw_text": "MURPHY MATTHEW J insider_buy 13000 shares at $77.63",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-10-01",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0354,
+    "raw_text": "Casper Mark insider_sell 2500 shares at $70.83",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-09-16",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0879,
+    "raw_text": "MURPHY MATTHEW J insider_sell 6000 shares at $73.29",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-09-16",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0222,
+    "raw_text": "Meintjes Willem A insider_sell 1500 shares at $73.87",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-09-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Tamer Ford insider_buy 4354 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-09-16",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0886,
+    "raw_text": "Koopmans Chris insider_sell 6000 shares at $73.87",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-09-12",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 1.0,
+    "raw_text": "Tamer Ford insider_sell 92000 shares at $74.16",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-08-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2486 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-08-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.02,
+    "raw_text": "Meintjes Willem A insider_sell 1500 shares at $66.75",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 3075 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 5519 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 6968 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1203 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1519 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 209 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2208 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1393 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0739,
+    "raw_text": "Koopmans Chris insider_sell 5000 shares at $73.88",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 2187 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 1367 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 4497 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 2787 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0222,
+    "raw_text": "Meintjes Willem A insider_sell 1500 shares at $73.88",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 765 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2551 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 3434 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2555 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 411 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 1064 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 715 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 557 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 3171 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 5314 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 3252 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-08",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.75,
+    "raw_text": "Hussain Muhammad Raghib insider_sell 50000 shares at $75.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-07-01",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.035,
+    "raw_text": "Casper Mark insider_sell 2500 shares at $70.07",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-24",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.02,
+    "raw_text": "Durn Daniel insider_buy 1425 shares at $70.21",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-20",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Durn Daniel insider_buy 498 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-20",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "WALLACE RICHARD P insider_buy 498 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-17",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0734,
+    "raw_text": "Koopmans Chris insider_sell 5000 shares at $73.42",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-16",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Brown Tudor insider_buy 4570 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-16",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "STRACHAN MICHAEL G insider_buy 4570 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-16",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Tamer Ford insider_buy 4570 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-16",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "SWITZ ROBERT E insider_buy 4570 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-16",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Buss Brad W insider_buy 4570 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-16",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Knight Marachel insider_buy 4570 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-06-16",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Andrews Sara C insider_buy 4570 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-05-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4151,
+    "raw_text": "MURPHY MATTHEW J insider_sell 30000 shares at $69.18",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-05-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2486 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-05-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0686,
+    "raw_text": "Koopmans Chris insider_sell 5000 shares at $68.57",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-05-01",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0129,
+    "raw_text": "Meintjes Willem A insider_sell 1000 shares at $64.49",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-19",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0324,
+    "raw_text": "Casper Mark insider_sell 2500 shares at $64.75",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 3306 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 3171 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 5315 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 51392 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1203 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1520 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 210 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2207 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 7517 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 6150 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 11039 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.4129,
+    "raw_text": "MURPHY MATTHEW J insider_sell 30000 shares at $68.82",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0712,
+    "raw_text": "Koopmans Chris insider_sell 5000 shares at $71.25",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 1384 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 2187 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 1367 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 4497 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 21514 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 539 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 766 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2552 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 3434 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 8367 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 359 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 412 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 1063 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 716 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 1957 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-04-01",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0143,
+    "raw_text": "Meintjes Willem A insider_sell 1000 shares at $71.50",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-18",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0136,
+    "raw_text": "Meintjes Willem A insider_sell 1000 shares at $67.79",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0664,
+    "raw_text": "Koopmans Chris insider_sell 5000 shares at $66.44",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-03-14",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.397,
+    "raw_text": "MURPHY MATTHEW J insider_sell 30000 shares at $66.17",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2485 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.406,
+    "raw_text": "MURPHY MATTHEW J insider_sell 30000 shares at $67.67",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-15",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.068,
+    "raw_text": "Koopmans Chris insider_sell 5000 shares at $67.98",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-02-01",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0136,
+    "raw_text": "Meintjes Willem A insider_sell 1000 shares at $68.20",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 359 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 411 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 1063 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Dixon Panteha insider_buy 715 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 1384 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 2187 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 1366 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Koopmans Chris insider_buy 4497 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-16",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.0653,
+    "raw_text": "Koopmans Chris insider_sell 5000 shares at $65.26",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 7517 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 6151 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "MURPHY MATTHEW J insider_buy 11038 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-16",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3935,
+    "raw_text": "MURPHY MATTHEW J insider_sell 30000 shares at $65.59",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1202 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 1519 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 209 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Casper Mark insider_buy 2208 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 538 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 765 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 2551 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Meintjes Willem A insider_buy 3434 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 3306 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 3171 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-15",
+    "ticker": "MRVL",
+    "event_type": "insider_buy",
+    "sentiment": 0.7,
+    "magnitude": 0.0,
+    "raw_text": "Hussain Muhammad Raghib insider_buy 5315 shares at $0.00",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-08",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.3612,
+    "raw_text": "Tamer Ford insider_sell 30000 shares at $60.20",
+    "source": "edgar_form4"
+  },
+  {
+    "date": "2024-01-05",
+    "ticker": "MRVL",
+    "event_type": "insider_sell",
+    "sentiment": -0.5,
+    "magnitude": 0.012,
+    "raw_text": "Meintjes Willem A insider_sell 1000 shares at $60.00",
+    "source": "edgar_form4"
+  }
+]
