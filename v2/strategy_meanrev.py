@@ -157,7 +157,7 @@ def can_enter_meanrev(snap: MeanRevSnapshot,
     # High vol = binary event risk = gaps through stops
     # PTON, METC, ZIM, RKLB all had ann_vol > 0.60
     if hasattr(snap, 'ann_vol') and snap.ann_vol > 0.65:  # research-validated: PTON=0.72, HOOD=0.76, APP=0.90 all blocked
-        return False, f"ann_vol={snap.ann_vol:.2f} too high (max 0.55)"
+        return False, f"ann_vol={snap.ann_vol:.2f} too high (max 0.65)"
     return True, "OK"
 
 def score_meanrev_candidates(snaps: List[MeanRevSnapshot],

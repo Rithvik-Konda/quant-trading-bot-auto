@@ -63,6 +63,17 @@ import strategy_bear    as strat_bear
 
 CACHE_DIR = "cache_prices"
 
+# ── SILENT-FAILURE LOGGER (added by hygiene_patch.py) ─────────────────
+def _silent_log(_where: str, _sym: str, _exc: Exception) -> None:
+    import os as _os, traceback as _tb
+    _path = _os.environ.get("V2_SILENT_LOG", "/tmp/v2_silent_errors.log")
+    try:
+        with open(_path, "a") as _f:
+            _f.write(f"[{_where}] {_sym}: {type(_exc).__name__}: {_exc}\n")
+    except Exception:
+        pass
+
+
 
 def _get_strategy(regime: str):
     """Return the active strategy module for the current regime."""
@@ -540,8 +551,8 @@ def run_backtest_v2(
                                 add_count=getattr(pos, 'add_count', 0),
                             )
                             pos = long_positions[s]
-                except Exception:
-                    pass
+                except Exception as _e:
+                    _silent_log("tcps_day7", s, _e)
 
             # ── Mean reversion exit (different logic from momentum) ──────
             # RSI(2) positions: exit on SMA5 cross or 10-day timeout
@@ -642,8 +653,8 @@ def run_backtest_v2(
                         _call_pnl  = _payoff2 - _cost2
                         cash      += _payoff2
                         pnl       += _call_pnl
-                    except Exception:
-                        pass
+                    except Exception as _e:
+                        _silent_log("conv_call_exit", s, _e)
 
                 trades.append(Trade(
                     symbol=s, entry_date=pos.entry_time,
@@ -1027,8 +1038,8 @@ def run_backtest_v2(
                                     "call_entry_date": str(next_date.date()),
                                     "call_delta":     _delta,
                                 })
-                except Exception:
-                    pass
+                except Exception as _e:
+                    _silent_log("conv_call_entry", s, _e)
 
                 entry_meta[s] = _conv_meta
 

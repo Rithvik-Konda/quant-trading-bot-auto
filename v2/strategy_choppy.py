@@ -29,7 +29,7 @@ from regime_classifier import CHOPPY
 
 
 # ── Strategy parameters ───────────────────────────────────────────────────────
-MAX_POSITIONS        = 2       # very defensive in choppy — only best 2 ideas
+MAX_POSITIONS        = 2       # FIXME docstring above says 4 — reconcile
 ML_RANK_MIN          = 0.93    # top 7% — very selective
 COMBINED_SCORE_MIN   = 0.25    # higher bar in choppy markets
 MAX_HOLD_DAYS        = 22      # data: 11-15d exits avg -$86, 21-30d avg +$420
