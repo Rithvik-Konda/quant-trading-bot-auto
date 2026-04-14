@@ -1,0 +1,532 @@
+22:44:42 | INFO | Rolling walk-forward retrain
+22:44:42 | INFO | Universe: 443 stocks
+22:44:42 | INFO | Model: LightGBM
+22:44:42 | WARN | Earnings streak store failed: No module named 'earnings_streak'
+22:44:42 | WARN | Insider store failed: No module named 'insider_signal'
+22:44:42 | WARN | Revision store failed: No module named 'analyst_revision'
+22:44:42 | INFO | Loaded 2513 cached bars for NVDA
+22:44:42 | INFO | Loaded 2513 cached bars for AVGO
+22:44:42 | INFO | Loaded 2513 cached bars for AMD
+22:44:42 | INFO | Loaded 2513 cached bars for MU
+22:44:42 | INFO | Loaded 2513 cached bars for MRVL
+22:44:42 | INFO | Loaded 2513 cached bars for QCOM
+22:44:42 | INFO | Loaded 2513 cached bars for TXN
+22:44:43 | INFO | Loaded 2513 cached bars for INTC
+22:44:43 | INFO | Loaded 2513 cached bars for ADI
+22:44:43 | INFO | Loaded 2513 cached bars for AMAT
+22:44:43 | INFO | Loaded 2513 cached bars for LRCX
+22:44:43 | INFO | Loaded 2513 cached bars for KLAC
+22:44:43 | INFO | Loaded 2513 cached bars for SMCI
+22:44:43 | INFO | Loaded 2513 cached bars for ANET
+22:44:43 | INFO | Loaded 623 cached bars for ARM
+22:44:43 | INFO | Loaded 2515 cached bars for MPWR
+22:44:43 | INFO | Loaded 2515 cached bars for ON
+22:44:43 | INFO | Loaded 2515 cached bars for SWKS
+22:44:43 | INFO | Loaded 2515 cached bars for NXPI
+22:44:43 | INFO | Loaded 2515 cached bars for SNPS
+22:44:43 | INFO | Loaded 2515 cached bars for CDNS
+22:44:43 | INFO | Loaded 2515 cached bars for STX
+22:44:43 | INFO | Loaded 2515 cached bars for WDC
+22:44:43 | INFO | Loaded 2513 cached bars for MSFT
+22:44:44 | INFO | Loaded 2513 cached bars for META
+22:44:44 | INFO | Loaded 2513 cached bars for AMZN
+22:44:44 | INFO | Loaded 2513 cached bars for GOOGL
+22:44:44 | INFO | Loaded 2513 cached bars for AAPL
+22:44:44 | INFO | Loaded 2513 cached bars for TSLA
+22:44:44 | INFO | Loaded 1376 cached bars for SNOW
+22:44:44 | INFO | Loaded 2107 cached bars for MDB
+22:44:44 | INFO | Loaded 1626 cached bars for DDOG
+22:44:44 | INFO | Loaded 1630 cached bars for NET
+22:44:44 | INFO | Loaded 2513 cached bars for TEAM
+22:44:44 | INFO | Loaded 2006 cached bars for ZS
+22:44:44 | INFO | Loaded 2513 cached bars for SHOP
+22:44:44 | INFO | Loaded 2513 cached bars for NOW
+22:44:44 | INFO | Loaded 1695 cached bars for CRWD
+22:44:44 | INFO | Loaded 2513 cached bars for PANW
+22:44:44 | INFO | Loaded 1366 cached bars for PLTR
+22:44:44 | INFO | Loaded 2513 cached bars for ADBE
+22:44:44 | INFO | Loaded 2513 cached bars for ORCL
+22:44:44 | INFO | Loaded 2513 cached bars for CRM
+22:44:45 | INFO | Loaded 2513 cached bars for INTU
+22:44:45 | INFO | Loaded 2513 cached bars for WDAY
+22:44:45 | INFO | Loaded 2243 cached bars for OKTA
+22:44:45 | INFO | Loaded 1978 cached bars for DOCU
+22:44:45 | INFO | Loaded 2513 cached bars for HUBS
+22:44:45 | INFO | Loaded 2513 cached bars for FTNT
+22:44:45 | INFO | Loaded 1107 cached bars for GTLB
+22:44:45 | INFO | Loaded 1570 cached bars for BILL
+22:44:45 | INFO | Loaded 1181 cached bars for S
+22:44:45 | INFO | Loaded 1868 cached bars for ESTC
+22:44:45 | INFO | Loaded 1195 cached bars for MNDY
+22:44:45 | INFO | Loaded 1123 cached bars for TOST
+22:44:45 | INFO | Loaded 2403 cached bars for DELL
+22:44:45 | INFO | Loaded 2515 cached bars for HPQ
+22:44:45 | INFO | Loaded 2515 cached bars for HPE
+22:44:45 | INFO | Loaded 2515 cached bars for PSTG
+22:44:45 | INFO | Loaded 2515 cached bars for NTAP
+22:44:45 | INFO | Loaded 2515 cached bars for CDW
+22:44:46 | INFO | Loaded 2515 cached bars for FFIV
+22:44:46 | INFO | Loaded 2515 cached bars for ZBRA
+22:44:46 | INFO | Loaded 2515 cached bars for CGNX
+22:44:46 | INFO | Loaded 2515 cached bars for TDY
+22:44:46 | INFO | Loaded 2515 cached bars for TRMB
+22:44:46 | INFO | Loaded 2515 cached bars for NFLX
+22:44:46 | INFO | Loaded 1720 cached bars for UBER
+22:44:46 | INFO | Loaded 1319 cached bars for ABNB
+22:44:46 | INFO | Loaded 1320 cached bars for DASH
+22:44:46 | INFO | Loaded 1735 cached bars for PINS
+22:44:46 | INFO | Loaded 2271 cached bars for SNAP
+22:44:46 | INFO | Loaded 496 cached bars for RDDT
+22:44:46 | INFO | Loaded 2382 cached bars for TTD
+22:44:46 | INFO | Loaded 2515 cached bars for ZG
+22:44:46 | INFO | Loaded 2515 cached bars for IAC
+22:44:46 | INFO | Loaded 2515 cached bars for V
+22:44:46 | INFO | Loaded 2515 cached bars for MA
+22:44:46 | INFO | Loaded 2515 cached bars for PYPL
+22:44:47 | INFO | Loaded 1297 cached bars for AFRM
+22:44:47 | INFO | Loaded 1315 cached bars for UPST
+22:44:47 | INFO | Loaded 1304 cached bars for SOFI
+22:44:47 | INFO | Loaded 1068 cached bars for NU
+22:44:47 | INFO | Loaded 2515 cached bars for ALLY
+22:44:47 | INFO | Loaded 1161 cached bars for HOOD
+22:44:47 | INFO | Loaded 1235 cached bars for COIN
+22:44:47 | INFO | Loaded 2513 cached bars for JPM
+22:44:47 | INFO | Loaded 2513 cached bars for BAC
+22:44:47 | INFO | Loaded 2513 cached bars for C
+22:44:47 | INFO | Loaded 2513 cached bars for GS
+22:44:47 | INFO | Loaded 2513 cached bars for MS
+22:44:47 | INFO | Loaded 2513 cached bars for BLK
+22:44:47 | INFO | Loaded 2513 cached bars for SCHW
+22:44:47 | INFO | Loaded 2513 cached bars for AXP
+22:44:47 | INFO | Loaded 2513 cached bars for SPGI
+22:44:48 | INFO | Loaded 2513 cached bars for ICE
+22:44:48 | INFO | Loaded 2513 cached bars for CME
+22:44:48 | INFO | Loaded 2513 cached bars for AIG
+22:44:48 | INFO | Loaded 2513 cached bars for CB
+22:44:48 | INFO | Loaded 2513 cached bars for PGR
+22:44:48 | INFO | Loaded 2513 cached bars for TRV
+22:44:48 | INFO | Loaded 2513 cached bars for USB
+22:44:48 | INFO | Loaded 2513 cached bars for PNC
+22:44:48 | INFO | Loaded 2513 cached bars for TFC
+22:44:48 | INFO | Loaded 2513 cached bars for COF
+22:44:48 | INFO | Loaded 2513 cached bars for BK
+22:44:48 | INFO | Loaded 2515 cached bars for MTB
+22:44:48 | INFO | Loaded 2515 cached bars for CFG
+22:44:48 | INFO | Loaded 2515 cached bars for HBAN
+22:44:48 | INFO | Loaded 2515 cached bars for RF
+22:44:48 | INFO | Loaded 2515 cached bars for KEY
+22:44:49 | INFO | Loaded 2515 cached bars for FITB
+22:44:49 | INFO | Loaded 2515 cached bars for ZION
+22:44:49 | INFO | Loaded 2515 cached bars for WAL
+22:44:49 | INFO | Loaded 2515 cached bars for MET
+22:44:49 | INFO | Loaded 2515 cached bars for PRU
+22:44:49 | INFO | Loaded 2515 cached bars for AFL
+22:44:49 | INFO | Loaded 2515 cached bars for ALL
+22:44:49 | INFO | Loaded 2515 cached bars for HIG
+22:44:49 | INFO | Loaded 2515 cached bars for LNC
+22:44:49 | INFO | Loaded 2515 cached bars for RJF
+22:44:49 | INFO | Loaded 2515 cached bars for LPLA
+22:44:49 | INFO | Loaded 2515 cached bars for WTW
+22:44:49 | INFO | Loaded 2515 cached bars for AON
+22:44:49 | INFO | Loaded 2515 cached bars for AJG
+22:44:49 | INFO | Loaded 2515 cached bars for BRO
+22:44:50 | INFO | Loaded 2515 cached bars for ERIE
+22:44:50 | INFO | Loaded 2515 cached bars for BX
+22:44:50 | INFO | Loaded 2515 cached bars for KKR
+22:44:50 | INFO | Loaded 2515 cached bars for APO
+22:44:50 | INFO | Loaded 2515 cached bars for CG
+22:44:50 | INFO | Loaded 2515 cached bars for ARES
+22:44:50 | INFO | Loaded 2513 cached bars for UNH
+22:44:50 | INFO | Loaded 2513 cached bars for LLY
+22:44:50 | INFO | Loaded 2513 cached bars for JNJ
+22:44:50 | INFO | Loaded 2513 cached bars for PFE
+22:44:50 | INFO | Loaded 2513 cached bars for ABBV
+22:44:50 | INFO | Loaded 2513 cached bars for MRK
+22:44:50 | INFO | Loaded 2513 cached bars for TMO
+22:44:50 | INFO | Loaded 2513 cached bars for ISRG
+22:44:50 | INFO | Loaded 2513 cached bars for DHR
+22:44:51 | INFO | Loaded 2513 cached bars for ABT
+22:44:51 | INFO | Loaded 2513 cached bars for BMY
+22:44:51 | INFO | Loaded 2513 cached bars for AMGN
+22:44:51 | INFO | Loaded 2513 cached bars for GILD
+22:44:51 | INFO | Loaded 2513 cached bars for VRTX
+22:44:51 | INFO | Loaded 2513 cached bars for REGN
+22:44:51 | INFO | Loaded 2513 cached bars for ZTS
+22:44:51 | INFO | Loaded 2513 cached bars for SYK
+22:44:51 | INFO | Loaded 2513 cached bars for BSX
+22:44:51 | INFO | Loaded 2513 cached bars for MDT
+22:44:51 | INFO | Loaded 2513 cached bars for CI
+22:44:51 | INFO | Loaded 2515 cached bars for CVS
+22:44:51 | INFO | Loaded 2515 cached bars for HUM
+22:44:51 | INFO | Loaded 2515 cached bars for CNC
+22:44:51 | INFO | Loaded 1825 cached bars for MRNA
+22:44:51 | INFO | Loaded 1614 cached bars for BNTX
+22:44:52 | INFO | Loaded 2515 cached bars for BIIB
+22:44:52 | INFO | Loaded 2515 cached bars for ALNY
+22:44:52 | INFO | Loaded 2515 cached bars for INCY
+22:44:52 | INFO | Loaded 2515 cached bars for NBIX
+22:44:52 | INFO | Loaded 2515 cached bars for JAZZ
+22:44:52 | INFO | Loaded 2515 cached bars for EW
+22:44:52 | INFO | Loaded 2515 cached bars for HOLX
+22:44:52 | INFO | Loaded 2515 cached bars for DXCM
+22:44:52 | INFO | Loaded 2515 cached bars for PODD
+22:44:52 | INFO | Loaded 2515 cached bars for ALGN
+22:44:52 | INFO | Loaded 2515 cached bars for IART
+22:44:52 | INFO | Loaded 2515 cached bars for HCA
+22:44:52 | INFO | Loaded 2515 cached bars for THC
+22:44:52 | INFO | Loaded 2515 cached bars for UHS
+22:44:53 | INFO | Loaded 2515 cached bars for LH
+22:44:53 | INFO | Loaded 2515 cached bars for DGX
+22:44:53 | INFO | Loaded 2515 cached bars for NTRA
+22:44:53 | INFO | Loaded 2515 cached bars for VEEV
+22:44:53 | INFO | Loaded 1185 cached bars for DOCS
+22:44:53 | INFO | Loaded 2513 cached bars for PG
+22:44:53 | INFO | Loaded 2513 cached bars for KO
+22:44:53 | INFO | Loaded 2513 cached bars for PEP
+22:44:53 | INFO | Loaded 2513 cached bars for COST
+22:44:53 | INFO | Loaded 2513 cached bars for WMT
+22:44:53 | INFO | Loaded 2513 cached bars for PM
+22:44:53 | INFO | Loaded 2513 cached bars for MO
+22:44:53 | INFO | Loaded 2513 cached bars for CL
+22:44:53 | INFO | Loaded 2513 cached bars for KMB
+22:44:53 | INFO | Loaded 2513 cached bars for GIS
+22:44:54 | INFO | Loaded 2513 cached bars for HSY
+22:44:54 | INFO | Loaded 2513 cached bars for EL
+22:44:54 | INFO | Loaded 2515 cached bars for MDLZ
+22:44:54 | INFO | Loaded 2515 cached bars for CAG
+22:44:54 | INFO | Loaded 2515 cached bars for CPB
+22:44:54 | INFO | Loaded 2515 cached bars for SJM
+22:44:54 | INFO | Loaded 2515 cached bars for HRL
+22:44:54 | INFO | Loaded 2515 cached bars for TSN
+22:44:54 | INFO | Loaded 2515 cached bars for KHC
+22:44:54 | INFO | Loaded 2515 cached bars for MKC
+22:44:54 | INFO | Loaded 2515 cached bars for CHD
+22:44:54 | INFO | Loaded 2515 cached bars for CLX
+22:44:54 | INFO | Loaded 2515 cached bars for KR
+22:44:54 | INFO | Loaded 1937 cached bars for BJ
+22:44:54 | INFO | Loaded 2515 cached bars for SFM
+22:44:55 | INFO | Loaded 2513 cached bars for HD
+22:44:55 | INFO | Loaded 2513 cached bars for LOW
+22:44:55 | INFO | Loaded 2513 cached bars for NKE
+22:44:55 | INFO | Loaded 2513 cached bars for MCD
+22:44:55 | INFO | Loaded 2513 cached bars for SBUX
+22:44:55 | INFO | Loaded 2513 cached bars for CMG
+22:44:55 | INFO | Loaded 2513 cached bars for MAR
+22:44:55 | INFO | Loaded 2513 cached bars for BKNG
+22:44:55 | INFO | Loaded 2513 cached bars for TJX
+22:44:55 | INFO | Loaded 2513 cached bars for ROST
+22:44:55 | INFO | Loaded 2513 cached bars for EBAY
+22:44:55 | INFO | Loaded 2513 cached bars for ETSY
+22:44:55 | INFO | Loaded 2513 cached bars for ULTA
+22:44:55 | INFO | Loaded 2515 cached bars for TGT
+22:44:56 | INFO | Loaded 2515 cached bars for BBY
+22:44:56 | INFO | Loaded 2515 cached bars for ANF
+22:44:56 | INFO | Loaded 2515 cached bars for URBN
+22:44:56 | INFO | Loaded 2515 cached bars for WSM
+22:44:56 | INFO | Loaded 2515 cached bars for RH
+22:44:56 | INFO | Loaded 2515 cached bars for BOOT
+22:44:56 | INFO | Loaded 1294 cached bars for DRVN
+22:44:56 | INFO | Loaded 2515 cached bars for F
+22:44:56 | INFO | Loaded 2515 cached bars for GM
+22:44:56 | INFO | Loaded 1088 cached bars for RIVN
+22:44:56 | INFO | Loaded 2515 cached bars for HOG
+22:44:56 | INFO | Loaded 2515 cached bars for POOL
+22:44:56 | INFO | Loaded 2515 cached bars for LVS
+22:44:56 | INFO | Loaded 2515 cached bars for MGM
+22:44:57 | INFO | Loaded 2515 cached bars for WYNN
+22:44:57 | INFO | Loaded 2515 cached bars for CZR
+22:44:57 | INFO | Loaded 2515 cached bars for PENN
+22:44:57 | INFO | Loaded 1668 cached bars for DKNG
+22:44:57 | INFO | Loaded 2515 cached bars for DIS
+22:44:57 | INFO | Loaded 2515 cached bars for WBD
+22:44:57 | INFO | Loaded 2515 cached bars for CNK
+22:44:57 | INFO | Loaded 2515 cached bars for IMAX
+22:44:57 | INFO | Loaded 2513 cached bars for LMT
+22:44:57 | INFO | Loaded 2513 cached bars for BA
+22:44:57 | INFO | Loaded 2513 cached bars for RTX
+22:44:57 | INFO | Loaded 2513 cached bars for GD
+22:44:57 | INFO | Loaded 2513 cached bars for NOC
+22:44:57 | INFO | Loaded 2515 cached bars for HII
+22:44:58 | INFO | Loaded 2515 cached bars for TXT
+22:44:58 | INFO | Loaded 2515 cached bars for KTOS
+22:44:58 | INFO | Loaded 1330 cached bars for RKLB
+22:44:58 | INFO | Loaded 2513 cached bars for CAT
+22:44:58 | INFO | Loaded 2513 cached bars for DE
+22:44:58 | INFO | Loaded 2513 cached bars for HON
+22:44:58 | INFO | Loaded 2513 cached bars for UPS
+22:44:58 | INFO | Loaded 2513 cached bars for FDX
+22:44:58 | INFO | Loaded 2513 cached bars for WM
+22:44:58 | INFO | Loaded 2513 cached bars for GE
+22:44:58 | INFO | Loaded 2513 cached bars for PH
+22:44:58 | INFO | Loaded 2513 cached bars for ETN
+22:44:58 | INFO | Loaded 2513 cached bars for ITW
+22:44:59 | INFO | Loaded 2513 cached bars for EMR
+22:44:59 | INFO | Loaded 2513 cached bars for ROK
+22:44:59 | INFO | Loaded 2513 cached bars for CSX
+22:44:59 | INFO | Loaded 2513 cached bars for UNP
+22:44:59 | INFO | Loaded 2513 cached bars for NSC
+22:44:59 | INFO | Loaded 2515 cached bars for MMM
+22:44:59 | INFO | Loaded 2515 cached bars for DOV
+22:44:59 | INFO | Loaded 2221 cached bars for IR
+22:44:59 | INFO | Loaded 2515 cached bars for XYL
+22:44:59 | INFO | Loaded 2515 cached bars for GNRC
+22:44:59 | INFO | Loaded 2515 cached bars for FAST
+22:44:59 | INFO | Loaded 2515 cached bars for GWW
+22:44:59 | INFO | Loaded 1859 cached bars for MSC
+22:45:00 | INFO | Loaded 2515 cached bars for WSO
+22:45:00 | INFO | Loaded 2515 cached bars for PWR
+22:45:00 | INFO | Loaded 2515 cached bars for PRIM
+22:45:00 | INFO | Loaded 2515 cached bars for MTZ
+22:45:00 | INFO | Loaded 2515 cached bars for STRL
+22:45:00 | INFO | Loaded 2515 cached bars for VMC
+22:45:00 | INFO | Loaded 2515 cached bars for MLM
+22:45:00 | INFO | Loaded 2515 cached bars for EXP
+22:45:00 | INFO | Loaded 2515 cached bars for MAS
+22:45:00 | INFO | Loaded 2515 cached bars for TREX
+22:45:00 | INFO | Loaded 2515 cached bars for NVR
+22:45:00 | INFO | Loaded 2515 cached bars for PHM
+22:45:00 | INFO | Loaded 2515 cached bars for DHI
+22:45:00 | INFO | Loaded 2515 cached bars for LEN
+22:45:00 | INFO | Loaded 2515 cached bars for TOL
+22:45:01 | INFO | Loaded 2515 cached bars for KBH
+22:45:01 | INFO | Loaded 2515 cached bars for TMHC
+22:45:01 | INFO | Loaded 2515 cached bars for SKY
+22:45:01 | INFO | Loaded 2515 cached bars for CHRW
+22:45:01 | INFO | Loaded 2515 cached bars for EXPD
+22:45:01 | INFO | Loaded 2515 cached bars for XPO
+22:45:01 | INFO | Loaded 2515 cached bars for ODFL
+22:45:01 | INFO | Loaded 2515 cached bars for SAIA
+22:45:01 | INFO | Loaded 2515 cached bars for JBHT
+22:45:01 | INFO | Loaded 2515 cached bars for KNX
+22:45:01 | INFO | Loaded 2515 cached bars for WERN
+22:45:01 | INFO | Loaded 2515 cached bars for ARCB
+22:45:01 | INFO | Loaded 2515 cached bars for MATX
+22:45:02 | INFO | Loaded 1287 cached bars for ZIM
+22:45:02 | INFO | Loaded 2513 cached bars for XOM
+22:45:02 | INFO | Loaded 2513 cached bars for CVX
+22:45:02 | INFO | Loaded 2513 cached bars for COP
+22:45:02 | INFO | Loaded 2513 cached bars for EOG
+22:45:02 | INFO | Loaded 2513 cached bars for SLB
+22:45:02 | INFO | Loaded 2513 cached bars for PSX
+22:45:02 | INFO | Loaded 2513 cached bars for VLO
+22:45:02 | INFO | Loaded 2513 cached bars for MPC
+22:45:02 | INFO | Loaded 2513 cached bars for OXY
+22:45:02 | INFO | Loaded 2513 cached bars for HAL
+22:45:02 | INFO | Loaded 2515 cached bars for DVN
+22:45:02 | INFO | Loaded 2515 cached bars for FANG
+22:45:03 | INFO | Loaded 2515 cached bars for APA
+22:45:03 | INFO | Loaded 2515 cached bars for KMI
+22:45:03 | INFO | Loaded 2515 cached bars for WMB
+22:45:03 | INFO | Loaded 2515 cached bars for OKE
+22:45:03 | INFO | Loaded 2515 cached bars for EPD
+22:45:03 | INFO | Loaded 2515 cached bars for ET
+22:45:03 | INFO | Loaded 2515 cached bars for MPLX
+22:45:03 | INFO | Loaded 2513 cached bars for NEE
+22:45:03 | INFO | Loaded 2369 cached bars for VST
+22:45:03 | INFO | Loaded 1038 cached bars for CEG
+22:45:03 | INFO | Loaded 2513 cached bars for NRG
+22:45:03 | INFO | Loaded 2515 cached bars for AES
+22:45:03 | INFO | Loaded 2515 cached bars for CWEN
+22:45:04 | INFO | Loaded 2515 cached bars for ENPH
+22:45:04 | INFO | Loaded 2515 cached bars for SEDG
+22:45:04 | INFO | Loaded 2515 cached bars for FSLR
+22:45:04 | INFO | Loaded 1358 cached bars for ARRY
+22:45:04 | INFO | Loaded 1919 cached bars for BE
+22:45:04 | INFO | Loaded 2515 cached bars for PLUG
+22:45:04 | INFO | Loaded 2513 cached bars for DUK
+22:45:04 | INFO | Loaded 2513 cached bars for SO
+22:45:04 | INFO | Loaded 2513 cached bars for D
+22:45:04 | INFO | Loaded 2513 cached bars for EXC
+22:45:04 | INFO | Loaded 2513 cached bars for AEP
+22:45:04 | INFO | Loaded 2513 cached bars for SRE
+22:45:04 | INFO | Loaded 2513 cached bars for PEG
+22:45:05 | INFO | Loaded 2515 cached bars for EIX
+22:45:05 | INFO | Loaded 2515 cached bars for PCG
+22:45:05 | INFO | Loaded 2515 cached bars for PPL
+22:45:05 | INFO | Loaded 2515 cached bars for WEC
+22:45:05 | INFO | Loaded 2515 cached bars for ES
+22:45:05 | INFO | Loaded 2515 cached bars for CNP
+22:45:05 | INFO | Loaded 2515 cached bars for CMS
+22:45:05 | INFO | Loaded 2515 cached bars for NI
+22:45:05 | INFO | Loaded 2515 cached bars for PNW
+22:45:05 | INFO | Loaded 2513 cached bars for LIN
+22:45:05 | INFO | Loaded 2513 cached bars for APD
+22:45:05 | INFO | Loaded 2513 cached bars for NEM
+22:45:06 | INFO | Loaded 2513 cached bars for FCX
+22:45:06 | INFO | Loaded 2513 cached bars for ECL
+22:45:06 | INFO | Loaded 2513 cached bars for SHW
+22:45:06 | INFO | Loaded 2513 cached bars for DD
+22:45:06 | INFO | Loaded 1754 cached bars for DOW
+22:45:06 | INFO | Loaded 2515 cached bars for PPG
+22:45:06 | INFO | Loaded 2515 cached bars for RPM
+22:45:06 | INFO | Loaded 2515 cached bars for EMN
+22:45:06 | INFO | Loaded 2515 cached bars for CE
+22:45:06 | INFO | Loaded 2515 cached bars for OLN
+22:45:06 | INFO | Loaded 2515 cached bars for AA
+22:45:06 | INFO | Loaded 2515 cached bars for NUE
+22:45:06 | INFO | Loaded 2515 cached bars for STLD
+22:45:07 | INFO | Loaded 2515 cached bars for CMC
+22:45:07 | INFO | Loaded 2515 cached bars for ATI
+22:45:07 | INFO | Loaded 2515 cached bars for RS
+22:45:07 | INFO | Loaded 2515 cached bars for ALB
+22:45:07 | INFO | Loaded 1439 cached bars for MP
+22:45:07 | INFO | Loaded 2515 cached bars for AVY
+22:45:07 | INFO | Loaded 2515 cached bars for PKG
+22:45:07 | INFO | Loaded 2515 cached bars for IP
+22:45:07 | INFO | Loaded 2515 cached bars for AMCR
+22:45:07 | INFO | Loaded 2513 cached bars for EQIX
+22:45:07 | INFO | Loaded 2513 cached bars for DLR
+22:45:07 | INFO | Loaded 2513 cached bars for AMT
+22:45:08 | INFO | Loaded 2513 cached bars for CCI
+22:45:08 | INFO | Loaded 2513 cached bars for SBAC
+22:45:08 | INFO | Loaded 2513 cached bars for PLD
+22:45:08 | INFO | Loaded 2513 cached bars for PSA
+22:45:08 | INFO | Loaded 2515 cached bars for SPG
+22:45:08 | INFO | Loaded 2515 cached bars for O
+22:45:08 | INFO | Loaded 2060 cached bars for VICI
+22:45:08 | INFO | Loaded 2515 cached bars for WELL
+22:45:08 | INFO | Loaded 2515 cached bars for VTR
+22:45:08 | INFO | Loaded 2515 cached bars for EQR
+22:45:08 | INFO | Loaded 2515 cached bars for AVB
+22:45:08 | INFO | Loaded 2515 cached bars for ESS
+22:45:09 | INFO | Loaded 2515 cached bars for MAA
+22:45:09 | INFO | Loaded 2515 cached bars for KIM
+22:45:09 | INFO | Loaded 2515 cached bars for REG
+22:45:09 | INFO | Loaded 2515 cached bars for STAG
+22:45:09 | INFO | Loaded 2515 cached bars for EGP
+22:45:09 | INFO | Loaded 2515 cached bars for REXR
+22:45:09 | INFO | Loaded 1910 cached bars for VRT
+22:45:09 | INFO | Loaded 2515 cached bars for NDAQ
+22:45:09 | INFO | Loaded 2515 cached bars for MSCI
+22:45:09 | INFO | Loaded 2515 cached bars for CBOE
+22:45:09 | INFO | Loaded 2515 cached bars for FDS
+22:45:09 | INFO | Loaded 2515 cached bars for T
+22:45:10 | INFO | Loaded 2515 cached bars for VZ
+22:45:10 | INFO | Loaded 2515 cached bars for TMUS
+22:45:10 | INFO | Loaded 2515 cached bars for CHTR
+22:45:10 | INFO | Loaded 2515 cached bars for CMCSA
+22:45:10 | INFO | Loaded 2515 cached bars for LBRDA
+22:45:10 | INFO | Loaded 1242 cached bars for APP
+22:45:10 | INFO | Loaded 1170 cached bars for DUOL
+22:45:10 | INFO | Loaded 3018 cached bars for AXON
+22:45:10 | INFO | Loaded 3018 cached bars for CELH
+22:45:10 | INFO | Loaded 1377 cached bars for ASAN
+22:45:10 | INFO | Loaded 1091 cached bars for BRZE
+22:45:10 | INFO | Loaded 3018 cached bars for PCTY
+22:45:10 | INFO | Loaded 3004 cached bars for PAYC
+22:45:11 | INFO | Loaded 3018 cached bars for ACAD
+22:45:11 | INFO | Loaded 3018 cached bars for RARE
+22:45:11 | INFO | Loaded 3018 cached bars for IONS
+22:45:11 | INFO | Loaded 3018 cached bars for HALO
+22:45:11 | INFO | Loaded 3018 cached bars for PRGO
+22:45:11 | INFO | Loaded 3018 cached bars for PCRX
+22:45:11 | INFO | Loaded 3018 cached bars for OMCL
+22:45:11 | INFO | Loaded 1382 cached bars for GDRX
+22:45:11 | INFO | Loaded 1233 cached bars for PRVA
+22:45:11 | INFO | Loaded 2369 cached bars for IRTC
+22:45:11 | INFO | Loaded 1984 cached bars for INSP
+22:45:12 | INFO | Loaded 3018 cached bars for TNDM
+22:45:12 | INFO | Loaded 2712 cached bars for WING
+22:45:12 | INFO | Loaded 3018 cached bars for TXRH
+22:45:12 | INFO | Loaded 2804 cached bars for SHAK
+22:45:12 | INFO | Loaded 696 cached bars for CAVA
+22:45:12 | INFO | Loaded 3018 cached bars for DECK
+22:45:12 | INFO | Loaded 3018 cached bars for CROX
+22:45:12 | INFO | Loaded 1126 cached bars for WRBY
+22:45:12 | INFO | Loaded 1632 cached bars for PTON
+22:45:12 | INFO | Loaded 2674 cached bars for PLNT
+22:45:12 | INFO | Loaded 3018 cached bars for TDG
+22:45:12 | INFO | Loaded 3018 cached bars for WWD
+22:45:13 | INFO | Loaded 3018 cached bars for LDOS
+22:45:13 | INFO | Loaded 3018 cached bars for SAIC
+22:45:13 | INFO | Loaded 3018 cached bars for BAH
+22:45:13 | INFO | Loaded 3018 cached bars for AVAV
+22:45:13 | INFO | Loaded 3018 cached bars for HEI
+22:45:13 | INFO | Loaded 1295 cached bars for SHLS
+22:45:13 | INFO | Loaded 1371 cached bars for STEM
+22:45:13 | INFO | Loaded 2675 cached bars for RUN
+22:45:13 | INFO | Loaded 1288 cached bars for AMR
+22:45:13 | INFO | Loaded 2297 cached bars for METC
+22:45:13 | INFO | Loaded 443 symbols
+22:45:13 | INFO | === Horizon 3d ===
+22:45:13 | INFO | Loaded 2513 cached bars for SPY
+22:45:42 | INFO | 2020: train=2015-2019 (100,274 rows) | test=2020 (63,663 rows)
+22:45:42 | INFO | Using LightGBM (horizon=3d)
+22:45:46 | INFO | 2020 OOS: RMSE=0.2846  IC=0.0252
+22:45:46 | INFO | Saved cross_sectional_ranker_3d_2020.joblib
+22:45:46 | INFO | 2021: train=2016-2020 (163,937 rows) | test=2021 (64,342 rows)
+22:45:47 | INFO | Using LightGBM (horizon=3d)
+22:45:53 | INFO | 2021 OOS: RMSE=0.2755  IC=-0.0119
+22:45:53 | INFO | Saved cross_sectional_ranker_3d_2021.joblib
+22:45:53 | INFO | 2022: train=2017-2021 (227,605 rows) | test=2022 (64,878 rows)
+22:45:54 | INFO | Using LightGBM (horizon=3d)
+22:46:02 | INFO | 2022 OOS: RMSE=0.2769  IC=0.0202
+22:46:02 | INFO | Saved cross_sectional_ranker_3d_2022.joblib
+22:46:02 | INFO | 2023: train=2018-2022 (290,322 rows) | test=2023 (66,190 rows)
+22:46:03 | INFO | Using LightGBM (horizon=3d)
+22:46:12 | INFO | 2023 OOS: RMSE=0.2771  IC=-0.0043
+22:46:12 | INFO | Saved cross_sectional_ranker_3d_2023.joblib
+22:46:13 | INFO | 2024: train=2019-2023 (321,245 rows) | test=2024 (68,267 rows)
+22:46:14 | INFO | Using LightGBM (horizon=3d)
+22:46:24 | INFO | 2024 OOS: RMSE=0.2778  IC=0.0232
+22:46:24 | INFO | Saved cross_sectional_ranker_3d_2024.joblib
+22:46:24 | INFO | 2025: train=2020-2024 (327,340 rows) | test=2025 (68,038 rows)
+22:46:25 | INFO | Using LightGBM (horizon=3d)
+22:46:35 | INFO | 2025 OOS: RMSE=0.2783  IC=0.0590
+22:46:35 | INFO | Saved cross_sectional_ranker_3d_2025.joblib
+22:46:35 | INFO | Updated live model cross_sectional_ranker_3d.joblib from 2025 vintage
+22:46:35 | INFO | === Horizon 5d ===
+22:46:35 | INFO | Loaded 2513 cached bars for SPY
+22:47:06 | INFO | 2020: train=2015-2019 (100,274 rows) | test=2020 (63,663 rows)
+22:47:06 | INFO | Using LightGBM (horizon=5d)
+22:47:10 | INFO | 2020 OOS: RMSE=0.2816  IC=0.0477
+22:47:10 | INFO | Saved cross_sectional_ranker_5d_2020.joblib
+22:47:10 | INFO | 2021: train=2016-2020 (163,937 rows) | test=2021 (64,342 rows)
+22:47:11 | INFO | Using LightGBM (horizon=5d)
+22:47:17 | INFO | 2021 OOS: RMSE=0.2757  IC=-0.0194
+22:47:17 | INFO | Saved cross_sectional_ranker_5d_2021.joblib
+22:47:17 | INFO | 2022: train=2017-2021 (227,605 rows) | test=2022 (64,878 rows)
+22:47:17 | INFO | Using LightGBM (horizon=5d)
+22:47:25 | INFO | 2022 OOS: RMSE=0.2766  IC=0.0252
+22:47:25 | INFO | Saved cross_sectional_ranker_5d_2022.joblib
+22:47:25 | INFO | 2023: train=2018-2022 (290,322 rows) | test=2023 (66,190 rows)
+22:47:26 | INFO | Using LightGBM (horizon=5d)
+22:47:34 | INFO | 2023 OOS: RMSE=0.2789  IC=0.0030
+22:47:34 | INFO | Saved cross_sectional_ranker_5d_2023.joblib
+22:47:35 | INFO | 2024: train=2019-2023 (321,245 rows) | test=2024 (68,267 rows)
+22:47:36 | INFO | Using LightGBM (horizon=5d)
+22:47:45 | INFO | 2024 OOS: RMSE=0.2780  IC=0.0219
+22:47:45 | INFO | Saved cross_sectional_ranker_5d_2024.joblib
+22:47:45 | INFO | 2025: train=2020-2024 (327,340 rows) | test=2025 (68,038 rows)
+22:47:46 | INFO | Using LightGBM (horizon=5d)
+22:47:56 | INFO | 2025 OOS: RMSE=0.2790  IC=0.0457
+22:47:56 | INFO | Saved cross_sectional_ranker_5d_2025.joblib
+22:47:56 | INFO | Updated live model cross_sectional_ranker_5d.joblib from 2025 vintage
+22:47:56 | INFO | === Horizon 7d ===
+22:47:56 | INFO | Loaded 2513 cached bars for SPY
+22:48:26 | INFO | 2020: train=2015-2019 (100,274 rows) | test=2020 (63,663 rows)
+22:48:26 | INFO | Using LightGBM (horizon=7d)
+22:48:31 | INFO | 2020 OOS: RMSE=0.2823  IC=0.0397
+22:48:31 | INFO | Saved cross_sectional_ranker_7d_2020.joblib
+22:48:31 | INFO | 2021: train=2016-2020 (163,937 rows) | test=2021 (64,342 rows)
+22:48:31 | INFO | Using LightGBM (horizon=7d)
+22:48:37 | INFO | 2021 OOS: RMSE=0.2760  IC=-0.0182
+22:48:37 | INFO | Saved cross_sectional_ranker_7d_2021.joblib
+22:48:37 | INFO | 2022: train=2017-2021 (227,605 rows) | test=2022 (64,878 rows)
+22:48:38 | INFO | Using LightGBM (horizon=7d)
+22:48:45 | INFO | 2022 OOS: RMSE=0.2762  IC=0.0168
+22:48:45 | INFO | Saved cross_sectional_ranker_7d_2022.joblib
+22:48:46 | INFO | 2023: train=2018-2022 (290,322 rows) | test=2023 (66,190 rows)
+22:48:46 | INFO | Using LightGBM (horizon=7d)
+22:48:55 | INFO | 2023 OOS: RMSE=0.2795  IC=-0.0027
+22:48:55 | INFO | Saved cross_sectional_ranker_7d_2023.joblib
+22:48:55 | INFO | 2024: train=2019-2023 (321,245 rows) | test=2024 (68,267 rows)
+22:48:56 | INFO | Using LightGBM (horizon=7d)
+22:49:05 | INFO | 2024 OOS: RMSE=0.2777  IC=0.0265
+22:49:05 | INFO | Saved cross_sectional_ranker_7d_2024.joblib
+22:49:06 | INFO | 2025: train=2020-2024 (327,340 rows) | test=2025 (68,038 rows)
+22:49:07 | INFO | Using LightGBM (horizon=7d)
+22:49:17 | INFO | 2025 OOS: RMSE=0.2786  IC=0.0679
+22:49:17 | INFO | Saved cross_sectional_ranker_7d_2025.joblib
+22:49:17 | INFO | Updated live model cross_sectional_ranker_7d.joblib from 2025 vintage
+22:49:17 | INFO | Rolling retrain complete.

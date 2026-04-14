@@ -1,0 +1,144 @@
+============================================================
+  V2 OUT-OF-SAMPLE VALIDATION
+  IN-SAMPLE : 2015-2021
+  OOS       : 2022-2025
+============================================================
+
+
+============================================================
+  V2 MULTI-ENGINE REGIME-CONDITIONAL BACKTEST
+============================================================
+  Universe: 443 symbols
+  Days:     3650
+
+[prep] loading macro data (SPY/HYG/VIX)...
+[ok]   macro data loaded
+  [cache] NVDA: 2513 rows  [cache] AVGO: 2513 rows  [cache] AMD: 2513 rows  [cache] MU: 2513 rows  [cache] MRVL: 2513 rows  [cache] QCOM: 2513 rows  [cache] TXN: 2513 rows  [cache] INTC: 2513 rows  [cache] ADI: 2513 rows  [cache] AMAT: 2513 rows  [cache] LRCX: 2513 rows  [cache] KLAC: 2513 rows  [cache] SMCI: 2513 rows  [cache] ANET: 2513 rows  [cache] ARM: 623 rows  [cache] MPWR: 2515 rows  [cache] ON: 2515 rows  [cache] SWKS: 2515 rows  [cache] NXPI: 2515 rows  [cache] SNPS: 2515 rows  [cache] CDNS: 2515 rows  [cache] STX: 2515 rows  [cache] WDC: 2515 rows  [cache] MSFT: 2513 rows  [cache] META: 2513 rows  [cache] AMZN: 2513 rows  [cache] GOOGL: 2513 rows  [cache] AAPL: 2513 rows  [cache] TSLA: 2513 rows  [cache] SNOW: 1376 rows  [cache] MDB: 2107 rows  [cache] DDOG: 1626 rows  [cache] NET: 1630 rows  [cache] TEAM: 2513 rows  [cache] ZS: 2006 rows  [cache] SHOP: 2513 rows  [cache] NOW: 2513 rows  [cache] CRWD: 1695 rows  [cache] PANW: 2513 rows  [cache] PLTR: 1366 rows  [cache] ADBE: 2513 rows  [cache] ORCL: 2513 rows  [cache] CRM: 2513 rows  [cache] INTU: 2513 rows  [cache] WDAY: 2513 rows  [cache] OKTA: 2243 rows  [cache] DOCU: 1978 rows  [cache] HUBS: 2513 rows  [cache] FTNT: 2513 rows  [cache] GTLB: 1107 rows  [cache] BILL: 1570 rows  [cache] S: 1181 rows  [cache] ESTC: 1868 rows  [cache] MNDY: 1195 rows  [cache] TOST: 1123 rows  [cache] DELL: 2403 rows  [cache] HPQ: 2515 rows  [cache] HPE: 2515 rows  [cache] PSTG: 2515 rows  [cache] NTAP: 2515 rows  [cache] CDW: 2515 rows  [cache] FFIV: 2515 rows  [cache] ZBRA: 2515 rows  [cache] CGNX: 2515 rows  [cache] TDY: 2515 rows  [cache] TRMB: 2515 rows  [cache] NFLX: 2515 rows  [cache] UBER: 1720 rows  [cache] ABNB: 1319 rows  [cache] DASH: 1320 rows  [cache] PINS: 1735 rows  [cache] SNAP: 2271 rows  [cache] RDDT: 496 rows  [cache] TTD: 2382 rows  [cache] ZG: 2515 rows  [cache] IAC: 2515 rows  [cache] V: 2515 rows  [cache] MA: 2515 rows  [cache] PYPL: 2515 rows  [cache] AFRM: 1297 rows  [cache] UPST: 1315 rows  [cache] SOFI: 1304 rows  [cache] NU: 1068 rows  [cache] ALLY: 2515 rows  [cache] HOOD: 1161 rows  [cache] COIN: 1235 rows  [cache] JPM: 2513 rows  [cache] BAC: 2513 rows  [cache] C: 2513 rows  [cache] GS: 2513 rows  [cache] MS: 2513 rows  [cache] BLK: 2513 rows  [cache] SCHW: 2513 rows  [cache] AXP: 2513 rows  [cache] SPGI: 2513 rows  [cache] ICE: 2513 rows  [cache] CME: 2513 rows  [cache] AIG: 2513 rows  [cache] CB: 2513 rows  [cache] PGR: 2513 rows  [cache] TRV: 2513 rows  [cache] USB: 2513 rows  [cache] PNC: 2513 rows  [cache] TFC: 2513 rows  [cache] COF: 2513 rows  [cache] BK: 2513 rows  [cache] MTB: 2515 rows  [cache] CFG: 2515 rows  [cache] HBAN: 2515 rows  [cache] RF: 2515 rows  [cache] KEY: 2515 rows  [cache] FITB: 2515 rows  [cache] ZION: 2515 rows  [cache] WAL: 2515 rows  [cache] MET: 2515 rows  [cache] PRU: 2515 rows  [cache] AFL: 2515 rows  [cache] ALL: 2515 rows  [cache] HIG: 2515 rows  [cache] LNC: 2515 rows  [cache] RJF: 2515 rows  [cache] LPLA: 2515 rows  [cache] WTW: 2515 rows  [cache] AON: 2515 rows  [cache] AJG: 2515 rows  [cache] BRO: 2515 rows  [cache] ERIE: 2515 rows  [cache] BX: 2515 rows  [cache] KKR: 2515 rows  [cache] APO: 2515 rows  [cache] CG: 2515 rows  [cache] ARES: 2515 rows  [cache] UNH: 2513 rows  [cache] LLY: 2513 rows  [cache] JNJ: 2513 rows  [cache] PFE: 2513 rows  [cache] ABBV: 2513 rows  [cache] MRK: 2513 rows  [cache] TMO: 2513 rows  [cache] ISRG: 2513 rows  [cache] DHR: 2513 rows  [cache] ABT: 2513 rows  [cache] BMY: 2513 rows  [cache] AMGN: 2513 rows  [cache] GILD: 2513 rows  [cache] VRTX: 2513 rows  [cache] REGN: 2513 rows  [cache] ZTS: 2513 rows  [cache] SYK: 2513 rows  [cache] BSX: 2513 rows  [cache] MDT: 2513 rows  [cache] CI: 2513 rows  [cache] CVS: 2515 rows  [cache] HUM: 2515 rows  [cache] CNC: 2515 rows  [cache] MRNA: 1825 rows  [cache] BNTX: 1614 rows  [cache] BIIB: 2515 rows  [cache] ALNY: 2515 rows  [cache] INCY: 2515 rows  [cache] NBIX: 2515 rows  [cache] JAZZ: 2515 rows  [cache] EW: 2515 rows  [cache] HOLX: 2515 rows  [cache] DXCM: 2515 rows  [cache] PODD: 2515 rows  [cache] ALGN: 2515 rows  [cache] IART: 2515 rows  [cache] HCA: 2515 rows  [cache] THC: 2515 rows  [cache] UHS: 2515 rows  [cache] LH: 2515 rows  [cache] DGX: 2515 rows  [cache] NTRA: 2515 rows  [cache] VEEV: 2515 rows  [cache] DOCS: 1185 rows  [cache] PG: 2513 rows  [cache] KO: 2513 rows  [cache] PEP: 2513 rows  [cache] COST: 2513 rows  [cache] WMT: 2513 rows  [cache] PM: 2513 rows  [cache] MO: 2513 rows  [cache] CL: 2513 rows  [cache] KMB: 2513 rows  [cache] GIS: 2513 rows  [cache] HSY: 2513 rows  [cache] EL: 2513 rows  [cache] MDLZ: 2515 rows  [cache] CAG: 2515 rows  [cache] CPB: 2515 rows  [cache] SJM: 2515 rows  [cache] HRL: 2515 rows  [cache] TSN: 2515 rows  [cache] KHC: 2515 rows  [cache] MKC: 2515 rows  [cache] CHD: 2515 rows  [cache] CLX: 2515 rows  [cache] KR: 2515 rows  [cache] BJ: 1937 rows  [cache] SFM: 2515 rows  [cache] HD: 2513 rows  [cache] LOW: 2513 rows  [cache] NKE: 2513 rows  [cache] MCD: 2513 rows  [cache] SBUX: 2513 rows  [cache] CMG: 2513 rows  [cache] MAR: 2513 rows  [cache] BKNG: 2513 rows  [cache] TJX: 2513 rows  [cache] ROST: 2513 rows  [cache] EBAY: 2513 rows  [cache] ETSY: 2513 rows  [cache] ULTA: 2513 rows  [cache] TGT: 2515 rows  [cache] BBY: 2515 rows  [cache] ANF: 2515 rows  [cache] URBN: 2515 rows  [cache] WSM: 2515 rows  [cache] RH: 2515 rows  [cache] BOOT: 2515 rows  [cache] DRVN: 1294 rows  [cache] F: 2515 rows  [cache] GM: 2515 rows  [cache] RIVN: 1088 rows  [cache] HOG: 2515 rows  [cache] POOL: 2515 rows  [cache] LVS: 2515 rows  [cache] MGM: 2515 rows  [cache] WYNN: 2515 rows  [cache] CZR: 2515 rows  [cache] PENN: 2515 rows  [cache] DKNG: 1668 rows  [cache] DIS: 2515 rows  [cache] WBD: 2515 rows  [cache] CNK: 2515 rows  [cache] IMAX: 2515 rows  [cache] LMT: 2513 rows  [cache] BA: 2513 rows  [cache] RTX: 2513 rows  [cache] GD: 2513 rows  [cache] NOC: 2513 rows  [cache] HII: 2515 rows  [cache] TXT: 2515 rows  [cache] KTOS: 2515 rows  [cache] RKLB: 1330 rows  [cache] CAT: 2513 rows  [cache] DE: 2513 rows  [cache] HON: 2513 rows  [cache] UPS: 2513 rows  [cache] FDX: 2513 rows  [cache] WM: 2513 rows  [cache] GE: 2513 rows  [cache] PH: 2513 rows  [cache] ETN: 2513 rows  [cache] ITW: 2513 rows  [cache] EMR: 2513 rows  [cache] ROK: 2513 rows  [cache] CSX: 2513 rows  [cache] UNP: 2513 rows  [cache] NSC: 2513 rows  [cache] MMM: 2515 rows  [cache] DOV: 2515 rows  [cache] IR: 2221 rows  [cache] XYL: 2515 rows  [cache] GNRC: 2515 rows  [cache] FAST: 2515 rows  [cache] GWW: 2515 rows  [cache] MSC: 1859 rows  [cache] WSO: 2515 rows  [cache] PWR: 2515 rows  [cache] PRIM: 2515 rows  [cache] MTZ: 2515 rows  [cache] STRL: 2515 rows  [cache] VMC: 2515 rows  [cache] MLM: 2515 rows  [cache] EXP: 2515 rows  [cache] MAS: 2515 rows  [cache] TREX: 2515 rows  [cache] NVR: 2515 rows  [cache] PHM: 2515 rows  [cache] DHI: 2515 rows  [cache] LEN: 2515 rows  [cache] TOL: 2515 rows  [cache] KBH: 2515 rows  [cache] TMHC: 2515 rows  [cache] SKY: 2515 rows  [cache] CHRW: 2515 rows  [cache] EXPD: 2515 rows  [cache] XPO: 2515 rows  [cache] ODFL: 2515 rows  [cache] SAIA: 2515 rows  [cache] JBHT: 2515 rows  [cache] KNX: 2515 rows  [cache] WERN: 2515 rows  [cache] ARCB: 2515 rows  [cache] MATX: 2515 rows  [cache] ZIM: 1287 rows  [cache] XOM: 2513 rows  [cache] CVX: 2513 rows  [cache] COP: 2513 rows  [cache] EOG: 2513 rows  [cache] SLB: 2513 rows  [cache] PSX: 2513 rows  [cache] VLO: 2513 rows  [cache] MPC: 2513 rows  [cache] OXY: 2513 rows  [cache] HAL: 2513 rows  [cache] DVN: 2515 rows  [cache] FANG: 2515 rows  [cache] APA: 2515 rows  [cache] KMI: 2515 rows  [cache] WMB: 2515 rows  [cache] OKE: 2515 rows  [cache] EPD: 2515 rows  [cache] ET: 2515 rows  [cache] MPLX: 2515 rows  [cache] NEE: 2513 rows  [cache] VST: 2369 rows  [cache] CEG: 1038 rows  [cache] NRG: 2513 rows  [cache] AES: 2515 rows  [cache] CWEN: 2515 rows  [cache] ENPH: 2515 rows  [cache] SEDG: 2515 rows  [cache] FSLR: 2515 rows  [cache] ARRY: 1358 rows  [cache] BE: 1919 rows  [cache] PLUG: 2515 rows  [cache] DUK: 2513 rows  [cache] SO: 2513 rows  [cache] D: 2513 rows  [cache] EXC: 2513 rows  [cache] AEP: 2513 rows  [cache] SRE: 2513 rows  [cache] PEG: 2513 rows  [cache] EIX: 2515 rows  [cache] PCG: 2515 rows  [cache] PPL: 2515 rows  [cache] WEC: 2515 rows  [cache] ES: 2515 rows  [cache] CNP: 2515 rows  [cache] CMS: 2515 rows  [cache] NI: 2515 rows  [cache] PNW: 2515 rows  [cache] LIN: 2513 rows  [cache] APD: 2513 rows  [cache] NEM: 2513 rows  [cache] FCX: 2513 rows  [cache] ECL: 2513 rows  [cache] SHW: 2513 rows  [cache] DD: 2513 rows  [cache] DOW: 1754 rows  [cache] PPG: 2515 rows  [cache] RPM: 2515 rows  [cache] EMN: 2515 rows  [cache] CE: 2515 rows  [cache] OLN: 2515 rows  [cache] AA: 2515 rows  [cache] NUE: 2515 rows  [cache] STLD: 2515 rows  [cache] CMC: 2515 rows  [cache] ATI: 2515 rows  [cache] RS: 2515 rows  [cache] ALB: 2515 rows  [cache] MP: 1439 rows  [cache] AVY: 2515 rows  [cache] PKG: 2515 rows  [cache] IP: 2515 rows  [cache] AMCR: 2515 rows  [cache] EQIX: 2513 rows  [cache] DLR: 2513 rows  [cache] AMT: 2513 rows  [cache] CCI: 2513 rows  [cache] SBAC: 2513 rows  [cache] PLD: 2513 rows  [cache] PSA: 2513 rows  [cache] SPG: 2515 rows  [cache] O: 2515 rows  [cache] VICI: 2060 rows  [cache] WELL: 2515 rows  [cache] VTR: 2515 rows  [cache] EQR: 2515 rows  [cache] AVB: 2515 rows  [cache] ESS: 2515 rows  [cache] MAA: 2515 rows  [cache] KIM: 2515 rows  [cache] REG: 2515 rows  [cache] STAG: 2515 rows  [cache] EGP: 2515 rows  [cache] REXR: 2515 rows  [cache] VRT: 1910 rows  [cache] NDAQ: 2515 rows  [cache] MSCI: 2515 rows  [cache] CBOE: 2515 rows  [cache] FDS: 2515 rows  [cache] T: 2515 rows  [cache] VZ: 2515 rows  [cache] TMUS: 2515 rows  [cache] CHTR: 2515 rows  [cache] CMCSA: 2515 rows  [cache] LBRDA: 2515 rows  [cache] APP: 1242 rows  [cache] DUOL: 1170 rows  [cache] AXON: 3018 rows  [cache] CELH: 3018 rows  [cache] ASAN: 1377 rows  [cache] BRZE: 1091 rows  [cache] PCTY: 3018 rows  [cache] PAYC: 3004 rows  [cache] ACAD: 3018 rows  [cache] RARE: 3018 rows  [cache] IONS: 3018 rows  [cache] HALO: 3018 rows  [cache] PRGO: 3018 rows  [cache] PCRX: 3018 rows  [cache] OMCL: 3018 rows  [cache] GDRX: 1382 rows  [cache] PRVA: 1233 rows  [cache] IRTC: 2369 rows  [cache] INSP: 1984 rows  [cache] TNDM: 3018 rows  [cache] WING: 2712 rows  [cache] TXRH: 3018 rows  [cache] SHAK: 2804 rows  [cache] CAVA: 696 rows  [cache] DECK: 3018 rows  [cache] CROX: 3018 rows  [cache] WRBY: 1126 rows  [cache] PTON: 1632 rows  [cache] PLNT: 2674 rows  [cache] TDG: 3018 rows  [cache] WWD: 3018 rows  [cache] LDOS: 3018 rows  [cache] SAIC: 3018 rows  [cache] BAH: 3018 rows  [cache] AVAV: 3018 rows  [cache] HEI: 3018 rows  [cache] SHLS: 1295 rows  [cache] STEM: 1371 rows  [cache] RUN: 2675 rows  [cache] AMR: 1288 rows  [cache] METC: 2297 rows  [cache] SPY: 2513 rows[info] loaded 444 symbols
+[info] 2513 trading dates
+[prep] loading ML ensemble...
+[ok]   ensemble loaded (387 features)
+[prep] loading regime-specific ML ensembles...
+[ok]   regime-specific models loaded
+[prep] computing features (parallel + cached)...
+  [feat] 443 cached, computing 0 symbols...
+
+[ok]   features done (443 cached + 0 computed)
+[prep] computing rule scores...
+[ok]   rule scores loaded from cache
+[prep] building feature matrix...
+  [matrix] pre-stacking feature arrays...
+  [matrix] done.                         
+[ok]   SPY 5d returns precomputed (2513 dates)
+[prep] loading earnings calendars...
+[ok]   earnings calendars loaded from cache (417 symbols, 18.4h old)
+[ok]   ready
+
+[run] starting main loop (2252 steps)...
+
+  [░░░░░░░░░░░░░░░░░░░░]   2.2%  step 50/2252  L=8 S=0  trades=20  regime=TREN  cash=$5,017    [░░░░░░░░░░░░░░░░░░░░]   4.4%  step 100/2252  L=8 S=0  trades=39  regime=TREN  cash=$14    [█░░░░░░░░░░░░░░░░░░░]   6.7%  step 150/2252  L=8 S=0  trades=64  regime=TREN  cash=$32,781    [█░░░░░░░░░░░░░░░░░░░]   8.9%  step 200/2252  L=8 S=0  trades=83  regime=TREN  cash=$19    [██░░░░░░░░░░░░░░░░░░]  11.1%  step 250/2252  L=6 S=0  trades=110  regime=TREN  cash=$2,793  
+  [regime] 2018-03-20 = TRENDING_BULL  L=6 S=0  trades=110
+  [██░░░░░░░░░░░░░░░░░░]  13.3%  step 300/2252  L=8 S=0  trades=135  regime=TREN  cash=$1,199    [███░░░░░░░░░░░░░░░░░]  15.5%  step 350/2252  L=8 S=0  trades=153  regime=TREN  cash=$9,688    [███░░░░░░░░░░░░░░░░░]  17.8%  step 400/2252  L=0 S=0  trades=181  regime=CHOP  cash=$119,543    [███░░░░░░░░░░░░░░░░░]  20.0%  step 450/2252  L=2 S=3  trades=195  regime=BEAR  cash=$99,157    [████░░░░░░░░░░░░░░░░]  22.2%  step 500/2252  L=5 S=0  trades=227  regime=CHOP  cash=$75,677  
+  [regime] 2019-03-19 = CHOPPY  L=5 S=0  trades=227
+  [████░░░░░░░░░░░░░░░░]  24.4%  step 550/2252  L=4 S=0  trades=248  regime=CHOP  cash=$74,618    [█████░░░░░░░░░░░░░░░]  26.6%  step 600/2252  L=0 S=2  trades=271  regime=CHOP  cash=$121,785    [█████░░░░░░░░░░░░░░░]  28.9%  step 650/2252  L=9 S=0  trades=288  regime=CHOP  cash=$40,417    [██████░░░░░░░░░░░░░░]  31.1%  step 700/2252  L=8 S=0  trades=311  regime=TREN  cash=$21,347    [██████░░░░░░░░░░░░░░]  33.3%  step 750/2252  L=0 S=3  trades=345  regime=BEAR  cash=$137,509  
+  [regime] 2020-03-16 = BEAR  L=0 S=3  trades=346
+  [███████░░░░░░░░░░░░░]  35.5%  step 800/2252  L=2 S=2  trades=364  regime=BEAR  cash=$105,371    [███████░░░░░░░░░░░░░]  37.7%  step 850/2252  L=8 S=0  trades=393  regime=TREN  cash=$39,364    [███████░░░░░░░░░░░░░]  40.0%  step 900/2252  L=6 S=0  trades=422  regime=TREN  cash=$99,003    [████████░░░░░░░░░░░░]  42.2%  step 950/2252  L=8 S=0  trades=444  regime=TREN  cash=$63,981    [████████░░░░░░░░░░░░]  44.4%  step 1000/2252  L=9 S=0  trades=469  regime=CHOP  cash=$66,429  
+  [regime] 2021-03-12 = CHOPPY  L=8 S=0  trades=471
+  [█████████░░░░░░░░░░░]  46.6%  step 1050/2252  L=7 S=0  trades=491  regime=CHOP  cash=$95,227    [█████████░░░░░░░░░░░]  48.8%  step 1100/2252  L=5 S=0  trades=515  regime=TREN  cash=$191,429    [██████████░░░░░░░░░░]  51.1%  step 1150/2252  L=0 S=0  trades=539  regime=CHOP  cash=$252,612    [██████████░░░░░░░░░░]  53.3%  step 1200/2252  L=0 S=0  trades=559  regime=CHOP  cash=$254,509    [███████████░░░░░░░░░]  55.5%  step 1250/2252  L=0 S=2  trades=575  regime=BEAR  cash=$253,232  
+  [regime] 2022-03-09 = BEAR  L=0 S=2  trades=577
+  [███████████░░░░░░░░░]  57.7%  step 1300/2252  L=1 S=3  trades=602  regime=BEAR  cash=$233,513    [███████████░░░░░░░░░]  59.9%  step 1350/2252  L=0 S=3  trades=644  regime=BEAR  cash=$263,826    [████████████░░░░░░░░]  62.2%  step 1400/2252  L=1 S=3  trades=663  regime=BEAR  cash=$242,227    [████████████░░░░░░░░]  64.4%  step 1450/2252  L=0 S=3  trades=693  regime=BEAR  cash=$267,984    [█████████████░░░░░░░]  66.6%  step 1500/2252  L=1 S=0  trades=718  regime=CHOP  cash=$276,989  
+  [regime] 2023-03-08 = CHOPPY  L=1 S=0  trades=718
+  [█████████████░░░░░░░]  68.8%  step 1550/2252  L=6 S=0  trades=729  regime=CHOP  cash=$117,309    [██████████████░░░░░░]  71.0%  step 1600/2252  L=8 S=0  trades=747  regime=TREN  cash=$179,412    [██████████████░░░░░░]  73.3%  step 1650/2252  L=4 S=0  trades=775  regime=CHOP  cash=$245,662    [███████████████░░░░░]  75.5%  step 1700/2252  L=8 S=0  trades=794  regime=TREN  cash=$210,355    [███████████████░░░░░]  77.7%  step 1750/2252  L=6 S=0  trades=818  regime=TREN  cash=$225,994  
+  [regime] 2024-03-06 = TRENDING_BULL  L=7 S=0  trades=819
+  [███████████████░░░░░]  79.9%  step 1800/2252  L=2 S=0  trades=841  regime=CHOP  cash=$372,763    [████████████████░░░░]  82.1%  step 1850/2252  L=7 S=0  trades=860  regime=TREN  cash=$289,421    [████████████████░░░░]  84.4%  step 1900/2252  L=6 S=0  trades=882  regime=TREN  cash=$296,322    [█████████████████░░░]  86.6%  step 1950/2252  L=7 S=0  trades=904  regime=TREN  cash=$389,791    [█████████████████░░░]  88.8%  step 2000/2252  L=3 S=2  trades=935  regime=CHOP  cash=$392,422  
+  [regime] 2025-03-06 = CHOPPY  L=1 S=2  trades=937
+  [██████████████████░░]  91.0%  step 2050/2252  L=1 S=3  trades=959  regime=BEAR  cash=$449,313    [██████████████████░░]  93.3%  step 2100/2252  L=8 S=0  trades=987  regime=TREN  cash=$350,615    [███████████████████░]  95.5%  step 2150/2252  L=8 S=0  trades=1007  regime=TREN  cash=$359,790    [███████████████████░]  97.7%  step 2200/2252  L=7 S=0  trades=1028  regime=TREN  cash=$353,854    [███████████████████░]  99.9%  step 2250/2252  L=4 S=0  trades=1050  regime=CHOP  cash=$381,508  
+  [regime] 2026-03-05 = CHOPPY  L=3 S=0  trades=1051
+  [████████████████████] 100.0%  step 2252/2252  L=3 S=0  trades=1051  regime=CHOP  cash=$396,481  
+
+
+════════════════════════════════════════════════════════════
+  V2 BACKTEST RESULTS
+════════════════════════════════════════════════════════════
+  Total Return :    390.45%
+  CAGR         :     19.48%
+  Sharpe       :       1.44
+  Max Drawdown :    -14.37%
+  Trades       :       1052
+  Win Rate     :     60.84%
+
+  Regime distribution:
+    TRENDING_BULL  : 1064 days (47%)
+    CHOPPY         :  830 days (37%)
+    BEAR           :  358 days (16%)
+
+  Avg Trade PnL: $468
+
+  Exit breakdown:
+    max_hold              631  WR=74%  avg=$635
+    regime_cover           40  WR=50%  avg=$-14
+    regime_exit            98  WR=79%  avg=$489
+    short_max_hold         63  WR=54%  avg=$9
+    short_take_profit       6  WR=100%  avg=$1306
+    stop                  195  WR=10%  avg=$-830
+    take_profit            19  WR=100%  avg=$10382
+
+  By engine:
+    meanrev          357 trades  WR=68%  avg=$65
+    momentum         695 trades  WR=57%  avg=$674
+
+  By regime entered:
+                     109 trades  WR=55%  avg=$72
+    BEAR             176 trades  WR=71%  avg=$230
+    CHOPPY           277 trades  WR=62%  avg=$83
+    TRENDING_BULL    490 trades  WR=58%  avg=$858
+
+  Year     Return  Sharpe    MaxDD  Trades
+  ----------------------------------------
+  2017     18.1%    1.83    -6.2%      81 ✓
+  2018      0.7%    0.12   -14.4%     112 ✓
+  2019      8.7%    0.85    -9.3%     118 ✓
+  2020     61.3%    2.13    -9.7%     134 ✓
+  2021     20.3%    1.44    -6.8%     114 ✓
+  2022      5.0%    0.99    -2.3%     137 ✓
+  2023     30.9%    2.79    -3.9%     105 ✓
+  2024     45.2%    3.01    -5.6%     107 ✓
+  2025      0.1%    0.06    -6.2%     121 ✓
+  2026     -2.4%   -3.53    -2.8%      23 ✗
+════════════════════════════════════════════════════════════
+
+[lifecycle] 10,926 daily snapshots saved → cache_backtester/position_lifecycle.csv
+
+  -- IN-SAMPLE 2015-2021 --
+  CAGR     :   21.68%
+  Sharpe   :     1.35
+  Max DD   :  -14.37%
+  Win Rate :   59.93%
+  Trades   :      559
+
+  Year     Return  Sharpe    MaxDD  Trades
+  ----------------------------------------
+  2017     18.1%    1.83    -6.2%      81 ✓
+  2018      0.7%    0.12   -14.4%     112 ✓
+  2019      8.7%    0.85    -9.3%     118 ✓
+  2020     61.3%    2.13    -9.7%     134 ✓
+  2021     20.3%    1.44    -6.8%     114 ✓
+
+  -- OUT-OF-SAMPLE 2022-2025 --
+  CAGR     :   16.91%
+  Sharpe   :     1.68
+  Max DD   :   -6.22%
+  Win Rate :   61.87%
+  Trades   :      493
+
+  Year     Return  Sharpe    MaxDD  Trades
+  ----------------------------------------
+  2022      5.0%    0.99    -2.3%     137 ✓
+  2023     30.9%    2.79    -3.9%     105 ✓
+  2024     45.2%    3.01    -5.6%     107 ✓
+  2025      0.1%    0.06    -6.2%     121 ✓
+  2026     -2.4%   -3.53    -2.8%      23 ✗
+
+============================================================
+  VERDICT: MODERATE EDGE — Good foundation, keep building.
+============================================================
+
