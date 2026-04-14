@@ -91,3 +91,48 @@ prior and clearer mechanism.
 **Park for Phase 5:** VIX term structure overlay as a hard entry gate
 when ratio > 1.10. Costs nothing to add as a filter, can't make CAGR
 worse, may meaningfully reduce tail drawdown.
+
+---
+
+## Step 3 — SKIPPED (2026-04-14)
+
+**Original plan:** Train logistic regression on (portfolio_size, portfolio_corr, vix_now) to predict P(stop) for CHOPPY entries. Use as entry filter.
+
+**What we tried:**
+
+Phase A — Build training data
+- Initial join lost 56% of rows (162 of 365)
+- Diagnosed off-by-one issue: lifecycle records decision_date, trades records execution_date (+1 business day)
+- Fixed join: recovered 360 of 365 (98.6%)
+- Final IS: 360 rows, 39 stops (10.8%); OOS: 210 rows, 28 stops (13.3%)
+
+Phase B — Three model attempts:
+
+1. Logreg, 3 features (portfolio_size, portfolio_corr, vix_now)
+   IS AUC 0.746, OOS AUC 0.531, gap +0.214
+   Best threshold: ratio 0.67, blocked PnL +$10,818 (anti-helpful)
+
+2. Logreg, 7 features (added ml_rank_entry, portfolio_rank_mean, portfolio_rank_vel, ann_vol)
+   IS AUC 0.756, OOS AUC 0.486, gap +0.271
+   Best threshold: ratio 0.43, blocked PnL marginally negative
+
+3. Gradient Boosting, 7 features (max_depth=2, n_est=50)
+   IS AUC 0.816, OOS AUC 0.551, gap +0.265
+   No profitable threshold found at any cutoff
+
+**Diagnosis:** Three independent attempts with different model classes and feature sets produced consistent IS-OOS gaps of 0.21-0.27. This is a financial non-stationarity problem: the patterns that predict CHOPPY stops in 2017-2021 do not exist in 2022-2025. The 2017-2021 CHOPPY regime (containing 2018 vol crash, 2020 COVID) is structurally different from the 2022-2025 CHOPPY regime (post-rate-hike, AI-led concentration). No model trained on the former generalizes to the latter.
+
+**Directional finding (IS only, does not generalize):**
+- portfolio_size: Cohen's d = -0.854 (smaller portfolios stop MORE — opposite of original hypothesis)
+- portfolio_corr: Cohen's d = +0.254
+- vix_now: Cohen's d = +0.291
+
+**Decision:** Step 3 closed as documented null result. Not abandoned forever — may revisit when:
+- Lifecycle data pipeline is rebuilt with cleaner alignment
+- More CHOPPY-specific stop data is available (2026+ live trading)
+- Phase 6 second engine work reveals different ways to handle CHOPPY underperformance
+
+**Moving to Step 4: early-kill classifier for TRENDING_BULL stops.**
+Stronger prior (68% of stops red within 3 days), more training data
+(~200+ stop events vs 39), simpler prediction problem (intra-trade
+day 1-2 features → eventual stop), no lifecycle CSV dependency.
