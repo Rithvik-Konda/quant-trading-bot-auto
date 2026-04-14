@@ -136,3 +136,86 @@ Phase B — Three model attempts:
 Stronger prior (68% of stops red within 3 days), more training data
 (~200+ stop events vs 39), simpler prediction problem (intra-trade
 day 1-2 features → eventual stop), no lifecycle CSV dependency.
+
+---
+
+## Step 4 — SKIPPED (early-kill hypothesis not supported by data) (2026-04-14)
+
+**Original plan:** Predict eventual stops from day 1-2 price action features (return, MAE, MFE, recovery), close losing trades early at day 2 close instead of waiting for the full stop trigger.
+
+**Phase A built training data:**
+- 469 IS trades (2017-2021), 110 stops (23.5%)
+- 397 OOS trades (2022-2026), 84 stops (21.2%)
+- 7 price-action features at day 2 + 5 entry-context features
+- All 241 unique symbols had price data available
+
+**Univariate Cohen's d on IS data:**
+
+| Feature | Cohen's d |
+|---|---|
+| day1_return | -0.102 |
+| day2_return | -0.205 |
+| day2_minus_day1 | -0.162 |
+| day2_mae | -0.077 |
+| day2_mfe | -0.187 |
+| day2_recovery | -0.171 |
+| day2_intraday_vol | -0.090 |
+| ml_rank_pct | +0.353 |
+| rule_score | +0.536 |
+| ann_vol | -0.108 |
+
+**The hypothesis failed:** All 7 price-action features have |d| < 0.21, far below the 0.5 threshold for a useful classifier. Day 1-2 price action does not meaningfully separate eventual stops from eventual winners on this dataset.
+
+**Unexpected finding (the real value of this step):**
+
+The two strongest features are entry-time scores (rule_score d=+0.536, ml_rank_pct d=+0.353) and they point in the WRONG direction. Trades that eventually stopped had HIGHER entry scores than trades that didn't:
+
+- Stopped trades: rule_score 0.396, ml_rank_pct 0.918
+- Not stopped trades: rule_score 0.283, ml_rank_pct 0.828
+
+**This suggests a structural inefficiency in the conviction signal of the cleaned baseline.** High-conviction entries appear to be more likely to stop, not less. Possible explanations include position-sizing interactions (high conviction = bigger size = tighter percent stop), selection effects from the Step 1 cleanup, or genuine miscalibration of the rule_score formula.
+
+**Decision:** Skip Step 4 (early-kill as designed cannot work on this data). Document the finding. Schedule Phase 2.5 as a real investigation.
+
+---
+
+## Phase 2.5 — Conviction-Stop Investigation (NEW, scheduled after Phase 2)
+
+**Goal:** Determine whether the high-conviction → high-stop-rate finding is real, what causes it, and whether it implies a fix.
+
+**Verification tasks:**
+1. Replicate the finding on OOS data (does the same Cohen's d hold for 2022-2025?)
+2. Slice by regime (does it hold in TRENDING_BULL, CHOPPY, BEAR separately?)
+3. Slice by entry timing (specific market conditions?)
+4. Audit the relationship between rule_score and position size in backtester code
+5. Check whether stopped trades hit predicted distances or are being whipsawed
+6. Decompose rule_score into component features
+
+**Hypothesis tests:**
+- "Position size scales inversely with rule_score above a threshold" (corrects oversizing)
+- "Skip entries with rule_score top 10% AND ml_rank_pct top 10%" (over-confident combo filter)
+- "Rule_score formula has an over-weighted component that needs recalibration"
+
+**Possible outcomes:**
+- Spurious sample artifact → document, move on, no fix
+- Real and bug-driven → fix, retrain, retest
+- Real and points to over-trading at extremes → add a conviction cap filter
+- Leads somewhere unexpected → continue investigation
+
+**Estimated effort:** 1-2 days of focused research
+
+**Hard gate:** Phase 2.5 happens AFTER Step 5 and Step 6 ship. Phase 5 happens AFTER Phase 2.5.
+
+---
+
+## Updated sequence
+
+1. ✅ Step 1: Cleanup of 7 harmful overlays (BASELINE_2026_05_step1)
+2. ❌ Step 2: VIX term overlay (dropped, marginal positive but failed 2σ)
+3. ⏭️ Step 3: CHOPPY concentration throttle (skipped, three model attempts failed OOS)
+4. ⏭️ Step 4: Early-kill classifier (skipped, day 1-2 features don't separate classes)
+5. **NEXT — Step 5: Fix mean reversion regime labeling bug**
+6. Step 6: Refactor live trader (HARD GATE before Phase 2.5)
+7. Phase 2.5: Conviction-stop investigation
+8. Phase 5: Robustness layer
+9. Phase 6: Second engine (CHOPPY-specific)
