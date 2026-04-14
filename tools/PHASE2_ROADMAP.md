@@ -52,3 +52,42 @@
 - Sharpe ~1.95-2.10
 - MaxDD ~-5%
 - Live trader running same strategy as backtester
+
+## Phase 2 Step 2: VIX Term Structure Overlay — DROPPED
+
+**Date:** 2026-04-14
+**Result:** Did not clear 2σ commit threshold. Reverted.
+
+**Implementation:** Position-sizing scalar based on VIX/VIX3M ratio.
+- Calm (ratio < 0.83): 1.10x boost
+- Normal (0.83-0.99): 1.00x neutral
+- Mild caution (0.99-1.02): 0.90x
+- Backwardation (1.02-1.17): 0.70x
+- Deep stress (>1.17): 0.50x
+
+**OOS results vs BASELINE_2026_05_step1:**
+- ΔCAGR: +0.44% (below 1σ noise floor of 1.0%)
+- ΔSharpe: +0.03 (below 1σ of 0.06)
+- ΔMaxDD: -0.12% (noise)
+- Full-period MaxDD: -16.27% → -15.56% (small improvement)
+- 2018 specifically: -16.3% → -15.6%
+
+**Diagnosis:** The signal IS real (t=5.09 at 20d forward returns) and
+test cases fired correctly on historical stress events (2018 vol crash,
+2020 COVID, 2022, 2024 yen carry). But the position-sizing application
+doesn't translate to enough CAGR improvement to clear noise floor.
+
+**Lesson:** A real signal applied through the wrong mechanism can fail
+to deliver meaningful improvement. VIX term structure is probably better
+suited as:
+1. An entry filter (skip new entries when ratio > 1.10) — Phase 5
+2. A headline risk gate for the robustness layer — Phase 5
+3. NOT as a continuous position-size scalar — does not work for us
+
+**Action:** Reverted backtester_v2_phase2step1.py. Moving to Step 3
+(CHOPPY concentration throttle, Cohen's d=0.72) which has a stronger
+prior and clearer mechanism.
+
+**Park for Phase 5:** VIX term structure overlay as a hard entry gate
+when ratio > 1.10. Costs nothing to add as a filter, can't make CAGR
+worse, may meaningfully reduce tail drawdown.
