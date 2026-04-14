@@ -108,9 +108,9 @@ def _ablate(name: str) -> bool:
 '''
 
 RESULT_PATTERNS = {
-    "cagr":   re.compile(r"CAGR[^0-9\-]*([\-\d\.]+)\s*%"),
-    "sharpe": re.compile(r"Sharpe[^0-9\-]*([\-\d\.]+)"),
-    "maxdd":  re.compile(r"Max\s*DD[^0-9\-]*([\-\d\.]+)\s*%"),
+    "cagr":   re.compile(r"CAGR[^0-9\-]*(-?\d[\d\.]*)\s*%"),
+    "sharpe": re.compile(r"Sharpe[^0-9\-]*(-?\d[\d\.]*)"),
+    "maxdd":  re.compile(r"Max\s*DD[^0-9\-]*(-?\d[\d\.]*)\s*%"),
 }
 
 
