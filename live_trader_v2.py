@@ -576,9 +576,49 @@ def run_entry_scan(regime, choppy_sub, signals, ranks, tracked, portfolio):
             except:
                 stop_pct = 0.08
 
-            risk_budget = portfolio * 0.035 * vol_scalar * size_mult
-            qty = int(risk_budget / (price * stop_pct))
-            qty = min(qty, int(portfolio * 0.15 / price))
+            # Step 6 phaseB-2a: sizing extracted to v2/sizing.py
+            # Mirrors backtester semantics — vol_scalar folded into conviction
+            # like backtester line 894. Cap (max_position_weight) now scales
+            # with conviction, matching backtester's behavior.
+            #
+            # BEHAVIOR CHANGES vs original live trader inline math:
+            #   - macro_long sectors (size_mult=1.3): cap rises 15% -> 19.5%
+            #   - macro_risk regime (size_mult=0.7): cap falls 15% -> 10.5%
+            #   - VIX 25-35 (vol_scalar=0.5): cap falls 15% -> 7.5%
+            #   - VIX 20-25 (vol_scalar=0.75): cap falls 15% -> 11.25%
+            #   - normal (vol_scalar=1.0, size_mult=1.0): cap stays 15%
+            # These changes bring live in line with backtester baseline behavior.
+            #
+            # trades=None, use_kelly=False — Kelly stays disabled in phaseB-2a
+            # (phaseB-2b will enable Kelly via trades_v2.csv loading).
+            try:
+                import sys as _sys2
+                _sys2.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'v2'))
+                from sizing import compute_position_size_momentum
+                _conviction_with_vol = size_mult * vol_scalar  # match backtester L894
+                qty = compute_position_size_momentum(
+                    capital=portfolio,
+                    price=price,
+                    stop_pct=stop_pct,
+                    trades=None,
+                    regime=regime,
+                    ml_score=rank,
+                    ann_vol=0.35,
+                    vol_scalar=1.0,           # already folded into conviction
+                    conviction=_conviction_with_vol,
+                    position_scalar=1.0,
+                    max_position_weight=0.15,
+                    max_total_exposure=1.6,
+                    gross_exposure_now=0.0,
+                    cash_available=None,
+                    fallback_risk_pt=0.035,
+                    use_kelly=False,
+                )
+            except Exception as _sz_err:
+                print(f"  SIZING ERROR for {sym}: {_sz_err} — falling back to inline")
+                risk_budget = portfolio * 0.035 * vol_scalar * size_mult
+                qty = int(risk_budget / (price * stop_pct))
+                qty = min(qty, int(portfolio * 0.15 / price))
             if qty < 1: continue
 
             result = submit_order(sym, qty, 'buy')
