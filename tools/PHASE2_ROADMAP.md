@@ -288,3 +288,51 @@ The cap reduction (0.10 → 0.08) only affected ~9 trades worth of position sizi
 7. Phase 2.5: Conviction-stop investigation (now backed by 3 independent findings)
 8. Phase 5: Robustness layer
 9. Phase 6: Second engine (CHOPPY-specific options work)
+
+---
+
+## Step 6 — IN PROGRESS — Phase A audit complete (2026-04-14)
+
+**Goal:** Make live_trader_v2.py share strategy code with backtester so improvements to backtester automatically apply to live trading.
+
+**Phase A audit findings (tools/audit_live_vs_backtester.py):**
+
+Live trader: 892 lines, 38KB
+Backtester:  1481 lines, 74KB
+
+**Already shared (good):**
+- All strategy modules (strategy_trending, strategy_choppy, strategy_bear, strategy_meanrev, strategy_core)
+- regime_classifier
+- config, ml_model
+
+**Accidental divergences (must fix in Phase B-D):**
+
+1. vix_vol_scalar — DELETED from backtester in Step 1 but still active in live (line 520)
+2. earnings_exclusion — DELETED from backtester in Step 1 but still active in live
+3. compute_kelly — Backtester uses Kelly bucketing; live uses hardcoded 3.5% risk
+4. quality_gate — Beneficial filter present in backtester; MISSING from live
+5. ml_stop_hold — Beneficial drawdown control in backtester; MISSING from live
+6. Sizing duplication — live has two sizing paths (line 579 momentum, line 741 likely meanrev) at hardcoded percentages; backtester has unified Kelly path
+
+**Intentional divergences (keep separate):**
+- get_intraday_bars, compute_vwap, get_volume_ratio (live needs intraday data)
+- submit_order, cancel_all_orders (live calls Alpaca API)
+- get_intraday_confirmation (live-specific 5-min bar confirmation)
+
+**Critical implication of audit:**
+
+Live paper-trading account is currently NOT running BASELINE_2026_05_step1. It's running an older configuration that includes harmful overlays we deleted plus is missing Kelly sizing and beneficial filters. Live is likely producing CAGR ~16-17% rather than the 19.83% the backtester baseline shows.
+
+**Step 6 refactor plan (Phases B-E):**
+
+B. Decide which divergences are intentional vs accidental (this audit DONE)
+C. Extract shared logic into new v2/ modules:
+   - v2/sizing.py — unified Kelly + cap + scalar sizing called by both
+   - v2/entry_filters.py — quality_gate, spy_5d_filter, vix_vol_scalar (gated), etc.
+D. Update both backtester and live_trader_v2 to import from shared modules
+E. Regression test: backtester must produce identical BASELINE_2026_05_step1 metrics
+   after refactor. If yes, ship. If no, debug.
+
+**Estimated effort: 4-6 hours focused work in next session.**
+
+**Hard gate confirmation:** Phase 2.5 (conviction investigation) MUST wait until Step 6 ships, otherwise any Phase 2.5 finding only applies to backtester and not live.
