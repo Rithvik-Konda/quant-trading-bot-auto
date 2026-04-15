@@ -219,3 +219,72 @@ The two strongest features are entry-time scores (rule_score d=+0.536, ml_rank_p
 7. Phase 2.5: Conviction-stop investigation
 8. Phase 5: Robustness layer
 9. Phase 6: Second engine (CHOPPY-specific)
+
+---
+
+## Step 5 — SKIPPED (Kelly cap fix produced no measurable impact) (2026-04-14)
+
+**Original framing:** Fix the meanrev regime labeling bug — meanrev performs better in BEAR than CHOPPY despite being designed for CHOPPY.
+
+**Investigation chain:**
+
+1. **Code recon disproved the regime labeling bug hypothesis.** Both momentum and meanrev exit paths use `meta.get("regime", _current_regime)` from entry_meta — i.e., they record the entry-time regime, not the exit-time regime. Meanrev entry at line 1145 explicitly stores `"regime": _current_regime` in entry_meta. There is no regime relabeling bug.
+
+2. **Pivoted to performance-gap investigation.** Comparison of CHOPPY vs BEAR meanrev showed BEAR's outperformance comes almost entirely from regime_exit triggers (50.8% of BEAR meanrev exits vs 0.5% of CHOPPY) at +$470 average PnL. BEAR meanrev is structurally a "hold through panic, sell on relief" trade dressed as mean reversion. CHOPPY meanrev never gets equivalent regime-transition exits.
+
+3. **Pivoted to 2025 forensics.** Of the $32k headline PnL gap (CHOPPY -$6.7k, BEAR +$25.8k), $27k came from 2025 alone. Through 2024, CHOPPY meanrev was profitable in 6 of 8 years. The "structural underperformance" framing was wrong — 2025 was a discontinuity.
+
+4. **Forensic findings on 2025:**
+   - 19 trades in 2025, 3 of them (APP, PTON, MP) accounted for 88% of the loss
+   - APP and PTON entered on the SAME day (2025-02-28), both stopped at -15% and -17%
+   - Position sizes in 2025 were 2.4x larger than prior years (median notional $52k vs $21k)
+   - ml_rank_pct mean: 0.965 in 2025 vs 0.933 prior — third independent confirmation of conviction-stop pattern
+
+5. **Identified mechanism:** kelly_sizer.py uses bucket-based half-Kelly capped at 0.10. The TRENDING_BULL `top` and `high` ML buckets had raw half-Kelly fractions of 0.16-0.29, hitting the cap consistently. The cap was binding for high-conviction trades — meaning all top/high bucket trades got sized at 10% risk per trade regardless of their actual edge.
+
+6. **Validated conviction-stop on 2017-2021 alone (held out from 2025):**
+   - All trades, ml_rank_pct: Cohen's d = +0.329 (high conviction predicts MORE stops)
+   - All trades, rule_score: Cohen's d = +0.783
+   - All trades, combined_score: Cohen's d = +0.871
+   - **Pattern is real and present in held-out data — non-backfit signal**
+
+7. **Implemented literature-justified Kelly cap reduction:** Changed max_kelly from 0.10 to 0.08 in v2/kelly_sizer.py. Justification: quarter-Kelly literature (Thorp, Vince) recommends Kelly fractions of 0.25-0.50 of full Kelly. Raw Kelly observations in top buckets reach 0.4-0.6, so quarter-Kelly suggests 0.10-0.15 cap. 0.08 sits at the conservative end of that range.
+
+8. **Backtest result vs BASELINE_2026_05_step1:**
+   - Full CAGR: 21.78% → 21.78% (Δ 0.00)
+   - Full Sharpe: 1.65 → 1.65 (Δ 0.00)
+   - Full MaxDD: -16.27% → -16.27% (Δ 0.00)
+   - OOS CAGR: 19.83% → 19.83% (Δ 0.00)
+   - OOS Sharpe: 2.06 → 2.06 (Δ 0.00)
+   - OOS MaxDD: -5.96% → -5.96% (Δ 0.00)
+   - Trades: 1116 → 1107 (-9 trades affected)
+   - **Byte-identical headline metrics. Fix did not move the needle.**
+
+**Why the fix didn't help:**
+
+The cap reduction (0.10 → 0.08) only affected ~9 trades worth of position sizing. The system is sufficiently deterministic that the small position-size changes in cap-binding trades got absorbed by other entries filling the slots. Net effect on aggregate PnL: zero.
+
+**Reverted** kelly_sizer.py to max_kelly=0.10. Documented as null result.
+
+**Findings preserved for Phase 2.5:**
+
+- Conviction-stop pattern is real on 2017-2021 held-out data (Cohen's d +0.329 to +0.871 across three features)
+- This is the THIRD independent confirmation in this Phase 2 session (Step 4 forensics, Step 5 2025 analysis, temporal validation)
+- The mechanism (Kelly bucket-based sizing) is structurally suspect but a literature-defensible cap change does not extract measurable CAGR
+- Future investigation: deeper Kelly redesign (quarter-Kelly throughout? collapse top into high bucket? use median PnL?) or restructure the conviction signal itself
+
+**Hard gate update:** Phase 2.5 conviction investigation is now an even higher priority. Three independent investigations now point to the same finding.
+
+---
+
+## Updated sequence
+
+1. ✅ Step 1: Cleanup of 7 harmful overlays (BASELINE_2026_05_step1 — SHIPPED)
+2. ❌ Step 2: VIX term overlay (dropped, +0.44% below 2σ)
+3. ⏭️ Step 3: CHOPPY concentration throttle (skipped, three model attempts failed OOS)
+4. ⏭️ Step 4: Early-kill classifier (skipped, day 1-2 features don't separate stops)
+5. ⏭️ Step 5: Meanrev investigation + Kelly cap (no labeling bug, Kelly cap had no measurable impact)
+6. **NEXT — Step 6: Refactor live trader (HARD GATE before Phase 2.5)**
+7. Phase 2.5: Conviction-stop investigation (now backed by 3 independent findings)
+8. Phase 5: Robustness layer
+9. Phase 6: Second engine (CHOPPY-specific options work)
