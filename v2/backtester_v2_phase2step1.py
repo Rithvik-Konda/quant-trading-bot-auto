@@ -897,43 +897,57 @@ def run_backtest_v2(
                 if vol_scalar == 0.0:
                     continue           # skip this entry entirely
                 conviction = conviction * vol_scalar
-                # Kelly position sizing — replaces hardcoded 3.5% risk/trade
-                # Computed from last 100 similar trades (regime + ML bucket + vol bucket)
-                # Falls back to 3.5% if <15 similar trades in history
+                # Step 6 refactor: sizing extracted to v2/sizing.py
+                # Behavior must be byte-identical to original inline math.
                 try:
                     import sys as _sys2
                     _sys2.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-                    from kelly_sizer import compute_kelly
+                    from sizing import compute_position_size_momentum
                     _df_vol = prices_by_symbol.get(s)
                     _ann_vol = float(_df_vol.loc[:date]["close"].pct_change().dropna().tail(60).std() * (252**0.5)) if _df_vol is not None and len(_df_vol) >= 20 else 0.35
                     _trade_dicts = [t.__dict__ for t in trades]
-                    risk_pt = compute_kelly(
+                    scalar = getattr(params, 'position_scalar', getattr(params, 'position_scalar_long', 1.0))
+                    gross_exp = sum(close_prices.get(sym, p.entry_price) * p.qty for sym, p in long_positions.items())
+                    max_exp = config.INITIAL_CAPITAL * getattr(params, 'max_total_exposure', 1.6)
+                    remaining = max(0, max_exp - gross_exp)
+                    if remaining <= 0:
+                        break
+                    qty = compute_position_size_momentum(
+                        capital=config.INITIAL_CAPITAL,
+                        price=px,
+                        stop_pct=stop_pct,
                         trades=_trade_dicts,
                         regime=_current_regime,
                         ml_score=snap.ml_rank_pct,
                         ann_vol=_ann_vol,
-                        min_trades=15,
-                        fallback=getattr(params, 'risk_per_trade', 0.035),
+                        vol_scalar=1.0,  # vol_scalar already folded into conviction above
+                        conviction=conviction,
+                        position_scalar=scalar,
+                        max_position_weight=getattr(params, 'max_position_weight', 0.35),
+                        max_total_exposure=getattr(params, 'max_total_exposure', 1.6),
+                        gross_exposure_now=gross_exp,
+                        cash_available=cash,
+                        fallback_risk_pt=getattr(params, 'risk_per_trade', 0.035),
+                        use_kelly=True,
                     )
                 except Exception:
+                    # Fallback path matches original code's exception behavior
                     risk_pt = getattr(params, 'risk_per_trade', 0.035)
-                scalar     = getattr(params, 'position_scalar', getattr(params, 'position_scalar_long', 1.0))
-
-                gross_exp  = sum(close_prices.get(sym, p.entry_price) * p.qty for sym, p in long_positions.items())
-                max_exp    = config.INITIAL_CAPITAL * getattr(params, 'max_total_exposure', 1.6)
-                remaining  = max(0, max_exp - gross_exp)
-                if remaining <= 0:
-                    break
-
-                risk_budget    = config.INITIAL_CAPITAL * risk_pt * scalar * conviction
-                risk_per_share = px * stop_pct
-                qty_risk       = int(risk_budget / risk_per_share) if risk_per_share > 0 else 0
-                max_wt         = getattr(params, 'max_position_weight', 0.35)
-                max_dollars    = min(
-                    config.INITIAL_CAPITAL * max_wt * scalar * conviction,
-                    cash, remaining,
-                )
-                qty = min(qty_risk, int(max_dollars / px) if px > 0 else 0)
+                    scalar = getattr(params, 'position_scalar', getattr(params, 'position_scalar_long', 1.0))
+                    gross_exp = sum(close_prices.get(sym, p.entry_price) * p.qty for sym, p in long_positions.items())
+                    max_exp = config.INITIAL_CAPITAL * getattr(params, 'max_total_exposure', 1.6)
+                    remaining = max(0, max_exp - gross_exp)
+                    if remaining <= 0:
+                        break
+                    risk_budget = config.INITIAL_CAPITAL * risk_pt * scalar * conviction
+                    risk_per_share = px * stop_pct
+                    qty_risk = int(risk_budget / risk_per_share) if risk_per_share > 0 else 0
+                    max_wt = getattr(params, 'max_position_weight', 0.35)
+                    max_dollars = min(
+                        config.INITIAL_CAPITAL * max_wt * scalar * conviction,
+                        cash, remaining,
+                    )
+                    qty = min(qty_risk, int(max_dollars / px) if px > 0 else 0)
                 # Vol-aware sizing: use ML stop width to scale position size.
                 # Wider ML stop = model expects more noise = smaller position.
                 # stop_pct already set by ML model above — use it directly.
