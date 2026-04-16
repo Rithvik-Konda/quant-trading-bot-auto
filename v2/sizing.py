@@ -133,3 +133,67 @@ def compute_position_size_momentum(
     
     qty = min(qty_risk, qty_cap)
     return max(0, qty)
+
+
+
+def compute_position_size_short(
+    capital: float,
+    price: float,
+    stop_pct: float,
+    *,
+    risk_per_trade: float = 0.025,
+    position_scalar: float = 1.0,
+    max_position_weight: float = 0.08,
+    cash_available: float = None,
+    margin_requirement: float = 0.60,
+) -> int:
+    """
+    Compute integer share quantity for a short entry.
+
+    Mirrors the sizing logic from v2/backtester_v2_phase2step1.py lines 1180-1196.
+
+    Parameters
+    ----------
+    capital : float
+        Reference capital for percentage-based sizing.
+    price : float
+        Entry price per share.
+    stop_pct : float
+        Stop loss as fraction of price (e.g., 0.08 = 8%).
+    risk_per_trade : float
+        Risk fraction (default 2.5%).
+    position_scalar : float
+        Per-regime sizing multiplier (e.g., bear_params.position_scalar_short).
+    max_position_weight : float
+        Per-position cap as fraction of capital (default 8%).
+    cash_available : float, optional
+        Cash on hand. If provided, blocks trade if margin > cash.
+    margin_requirement : float
+        Reg T short margin requirement (default 60% of notional).
+
+    Returns
+    -------
+    qty : int
+        Number of shares to short. Returns 0 if any constraint blocks the trade.
+    """
+    if price <= 0 or stop_pct <= 0 or capital <= 0:
+        return 0
+
+    risk_budget = capital * risk_per_trade * position_scalar
+    risk_per_share = price * stop_pct
+    qty_risk = int(risk_budget / risk_per_share) if risk_per_share > 0 else 0
+
+    cap_dollars = capital * max_position_weight
+    qty_cap = int(cap_dollars / price) if price > 0 else 0
+
+    qty = min(qty_risk, qty_cap)
+    if qty <= 0:
+        return 0
+
+    # Margin check (live-relevant; backtester also enforces this)
+    if cash_available is not None:
+        margin = price * qty * margin_requirement
+        if margin > cash_available:
+            return 0
+
+    return max(0, qty)

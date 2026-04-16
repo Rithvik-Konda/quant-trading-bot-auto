@@ -1188,15 +1188,38 @@ def run_backtest_v2(
                 if last_stop and (date - last_stop).days < getattr(config, "SHORT_REENTRY_COOLDOWN_DAYS", 60):
                     continue
 
-                px         = open_next_prices[s]
-                stop_pct   = bear_params.stop_short
-                scalar     = bear_params.position_scalar_short
-                risk_budget= config.INITIAL_CAPITAL * bear_params.risk_per_trade_short * scalar
-                qty_risk   = int(risk_budget / (px * stop_pct)) if px * stop_pct > 0 else 0
-                qty        = min(qty_risk, int(config.INITIAL_CAPITAL * 0.08 / px) if px > 0 else 0)  # max 8% of initial capital per short
+                px       = open_next_prices[s]
+                stop_pct = bear_params.stop_short
+                scalar   = bear_params.position_scalar_short
+                # Step 6 phaseB-3: short sizing extracted to v2/sizing.py
+                # Behavior must be byte-identical to original inline math.
+                try:
+                    import sys as _sys3
+                    _sys3.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+                    from sizing import compute_position_size_short
+                    qty = compute_position_size_short(
+                        capital=config.INITIAL_CAPITAL,
+                        price=px,
+                        stop_pct=stop_pct,
+                        risk_per_trade=bear_params.risk_per_trade_short,
+                        position_scalar=scalar,
+                        max_position_weight=0.08,
+                        cash_available=cash,
+                        margin_requirement=0.60,
+                    )
+                except Exception:
+                    risk_budget = config.INITIAL_CAPITAL * bear_params.risk_per_trade_short * scalar
+                    qty_risk    = int(risk_budget / (px * stop_pct)) if px * stop_pct > 0 else 0
+                    qty         = min(qty_risk, int(config.INITIAL_CAPITAL * 0.08 / px) if px > 0 else 0)
+                    if qty > 0:
+                        margin = px * qty * 0.60
+                        if margin > cash:
+                            qty = 0
                 if qty <= 0:
                     continue
 
+                # Margin already checked in compute_position_size_short or fallback;
+                # this margin block kept for any edge case where qty was set externally.
                 margin = px * qty * 0.60
                 if margin > cash:
                     continue
