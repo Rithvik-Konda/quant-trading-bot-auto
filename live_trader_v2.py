@@ -508,16 +508,17 @@ def run_entry_scan(regime, choppy_sub, signals, ranks, tracked, portfolio):
     macro_risk, news_score, macro_long_sectors, macro_short_sectors = load_scan_meta()
     today_str = str(datetime.now().date())
 
-    # VIX gate
-    # Refresh VIX live — don't use stale morning reading
-    # If Trump tweets mid-session, VIX can spike from 20 to 40 in minutes
+    # VIX fetch (kept for logging only — no sizing impact)
+    # Step 6 phaseC: vix_vol_scalar removed to match backtester BASELINE_2026_05_step1.
+    # Step 1 ablation showed graded VIX scaling cost +1.56% CAGR in backtester.
+    # SPY 5d cutoff kept as a hard gate (kept overlay per Step 1 ablation).
     try:
         import yfinance as _yf_vix
         _vix_live = _yf_vix.Ticker('^VIX').history(period='1d', interval='5m')
         vix_level = float(_vix_live['Close'].iloc[-1]) if len(_vix_live) > 0 else signals.get('vix_level', 20)
     except Exception:
         vix_level = signals.get('vix_level', 20)
-    vol_scalar = 0.0 if vix_level >= 35 else 0.5 if vix_level >= 25 else 0.75 if vix_level >= 20 else 1.0
+    vol_scalar = 1.0
     if signals.get('spy_5d', 0) < -0.015:
         vol_scalar = 0.0
 
