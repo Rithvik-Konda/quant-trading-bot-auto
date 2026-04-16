@@ -81,6 +81,37 @@ try:
 except: pass
 
 # ── Alpaca trading helpers ─────────────────────────────────────────────────────
+# Step 6 phaseC-2: Quality gate feature cache
+# Features for a symbol on a given day don't change (computed from EOD data).
+# Cache keyed by (symbol, date_str). Reset naturally when script restarts.
+_features_cache = {}
+
+def _get_quality_composite(sym, df):
+    """
+    Compute or fetch cached quality_composite for this symbol on today's date.
+    Returns float (quality_composite) or None if unavailable.
+    Uses ml_model.compute_features which is already imported.
+    """
+    if df is None or len(df) < 200:
+        return None
+    today_key = (sym, str(datetime.now().date()))
+    if today_key in _features_cache:
+        return _features_cache[today_key]
+    try:
+        feats = compute_features(df, symbol=sym)
+        if "quality_composite" not in feats.columns:
+            _features_cache[today_key] = None
+            return None
+        val = float(feats["quality_composite"].iloc[-1])
+        if not (val == val):  # NaN check
+            val = None
+        _features_cache[today_key] = val
+        return val
+    except Exception as _qc_err:
+        _features_cache[today_key] = None
+        return None
+
+
 def get_account():
     r = requests.get(f'{TRADE_URL}/v2/account', headers=HEADERS)
     a = r.json()
@@ -562,9 +593,21 @@ def run_entry_scan(regime, choppy_sub, signals, ranks, tracked, portfolio):
             price = get_current_price(sym)
             if price <= 0: continue
 
-            # ATR stop
+            # Step 6 phaseC-2: quality_gate check (was missing from live)
+            # Backtester Step 1 ablation: quality_gate kept because removing it
+            # cost +5.20% CAGR. This filter rejects high-momentum low-quality
+            # stocks. Thresholds match backtester L851: CHOPPY >= 0.35, else 0.20.
+            _q_df = fetch_data(sym)
+            _q_val = _get_quality_composite(sym, _q_df)
+            if _q_val is not None:
+                _q_min = 0.35 if regime == CHOPPY else 0.20
+                if _q_val < _q_min:
+                    print(f"  SKIP {sym} momentum: quality_composite {_q_val:.2f} < {_q_min:.2f}")
+                    continue
+
+            # ATR stop (reuses _q_df from quality check)
             try:
-                df = fetch_data(sym)
+                df = _q_df if _q_df is not None else fetch_data(sym)
                 if df is not None and len(df) >= 14:
                     tr = pd.concat([
                         df['high'] - df['low'],
